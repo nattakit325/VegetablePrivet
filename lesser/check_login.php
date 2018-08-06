@@ -2,9 +2,9 @@
 	session_start();
 	include "connect.php";
 
-	$pass = md5($_POST['pwd']);
+
 	$strSQL = "SELECT * FROM login WHERE username = '".mysqli_real_escape_string($objCon,$_POST['usr'])."' 
-	and password = '".mysqli_real_escape_string($objCon,$pass)."'";
+	and password = '".mysqli_real_escape_string($objCon,$_POST['pwd'])."'";
 	$objQuery = mysqli_query($objCon,$strSQL);
 	$objResult = mysqli_fetch_array($objQuery,MYSQLI_ASSOC);
 	if(!$objResult)
@@ -20,15 +20,15 @@
 			
 			if($objResult["status"] == "admin")
 			{
-				header("location:indexad.php");
+				header("location:admin.html");
 			}
 			else if($objResult["status"] == "ปัจจัย")
 			{
-				header("location:indexag.php");
+				header("location:index.php");
 			}
 			else
 			{
-				header("location:indexag.php");
+				header("location:index.php");
 			}
 	}
 	mysqli_close($objCon);

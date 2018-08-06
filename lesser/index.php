@@ -7,6 +7,20 @@
 	$queryDialog=mysqli_query($objCon,$sql);
 	$count = 0;
 
+
+	function DateThai($strDate)
+	{
+		$strYear = date("Y",strtotime($strDate))+543;
+		$strMonth= date("n",strtotime($strDate));
+		$strDay= date("j",strtotime($strDate));
+		$strHour= date("H",strtotime($strDate));
+		$strMinute= date("i",strtotime($strDate));
+		$strSeconds= date("s",strtotime($strDate));
+		$strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+		$strMonthThai=$strMonthCut[$strMonth];
+		return "$strDay $strMonthThai $strYear, เวลา $strHour:$strMinute";
+	}
+
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -16,7 +30,7 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Vegetable</title>
+	<title>VegetableGether</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -107,12 +121,12 @@
           <center>
 						<form action="check_login.php" method="POST">
 							<div class="form-group">
-								<input type="text" class="form-control" name="usr" placeholder="Username">
+								<input type="text" class="form-control" name="usr" placeholder="Username" required>
 							</div>
 							<div class="form-group">
-								<input type="password" class="form-control" name="pwd" placeholder="Password">
+								<input type="password" class="form-control" name="pwd" placeholder="Password" required>
 							</div>
-							<input type="submit" class="btn btn-success" id="pwd" placeholder="Password" value="เข้าสู่ระบบ">
+							<input type="submit" class="btn btn-success"  value="เข้าสู่ระบบ">
 						</form>
   <br>
   <a href="register.html">ยังไม่ได้สมัครบัญชีในระบบ</a>
@@ -216,10 +230,10 @@ $count=0;
 				 	?>
 				<div class="col-md-4 text-center">
 					<div class="blog-inner">
-						<a href="#" data-toggle="modal" data-target="#myModal<?php echo $count?>"><img class="img-responsive" src="images/sell.jpg" alt="Blog"></a>
+						<a href="#" data-toggle="modal" data-target="#myModal<?php echo $count?>"><img class="img-responsive" src="images/<?php echo $row["media"]?>" alt="Blog"></a>
 						<div class="desc">
 							<h3><a href="#" data-toggle="modal" data-target="#myModal1" > <?php echo $row["topic"];?></a></h3>
-							<p>เวลา <?php echo $row["time"];?></p>
+							<p>เวลา <?php echo DateThai($row["time"]);?></p>
 							<p><a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">ดูรายละเอียด<i class="icon-arrow-right"></i></a></p>
 						</div>
 					</div>
