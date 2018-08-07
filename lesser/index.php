@@ -121,6 +121,29 @@
 
 
 
+<script>
+function showResult(username,password) {
+  if (username=="") {
+    document.getElementById("txtHint").innerHTML="";
+    return;
+  } 
+  if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+  } else { // code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+      document.getElementById("txtHint").innerHTML=this.responseText;
+    }
+  }
+  xmlhttp.open("GET","check_login.php?username="+username+"&password="+password,true);
+  xmlhttp.send();
+}
+</script>
+
+
 	<body>
 
 		<div class="modal fade" id="myModal" role="dialog">
@@ -134,6 +157,7 @@
           <center>
 						<form action="check_login.php" method="POST">
 							<div class="form-group">
+								<p id="txtHint"></p>
 								<input type="text" class="form-control" name="usr" placeholder="Username" required>
 							</div>
 							<div class="form-group">
