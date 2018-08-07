@@ -33,6 +33,7 @@ if(!$objResult1){
 	echo "Password ไม่ถูกต้อง";
 	}else{
 
+
 			$_SESSION["status"] = $objResult["status"];
 			$_SESSION["username"] = $objResult["username"];
 			$_SESSION["password"] = $objResult["password"];
@@ -41,6 +42,11 @@ if(!$objResult1){
 			$_SESSION["career"] = $objResult2["career"];
 			$_SESSION["age"] = $objResult2["age"];
 			$_SESSION["picture"] = $objResult2["picture"];
+
+
+			if($_SESSION["status"] == "admin"){
+				echo "admin";
+			}
 
 			session_write_close();
 			}

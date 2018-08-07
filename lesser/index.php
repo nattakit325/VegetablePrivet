@@ -101,42 +101,7 @@
 
 	</head>
 
-<script>
-function showUser(str,password) {
-
-  if(str.length==0){
-  	alert('กรุณาป้อน Username ก่อน');
-     document.login_form.usr.focus();
-
-	}
-if(password.length==0){
-  	alert('กรุณาป้อน Password ก่อน');
-     document.login_form.usr.focus();
-
-	}
-
-  if (str=="") {
-    document.getElementById("txtHint").innerHTML="";
-    return;
-  } 
-  if (window.XMLHttpRequest) {
-    // code for IE7+, Firefox, Chrome, Opera, Safari
-    xmlhttp=new XMLHttpRequest();
-  } else { // code for IE6, IE5
-    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  xmlhttp.onreadystatechange=function() {
-    if (this.readyState==4 && this.status==200) {
-      document.getElementById("txtHint").innerHTML=this.responseText;
-      if(this.responseText == ""){
-      document.location.href = "index.php";
-  }
-    }
-  }
-  xmlhttp.open("GET","result_login.php?q="+str+"&password="+password,true);
-  xmlhttp.send();
-}
-</script>
+	<script type="text/javascript" src="js/showUser.js"></script>
 
 
 	<style>
@@ -179,6 +144,7 @@ if(password.length==0){
 							</div>
 							<div class="form-group">
 								<input type="password" class="form-control" name="pwd" placeholder="Password" required id="pwd"> 
+								
 							</div>
 							<button type="button" class="btn btn-success" onclick="showUser(document.getElementById('usr').value,document.getElementById('pwd').value)">เข้าสู่ระบบ</button>
 							<!--<input type="submit" class="btn btn-success" placeholder="Password" value="เข้าสู่ระบบ">-->
@@ -264,7 +230,7 @@ $count=0;
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><i class="sl-icon-energy"></i><a href="index.html">Lesserr</a></h1>
+				<h1><i class="sl-icon-energy"></i><a href="index.php">Lesserr</a></h1>
 				<nav role="navigation">
 					<ul>
 						<li>
