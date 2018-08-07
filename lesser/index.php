@@ -101,6 +101,28 @@
 
 	</head>
 
+<script>
+function showUser(str) {
+  if (str=="") {
+    document.getElementById("txtHint").innerHTML="";
+    return;
+  } 
+  if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+  } else { // code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+      document.getElementById("txtHint").innerHTML=this.responseText;
+    }
+  }
+  xmlhttp.open("GET","result_login.php?q="+str,true);
+  xmlhttp.send();
+}
+</script>
+
 
 	<style>
 .circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
@@ -123,6 +145,8 @@
 
 	<body>
 
+
+
 		<div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -133,14 +157,16 @@
         <div class="modal-body">
           <center>
 						<form action="check_login.php" method="POST">
+							<div id="txtHint"><b></b></div>
+							
 							<div class="form-group">
-								<input type="text" class="form-control" name="usr" placeholder="Username" required>
+								<input type="text" class="form-control" name="usr" placeholder="Username" required onkeyup="showUser(this.value)">
 							</div>
 							<div class="form-group">
-								<input type="password" class="form-control" name="pwd" placeholder="Password" required>
+								<input type="password" class="form-control" name="pwd" placeholder="Password" required> 
 							</div>
 
-							<input type="submit" class="btn btn-success"  value="เข้าสู่ระบบ">
+							<input type="submit" class="btn btn-success"  value="เข้าสู่ระบบ" >
 						</form>
   <br>
   <a href="register.html">ยังไม่ได้สมัครบัญชีในระบบ</a>
@@ -154,7 +180,7 @@
     </div>
   </div>
 
-  <div class="modal fade" id="myModal2" role="dialog">
+  <div class="modal fade" id="login" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
@@ -231,8 +257,8 @@ $count=0;
 							<a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
 							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
 						<?php }else{?>
-							<a href="" data-toggle="modal" data-target="#myModal2"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></a></li>
-							<a href="" data-toggle="modal" data-target="#myModal2"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
+							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></a></li>
+							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
 						<?php } ?>
 						
 					</ul>
@@ -284,7 +310,7 @@ $count=0;
 					<div class="blog-inner">
 						<a href="#" data-toggle="modal" data-target="#myModal<?php echo $count?>"><img class="img-responsive" src="images/<?php echo $row["media"]?>" alt="Blog"></a>
 						<div class="desc">
-							<h3><a href="#" data-toggle="modal" data-target="#myModal1" > <?php echo $row["topic"];?></a></h3>
+							<h3><a href="#" data-toggle="modal" data-target="#myModal<?php echo $count?>" > <?php echo $row["topic"];?></a></h3>
 							<p>เวลา <?php echo DateThai($row["time"]);?></p>
 							<p><a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">ดูรายละเอียด<i class="icon-arrow-right"></i></a></p>
 						</div>
