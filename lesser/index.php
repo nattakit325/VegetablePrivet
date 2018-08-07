@@ -102,7 +102,19 @@
 	</head>
 
 <script>
-function showUser(str) {
+function showUser(str,password) {
+
+  if(str.length==0){
+  	alert('กรุณาป้อน Username ก่อน');
+     document.login_form.usr.focus();
+
+	}
+if(password.length==0){
+  	alert('กรุณาป้อน Password ก่อน');
+     document.login_form.usr.focus();
+
+	}
+
   if (str=="") {
     document.getElementById("txtHint").innerHTML="";
     return;
@@ -116,9 +128,12 @@ function showUser(str) {
   xmlhttp.onreadystatechange=function() {
     if (this.readyState==4 && this.status==200) {
       document.getElementById("txtHint").innerHTML=this.responseText;
+      if(this.responseText == ""){
+      document.location.href = "index.php";
+  }
     }
   }
-  xmlhttp.open("GET","result_login.php?q="+str,true);
+  xmlhttp.open("GET","result_login.php?q="+str+"&password="+password,true);
   xmlhttp.send();
 }
 </script>
@@ -156,17 +171,18 @@ function showUser(str) {
         </div>
         <div class="modal-body">
           <center>
-						<form action="check_login.php" method="POST">
-							<div id="txtHint"><b></b></div>
+						<form action="check_login.php" method="POST"  id="login_form">
+							<p id="txtHint" style="color:red; "></p>
 							
 							<div class="form-group">
-								<input type="text" class="form-control" name="usr" placeholder="Username" required onkeyup="showUser(this.value)">
+								<input type="text" class="form-control" name="usr" placeholder="Username" required id="usr">
 							</div>
 							<div class="form-group">
-								<input type="password" class="form-control" name="pwd" placeholder="Password" required> 
+								<input type="password" class="form-control" name="pwd" placeholder="Password" required id="pwd"> 
 							</div>
+							<button type="button" class="btn btn-success" onclick="showUser(document.getElementById('usr').value,document.getElementById('pwd').value)">เข้าสู่ระบบ</button>
+							<!--<input type="submit" class="btn btn-success" placeholder="Password" value="เข้าสู่ระบบ">-->
 
-							<input type="submit" class="btn btn-success"  value="เข้าสู่ระบบ" >
 						</form>
   <br>
   <a href="register.html">ยังไม่ได้สมัครบัญชีในระบบ</a>
