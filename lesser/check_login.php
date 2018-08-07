@@ -1,6 +1,10 @@
 <?php
 	session_start();
 	include "connect.php";
+	
+
+
+
 
 	$strSQL = "SELECT * FROM login WHERE username = '".mysqli_real_escape_string($objCon,$_POST['usr'])."' 
 	and password = '".mysqli_real_escape_string($objCon,$_POST['pwd'])."'";
