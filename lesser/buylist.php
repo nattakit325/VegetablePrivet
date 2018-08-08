@@ -9,6 +9,7 @@
 			on d.category = g.name
 			where d.category='$value' ";
     $query=mysqli_query($objCon,$sql);
+    $queryC=mysqli_query($objCon,$sql);
 
 ?>
 <!DOCTYPE html>
@@ -232,7 +233,7 @@
             </div>
             <div class="row">
 				<div class="fh5co-heading">
-					<?php if(empty($query)){?>
+					<?php if(mysqli_fetch_array($queryC,MYSQLI_ASSOC)<=0){?>
 						<center><h2>ไม่รายการในประเภทสินค้าดังกล่าว</h2> </center>
 					<?php }else{ ?>
 					<h2>แนะนำ</h2> 
