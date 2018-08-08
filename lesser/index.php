@@ -123,6 +123,29 @@
 
 
 
+<script>
+function showResult(username,password) {
+  if (username=="") {
+    document.getElementById("txtHint").innerHTML="";
+    return;
+  } 
+  if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+  } else { // code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+      document.getElementById("txtHint").innerHTML=this.responseText;
+    }
+  }
+  xmlhttp.open("GET","check_login.php?username="+username+"&password="+password,true);
+  xmlhttp.send();
+}
+</script>
+
+
 	<body>
 
 
@@ -140,7 +163,12 @@
 							<p id="txtHint" style="color:red; "></p>
 							
 							<div class="form-group">
+<<<<<<< HEAD
+								<p id="txtHint"></p>
+								<input type="text" class="form-control" name="usr" placeholder="Username" required>
+=======
 								<input type="text" class="form-control" name="usr" placeholder="Username" required id="usr">
+>>>>>>> 07ccf31a60f2a31f861e13abb33ca35ec94e3c26
 							</div>
 							<div class="form-group">
 								<input type="password" class="form-control" name="pwd" placeholder="Password" required id="pwd"> 
