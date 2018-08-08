@@ -31,7 +31,7 @@ if(password.length==0){
       if(this.responseText == ""){
       document.location.href = "index.php";
   }
-  this.responseText = "";
+      this.responseText = "";
     }
   }
   xmlhttp.open("GET","result_login.php?q="+str+"&password="+password,true);
