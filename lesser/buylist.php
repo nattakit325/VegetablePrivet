@@ -4,9 +4,11 @@
 
 	$value=$_GET["value"];
 
-	$sql="SELECT * FROM selllist RIGHT JOIN product ON selllist.productname = product.name WHERE type='$value' ";
+	$sql="SELECT * FROM product d
+			inner join gcategory g 
+			on d.category = g.name
+			where d.category='$value' ";
     $query=mysqli_query($objCon,$sql);
-    $objResult = mysqli_fetch_array($query,MYSQLI_ASSOC);
 
 ?>
 <!DOCTYPE html>
@@ -94,6 +96,13 @@
 .picture{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
     height: 90px;  /* ความสูงปรับให้เป็นออโต้ */
     width: 90px;  /* ความสูงปรับให้เป็นออโต้ */
+    border: 3px solid #fff; /* เส้นขอบขนาด 3px solid: เส้น #fff:โค้ดสีขาว */
+    border-radius: 50%; /* ปรับเป็น 50% คือความโค้งของเส้นขอบ*/
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
+}
+.circlein{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
+    height: 150px;  /* ความสูงปรับให้เป็นออโต้ */
+    width: 140px;  /* ความสูงปรับให้เป็นออโต้ */
     border: 3px solid #fff; /* เส้นขอบขนาด 3px solid: เส้น #fff:โค้ดสีขาว */
     border-radius: 50%; /* ปรับเป็น 50% คือความโค้งของเส้นขอบ*/
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
@@ -223,7 +232,7 @@
             </div>
             <div class="row">
 				<div class="fh5co-heading">
-					<?php if(empty($objResult)){?>
+					<?php if(empty($query)){?>
 						<center><h2>ไม่รายการในประเภทสินค้าดังกล่าว</h2> </center>
 					<?php }else{ ?>
 					<h2>แนะนำ</h2> 
@@ -236,11 +245,11 @@
                     <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ ?>
                         <div class="col-md-4 text-center">
                             <div class="blog-inner">
-                                <a href="detail-product.php?id=<?php echo $row["id"];?>"><img class="img-responsive" src="myfile/<?php echo $row["picture"];?>" alt="Blog"></a>
+                                <a href="detail-product.php?id=<?php echo $row["id"];?>"><img class="img-responsive" src="images/<?php echo $row["picture"];?>" alt="Blog"></a>
                                 <div class="desc">
                                     <h3><a href="detail-list.php?id=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></h3>
                                     <p><?php echo $row["detail"];?></p>
-                                    <p><a href="detail-list.php?id=<?php echo $row["id"];?>" class="btn btn-primary btn-outline with-arrow">Read More<i class="icon-arrow-right"></i></a></p>
+                                    <p><a href="detail-list.php?id=<?php echo $row["id"];?>" class="btn btn-primary btn-outline with-arrow">ดูรายละเอียด<i class="icon-arrow-right"></i></a></p>
                                 </div>
                             </div>
                         </div>

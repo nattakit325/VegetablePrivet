@@ -149,7 +149,6 @@ function showResult(username,password) {
 	<body>
 
 
-
 		<div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -163,12 +162,11 @@ function showResult(username,password) {
 							<p id="txtHint" style="color:red; "></p>
 							
 							<div class="form-group">
-<<<<<<< HEAD
+
 								<p id="txtHint"></p>
-								<input type="text" class="form-control" name="usr" placeholder="Username" required>
-=======
+
 								<input type="text" class="form-control" name="usr" placeholder="Username" required id="usr">
->>>>>>> 07ccf31a60f2a31f861e13abb33ca35ec94e3c26
+
 							</div>
 							<div class="form-group">
 								<input type="password" class="form-control" name="pwd" placeholder="Password" required id="pwd"> 
@@ -281,15 +279,35 @@ $count=0;
 	<div id="fh5co-featured-section">
 		<div class="container">
 			<div class="row">
-				
+				<?php
+					$buy = null;
+					if(empty($_SESSION["username"])){
+						$buy = "buy.php";
+						$sell = "#";
+					}else{
+						if($_SESSION["status"]=="เกษตรกร"){
+							$buy = "buy-farmer.php";
+							
+						}else{
+							$buy = "buy.php";
+							
+						}
+					}
+				 ?>
+
+
+
 				<div class="col-md-6">
-					<a href="buy.php" class="featured-grid featured-grid-2" style="background-image: url(images/buy.jpg);">
+					<a href="<?php echo $buy?>" class="featured-grid featured-grid-2" style="background-image: url(images/buy.jpg);">
 						<div class="desc">
 							<h3>ชื้อสินค้า</h3>
 							<span>Buy</span>
 						</div>
 					</a>
 				</div>
+
+
+<?php if(empty($_SESSION["username"])){ ?>
 				<div class="col-md-6">
 					<a href="#" data-toggle="modal" data-target="#myModal" class="featured-grid featured-grid-2" style="background-image: url(images/sell3.jpg);">
 						<div class="desc">
@@ -299,6 +317,19 @@ $count=0;
 					</a>
 					
 				</div>
+<?php }else{ ?>
+
+				<div class="col-md-6">
+					<a href="selllist.html"  class="featured-grid featured-grid-2" style="background-image: url(images/sell3.jpg);">
+						<div class="desc">
+							<h3>ขายสินค้า</h3>
+							<span>Sell</span>
+						</div>
+					</a>
+					
+				</div>
+<?php } ?>
+
 			</div>
 		</div>
 	</div>

@@ -1,16 +1,4 @@
-<?php
-	session_start();
-	include "connect.php";
 
-	$strSQL = "SELECT * FROM login WHERE username = '".$_SESSION['username']."' ";
-	$objQuery = mysqli_query($objCon,$strSQL);
-	$objResult = mysqli_fetch_array($objQuery,MYSQLI_ASSOC);
-
-	$value1='ปุ๋ย';
-	$value2='เครื่องมือ';
-	$value3;
-
-?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -144,8 +132,8 @@
 				<h1><i class="sl-icon-energy"></i><a href="index.html">Lesserr</a></h1>
 				<nav role="navigation">
 					<ul>
-						<li><a href=""><?php echo $_SESSION["username"]; ?></a></li>
-						<a href="logout.php"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
+						<li><a href="" data-toggle="modal" data-target="#myModal">Mr.Best Framer</a></li>
+						<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/man.jpg" width="10%" height="12%" /></a>
 					</ul>
 				</nav>
 			</div>
@@ -162,30 +150,30 @@
 			<div class="row">
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buy-farmer-list.php?value=<?php echo $value1;?>" class="work-grid" style="background-image: url(images/fertilizer.jpg);">
+						<a href="buylist.html" class="work-grid" style="background-image: url(images/fertilizer.jpg);">
 						</a>
 						<div class="desc">
-							<h3><a href="buy-farmer-list.php?value=<?php echo $value1;?>">ปุ๋ย</a></h3>
+							<h3><a href="buylist.html">ปุ๋ย</a></h3>
 							<span>fertilizer</span>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buy-farmer-list.php?value=<?php echo $value2;?>" class="work-grid" style="background-image: url(images/shovel.jpg);">
+						<a href="buylist.html" class="work-grid" style="background-image: url(images/shovel.jpg);">
 						</a>
 						<div class="desc">
-							<h3><a href="buy-farmer-list.php?value=<?php echo $value2;?>">เครื่องมือ</a></h3>
+							<h3><a href="buylist.html">เครื่องมือ</a></h3>
 							<span>Tool</span>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buy-farmer-other.php" class="work-grid" style="background-image: url(images/other.jpg);">
+						<a href="buylist.html" class="work-grid" style="background-image: url(images/other.jpg);">
 						</a>
 						<div class="desc">
-							<h3><a href="buy-farmer-other.php">อื่นๆ</a></h3>
+							<h3><a href="buylist.html">อื่นๆ</a></h3>
 							<span>other</span>
 						</div>
 					</div>

@@ -7,7 +7,7 @@
 	$value3='ใบ';
 	$value4='ดอก';
 	$value5='ผล';
-	$value6;
+	$value6='อืนๆ(ผัก)';
 
 ?>
 <!DOCTYPE html>
@@ -255,10 +255,10 @@
 				</div>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buy-farmer-other.php" class="work-grid" style="background-image: url(images/vegetable.jpg);">
+						<a href="buylist.php?value=<?php echo $value6;?>" class="work-grid" style="background-image: url(images/vegetable.jpg);">
 						</a>
 						<div class="desc">
-							<h3><a href="buy-farmer-other.php">อื่นๆ</a></h3>
+							<h3><a href="buylist.php?value=<?php echo $value6;?>">อื่นๆ</a></h3>
 							<span>other</span>
 						</div>
 					</div>
