@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 08, 2018 at 12:47 PM
+-- Generation Time: Aug 09, 2018 at 12:51 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -36,6 +36,13 @@ CREATE TABLE `contact` (
   `line` varchar(100) NOT NULL,
   `username` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `contact`
+--
+
+INSERT INTO `contact` (`id`, `address`, `phone`, `facebook`, `line`, `username`) VALUES
+(1, '63 หมู่ 4 ต.หนองหาร อ.สันทราย จ.เชียงใหม่', '0610299050', 'Nattakit Nganrungrueang', 'Nat415', 'test');
 
 -- --------------------------------------------------------
 
@@ -179,7 +186,8 @@ INSERT INTO `news` (`id`, `topic`, `detail`, `media`, `time`, `username`) VALUES
 --
 
 CREATE TABLE `product` (
-  `name` varchar(100) NOT NULL,
+  `id` int(11) NOT NULL,
+  `name` varchar(15) NOT NULL,
   `detail` varchar(100) NOT NULL,
   `type` varchar(100) NOT NULL,
   `category` varchar(11) NOT NULL,
@@ -190,8 +198,9 @@ CREATE TABLE `product` (
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`name`, `detail`, `type`, `category`, `picture`) VALUES
-('แครอท', 'หัวละ 40 สี่โลร้อย', 'พืชผัก', 'ราก', 'p1.jpg');
+INSERT INTO `product` (`id`, `name`, `detail`, `type`, `category`, `picture`) VALUES
+(1, 'แครอทสวนลุงนนท์', 'อร่อย', 'พืชผัก', 'ราก', 'carrot.jpg'),
+(2, 'ส้มโอใต้ดิน', 'เปรี้ยว', 'พืชผัก', 'ราก', 'cabbage.jpg');
 
 -- --------------------------------------------------------
 
@@ -226,12 +235,18 @@ INSERT INTO `profile` (`name`, `surname`, `career`, `age`, `picture`, `username`
 
 CREATE TABLE `selllist` (
   `id` int(11) NOT NULL,
-  `productname` varchar(100) NOT NULL,
-  `amount` int(11) NOT NULL,
-  `price` int(11) NOT NULL,
+  `productid` int(11) NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `username` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `selllist`
+--
+
+INSERT INTO `selllist` (`id`, `productid`, `time`, `username`) VALUES
+(1, 1, '2018-08-09 08:49:24', 'test'),
+(2, 2, '2018-08-09 08:56:01', 'test');
 
 --
 -- Indexes for dumped tables
@@ -294,7 +309,7 @@ ALTER TABLE `news`
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
-  ADD PRIMARY KEY (`name`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `type` (`type`),
   ADD KEY `category` (`category`);
 
@@ -309,7 +324,7 @@ ALTER TABLE `profile`
 --
 ALTER TABLE `selllist`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `productname` (`productname`),
+  ADD KEY `productname` (`productid`),
   ADD KEY `username` (`username`);
 
 --
@@ -320,7 +335,7 @@ ALTER TABLE `selllist`
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `gmarket`
@@ -341,10 +356,16 @@ ALTER TABLE `news`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `product`
+--
+ALTER TABLE `product`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `selllist`
 --
 ALTER TABLE `selllist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -392,8 +413,8 @@ ALTER TABLE `profile`
 -- Constraints for table `selllist`
 --
 ALTER TABLE `selllist`
-  ADD CONSTRAINT `selllist_ibfk_1` FOREIGN KEY (`productname`) REFERENCES `product` (`name`),
-  ADD CONSTRAINT `selllist_ibfk_2` FOREIGN KEY (`username`) REFERENCES `profile` (`username`);
+  ADD CONSTRAINT `selllist_ibfk_2` FOREIGN KEY (`username`) REFERENCES `profile` (`username`),
+  ADD CONSTRAINT `selllist_ibfk_3` FOREIGN KEY (`productid`) REFERENCES `product` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
