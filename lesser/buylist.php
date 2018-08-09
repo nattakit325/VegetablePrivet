@@ -4,10 +4,10 @@
 
 	$value=$_GET["value"];
 
-	$sql="SELECT d.name as name,d.detail as detail ,d.picture as picture FROM product d
-			inner join gcategory g 
-			on d.category = g.name
-			where d.category='$value' ";
+	$sql="SELECT p.name as name,p.picture as picture, s.username as SellerName, p.id as Productid FROM selllist s
+			inner join product p
+			on s.productid=p.id
+			where p.category='$value' ";
     $query=mysqli_query($objCon,$sql);
     $queryC=mysqli_query($objCon,$sql);
 
@@ -242,7 +242,7 @@ function showHint(str,type) {
              <div class="row">
 				<div class="fh5co-heading">
 					<?php if(mysqli_fetch_array($queryC,MYSQLI_ASSOC)<=0){?>
-						<center><h2>ไม่รายการในประเภทสินค้าดังกล่าว</h2> </center>
+						<center><h2>ไม่มีรายการในประเภทสินค้าดังกล่าว</h2> </center>
 					<?php }else{ ?>
 					<h2>แนะนำ</h2> 
 				<?php }?>
@@ -252,16 +252,22 @@ function showHint(str,type) {
 				<div class="col-md-12">
                     <div class="row">
                     <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ ?>
+                        
+
                         <div class="col-md-4 text-center">
-                            <div class="blog-inner">
-                                <a href="detail-product.php?id=<?php echo $row["id"];?>"><img class="img-responsive" src="images/<?php echo $row["picture"];?>" alt="Blog"></a>
-                                <div class="desc">
-                                    <h3><a href="#"><?php echo $row["name"];?></a></h3>
-                                    <p><?php echo $row["detail"];?></p>
-                                    <p><a href="detail-list.php?id=<?php echo $row["id"];?>" class="btn btn-primary btn-outline with-arrow">ดูรายละเอียด<i class="icon-arrow-right"></i></a></p>
-                                </div>
-                            </div>
-                        </div>
+					<div class="work-inner">
+						<a href="ProductDetail.php?SellerName=<?php echo $row["SellerName"];?>&Productid=<?php echo $row["Productid"];?>" class="work-grid" style="background-image: url(images/<?php echo $row["picture"];?>);">
+						</a>
+						<div class="desc">
+							<h3><a href="buylist.php?value=<?php echo $value1;?>"><?php echo $row["name"];?></a></h3>
+							<span>ห่างจากคุณ 14 กม.</span>
+							<br>
+							 <p><a href="detail-list.php?id=<?php echo $row["id"];?>" class="btn btn-primary btn-outline with-arrow">ดูรายละเอียด<i class="icon-arrow-right"></i></a></p>
+						</div>
+					</div>
+				</div>
+
+
 				    <?php } ?>
 			        </div>
 				</div>
