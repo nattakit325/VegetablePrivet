@@ -36,10 +36,10 @@
 						<a href="ProductDetail.php?SellerName=<?php echo $row["SellerName"];?>&Productid=<?php echo $row["Productid"];?>" class="work-grid" style="background-image: url(images/<?php echo $row["picture"];?>);">
 						</a>
 						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value1;?>"><?php echo $row["name"];?></a></h3>
+							<h3><a href="ProductDetail.php?SellerName=<?php echo $row["SellerName"];?>&Productid=<?php echo $row["Productid"];?>"><?php echo $row["name"];?></a></h3>
 							<span>ห่างจากคุณ 14 กิโลเมตร</span>
 							<br>
-							 <p><a href="detail-list.php?id=<?php echo $row["id"];?>" class="btn btn-primary btn-outline with-arrow">ดูรายละเอียด<i class="icon-arrow-right"></i></a></p>
+							 <p><a href="ProductDetail.php?SellerName=<?php echo $row["SellerName"];?>&Productid=<?php echo $row["Productid"];?>" class="btn btn-primary btn-outline with-arrow">ดูรายละเอียด<i class="icon-arrow-right"></i></a></p>
 						</div>
 					</div>
 				</div>
