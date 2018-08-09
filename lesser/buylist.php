@@ -4,7 +4,7 @@
 
 	$value=$_GET["value"];
 
-	$sql="SELECT * FROM product d
+	$sql="SELECT d.name as name,d.detail as detail ,d.picture as picture FROM product d
 			inner join gcategory g 
 			on d.category = g.name
 			where d.category='$value' ";
@@ -109,7 +109,20 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
 }
 </style>
-
+<script>
+function showHint(str,type) {
+    
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("search_result").innerHTML = this.responseText;
+            }
+        }
+        xmlhttp.open("GET", "gethint.php?q="+str+"&type="+type, true);
+        xmlhttp.send();
+    
+}
+</script>
 
 
 
@@ -148,7 +161,6 @@
       </div>
     </div>
   </div>
-
   <div class="modal fade" id="login" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -211,11 +223,12 @@
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
 					<h2>สินค้านำเสนอสำหรับคุณ</h2>
+
                     <p><span>Product for you</a></span></p>
                     <form class="form-inline" name="searchform" id="searchform">
                         <div class="form-group">
                             <label for="textsearch" >ชื่อสินค้า</label>
-                            <input type="text" name="itemname" id="itemname" class="form-control" placeholder="ข้อความ คำค้นหา!" autocomplete="off">
+                            <input type="text"  class="form-control" placeholder="ข้อความ คำค้นหา!" onkeyup="showHint(this.value,'<?php echo $value ?>')">
                         </div>
                         <button type="button" class="btn btn-primary" id="btnSearch">
                             <span class="glyphicon glyphicon-search"></span>
@@ -223,15 +236,10 @@
                         </button>
                     </form>     
 				</div>
+
             </div>
-            <div class="row">
-				<div class="col-md-12">
-                    <div class="row">
-                    <div class="row" id="list-data" style="margin-top: 10px;">
-			        </div>
-				</div>
-            </div>
-            <div class="row">
+            <div id="search_result">
+             <div class="row">
 				<div class="fh5co-heading">
 					<?php if(mysqli_fetch_array($queryC,MYSQLI_ASSOC)<=0){?>
 						<center><h2>ไม่รายการในประเภทสินค้าดังกล่าว</h2> </center>
@@ -240,7 +248,7 @@
 				<?php }?>
 				</div>
             </div>
-			<div class="row">
+			<div class="row" >
 				<div class="col-md-12">
                     <div class="row">
                     <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ ?>
@@ -248,7 +256,7 @@
                             <div class="blog-inner">
                                 <a href="detail-product.php?id=<?php echo $row["id"];?>"><img class="img-responsive" src="images/<?php echo $row["picture"];?>" alt="Blog"></a>
                                 <div class="desc">
-                                    <h3><a href="detail-list.php?id=<?php echo $row["id"];?>"><?php echo $row["name"];?></a></h3>
+                                    <h3><a href="#"><?php echo $row["name"];?></a></h3>
                                     <p><?php echo $row["detail"];?></p>
                                     <p><a href="detail-list.php?id=<?php echo $row["id"];?>" class="btn btn-primary btn-outline with-arrow">ดูรายละเอียด<i class="icon-arrow-right"></i></a></p>
                                 </div>
@@ -258,9 +266,17 @@
 			        </div>
 				</div>
 			</div>
-		</div>
+</div>
+
 	</div>
+
+</div>
 	
+
+<div id="search_result">
+</div>
+
+
 	
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
@@ -274,33 +290,7 @@
     <script src="js/main.js"></script>
     <!-- Search -->
     <script type="text/javascript" src="jquery-1.11.2.min.js"></script>
-        <script type="text/javascript">
-            $(function () {
-                $("#btnSearch").click(function () {
-                    $.ajax({
-                        url: "searchlist.php?value=<?php echo $value;?>",
-                        type: "post",
-                        data: {itemname: $("#itemname").val()},
-                        beforeSend: function () {
-                            $(".loading").show();
-                        },
-                        complete: function () {
-                            $(".loading").hide();
-                        },
-                        success: function (data) {
-                            $("#list-data").html(data);
-                        }
-                    });
-                });
-                $("#searchform").on("keyup keypress",function(e){
-                   var code = e.keycode || e.which;
-                   if(code==13){
-                       $("#btnSearch").click();
-                       return false;
-                   }
-                });
-            });
-        </script>
+        
 	</body>
 </html>
 
