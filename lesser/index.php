@@ -123,27 +123,6 @@
 
 
 
-<script>
-function showResult(username,password) {
-  if (username=="") {
-    document.getElementById("txtHint").innerHTML="";
-    return;
-  } 
-  if (window.XMLHttpRequest) {
-    // code for IE7+, Firefox, Chrome, Opera, Safari
-    xmlhttp=new XMLHttpRequest();
-  } else { // code for IE6, IE5
-    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  xmlhttp.onreadystatechange=function() {
-    if (this.readyState==4 && this.status==200) {
-      document.getElementById("txtHint").innerHTML=this.responseText;
-    }
-  }
-  xmlhttp.open("GET","check_login.php?username="+username+"&password="+password,true);
-  xmlhttp.send();
-}
-</script>
 
 
 	<body>
@@ -286,7 +265,7 @@ $count=0;
 						$sell = "#";
 					}else{
 						if($_SESSION["status"]=="เกษตรกร"){
-							$buy = "buy-farmer.php";
+							$buy = "buy_farmmer_first.php";
 							
 						}else{
 							$buy = "buy.php";
@@ -320,7 +299,7 @@ $count=0;
 <?php }else{ ?>
 
 				<div class="col-md-6">
-					<a href="selllist.html"  class="featured-grid featured-grid-2" style="background-image: url(images/sell3.jpg);">
+					<a href="selllist.php"  class="featured-grid featured-grid-2" style="background-image: url(images/sell3.jpg);">
 						<div class="desc">
 							<h3>ขายสินค้า</h3>
 							<span>Sell</span>

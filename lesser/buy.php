@@ -7,7 +7,7 @@
 	$value3='ใบ';
 	$value4='ดอก';
 	$value5='ผล';
-	$value6='อืนๆ(ผัก)';
+	$value6='อื่นๆ(ผัก)';
 
 ?>
 <!DOCTYPE html>
