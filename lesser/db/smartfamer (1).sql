@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 09, 2018 at 12:51 PM
+-- Generation Time: Aug 10, 2018 at 12:34 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -42,7 +42,10 @@ CREATE TABLE `contact` (
 --
 
 INSERT INTO `contact` (`id`, `address`, `phone`, `facebook`, `line`, `username`) VALUES
-(1, '63 หมู่ 4 ต.หนองหาร อ.สันทราย จ.เชียงใหม่', '0610299050', 'Nattakit Nganrungrueang', 'Nat415', 'test');
+(1, '63 หมู่ 4 ต.หนองหาร อ.สันทราย จ.เชียงใหม่', '0610299050', 'Nattakit Nganrungrueang', 'Nat415', 'test'),
+(2, '43/3 หมูบ้านสหกรณ์ ต.หนองหาร อ.สันทราย จ.เชียงใหม่', '0964325543', 'Arun WaNaraaak', 'nar433', 'nat'),
+(3, 'หจก. เกษตรชัย', '02-1235543', 'KS Super', 'KS _LINE', 'seller'),
+(4, '74 Los Eden st. , Ailltons , Willing, England ', '0665332143', 'Somphon St.John', 'TheJohn', 'farm');
 
 -- --------------------------------------------------------
 
@@ -60,10 +63,13 @@ CREATE TABLE `gcategory` (
 
 INSERT INTO `gcategory` (`name`) VALUES
 ('ดอก'),
+('ปุ๋ย'),
 ('ผล'),
 ('ราก'),
 ('ลำต้น'),
+('อื่นๆ'),
 ('อื่นๆ(ผัก)'),
+('เครื่องมือ'),
 ('ใบ');
 
 -- --------------------------------------------------------
@@ -137,6 +143,7 @@ INSERT INTO `login` (`username`, `password`, `status`) VALUES
 ('admin', '1234', 'admin'),
 ('à¹‚à¸•à¹‰à¸‡', '1234', 'admin'),
 ('customer', '1234', 'ลูกค้า'),
+('farm', '1234', 'เกษตรกร'),
 ('nat', '1234', 'เกษตรกร'),
 ('qwe', '1234', 'admin'),
 ('seller', '1234', 'ปัจจัย'),
@@ -200,7 +207,10 @@ CREATE TABLE `product` (
 
 INSERT INTO `product` (`id`, `name`, `detail`, `type`, `category`, `picture`) VALUES
 (1, 'แครอทสวนลุงนนท์', 'อร่อย', 'พืชผัก', 'ราก', 'carrot.jpg'),
-(2, 'ส้มโอใต้ดิน', 'เปรี้ยว', 'พืชผัก', 'ราก', 'cabbage.jpg');
+(2, 'ส้มโอใต้ดิน', 'เปรี้ยว', 'พืชผัก', 'ราก', 'cabbage.jpg'),
+(3, 'มัลเบอรี่', 'ทำน้ำได้', 'พืชผัก', 'ผล', 'mal.jpg'),
+(4, 'ส้มไง', 'ทำน้ำได้เหมือนกัน', 'พืชผัก', 'อื่นๆ(ผัก)', 'or.jpg'),
+(5, 'ปุ๋ยดาวคะนอง', 'ซื้อ 3 แถม 8', 'ปัจจัย', 'ปุ๋ย', 'fertilizer.jpg');
 
 -- --------------------------------------------------------
 
@@ -209,6 +219,7 @@ INSERT INTO `product` (`id`, `name`, `detail`, `type`, `category`, `picture`) VA
 --
 
 CREATE TABLE `profile` (
+  `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `surname` varchar(100) NOT NULL,
   `career` varchar(100) NOT NULL,
@@ -221,11 +232,14 @@ CREATE TABLE `profile` (
 -- Dumping data for table `profile`
 --
 
-INSERT INTO `profile` (`name`, `surname`, `career`, `age`, `picture`, `username`) VALUES
-('Nattakit', 'Nganrungrueang', 'Farmmer', 34, 'nattakit.jpg', 'test'),
-('หจก. เกษตรพัฒนา', 'จ.บึงกาฬ', 'ค้าขาย', 65, 'seller.jpg', 'seller'),
-('na', 'na', 'รับจ้าง', 11, '', 'qwe'),
-('Nakhon', 'Shongkla', 'Customer', 23, 'customer.jpg', 'customer');
+INSERT INTO `profile` (`id`, `name`, `surname`, `career`, `age`, `picture`, `username`) VALUES
+(1, 'Nattakit', 'Nganrungrueang', 'Farmmer', 34, 'nattakit.jpg', 'test'),
+(2, 'หจก. เกษตรพัฒนา', 'จ.บึงกาฬ', 'ค้าขาย', 65, 'seller.jpg', 'seller'),
+(3, 'na', 'na', 'รับจ้าง', 11, '', 'qwe'),
+(4, 'Nakhon', 'Shongkla', 'Customer', 23, 'customer.jpg', 'customer'),
+(5, 'Qurry', 'Armen', 'CEO ', 22, 'qwe.jpg', 'qwe'),
+(6, 'Natta', 'Arun', 'Farmer', 11, 'qwe.jpg', 'nat'),
+(8, 'สมพร', 'ยอดพุ่ม', 'เกษตรกร', 33, 'man.jpg', 'farm');
 
 -- --------------------------------------------------------
 
@@ -246,7 +260,11 @@ CREATE TABLE `selllist` (
 
 INSERT INTO `selllist` (`id`, `productid`, `time`, `username`) VALUES
 (1, 1, '2018-08-09 08:49:24', 'test'),
-(2, 2, '2018-08-09 08:56:01', 'test');
+(2, 2, '2018-08-09 08:56:01', 'test'),
+(3, 1, '2018-08-10 04:00:53', 'nat'),
+(4, 3, '2018-08-10 04:07:45', 'nat'),
+(5, 4, '2018-08-10 04:10:29', 'test'),
+(6, 5, '2018-08-10 07:25:52', 'seller');
 
 --
 -- Indexes for dumped tables
@@ -317,6 +335,7 @@ ALTER TABLE `product`
 -- Indexes for table `profile`
 --
 ALTER TABLE `profile`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `username` (`username`);
 
 --
@@ -335,7 +354,7 @@ ALTER TABLE `selllist`
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `gmarket`
@@ -359,13 +378,19 @@ ALTER TABLE `news`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `profile`
+--
+ALTER TABLE `profile`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `selllist`
 --
 ALTER TABLE `selllist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
