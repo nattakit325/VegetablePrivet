@@ -3,7 +3,7 @@ session_start();
 include "connect.php";
 
 $q = $_GET['q'];
-$password = $_GET['password'];
+$password = md5($_GET['password']);
 
 
 

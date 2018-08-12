@@ -156,7 +156,7 @@
 
 						</form>
   <br>
-  <a href="register.html">ยังไม่ได้สมัครบัญชีในระบบ</a>
+  <a href="register.php">ยังไม่ได้สมัครบัญชีในระบบ</a>
         </center>
           
         </div>
