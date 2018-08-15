@@ -3,11 +3,12 @@
 	include "connect.php";
 
 	$value=$_GET["value"];
+	$type=$_GET["type"];
 
 	$sql="SELECT p.name as name,p.picture as picture, s.username as SellerName, p.id as Productid FROM selllist s
 			inner join product p
 			on s.productid=p.id
-			where p.category='$value' ";
+			where p.category='$value' and type='$type'";
     $query=mysqli_query($objCon,$sql);
     $queryC=mysqli_query($objCon,$sql);
 

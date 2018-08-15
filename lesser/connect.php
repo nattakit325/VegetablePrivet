@@ -1,8 +1,8 @@
 <?php
-    $server="103.233.192.204";
-    $user="nattakit";
-    $password="xR91c20dLt";
-    $db="nattakit_db";
+    $server="localhost";
+    $user="root";
+    $password="";
+    $db="smartfamer";
 
 
     $objCon = mysqli_connect($server,$user,$password,$db);

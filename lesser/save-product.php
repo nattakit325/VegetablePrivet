@@ -1,45 +1,40 @@
 <?php
 	session_start();
-	if($_SESSION['username'] == "")
-	{
-		echo "Please Login!";
-		exit();
-	}
-
+	
     include "connect.php";
-    
-	$strSQL = "UPDATE selllist SET productname = '".trim($_POST['name'])."' 
-	,amount = '".trim($_POST['amount'])."',price = '".trim($_POST['price'])."' WHERE username = '".$_SESSION["username"]."' ";
+    $name =  $_POST['name'];
+    $detail =  $_POST['detail'];
+    $type =  $_POST['type'];
+    $category =  $_POST['value'];
+    $picture =  'product.png';
+    $username = $_SESSION["username"];
+
+
+	$strSQL = "INSERT INTO product";
+    $strSQL .="(name,detail,type,category,picture) VALUES ('$name','$detail','$type','$category','$picture')";
 	$objQuery = mysqli_query($objCon,$strSQL);
 
-	$strSQL1 = "UPDATE product SET name = '".trim($_POST['name'])."',detail = '".trim($_POST['detail'])."' WHERE username = '".$_SESSION["username"]."' ";
-	$objQuery1 = mysqli_query($objCon,$strSQL1);
-	
-	echo "Save Completed!<br>";		
 
-	echo $_POST['name']."<br>";	
-	echo $_POST['detail']."<br>";
-	
-	
+	$ProfileSQL = "SELECT MAX(id) as id FROM product WHERE name = '$name'";
+	$objQuery2 = mysqli_query($objCon,$ProfileSQL);
+	$objResult2 = mysqli_fetch_array($objQuery2 ,MYSQLI_ASSOC);
 
-	echo $_POST['amount']."<br>";	
-	echo $_POST['price']."<br>";
+	$id = $objResult2["id"];
 
 
 
 
+	$strSQL = "INSERT INTO selllist";
+    $strSQL .="(productid,username) VALUES ('$id','$username')";
+	$objQuery = mysqli_query($objCon,$strSQL);
 
-
+   
 
 	
-	if($_SESSION["status"] == "ADMIN")
-	{
-		echo "<br> Go to <a href='sell-product.php'>Admin page</a>";
-	}
-	else
-	{
-		echo "<br> Go to <a href='sell-product.php'>User page</a>";
-	}
-	
-	mysqli_close($objCon);
+?>
+
+
+<?php
+header("location:create product.php");
+
 ?>

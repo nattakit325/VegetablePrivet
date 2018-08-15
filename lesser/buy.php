@@ -7,7 +7,8 @@
 	$value3='ใบ';
 	$value4='ดอก';
 	$value5='ผล';
-	$value6='อื่นๆ(ผัก)';
+	$value6='อื่นๆ';
+	$type='พืชผัก';
 
 ?>
 <!DOCTYPE html>
@@ -205,60 +206,60 @@
 			<div class="row">
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value1;?>" class="work-grid" style="background-image: url(images/carrot.jpg);">
+						<a href="buylist.php?value=<?php echo $value1;?>&type=<?php echo $type; ?>" class="work-grid" style="background-image: url(images/carrot.jpg);">
 						</a>
 						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value1;?>">ราก</a></h3>
+							<h3><a href="buylist.php?value=<?php echo $value1;?>&type=<?php echo $type; ?>">ราก</a></h3>
 							<span>Root</span>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value2;?>" class="work-grid" style="background-image: url(images/asparagus.jpg);">
+						<a href="buylist.php?value=<?php echo $value2;?>&type=<?php echo $type; ?>" class="work-grid" style="background-image: url(images/asparagus.jpg);">
 						</a>
 						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value2;?>">ลำต้น</a></h3>
+							<h3><a href="buylist.php?value=<?php echo $value2;?>&type=<?php echo $type; ?>">ลำต้น</a></h3>
 							<span>trunk</span>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value3;?>" class="work-grid" style="background-image: url(images/cabbage.jpg);">
+						<a href="buylist.php?value=<?php echo $value3;?>&type=<?php echo $type; ?>" class="work-grid" style="background-image: url(images/cabbage.jpg);">
 						</a>
 						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value3;?>">ใบ</a></h3>
+							<h3><a href="buylist.php?value=<?php echo $value3;?>&type=<?php echo $type; ?>">ใบ</a></h3>
 							<span>Leaves</span>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value4;?>" class="work-grid" style="background-image: url(images/Broccoli.jpg);">
+						<a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>" class="work-grid" style="background-image: url(images/Broccoli.jpg);">
 						</a>
 						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value4;?>">ดอก</a></h3>
+							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $typ;e ?>">ดอก</a></h3>
 							<span>blossom</span>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value5;?>" class="work-grid" style="background-image: url(images/tomato.jpg);">
+						<a href="buylist.php?value=<?php echo $value5;?>&type=<?php echo $type; ?>" class="work-grid" style="background-image: url(images/tomato.jpg);">
 						</a>
 						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value5;?>">ผล</a></h3>
+							<h3><a href="buylist.php?value=<?php echo $value5;?>&type=<?php echo $type; ?>">ผล</a></h3>
 							<span>fruit</span>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value6;?>" class="work-grid" style="background-image: url(images/vegetable.jpg);">
+						<a href="buylist.php?value=<?php echo $value6;?>&type=<?php echo $type; ?>" class="work-grid" style="background-image: url(images/vegetable.jpg);">
 						</a>
 						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value6;?>">อื่นๆ</a></h3>
+							<h3><a href="buylist.php?value=<?php echo $value6;?>&type=<?php echo $type; ?>">อื่นๆ</a></h3>
 							<span>other</span>
 						</div>
 					</div>

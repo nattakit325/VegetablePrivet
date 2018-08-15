@@ -186,6 +186,7 @@ include "connect.php";
 			</div>
 		</div>
 	</header>
+	<form action="save-product.php" method="post">
 	<div id="fh5co-contact-section">
 		<div class="container">
 			<div class="row">
@@ -201,18 +202,20 @@ include "connect.php";
 					<div class="row">
 				
 				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+					
 					<div class="row">
-						<form action="save-register.php" method="post">
+						
 							<div class="col-md-4 text-center">
 
 					<div class="work-inner">
 						<a  class="work-grid" style="background-image: url(images/product.png);">
 						</a>
 						<div class="desc">
-							<input class="form-control" placeholder="Picture" type="file" name="lastname">
+							<input class="form-control" placeholder="Picture" type="file" name="picture">
 						</div>
 					</div>
 				</div>
+			
 							<div class="col-md-6">
 								<div class="form-group">
 									<input class="form-control" placeholder="ชื่อสินค้า" type="text" name="name">
@@ -220,13 +223,39 @@ include "connect.php";
 							</div>
 							<div class="col-md-6">
 							<div class="form-group">
-								<textarea name="" class="form-control" id="" cols="30" rows="7" placeholder="Message"></textarea>
+								<textarea name="detail" class="form-control" id="" cols="30" rows="7" placeholder="Message"></textarea>
 							</div>
 						</div>
+						<?php if($_SESSION["status"]=='เกษตรกร'){ ?>
+							<input type="hidden" name="type" value="พืชผัก">
+						<?php }else{ ?>
+							<input type="hidden" name="type" value="ปัจจัย">
+						<?php } ?>
+
+						<div class="col-md-6">
+								<div class="form-group">
+									<select class="form-control" name="value" >
+										<option value="อื่นๆ">เลือกประเภทสินค้า</option>
+										<?php if($_SESSION["status"]=='เกษตรกร'){ ?>
+										<option value="ดอก">ดอก</option>
+										<option value="ผล">ผล</option>
+										<option value="ราก">ราก</option>
+										<option value="ลำต้น">ลำต้น</option>
+										<option value="ใบ">ใบ</option>
+										<option value="อื่นๆ">อื่นๆ</option>
+									<?php }else{ ?>
+										<option value="ปุ๋ย">ปุ๋ย</option>
+										<option value="เครื่องมือ">เครื่องมือ</option>
+										<option value="อื่นๆ">อื่นๆ</option>
+									<?php } ?>
+									</select>
+								</div>
+							</div>
 							
 						
 						
 					</div>
+					
 				</div>
 			</div>
 				</div>
@@ -239,12 +268,12 @@ include "connect.php";
               <div class="form-group">
                 <br>
                 <center>
-                <input value="เพิ่มสินค้า" class="btn btn-primary" type="submit">
+                <input value="เพิ่มสินค้า" class="btn btn-primary" type="submit"> 
                 </center>
               </div>
             </div>
             
-	
+	</form>
 	
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
