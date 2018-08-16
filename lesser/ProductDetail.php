@@ -234,7 +234,7 @@
 						<div class="col-md-12">
 							<div class="about-inner">
 								<img class="img-responsive" src="images/<?php echo $objResult["picture"]; ?>" alt="About" height="100%" width="100%">
-								<center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูสถานที่ขายสินค้า</button></center>
+								
 							</div>
 						</div>
 					</div>
@@ -273,9 +273,12 @@
 									<li><i class="icon-facebook"></i><a href="#"><?php echo $objResult["facebook"]; ?></a></li>
 									<li><i class="fab fa-line"></i><a href="#"><?php echo $objResult["line"]; ?></a></li>
 						</a>
+
 									</li>
 									
 								</ul>
+								<br><br><br>
+								<center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูสถานที่ขายสินค้า</button></center>
 							</div>
 							
 						</div>
