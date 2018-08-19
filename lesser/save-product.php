@@ -312,7 +312,7 @@
 									
 								</ul>
 								<br><br><br>
-								<center><button type="button" class="btn btn-success" >เพิ่มสินค้าใหม่</button> <button type="button" class="btn btn-primary" >กลับสู่หน้าหลัก</button></center>
+								<center><a href="create product.php"><button type="button" class="btn btn-success" >เพิ่มสินค้าใหม่</button></a> <a href="selllist.php"><button type="button" class="btn btn-primary" >กลับสู่หน้าหลัก</button></a></center>
 							</div>
 							
 						</div>

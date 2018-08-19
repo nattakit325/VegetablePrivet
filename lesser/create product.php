@@ -218,7 +218,7 @@ include "connect.php";
 			
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control" placeholder="ชื่อสินค้า" type="text" name="name">
+									<input class="form-control" placeholder="ชื่อสินค้า" type="text" name="name" required>
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -234,8 +234,8 @@ include "connect.php";
 
 						<div class="col-md-6">
 								<div class="form-group">
-									<select class="form-control" name="value" >
-										<option value="อื่นๆ">เลือกประเภทสินค้า</option>
+									<select class="form-control" name="value" required>
+										<option value="">เลือกประเภทสินค้า</option>
 										<?php if($_SESSION["status"]=='เกษตรกร'){ ?>
 										<option value="ดอก">ดอก</option>
 										<option value="ผล">ผล</option>
