@@ -186,7 +186,7 @@ include "connect.php";
 			</div>
 		</div>
 	</header>
-	<form action="save-product.php" method="post">
+	<form action="save-product.php" method="post" enctype="multipart/form-data">
 	<div id="fh5co-contact-section">
 		<div class="container">
 			<div class="row">
@@ -211,18 +211,18 @@ include "connect.php";
 						<a  class="work-grid" style="background-image: url(images/product.png);">
 						</a>
 						<div class="desc">
-							<input class="form-control" placeholder="Picture" type="file" name="picture">
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" id="fileToUpload">
 						</div>
 					</div>
 				</div>
 			
 							<div class="col-md-6">
 								<div class="form-group">
-<<<<<<< HEAD
-									<input class="form-control" placeholder="ชื่อสินค้า" type="text" name="name" required="กรุณาระบุชื่อสินค้า">
-=======
+
+									
+
 									<input class="form-control" placeholder="ชื่อสินค้า" type="text" name="name" required>
->>>>>>> 5b3c0fe9be68713138d060af1cf077b8eec39a0f
+
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -238,11 +238,11 @@ include "connect.php";
 
 						<div class="col-md-6">
 								<div class="form-group">
-<<<<<<< HEAD
-									<select required class="form-control" name="value" >
-=======
+
+									
+
 									<select class="form-control" name="value" required>
->>>>>>> 5b3c0fe9be68713138d060af1cf077b8eec39a0f
+
 										<option value="">เลือกประเภทสินค้า</option>
 										<?php if($_SESSION["status"]=='เกษตรกร'){ ?>
 										<option value="ดอก">ดอก</option>
@@ -276,7 +276,7 @@ include "connect.php";
               <div class="form-group">
                 <br>
                 <center>
-                <input value="เพิ่มสินค้า" class="btn btn-primary" type="submit"> 
+                <input  class="btn btn-primary" type="submit" value="Upload Image" name="submit"> 
                 </center>
               </div>
             </div>

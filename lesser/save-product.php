@@ -10,8 +10,66 @@
     $username = $_SESSION["username"];
 
 
+
+    //---------------------------------------//
+    $target_dir = "uploads_product/";
+    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+
+	$PictureName =  basename($_FILES["fileToUpload"]["name"]);
+	$pieces = explode(".", $PictureName);
+	
+
+	$t = microtime(true);
+	$micro = sprintf("%06d",($t - floor($t)) * 1000000);
+	$PictureName = $pieces[0].date("Y-m-d H:i:s").".$micro$t.";
+	$PictureName = str_replace(".","","$PictureName");
+	$PictureName = str_replace("-","","$PictureName");
+	$PictureName = str_replace(":","","$PictureName");
+	$PictureName = str_replace(" ","","$PictureName");
+	echo $PictureName;
+
+
+
+
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    if(isset($_POST["submit"])) {
+    	$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+    	if($check !== false) {
+        	echo "File is an image - " . $check["mime"] . ".";
+        	$uploadOk = 1;
+    	} else {
+        	echo "File is not an image.";
+        	$uploadOk = 0;
+    	}
+	}
+
+	// Check if file already exists
+	
+	
+	if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+    	echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+    	$uploadOk = 0;
+	}
+	if ($uploadOk == 0) {
+    	echo "Sorry, your file was not uploaded.";
+		// if everything is ok, try to upload file
+	} else {
+    	if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+    		rename("$target_file","$target_dir"."$PictureName.$pieces[1]");
+        	echo "The file ". $PictureName. " has been uploaded.";
+    	} else {
+        echo "Sorry, there was an error uploading your file.";
+    	}
+	}
+
+
+
+    //---------------------------------------//
+
+
 	$strSQL = "INSERT INTO product";
-    $strSQL .="(name,detail,type,category,picture) VALUES ('$name','$detail','$type','$category','$picture')";
+    $strSQL .="(name,detail,type,category,picture) VALUES ('$name','$detail','$type','$category','$PictureName.$pieces[1]')";
 	$objQuery = mysqli_query($objCon,$strSQL);
 
 
@@ -267,7 +325,7 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="about-inner">
-								<img class="img-responsive" src="images/<?php echo $objResult["picture"]; ?>" alt="About" height="100%" width="100%">
+								<img class="img-responsive" src="uploads_product/<?php echo $objResult["picture"]; ?>" alt="About" height="100%" width="100%">
 								
 							</div>
 						</div>
