@@ -211,14 +211,14 @@ include "connect.php";
 					
 					<div class="row">
 						
-							<div class="col-md-4 text-center">
+							<div class="col-md-5 text-center">
 
 					<div class="work-inner">
 						<a  class="work-grid" style="background-image: url(images/product.png);">
 						</a>
 						<div class="desc">
-							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" id="fileToUpload" onchange="getPicture(this.value)">
-							<input type="hidden" name="MAX_FILE_SIZE" value="30000">
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" id="fileToUpload" >
+							
 						</div>
 					</div>
 				</div>
