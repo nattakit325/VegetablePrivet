@@ -68,6 +68,12 @@ include "connect.php";
 
 
 
+<script>
+	function getPicture(value) {
+     alert(value)
+}
+</script>
+
 		<style>
 .circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
     height: 40px;  /* ความสูงปรับให้เป็นออโต้ */
@@ -211,7 +217,8 @@ include "connect.php";
 						<a  class="work-grid" style="background-image: url(images/product.png);">
 						</a>
 						<div class="desc">
-							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" id="fileToUpload">
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" id="fileToUpload" onchange="getPicture(this.value)">
+							<input type="hidden" name="MAX_FILE_SIZE" value="30000">
 						</div>
 					</div>
 				</div>

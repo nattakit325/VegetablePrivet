@@ -233,7 +233,7 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="about-inner">
-								<img class="img-responsive" src="images/<?php echo $objResult["picture"]; ?>" alt="About" height="100%" width="100%">
+								<img class="img-responsive" src="uploads_product/<?php echo $objResult["picture"]; ?>" alt="About" height="100%" width="100%">
 								
 							</div>
 						</div>

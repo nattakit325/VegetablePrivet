@@ -34,7 +34,7 @@
                     <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ ?>
                          <div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="ProductDetail.php?SellerName=<?php echo $row["SellerName"];?>&Productid=<?php echo $row["Productid"];?>" class="work-grid" style="background-image: url(images/<?php echo $row["picture"];?>);">
+						<a href="ProductDetail.php?SellerName=<?php echo $row["SellerName"];?>&Productid=<?php echo $row["Productid"];?>" class="work-grid" style="background-image: url(uploads_product/<?php echo $row["picture"];?>);">
 						</a>
 						<div class="desc">
 							<h3><a href="ProductDetail.php?SellerName=<?php echo $row["SellerName"];?>&Productid=<?php echo $row["Productid"];?>"><?php echo $row["name"];?></a></h3>

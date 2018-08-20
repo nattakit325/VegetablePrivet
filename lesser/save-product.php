@@ -17,6 +17,9 @@
 
 	$PictureName =  basename($_FILES["fileToUpload"]["name"]);
 	$pieces = explode(".", $PictureName);
+
+
+	
 	
 
 	$t = microtime(true);
