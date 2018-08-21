@@ -91,14 +91,12 @@ $queryC=mysqli_query($objCon,$sql);
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
-$(document).ready(function(){
-    $("#delete").click(function(){
-    	$('#fordelete').hide();
-    	
-          //$('.row').hide();
-    });
 
-});
+function myFunction() {
+  alert("Hello World");
+}
+
+
 function showHint(str,username) {
     
         var xmlhttp = new XMLHttpRequest();
@@ -220,7 +218,7 @@ function showHint(str,username) {
 						
   <br>
 
-  <button type="button" class="btn btn-warning" id="delete" data-dismiss="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button>
+  <a href="DeleteAllProduct.php"><button type="button" class="btn btn-warning"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button></a>
   <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
         </center>
           
@@ -245,7 +243,7 @@ function showHint(str,username) {
 						
   <br>
 
-  <button type="button" class="btn btn-warning" id="delete" data-dismiss="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button>
+  <button type="button" class="btn btn-warning" onclick="myFunction()"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button>
   <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
         </center>
           
