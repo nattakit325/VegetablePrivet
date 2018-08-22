@@ -34,7 +34,7 @@
 			
 			if($objResult["status"] == "admin")
 			{
-				header("location:admin.html");
+				header("location:admin.php");
 			}
 			else if($objResult["status"] == "ปัจจัย")
 			{

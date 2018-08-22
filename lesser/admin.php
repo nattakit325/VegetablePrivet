@@ -1,3 +1,9 @@
+<?php
+	session_start();
+	
+    include "connect.php";
+    
+?>
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -7,7 +13,7 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>VegetableGether</title>
+	<title>Admin</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -129,54 +135,64 @@ $(document).ready(function(){
   </div>
 
 
-<div class="modal fade" id="forconfermdeleteeach" role="dialog">
+<div class="modal fade" id="myModal1" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><p class="modal-title">ต้องการลบสินค้านี้หรือไม่</p></center>
+          <center><h4 class="modal-title">กรุณาเข้าสู่ระบบ</h4></center>
         </div>
         <div class="modal-body">
           <center>
-						
+						<form action="check_login.php" method="POST"  id="login_form">
+							<p id="txtHint" style="color:red; "></p>
+							
+							<div class="form-group">
+								<input type="text" class="form-control" name="usr" placeholder="Username" required id="usr">
+							</div>
+							<div class="form-group">
+								<input type="password" class="form-control" name="pwd" placeholder="Password" required id="pwd">
+								<input type="hidden"  name="page" value="buylist.php" id="page"> 
+							</div>
+							<button type="button" class="btn btn-success" onclick="showUser(document.getElementById('usr').value,document.getElementById('pwd').value,document.getElementById('page').value)">เข้าสู่ระบบ</button>
+							<!--<input type="submit" class="btn btn-success" placeholder="Password" value="เข้าสู่ระบบ">-->
+
+						</form>
   <br>
-
-  <button type="button" class="btn btn-warning" id="delete" data-dismiss="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button>
-  <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
-        </center>
-          
-        </div>
-        
-          
-        
-      </div>
-    </div>
-  </div>
-
-		<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><h4 class="modal-title">Mr.Best Framer</h4></center>
-        </div>
-        <div class="modal-body">
-          <center>
-						<img class="circlein" src="images/admin.png" width="100%" height="100%" />
-						<br>
-						<br>
-						<p>FirstName : Beat</p>
-						<p>LastName   : Framer</p>
-						<p>career     : Framer</p>
-						<p>age        : 41</p>
-  <br>
-
-  <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
+  <a href="register.html">ยังไม่ได้สมัครบัญชีในระบบ</a>
         </center>
           
         </div>
         <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="login" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <center><h4 class="modal-title"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></h4></center>
+        </div>
+        <div class="modal-body">
+          <center>
+						<img class="circlein" src="images/<?php echo $_SESSION["picture"]?>" width="100%" height="100%" />
+						<br>
+						<br>
+						<p>FirstName : <?php echo $_SESSION["name"];?></p>
+						<p>LastName   : <?php echo $_SESSION["surname"];?></p>
+						<p>career     : <?php echo $_SESSION["career"];?></p>
+						<p>age        : <?php echo $_SESSION["age"];?></p>
+  <br>
 
+  <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
+  <a href="ClearSession.php"><button type="button" class="btn btn-warning" >ออกจากระบบ</button></a>
+        </center>
+          
+        </div>
+        <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
         </div>
       </div>
@@ -243,11 +259,19 @@ $(document).ready(function(){
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><i class="sl-icon-energy"></i><a href="index.html">Lesserr</a></h1>
+				<h1><i class="sl-icon-energy"></i><a href="index.php">Lesserr</a></h1>
 				<nav role="navigation">
 					<ul>
-						<li><a href="" data-toggle="modal" data-target="#myModal">Admin</a></li>
-						<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/admin.png" width="10%" height="12%" /></a>
+						<li>
+							<?php if(empty($_SESSION["username"])){
+								?>
+							<a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
+							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
+						<?php }else{?>
+							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></a></li>
+							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
+						<?php } ?>
+						
 					</ul>
 				</nav>
 			</div>

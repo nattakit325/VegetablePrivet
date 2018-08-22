@@ -81,19 +81,7 @@
 </script>
 	<body>
 
-	<div class="modal fade" id="myModal" role="dialog">
-      <div class="modal-content">
-
-	  <div class="modal-body">
-			<body onload="setupMap()">
-
-				<div id="map_canvas" style="width:800px;height:450px;"></div>
-
-			</body>
-        </div>
-      </div>
-
-  </div>
+	
 
 	<div id="fh5co-page">
 	<header id="fh5co-header" role="banner">
@@ -117,6 +105,7 @@
 				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 					<div class="row">
 						<form action="save-register.php" method="post" enctype="multipart/form-data">
+						
 			<div class="col-md-4 text-center">
 
 					<div class="work-inner">

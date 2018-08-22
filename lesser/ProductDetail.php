@@ -91,9 +91,6 @@
 <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900' rel='stylesheet' type='text/css'>
 
 	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
-	<script src="js/google_map.js"></script>
-<script type="text/javascript" src="js/showUser.js"></script>
 		<style>
 .circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
     height: 40px;  /* ความสูงปรับให้เป็นออโต้ */
@@ -132,7 +129,7 @@
       </div>
     
   </div>
-
+5555
 
 	<div class="modal fade" id="myModal1" role="dialog">
     <div class="modal-dialog modal-sm">
@@ -233,8 +230,8 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="about-inner">
-								<img class="img-responsive" src="images/<?php echo $objResult["picture"]; ?>" alt="About" height="100%" width="100%">
-								<center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูสถานที่ขายสินค้า</button></center>
+								<img class="img-responsive" src="uploads_product/<?php echo $objResult["picture"]; ?>" alt="About" height="100%" width="100%">
+								
 							</div>
 						</div>
 					</div>
@@ -273,9 +270,12 @@
 									<li><i class="icon-facebook"></i><a href="#"><?php echo $objResult["facebook"]; ?></a></li>
 									<li><i class="fab fa-line"></i><a href="#"><?php echo $objResult["line"]; ?></a></li>
 						</a>
+
 									</li>
 									
 								</ul>
+								<br><br><br>
+								<center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูสถานที่ขายสินค้า</button></center>
 							</div>
 							
 						</div>
@@ -302,7 +302,9 @@
 	<script src="js/jquery.waypoints.min.js"></script>
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
-
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
+	<script src="js/google_map.js"></script>
+	<script type="text/javascript" src="js/showUser.js"></script>
 	</body>
 </html>
 

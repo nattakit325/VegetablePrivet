@@ -1,6 +1,9 @@
 <?php 
 session_start();
 include "connect.php";
+
+
+
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -10,7 +13,7 @@ include "connect.php";
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Add Profile</title>
+	<title>Edit Product</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -67,6 +70,12 @@ include "connect.php";
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 
+
+<script>
+	function getPicture(value) {
+     alert(value)
+}
+</script>
 
 		<style>
 .circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
@@ -186,6 +195,7 @@ include "connect.php";
 			</div>
 		</div>
 	</header>
+	<form action="save-product.php" method="post" enctype="multipart/form-data">
 	<div id="fh5co-contact-section">
 		<div class="container">
 			<div class="row">
@@ -201,32 +211,69 @@ include "connect.php";
 					<div class="row">
 				
 				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+					
 					<div class="row">
-						<form action="save-register.php" method="post">
-							<div class="col-md-4 text-center">
+						
+							<div class="col-md-5 text-center">
 
 					<div class="work-inner">
 						<a  class="work-grid" style="background-image: url(images/product.png);">
 						</a>
 						<div class="desc">
-							<input class="form-control" placeholder="Picture" type="file" name="lastname">
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" id="fileToUpload" >
+							
 						</div>
 					</div>
 				</div>
+			
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control" placeholder="ชื่อสินค้า" type="text" name="name">
+
+									
+
+									<input class="form-control" placeholder="ชื่อสินค้า" type="text" name="name" required>
+
 								</div>
 							</div>
 							<div class="col-md-6">
 							<div class="form-group">
-								<textarea name="" class="form-control" id="" cols="30" rows="7" placeholder="Message"></textarea>
+								<textarea name="detail" class="form-control" id="" cols="30" rows="7" placeholder="Message"></textarea>
 							</div>
 						</div>
+						<?php if($_SESSION["status"]=='เกษตรกร'){ ?>
+							<input type="hidden" name="type" value="พืชผัก">
+						<?php }else{ ?>
+							<input type="hidden" name="type" value="ปัจจัย">
+						<?php } ?>
+
+						<div class="col-md-6">
+								<div class="form-group">
+
+									
+
+									<select class="form-control" name="value" required>
+
+										<option value="">เลือกประเภทสินค้า</option>
+										<?php if($_SESSION["status"]=='เกษตรกร'){ ?>
+										<option value="ดอก">ดอก</option>
+										<option value="ผล">ผล</option>
+										<option value="ราก">ราก</option>
+										<option value="ลำต้น">ลำต้น</option>
+										<option value="ใบ">ใบ</option>
+										<option value="อื่นๆ">อื่นๆ</option>
+									<?php }else{ ?>
+										<option value="ปุ๋ย">ปุ๋ย</option>
+										<option value="เครื่องมือ">เครื่องมือ</option>
+										<option value="อื่นๆ">อื่นๆ</option>
+									<?php } ?>
+									</select>
+								</div>
+							</div>
 							
 						
 						
 					</div>
+					
 				</div>
 			</div>
 				</div>
@@ -239,12 +286,12 @@ include "connect.php";
               <div class="form-group">
                 <br>
                 <center>
-                <input value="เพิ่มสินค้า" class="btn btn-primary" type="submit">
+                <input  class="btn btn-primary" type="submit" value="Upload Image" name="submit"> 
                 </center>
               </div>
             </div>
             
-	
+	</form>
 	
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>

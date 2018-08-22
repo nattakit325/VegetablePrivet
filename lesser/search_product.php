@@ -7,10 +7,11 @@
 
 
 
-	$sql="SELECT p.name as name,p.picture as picture, s.username as SellerName, p.id as Productid FROM selllist s
-			inner join product p
-			on s.productid=p.id
-			where p.category='$type' and p.name like '%$value%'";
+	$sql="SELECT p.name as name,p.picture as picture, s.username as SellerName, p.id 
+	as Productid,m.market,m.latitude,m.longitude FROM selllist s inner join product p 
+	on s.productid=p.id INNER JOIN profile f ON f.username=s.username INNER JOIN gmarket g 
+	ON g.username=f.username INNER JOIN market m ON m.id = g.marketid 
+	where p.category='$type' and p.name like '%$value%'";
 
 
     $query=mysqli_query($objCon,$sql);
@@ -34,7 +35,7 @@
                     <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ ?>
                          <div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="ProductDetail.php?SellerName=<?php echo $row["SellerName"];?>&Productid=<?php echo $row["Productid"];?>" class="work-grid" style="background-image: url(images/<?php echo $row["picture"];?>);">
+						<a href="ProductDetail.php?SellerName=<?php echo $row["SellerName"];?>&Productid=<?php echo $row["Productid"];?>" class="work-grid" style="background-image: url(uploads_product/<?php echo $row["picture"];?>);">
 						</a>
 						<div class="desc">
 							<h3><a href="ProductDetail.php?SellerName=<?php echo $row["SellerName"];?>&Productid=<?php echo $row["Productid"];?>"><?php echo $row["name"];?></a></h3>

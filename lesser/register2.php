@@ -5,6 +5,10 @@
 	$sql="SELECT * FROM market WHERE type = 1 ";
 	$query=mysqli_query($objCon,$sql);
 	$username = $_GET['user'];
+	$market = array();
+	while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){
+		array_push($market,$row["market"]);
+	 } 
 
 ?>
 <!DOCTYPE html>
@@ -78,11 +82,10 @@ $(document).ready(function(){
 	var place1 = document.getElementById("place");
     var show = document.getElementById("show");
     var option = document.createElement("option");
-    option.text = place1.value;
-    show.add(option);
+	option.text = place1.value;
+	show.add(option);
 	marketarr.push(place1.value);
 	console.log(marketarr);
-    //$("p").append("<br>"+place1.value+" X ");
 	$("#place option:selected").remove();
     });
 
@@ -91,8 +94,13 @@ function myFunction() {
     var x = document.getElementById("show");
 	var place = document.getElementById("place");
     var option = document.createElement("option");
-    option.text = x.value;
-    place.add(option);
+	<?php foreach($market as $value){ ?>
+		if(x.value == "<?php echo $value ?>"){
+			option.text = x.value;
+    		place.add(option);
+		}
+	<?php } ?>
+    
 	Array.prototype.remove = function() {
     var what, a = arguments, L = a.length, ax;
     while (L && this.length) {
@@ -256,8 +264,8 @@ google.maps.event.addListener(map, 'click', function (event) {
 				<div class="form-group">
 					<select class="form-control" name="status" id="place">
 						<option selected>เลือกตลาด</option>
-						<?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ ?>
-						<option value="<?php echo $row["market"] ?>"><?php echo $row["market"] ?></option>
+						<?php foreach($market as $value){ ?>
+						<option value="<?php echo $value ?>"><?php echo $value ?></option>
 						<?php } ?>
 					</select>
 				</div>
@@ -276,7 +284,7 @@ google.maps.event.addListener(map, 'click', function (event) {
               <div class="form-group">
                 <br>
                 <center>
-                <a href="index.php"><input value="ยืนยันการสมัครสมาชิก" class="btn btn-primary" type="button" onclick="saveMarket()"></a>
+               <input value="ยืนยันการสมัครสมาชิก" class="btn btn-primary" type="button" onclick="saveMarket()">
                 </center>
               </div>
 			</div>

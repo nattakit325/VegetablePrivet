@@ -4,6 +4,7 @@ include "connect.php";
 	$value1='ปุ๋ย';
 	$value2='เครื่องมือ';
 	$value3='อื่นๆ';
+	$type = 'ปัจจัย';
 
 ?>
 <!DOCTYPE html>
@@ -205,30 +206,30 @@ include "connect.php";
 			<div class="row">
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value1;?>" class="work-grid" style="background-image: url(images/fertilizer.jpg);">
+						<a href="buylist.php?value=<?php echo $value1;?>&type=<?php echo $type; ?>" class="work-grid" style="background-image: url(images/fertilizer.jpg);">
 						</a>
 						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value1;?>">ปุ๋ย</a></h3>
+							<h3><a href="buylist.php?value=<?php echo $value1;?>&type=<?php echo $type; ?>">ปุ๋ย</a></h3>
 							<span>fertilizer</span>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value2;?>" class="work-grid" style="background-image: url(images/shovel.jpg);">
+						<a href="buylist.php?value=<?php echo $value2;?>&type=<?php echo $type; ?>" class="work-grid" style="background-image: url(images/shovel.jpg);">
 						</a>
 						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value2;?>">เครื่องมือ</a></h3>
+							<h3><a href="buylist.php?value=<?php echo $value2;?>&type=<?php echo $type; ?>">เครื่องมือ</a></h3>
 							<span>Tool</span>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value3;?>" class="work-grid" style="background-image: url(images/other.jpg);">
+						<a href="buylist.php?value=<?php echo $value3;?>&type=<?php echo $type; ?>" class="work-grid" style="background-image: url(images/other.jpg);">
 						</a>
 						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value3;?>">อื่นๆ</a></h3>
+							<h3><a href="buylist.php?value=<?php echo $value3;?>&type=<?php echo $type; ?>">อื่นๆ</a></h3>
 							<span>other</span>
 						</div>
 					</div>

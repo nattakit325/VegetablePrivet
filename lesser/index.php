@@ -3,6 +3,10 @@
 <?php  
    	session_start();
 	include "connect.php";
+
+
+	
+	
 	$sql = "SELECT topic, detail, media,time,username FROM news WHERE time>NOW()  order by time";
 
 

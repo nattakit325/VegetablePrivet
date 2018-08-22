@@ -28,7 +28,7 @@
 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ ?>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a class="work-grid" style="background-image: url(images/<?php echo $row['picture'];?>);">
+						<a class="work-grid" style="background-image: url(uploads_product/<?php echo $row['picture'];?>);">
 						</a>
 						<div class="desc">
 							<h3><a ><?php echo $row["name"];?></a></h3>
