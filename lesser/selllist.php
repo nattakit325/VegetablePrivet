@@ -92,8 +92,17 @@ $queryC=mysqli_query($objCon,$sql);
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
 
-function myFunction() {
-  alert("Hello World");
+function Delete(id,name) {
+    
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("DeleteDialog").innerHTML = this.responseText;
+            }
+        }
+        xmlhttp.open("GET", "DeleteOneProduct.php?id="+id+"&name="+name, true);
+        xmlhttp.send();
+    
 }
 
 
@@ -229,31 +238,15 @@ function showHint(str,username) {
       </div>
     </div>
   </div>
-
-
-  <div class="modal fade" id="forconfermdeleteeach" role="dialog">
+<div class="modal fade" id="forconfermdeleteeach" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><p class="modal-title">ต้องการลบสินค้านี้หรือไม่</p></center>
-        </div>
-        <div class="modal-body">
-          <center>
-						
-  <br>
-
-  <button type="button" class="btn btn-warning" onclick="myFunction()"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button>
-  <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
-        </center>
-          
-        </div>
-        
-          
-        
-      </div>
+<div id="DeleteDialog">
+</div>
+  </div>
     </div>
   </div>
+  
 
 
 	
@@ -326,7 +319,7 @@ function showHint(str,username) {
 							<div class="foo">
 							<span> <button type="button" class="btn btn-primary" ><i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;แก้ไข</span>
 								<span> <button type="button" class="btn btn-danger" 
-									data-toggle="modal" data-target="#forconfermdeleteeach"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ลบ</span>
+									data-toggle="modal" data-target="#forconfermdeleteeach" onclick="Delete('<?php echo $row['Productid'] ?>','<?php echo $row['name'] ?>')"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ลบ</span>
 								</div>
 						</div>
 					</div>

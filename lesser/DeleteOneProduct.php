@@ -1,36 +1,31 @@
 <?php
-session_start();
-include "connect.php";
-
-$username = $_SESSION["username"];
-$productid = $_GET['productid'];
-
-$sql1="SELECT *
-		FROM selllist s
-		INNER JOIN product p
-  		ON s.productid=p.id
-		WHERE s.username = '$username'";
-$query1=mysqli_query($objCon,$sql1);
-while($row=mysqli_fetch_array($query1,MYSQLI_ASSOC)){
-	if($row["picture"]!='product.png'){
-		unlink("uploads_product/".$row["picture"]);
-	}
-	
-
-}
-
-
-
-$sql="DELETE s,p
-		FROM selllist s
-		INNER JOIN product p
-  		ON s.productid=p.id
-		WHERE s.username = '$username'";
-
-$query=mysqli_query($objCon,$sql);
-
-
-
-header("location:selllist.php");
+$id = $_GET['id'];
+$name = $_GET['name'];
 
 ?>
+
+
+
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <center><p class="modal-title">ต้องการลบ <?php echo $name ?> หรือไม่</p></center>
+        </div>
+        <div class="modal-body">
+          <center>
+						
+  <br>
+<form action="Condelete.php" method="POST">
+	<input type="hidden" name="ProductID" value="<?php echo $id ?>">
+	<button type="submit" class="btn btn-warning" ><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button>
+
+  
+  <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+  </form>
+        </center>
+          
+        </div>
+        
+          
+        
+    
