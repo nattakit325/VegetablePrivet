@@ -25,7 +25,7 @@ if(password.length==0){
     if (this.readyState==4 && this.status==200) {
       document.getElementById("txtHint").innerHTML=this.responseText;
       if(this.responseText == "admin"){
-        document.location.href = "admin.html";
+        document.location.href = "admin.php";
 
       }
       if(this.responseText == ""){
