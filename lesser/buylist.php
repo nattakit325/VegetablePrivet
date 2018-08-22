@@ -9,12 +9,15 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	$sql="SELECT p.name as name,p.picture as picture, s.username as SellerName, 
 		p.id as Productid,m.market as marketname,m.latitude as latitude,m.longitude as longitude FROM selllist s inner join 
 		product p on s.productid=p.id INNER JOIN profile f ON f.username=s.username INNER JOIN 
 		gmarket g ON g.username=f.username INNER JOIN market m ON m.id = g.marketid 
 		where p.category= '$value' ";
 =======
+=======
+>>>>>>> b7c06fbef6bb257c15093f9014374f377a4d9ae0
 =======
 >>>>>>> b7c06fbef6bb257c15093f9014374f377a4d9ae0
 =======
@@ -28,6 +31,9 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> b7c06fbef6bb257c15093f9014374f377a4d9ae0
+=======
 >>>>>>> b7c06fbef6bb257c15093f9014374f377a4d9ae0
 =======
 >>>>>>> b7c06fbef6bb257c15093f9014374f377a4d9ae0

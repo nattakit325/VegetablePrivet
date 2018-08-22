@@ -5,7 +5,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     $db="smartfarmer";
+=======
+    $db="smartfamer";
+>>>>>>> b7c06fbef6bb257c15093f9014374f377a4d9ae0
 =======
     $db="smartfamer";
 >>>>>>> b7c06fbef6bb257c15093f9014374f377a4d9ae0
