@@ -1,21 +1,120 @@
+<?php
+	session_start();
+	
+    include "connect.php";
+    $name =  $_POST['name'];
+    $detail =  $_POST['detail'];
+    $type =  $_POST['type'];
+    $category =  $_POST['value'];
+    $picture =  'product.png';
+    $username = $_SESSION["username"];
+    $picture = $_POST["picture"];
+    $id = $_POST["id"];
 
-<?php 
-session_start();
-include "connect.php";
-$username = $_SESSION["username"];
-$sql="SELECT p.name as name,p.picture as picture, s.username as SellerName, p.id as Productid FROM selllist s
-			inner join product p
-			on s.productid=p.id
-			where username='$username' ";
-$query=mysqli_query($objCon,$sql);
-$queryC=mysqli_query($objCon,$sql);
+
+
+    //---------------------------------------//
+    if(basename($_FILES["fileToUpload"]["name"])){
+    	unlink("uploads_product/".$picture);
+    	$target_dir = "uploads_product/";
+    	$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+
+		$PictureName =  basename($_FILES["fileToUpload"]["name"]);
+		$pieces = explode(".", $PictureName);
+
+
+
+	
+
+		$t = microtime(true);
+		$micro = sprintf("%06d",($t - floor($t)) * 1000000);
+		$PictureName = $pieces[0].date("Y-m-d H:i:s").".$micro$t.";
+		$PictureName = str_replace(".","","$PictureName");
+		$PictureName = str_replace("-","","$PictureName");
+		$PictureName = str_replace(":","","$PictureName");
+		$PictureName = str_replace(" ","","$PictureName");
+	
+
+
+
+
+    	$uploadOk = 1;
+    	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    	if(isset($_POST["submit"])) {
+    		$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+    		if($check !== false) {
+        	
+        		$uploadOk = 1;
+    		} else {
+        	
+        		$uploadOk = 0;
+    		}
+		}
+
+	// Check if file already exists
+	
+	
+		if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+    	
+    		$uploadOk = 0;
+		}
+		if ($uploadOk == 0) {
+    	
+			// if everything is ok, try to upload file
+		} else {
+    		if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+    			rename("$target_file","$target_dir"."$PictureName.$pieces[1]");
+    			$PictureName = $PictureName.".".$pieces[1];
+        	
+    		} else {
+        
+    		}
+		}
+    }else{
+    	$PictureName = $picture;
+
+    }
+
+
+
+    
+
+
+
+    //---------------------------------------//
+
+
+	$strSQL = "UPDATE product SET name = '$name',detail = '$detail',type = '$type',category = '$category',picture ='$PictureName' where id ='$id'";
+	$objQuery = mysqli_query($objCon,$strSQL);
+
+
+
+	
+?>
+
+
+
+<?php
+
+	$SellerName=$username;
+	$Productid=$id;
+
+	$sql="SELECT d.name as ProductName, d.picture as picture, d.detail as detail, p.name as name, p.surname as surname,c.address as address,
+	c.phone as phone,c.facebook as facebook, c.line as line,p.picture as img  FROM selllist s INNER join product d 
+			on s.productid = d.id
+			INNER JOIN profile p 
+			on s.username = p.username
+			inner join contact c
+			on s.username = c.username
+			where s.username = '$SellerName'
+			and s.productid = '$Productid' ";
+    $query=mysqli_query($objCon,$sql);
+    $objResult = mysqli_fetch_array($query,MYSQLI_ASSOC);
 
 ?>
 
+
 <!DOCTYPE html>
-
-
-
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -23,7 +122,7 @@ $queryC=mysqli_query($objCon,$sql);
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Selllist</title>
+	<title>Lesser &mdash; Free HTML5 Bootstrap Website Template by FreeHTML5.co</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -74,60 +173,20 @@ $queryC=mysqli_query($objCon,$sql);
 
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<!-- FOR IE9 below -->
 	<!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
-
-	</head>
-
-
-
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900' rel='stylesheet' type='text/css'>
 
-function Delete(id,name) {
-    
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("DeleteDialog").innerHTML = this.responseText;
-            }
-        }
-        xmlhttp.open("GET", "DeleteOneProduct.php?id="+id+"&name="+name, true);
-        xmlhttp.send();
-    
-}
-
-
-function showHint(str,username) {
-    
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("search_result").innerHTML = this.responseText;
-            }
-        }
-        xmlhttp.open("GET", "getproduct.php?q="+str+"&username="+username, true);
-        xmlhttp.send();
-    
-}
-
-</script>
-
-
-
-
-	<body>
-
-
-
+	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
+	<script src="js/google_map.js"></script>
+<script type="text/javascript" src="js/showUser.js"></script>
 		<style>
 .circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
     height: 40px;  /* ความสูงปรับให้เป็นออโต้ */
@@ -136,21 +195,39 @@ function showHint(str,username) {
     border-radius: 50%; /* ปรับเป็น 50% คือความโค้งของเส้นขอบ*/
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
 }
+.picture{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
+    height: 30px;  /* ความสูงปรับให้เป็นออโต้ */
+    width: 30px;  /* ความสูงปรับให้เป็นออโต้ */
+    border: 3px solid #fff; /* เส้นขอบขนาด 3px solid: เส้น #fff:โค้ดสีขาว */
+    border-radius: 50%; /* ปรับเป็น 50% คือความโค้งของเส้นขอบ*/
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
+}
 .circlein{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
-    height: 140px;  /* ความสูงปรับให้เป็นออโต้ */
+    height: 150px;  /* ความสูงปรับให้เป็นออโต้ */
     width: 140px;  /* ความสูงปรับให้เป็นออโต้ */
     border: 3px solid #fff; /* เส้นขอบขนาด 3px solid: เส้น #fff:โค้ดสีขาว */
     border-radius: 50%; /* ปรับเป็น 50% คือความโค้งของเส้นขอบ*/
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
 }
-
-
 </style>
+	</head>
+	<body>
+	<div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-content">
+        
+        <div class="modal-body">
+         
+          <div id="map" data-animate-effect="fadeIn"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">ออก</button>
+        </div>
+      </div>
+    
+  </div>
 
 
-
-
-<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal fade" id="myModal1" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
@@ -214,42 +291,6 @@ function showHint(str,username) {
     </div>
   </div>
 
-
-  <div class="modal fade" id="forconfermdelete" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><p class="modal-title">ต้องการลบสินค้าทั้งหมดหรือไม่</p></center>
-        </div>
-        <div class="modal-body">
-          <center>
-						
-  <br>
-
-  <a href="DeleteAllProduct.php"><button type="button" class="btn btn-warning"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button></a>
-  <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
-        </center>
-          
-        </div>
-        
-          
-        
-      </div>
-    </div>
-  </div>
-<div class="modal fade" id="forconfermdeleteeach" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-<div id="DeleteDialog">
-</div>
-  </div>
-    </div>
-  </div>
-  
-
-
-	
 	
 	<div id="fh5co-page">
 	<header id="fh5co-header" role="banner">
@@ -261,8 +302,8 @@ function showHint(str,username) {
 						<li>
 							<?php if(empty($_SESSION["username"])){
 								?>
-							<a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
-							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
+							<a href="" data-toggle="modal" data-target="#myModal1">เข้าสู่ระบบ</a></li>
+							<a href="" data-toggle="modal" data-target="#myModal1"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
 						<?php }else{?>
 							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></a></li>
 							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
@@ -273,64 +314,77 @@ function showHint(str,username) {
 			</div>
 		</div>
 	</header>
-	
-
-	<div id="fh5co-main-services-section">
+	<div id="fh5co-about-section">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>สินค้าที่เคยประกาศขาย</h2>
-					<p><span>The product that you sold</a></span></p>
-
-
-								<div class="form-group">
-									<form class="form-inline" name="searchform" id="searchform">
-                        <div class="form-group">
-                            <label for="textsearch" >ชื่อสินค้า</label>
-                            <input type="text"  class="form-control" placeholder="ข้อความ คำค้นหา!" onkeyup="showHint(this.value,'<?php echo $username ?>')">
-                        </div>
-                        <button type="button" class="btn btn-primary" id="btnSearch">
-                            <span class="glyphicon glyphicon-search"></span>
-                            ค้นหา
-                        </button>
-                    </form> 
-                    <br>
-									<a href="create product.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;สร้างสินค้าใหม่</button></span></a>
-										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ลบทั้งหมด
-										
-									</div>
-							
+					<h2><?php echo $objResult["ProductName"]; ?></h2>
 				</div>
 			</div>
-<div id="search_result">
-<?php if(mysqli_fetch_array($queryC,MYSQLI_ASSOC)<=0){ ?>
-			<center><h3>ไม่มีรายการสินค้าที่ลงขาย</h3></center>
-			<?php } ?>
-
-			<div class="row" id="fordelete">
-
-<?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ ?>
-				<div class="col-md-4 text-center">
-					<div class="work-inner">
-						<a class="work-grid" style="background-image: url(uploads_product/<?php echo $row['picture'];?>);">
-						</a>
-						<div class="desc">
-							<h3><a ><?php echo $row["name"];?></a></h3>
-							<div class="foo">
-							<span> <a href="edit-product.php?id=<?php echo $row['Productid'] ?>"><button type="button" class="btn btn-primary" ><i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;แก้ไข</button></a></span>
-								<span> <button type="button" class="btn btn-danger" 
-									data-toggle="modal" data-target="#forconfermdeleteeach" onclick="Delete('<?php echo $row['Productid'] ?>','<?php echo $row['name'] ?>')"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ลบ</span>
-								</div>
+			<div class="row">
+				<div class="col-md-8">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="about-inner">
+								<img class="img-responsive" src="uploads_product/<?php echo $objResult["picture"]; ?>" alt="About" height="100%" width="100%">
+								
+							</div>
 						</div>
 					</div>
 				</div>
 				
-<?php } ?>
+				<div class="col-md-4">
+					<aside class="sidebar">
+						<div class="row">
+							<div class="col-md-12 side">
+								<h3><i class="fas fa-info-circle"></i>&nbsp;&nbsp;รายละเอียด</h3>
+								<ul>
+									<li>
+										<?php echo $objResult["detail"]; ?>
+									</li>
+									
+								</ul>
+							</div>
 
+							<div class="col-md-12 side">
+								<h3><img class="picture" src="images/<?php echo $objResult["img"]; ?>" width="10%" height="12%" />&nbsp;&nbsp;ผู้จำหน่าย</h3>
+								<ul>
+									<li>
+										<li><?php echo $objResult["name"];?>  &nbsp;&nbsp;<?php echo $objResult["surname"];?></li>
+						
+									</li>
+									
+								</ul>
+							</div>
+							<div class="col-md-12 side">
+								<h3><i class="fas fa-address-card"></i>&nbsp;&nbsp;ช่องทางการติดต่อ</h3>
+								<ul>
+									<li>
+										<li><i class="fas fa-map-marker-alt"></i><a href="#"><?php echo $objResult["address"]; ?></a></li>
+									<li><i class="fas fa-map-pin"></i></i><a href="#"> ห่างออกไป 14 กม.</a></li>
+									<li><i class="fas fa-phone"></i><a href="#"><?php echo $objResult["phone"]; ?></a></li>
+									<li><i class="icon-facebook"></i><a href="#"><?php echo $objResult["facebook"]; ?></a></li>
+									<li><i class="fab fa-line"></i><a href="#"><?php echo $objResult["line"]; ?></a></li>
+						</a>
+
+									</li>
+									
+								</ul>
+								<br><br><br>
+								<center><a href="create product.php"><button type="button" class="btn btn-success" >เพิ่มสินค้าใหม่</button></a> <a href="selllist.php"><button type="button" class="btn btn-primary" >กลับสู่หน้าหลัก</button></a></center>
+							</div>
+							
+						</div>
+					</aside>
+				</div>
 
 			</div>
-			</div>
+
 		</div>
+
+	</div>
+	
+	
 	</div>
 	
 	

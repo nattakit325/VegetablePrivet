@@ -1,14 +1,20 @@
-<?php
-	session_start();
-	include "connect.php";
+<?php 
+session_start();
+include "connect.php";
+$id =  $_GET['id'];
+$username = $_SESSION["username"];
 
-	$strSQL = "SELECT * FROM login WHERE username = '".$_SESSION['username']."' ";
-	$objQuery = mysqli_query($objCon,$strSQL);
-	$objResult = mysqli_fetch_array($objQuery,MYSQLI_ASSOC);
-
-	$sql="SELECT * FROM selllist RIGHT JOIN product ON selllist.productname = product.name WHERE username = '".$_SESSION['username']."' AND id = '".$_GET["id"]."' ";
-    $query=mysqli_query($objCon,$sql);
-    $objResult1 = mysqli_fetch_array($query,MYSQLI_ASSOC);
+$sql="SELECT p.picture as picture,
+			p.name as name,
+			p.detail as detail,
+			p.category as category
+		FROM selllist s
+		INNER JOIN product p
+  		ON s.productid=p.id
+		WHERE s.username = '$username'
+		and p.id = '$id'";
+$query=mysqli_query($objCon,$sql);
+$objResult = mysqli_fetch_array($query,MYSQLI_ASSOC);
 
 ?>
 <!DOCTYPE html>
@@ -19,7 +25,7 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Lesser &mdash; Free HTML5 Bootstrap Website Template by FreeHTML5.co</title>
+	<title>Add Profile</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -50,6 +56,8 @@
 	<meta name="twitter:url" content="" />
 	<meta name="twitter:card" content="" />
 
+
+
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 	<link rel="shortcut icon" href="favicon.ico">
 
@@ -68,6 +76,37 @@
 	<!-- Theme style  -->
 	<link rel="stylesheet" href="css/style.css">
 
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+
+<script>
+	function getPicture(value) {
+     alert(value)
+}
+</script>
+
+		<style>
+.circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
+    height: 40px;  /* ความสูงปรับให้เป็นออโต้ */
+    width: 40px;  /* ความสูงปรับให้เป็นออโต้ */
+    border: 3px solid #fff; /* เส้นขอบขนาด 3px solid: เส้น #fff:โค้ดสีขาว */
+    border-radius: 50%; /* ปรับเป็น 50% คือความโค้งของเส้นขอบ*/
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
+}
+.circlein{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
+    height: 140px;  /* ความสูงปรับให้เป็นออโต้ */
+    width: 140px;  /* ความสูงปรับให้เป็นออโต้ */
+    border: 3px solid #fff; /* เส้นขอบขนาด 3px solid: เส้น #fff:โค้ดสีขาว */
+    border-radius: 50%; /* ปรับเป็น 50% คือความโค้งของเส้นขอบ*/
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
+}
+
+
+</style>
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
 	<!-- FOR IE9 below -->
@@ -77,113 +116,196 @@
 
 	</head>
 	<body>
+	<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <center><h4 class="modal-title">กรุณาเข้าสู่ระบบ</h4></center>
+        </div>
+        <div class="modal-body">
+          <center>
+						<form action="check_login.php" method="POST"  id="login_form">
+							<p id="txtHint" style="color:red; "></p>
+							
+							<div class="form-group">
+								<input type="text" class="form-control" name="usr" placeholder="Username" required id="usr">
+							</div>
+							<div class="form-group">
+								<input type="password" class="form-control" name="pwd" placeholder="Password" required id="pwd">
+								<input type="hidden"  name="page" value="buylist.php" id="page"> 
+							</div>
+							<button type="button" class="btn btn-success" onclick="showUser(document.getElementById('usr').value,document.getElementById('pwd').value,document.getElementById('page').value)">เข้าสู่ระบบ</button>
+							<!--<input type="submit" class="btn btn-success" placeholder="Password" value="เข้าสู่ระบบ">-->
+
+						</form>
+  <br>
+  <a href="register.html">ยังไม่ได้สมัครบัญชีในระบบ</a>
+        </center>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="login" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <center><h4 class="modal-title"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></h4></center>
+        </div>
+        <div class="modal-body">
+          <center>
+						<img class="circlein" src="images/<?php echo $_SESSION["picture"]?>" width="100%" height="100%" />
+						<br>
+						<br>
+						<p>FirstName : <?php echo $_SESSION["name"];?></p>
+						<p>LastName   : <?php echo $_SESSION["surname"];?></p>
+						<p>career     : <?php echo $_SESSION["career"];?></p>
+						<p>age        : <?php echo $_SESSION["age"];?></p>
+  <br>
+
+  <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
+  <a href="ClearSession.php"><button type="button" class="btn btn-warning" >ออกจากระบบ</button></a>
+        </center>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
 	
 	
 	<div id="fh5co-page">
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><i class="sl-icon-energy"></i><a href="index.html">Lesser</a></h1>
+				<h1><i class="sl-icon-energy"></i><a href="index.php">Lesserr</a></h1>
 				<nav role="navigation">
-                    <ul>
-						<?php if($_SESSION['username'] != "") { ?>
-						<li><a href="profile.php"><?php echo $_SESSION["username"]; ?></a></li>
-						<li><a href="logout.php">ออกจากระบบ</a></li>
+					<ul>
+						<li>
+							<?php if(empty($_SESSION["username"])){
+								?>
+							<a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
+							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
+						<?php }else{?>
+							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></a></li>
+							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
 						<?php } ?>
-						<?php if($_SESSION['username'] == "") { ?>
-						<li><a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
-						<?php } ?>
+						
 					</ul>
 				</nav>
 			</div>
 		</div>
 	</header>
-	<div id="fh5co-about-section">
+	<form action="update-product.php" method="post" enctype="multipart/form-data">
+	<div id="fh5co-contact-section">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>About</h2>
-					<p><span>Created with <i class="sl-icon-heart"></i> by the fine folks at <a href="http://freehtml5.co">FreeHTML5.co</a></span></p>
+					<h2>แก้ไขข้อมูลสินค้า</h2>
+					<p><span>Edit your Product information</span></p>
 				</div>
 			</div>
+
 			<div class="row">
-				<div class="col-md-8">
+				
+				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 					<div class="row">
-						<div class="col-md-12">
-							<div class="about-inner">
-								<img class="img-responsive" src="myfile/<?php echo $objResult1["picture"];?>" alt="About">
-							</div>
+				
+				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+					
+					<div class="row">
+						
+							<div class="col-md-5 text-center">
+
+					<div class="work-inner">
+						<a  class="work-grid" style="background-image: url(uploads_product/<?php echo $objResult["picture"] ?>);">
+						</a>
+						<div class="desc">
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" id="fileToUpload" >
+							
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
-					<aside class="sidebar">
-						<div class="row">
-                            <form method="post" action="save-product.php">
-							    <div class="col-md-12 side">
-                                    <h3><input type="text" name="name" class="form-control" placeholder="<?php echo $objResult1["name"]; ?>"></h3>
-                                    <ul>
-                                        <li><i class="icon-star"></i><a href="#">ราคา : <input type="number" name="price" class="form-control" placeholder="<?php echo $objResult1["price"]; ?>"> บาท/กิโลกรัม</a></li>
-                                        <li><i class="icon-star"></i><a href="#">จำนวน : <input type="number" name="amount" class="form-control" placeholder="<?php echo $objResult1["amount"]; ?>"> กิโลกรัม</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-12 side">
-                                    <h3>รายละเอียด</h3>
-                                    <p><input type="text" name="detail" class="form-control" placeholder="<?php echo $objResult1["detail"];?>"></p>
-                                </div>
-                                    <p><input type="submit" class="btn btn-primary" name="Submit" value="Save">
-                                    <p><a href="delete-product.php" class="btn btn-primary">ลบ</a></p>
-                            </form>
+			
+							<div class="col-md-6">
+								<div class="form-group">
+									<input type="hidden" name="picture" value="<?php echo $objResult["picture"] ?>">
+									<input type="hidden" name="id" value="<?php echo $id ?>">
+
+									
+
+									ชื่อสินค้า<input class="form-control" placeholder="<?php echo $objResult["name"] ?>" value="<?php echo $objResult["name"] ?>" type="text" name="name" >
+
+								</div>
+							</div>
+							<div class="col-md-6">
+							<div class="form-group">
+								รายละเอียดสินค้า<textarea name="detail" value="<?php echo $objResult["detail"] ?>" class="form-control" id="" cols="30" rows="7" placeholder="<?php echo $objResult["detail"] ?>"></textarea>
+							</div>
 						</div>
-					</aside>
+						<?php if($_SESSION["status"]=='เกษตรกร'){ ?>
+							<input type="hidden" name="type" value="พืชผัก">
+						<?php }else{ ?>
+							<input type="hidden" name="type" value="ปัจจัย">
+						<?php } ?>
+
+						<div class="col-md-6">
+								<div class="form-group">
+
+									
+
+									ประเภทสินค้า<select class="form-control" name="value">
+
+										<option value="<?php echo $objResult["category"] ?>"><?php echo $objResult["category"] ?></option>
+										<?php if($_SESSION["status"]=='เกษตรกร'){ ?>
+										<option value="ดอก">ดอก</option>
+										<option value="ผล">ผล</option>
+										<option value="ราก">ราก</option>
+										<option value="ลำต้น">ลำต้น</option>
+										<option value="ใบ">ใบ</option>
+										<option value="อื่นๆ">อื่นๆ</option>
+									<?php }else{ ?>
+										<option value="ปุ๋ย">ปุ๋ย</option>
+										<option value="เครื่องมือ">เครื่องมือ</option>
+										<option value="อื่นๆ">อื่นๆ</option>
+									<?php } ?>
+									</select>
+								</div>
+							</div>
+							
+						
+						
+					</div>
+					
+				</div>
+			</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	<footer id="fh5co-footer" role="contentinfo">
-	
-		<div class="container">
-			<div class="col-md-3 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-				<h3>About Us</h3>
-				<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-			</div>
-			<div class="col-md-6 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-				<h3>Our Services</h3>
-				<ul class="float">
-					<li><a href="#">Web Design</a></li>
-					<li><a href="#">Branding &amp; Identity</a></li>
-					<li><a href="#">Free HTML5</a></li>
-					<li><a href="#">HandCrafted Templates</a></li>
-				</ul>
-				<ul class="float">
-					<li><a href="#">Free Bootstrap Template</a></li>
-					<li><a href="#">Free HTML5 Template</a></li>
-					<li><a href="#">Free HTML5 &amp; CSS3 Template</a></li>
-					<li><a href="#">HandCrafted Templates</a></li>
-				</ul>
 
-			</div>
-
-			<div class="col-md-2 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-				<h3>Follow Us</h3>
-				<ul class="fh5co-social">
-					<li><a href="#"><i class="icon-twitter"></i> Twitter</a></li>
-					<li><a href="#"><i class="icon-facebook"></i> Facebook</a></li>
-					<li><a href="#"><i class="icon-google-plus"></i> Google Plus</a></li>
-					<li><a href="#"><i class="icon-instagram"></i> Instagram</a></li>
-				</ul>
-			</div>
-			
-			
-			<div class="col-md-12 fh5co-copyright text-center">
-				<p>&copy; 2016 Free HTML5 template. All Rights Reserved. <span>Designed with <i class="icon-heart"></i> by <a href="http://freehtml5.co/" target="_blank">FreeHTML5.co</a> Demo Images by <a href="http://unsplash.com/" target="_blank">Unsplash</a></span></p>	
-			</div>
-			
-		</div>
-	</footer>
-	</div>
 	
+  <div class="col-md-12">
+              <div class="form-group">
+                <br>
+                <center>
+                <input  class="btn btn-primary" type="submit" value="บันทึกข้อมูล" name="submit"> 
+                </center>
+              </div>
+            </div>
+            
+	</form>
 	
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
@@ -193,6 +315,9 @@
 	<script src="js/bootstrap.min.js"></script>
 	<!-- Waypoints -->
 	<script src="js/jquery.waypoints.min.js"></script>
+	<!-- Google Map -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
+	<script src="js/google_map.js"></script>
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
 
