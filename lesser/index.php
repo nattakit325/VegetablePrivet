@@ -4,10 +4,17 @@
    	session_start();
 	include "connect.php";
 
+	if(empty($_SESSION["username"])){
+
+	}else{
+		if($_SESSION["status"]=='admin')
+		header("location:admin.php");
+	}
+
 
 	
-	
-	$sql = "SELECT topic, detail, media,time,username FROM news WHERE time>NOW()  order by time";
+	$sql = "connect.php";
+    $sql = "SELECT n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as 		surname FROM news n inner join profile p on n.username = p.username WHERE time>NOW()  order by time";
 
 
 
@@ -77,6 +84,8 @@
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900' rel='stylesheet' type='text/css'>
 
 	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
+
+
 
 
 	
@@ -331,12 +340,15 @@ $count=0;
 				 	$count++
 				 	?>
 				<div class="col-md-4 text-center">
-					<div class="blog-inner">
-						<a href="#" data-toggle="modal" data-target="#myModal<?php echo $count?>"><img class="img-responsive" src="images/<?php echo $row["media"]?>" alt="Blog"></a>
+					<div class="work-inner">
+						<a class="work-grid" style="background-image: url(images/<?php echo $row['media'];?>);">
+						</a>
 						<div class="desc">
-							<h3><a href="#" data-toggle="modal" data-target="#myModal<?php echo $count?>" > <?php echo $row["topic"];?></a></h3>
+							<h3><?php echo $row["topic"];?></h3>
 							<p>เวลา <?php echo DateThai($row["time"]);?></p>
-							<p><a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">ดูรายละเอียด<i class="icon-arrow-right"></i></a></p>
+							<p>โดย <?php echo $row["name"]." ".$row["surname"];?></p>
+							
+							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">ดูรายละเอียด<i class="icon-arrow-right"></i></a>
 						</div>
 					</div>
 				</div>

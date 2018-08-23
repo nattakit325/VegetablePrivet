@@ -2,6 +2,25 @@
 	session_start();
 	
     include "connect.php";
+    $sql = "SELECT n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as 		surname ,n.PostTime as posttime FROM news n inner join profile p on n.username = p.username order by n.PostTime";
+
+    $query=mysqli_query($objCon,$sql);
+	$queryDialog=mysqli_query($objCon,$sql);
+	$count = 0;
+
+	function DateThai($strDate)
+	{
+		$strYear = date("Y",strtotime($strDate))+543;
+		$strMonth= date("n",strtotime($strDate));
+		$strDay= date("j",strtotime($strDate));
+		$strHour= date("H",strtotime($strDate));
+		$strMinute= date("i",strtotime($strDate));
+		$strSeconds= date("s",strtotime($strDate));
+		$strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+		$strMonthThai=$strMonthCut[$strMonth];
+		return "$strDay $strMonthThai $strYear, เวลา $strHour:$strMinute";
+	}
+
     
 ?>
 
@@ -65,7 +84,8 @@
 	<link rel="stylesheet" href="css/style.css">
 
 
-
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -76,8 +96,10 @@
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 	</head>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
 
 <script>
 $(document).ready(function(){
@@ -88,6 +110,39 @@ $(document).ready(function(){
     });
 
 });
+
+
+
+
+function Delete(id,name) {
+    
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("DeleteDialog").innerHTML = this.responseText;
+            }
+        }
+        xmlhttp.open("GET", "DeleteOneProduct.php?id="+id+"&name="+name, true);
+        xmlhttp.send();
+    
+}
+
+
+function showHint(str) {
+    
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("search_result").innerHTML = this.responseText;
+            }
+        }
+        xmlhttp.open("GET", "getNews.php?q="+str, true);
+        xmlhttp.send();
+    
+}
+
+
+
 </script>
 
 	<style>
@@ -308,46 +363,53 @@ $(document).ready(function(){
 		<div class="container">
 			<div class="row" >
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>ข่าวที่คุณสร้างไว้</h2>
-					<p>News that you created</p>
-					<input class="form-control" placeholder="ค้นหาข่าว" type="text" name="firstname"><br>
-					<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ลบทั้งหมด
+					<h2>ข่าวที่สร้างไว้ทั้งหมด</h2>
+					<p>All News that created</p>
+					<div class="form-group">
+									<form class="form-inline" name="searchform" id="searchform">
+                        <div class="form-group">
+                            <label for="textsearch" >วันเดือนปีที่ลงข่าว</label>
+                            <input type="date"  class="form-control" placeholder="ข้อความ คำค้นหา!" onkeyup="showHint(this.value)">
+                        </div>
+                        <button type="button" class="btn btn-primary" id="btnSearch">
+                            <span class="glyphicon glyphicon-search"></span>
+                            ค้นหา
+                        </button>
+                    </form> 
+                    <br>
+									<a href="create product.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;สร้างข่าวใหม่</button></span></a>
+										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ลบทั้งหมด
+										
+									</div>
+							
 				</div>
 			</div>
-			<div class="row" id="fordelete">
+			<div class="row">
+
+				 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ 
+				 	$count++
+				 	?>
 				<div class="col-md-4 text-center">
-					<div class="blog-inner">
-						<a href="#" data-toggle="modal" data-target="#myModal2"><img class="img-responsive" src="images/sell.jpg" alt="Blog"></a>
+					<div class="work-inner">
+						<a class="work-grid" style="background-image: url(images/<?php echo $row['media'];?>);">
+						</a>
 						<div class="desc">
-							<h3><a href="#" data-toggle="modal" data-target="#myModal1" > ตลาดสดหนองหอย โซนเกษตรอินทรีย์</a></h3>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-							<p><button type="button" class="btn btn-danger" data-dismiss="modal">ลบ</button>
-								<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal1">แก้ไข<i class="icon-arrow-right"></i></a></p>
+							<h3><?php echo $row["topic"];?></h3>
+							<p>ประกาศเมื่อ <?php echo DateThai($row["posttime"]);?></p>
+							<p>โดย <?php echo $row["name"]." ".$row["surname"];?></p>
+							<button type="button" class="btn btn-danger" data-toggle="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ลบ</span></button>
+							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">แก้ไขข่าว<i class="icon-arrow-right"></i></a>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4 text-center">
-					<div class="blog-inner">
-						<a href="#" data-toggle="modal" data-target="#myModal2"><img class="img-responsive" src="images/sell2.jpg" alt="Blog"></a>
-						<div class="desc">
-							<h3><a href="#" data-toggle="modal" data-target="#myModal1">ตลาดนัดข้างคณะบริหารมหาวิทยาลัยแม่โจ้</a></h3>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-							<p><button type="button" class="btn btn-danger" data-dismiss="modal">ลบ</button>
-								<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal1">แก้ไข<i class="icon-arrow-right"></i></a></p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 text-center">
-					<div class="blog-inner">
-						<a href="#" data-toggle="modal" data-target="#myModal2"><img class="img-responsive" src="images/sell3.jpg" alt="Blog"></a>
-						<div class="desc">
-							<h3><a href="#" data-toggle="modal" data-target="#myModal1">โรงพยาบาลนครพิงค์ (ป่าแงะ)</a></h3>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-							<p><button type="button" class="btn btn-danger" data-dismiss="modal">ลบ</button>
-								<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal1">แก้ไข<i class="icon-arrow-right"></i></a></p>
-						</div>
-					</div>
-				</div>
+				<?php } ?>
+				
+				
+				
+
+
+				
+
 			</div>
 		</div>
 	</div>
