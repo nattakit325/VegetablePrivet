@@ -202,6 +202,8 @@ function CurrentPosition(position) {
 		var TnameVeget = document.createTextNode(market[i][2]);
 		var pDisten = document.createElement("p");
 		var TextDistan = document.createTextNode("ห่างจากคุณ "+market[i][8]+" กิโลเมตร");
+		var pMarketName = document.createElement("p");
+		var TextNameMket = document.createTextNode("สถานที่ "+market[i][4]);
 		var pLink = document.createElement("p");
 		var a3 = document.createElement("a");
 		a3.href = "ProductDetail.php?SellerName="+market[i][0]+"&Productid="+market[i][3];
@@ -216,6 +218,8 @@ function CurrentPosition(position) {
 		div3.appendChild(h3);
 		h3.appendChild(a2);
 		a2.appendChild(TnameVeget);
+		div3.appendChild(pMarketName);
+		pMarketName.appendChild(TextNameMket);
 		div3.appendChild(pDisten);
 		pDisten.appendChild(TextDistan);
 		div3.appendChild(pLink);
