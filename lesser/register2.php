@@ -138,17 +138,16 @@ var show = document.getElementById("show");
 }
 function saveMarket() {
 	var user = "<?php echo $username; ?>";
-
 $.ajax({
 	method: "POST",
 	url: "save-market.php",
 	dataType:"json",
+	cache: false,
 	data: { marketarr: marketarr, la: la, long: long, loname:loname ,  user:user },
 	success: function(data){
-				window.location.replace('success.php');
+				alert(data);
                 //the controller function count_votes returns an integer.
                 //echo that with the fade in here.
-
                 }
 	});
 
