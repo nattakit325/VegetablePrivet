@@ -1,3 +1,28 @@
+<?php
+	session_start();
+	
+    include "connect.php";
+    $sql = "SELECT n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as 		surname ,n.PostTime as posttime FROM news n inner join profile p on n.username = p.username order by n.PostTime";
+
+    $query=mysqli_query($objCon,$sql);
+	$queryDialog=mysqli_query($objCon,$sql);
+	$count = 0;
+
+	function DateThai($strDate)
+	{
+		$strYear = date("Y",strtotime($strDate))+543;
+		$strMonth= date("n",strtotime($strDate));
+		$strDay= date("j",strtotime($strDate));
+		$strHour= date("H",strtotime($strDate));
+		$strMinute= date("i",strtotime($strDate));
+		$strSeconds= date("s",strtotime($strDate));
+		$strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+		$strMonthThai=$strMonthCut[$strMonth];
+		return "$strDay $strMonthThai $strYear, เวลา $strHour:$strMinute";
+	}
+
+    
+?>
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -7,7 +32,7 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>VegetableGether</title>
+	<title>Admin</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -59,7 +84,8 @@
 	<link rel="stylesheet" href="css/style.css">
 
 
-
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -70,8 +96,10 @@
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 	</head>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
 
 <script>
 $(document).ready(function(){
@@ -82,6 +110,39 @@ $(document).ready(function(){
     });
 
 });
+
+
+
+
+function Delete(id,name) {
+    
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("DeleteDialog").innerHTML = this.responseText;
+            }
+        }
+        xmlhttp.open("GET", "DeleteOneProduct.php?id="+id+"&name="+name, true);
+        xmlhttp.send();
+    
+}
+
+
+function showHint(str) {
+    
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("search_result").innerHTML = this.responseText;
+            }
+        }
+        xmlhttp.open("GET", "getNews.php?q="+str, true);
+        xmlhttp.send();
+    
+}
+
+
+
 </script>
 
 	<style>
@@ -129,54 +190,64 @@ $(document).ready(function(){
   </div>
 
 
-<div class="modal fade" id="forconfermdeleteeach" role="dialog">
+<div class="modal fade" id="myModal1" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><p class="modal-title">ต้องการลบสินค้านี้หรือไม่</p></center>
+          <center><h4 class="modal-title">กรุณาเข้าสู่ระบบ</h4></center>
         </div>
         <div class="modal-body">
           <center>
-						
+						<form action="check_login.php" method="POST"  id="login_form">
+							<p id="txtHint" style="color:red; "></p>
+							
+							<div class="form-group">
+								<input type="text" class="form-control" name="usr" placeholder="Username" required id="usr">
+							</div>
+							<div class="form-group">
+								<input type="password" class="form-control" name="pwd" placeholder="Password" required id="pwd">
+								<input type="hidden"  name="page" value="buylist.php" id="page"> 
+							</div>
+							<button type="button" class="btn btn-success" onclick="showUser(document.getElementById('usr').value,document.getElementById('pwd').value,document.getElementById('page').value)">เข้าสู่ระบบ</button>
+							<!--<input type="submit" class="btn btn-success" placeholder="Password" value="เข้าสู่ระบบ">-->
+
+						</form>
   <br>
-
-  <button type="button" class="btn btn-warning" id="delete" data-dismiss="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button>
-  <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
-        </center>
-          
-        </div>
-        
-          
-        
-      </div>
-    </div>
-  </div>
-
-		<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><h4 class="modal-title">Mr.Best Framer</h4></center>
-        </div>
-        <div class="modal-body">
-          <center>
-						<img class="circlein" src="images/admin.png" width="100%" height="100%" />
-						<br>
-						<br>
-						<p>FirstName : Beat</p>
-						<p>LastName   : Framer</p>
-						<p>career     : Framer</p>
-						<p>age        : 41</p>
-  <br>
-
-  <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
+  <a href="register.html">ยังไม่ได้สมัครบัญชีในระบบ</a>
         </center>
           
         </div>
         <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="login" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <center><h4 class="modal-title"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></h4></center>
+        </div>
+        <div class="modal-body">
+          <center>
+						<img class="circlein" src="images/<?php echo $_SESSION["picture"]?>" width="100%" height="100%" />
+						<br>
+						<br>
+						<p>FirstName : <?php echo $_SESSION["name"];?></p>
+						<p>LastName   : <?php echo $_SESSION["surname"];?></p>
+						<p>career     : <?php echo $_SESSION["career"];?></p>
+						<p>age        : <?php echo $_SESSION["age"];?></p>
+  <br>
 
+  <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
+  <a href="ClearSession.php"><button type="button" class="btn btn-warning" >ออกจากระบบ</button></a>
+        </center>
+          
+        </div>
+        <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
         </div>
       </div>
@@ -243,11 +314,19 @@ $(document).ready(function(){
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><i class="sl-icon-energy"></i><a href="index.html">Lesserr</a></h1>
+				<h1><i class="sl-icon-energy"></i><a href="index.php">Lesserr</a></h1>
 				<nav role="navigation">
 					<ul>
-						<li><a href="" data-toggle="modal" data-target="#myModal">Admin</a></li>
-						<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/admin.png" width="10%" height="12%" /></a>
+						<li>
+							<?php if(empty($_SESSION["username"])){
+								?>
+							<a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
+							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
+						<?php }else{?>
+							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></a></li>
+							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
+						<?php } ?>
+						
 					</ul>
 				</nav>
 			</div>
@@ -284,46 +363,53 @@ $(document).ready(function(){
 		<div class="container">
 			<div class="row" >
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>ข่าวที่คุณสร้างไว้</h2>
-					<p>News that you created</p>
-					<input class="form-control" placeholder="ค้นหาข่าว" type="text" name="firstname"><br>
-					<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ลบทั้งหมด
+					<h2>ข่าวที่สร้างไว้ทั้งหมด</h2>
+					<p>All News that created</p>
+					<div class="form-group">
+									<form class="form-inline" name="searchform" id="searchform">
+                        <div class="form-group">
+                            <label for="textsearch" >วันเดือนปีที่ลงข่าว</label>
+                            <input type="date"  class="form-control" placeholder="ข้อความ คำค้นหา!" onkeyup="showHint(this.value)">
+                        </div>
+                        <button type="button" class="btn btn-primary" id="btnSearch">
+                            <span class="glyphicon glyphicon-search"></span>
+                            ค้นหา
+                        </button>
+                    </form> 
+                    <br>
+									<a href="create product.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;สร้างข่าวใหม่</button></span></a>
+										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ลบทั้งหมด
+										
+									</div>
+							
 				</div>
 			</div>
-			<div class="row" id="fordelete">
+			<div class="row">
+
+				 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ 
+				 	$count++
+				 	?>
 				<div class="col-md-4 text-center">
-					<div class="blog-inner">
-						<a href="#" data-toggle="modal" data-target="#myModal2"><img class="img-responsive" src="images/sell.jpg" alt="Blog"></a>
+					<div class="work-inner">
+						<a class="work-grid" style="background-image: url(images/<?php echo $row['media'];?>);">
+						</a>
 						<div class="desc">
-							<h3><a href="#" data-toggle="modal" data-target="#myModal1" > ตลาดสดหนองหอย โซนเกษตรอินทรีย์</a></h3>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-							<p><button type="button" class="btn btn-danger" data-dismiss="modal">ลบ</button>
-								<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal1">แก้ไข<i class="icon-arrow-right"></i></a></p>
+							<h3><?php echo $row["topic"];?></h3>
+							<p>ประกาศเมื่อ <?php echo DateThai($row["posttime"]);?></p>
+							<p>โดย <?php echo $row["name"]." ".$row["surname"];?></p>
+							<button type="button" class="btn btn-danger" data-toggle="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ลบ</span></button>
+							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">แก้ไขข่าว<i class="icon-arrow-right"></i></a>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4 text-center">
-					<div class="blog-inner">
-						<a href="#" data-toggle="modal" data-target="#myModal2"><img class="img-responsive" src="images/sell2.jpg" alt="Blog"></a>
-						<div class="desc">
-							<h3><a href="#" data-toggle="modal" data-target="#myModal1">ตลาดนัดข้างคณะบริหารมหาวิทยาลัยแม่โจ้</a></h3>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-							<p><button type="button" class="btn btn-danger" data-dismiss="modal">ลบ</button>
-								<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal1">แก้ไข<i class="icon-arrow-right"></i></a></p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 text-center">
-					<div class="blog-inner">
-						<a href="#" data-toggle="modal" data-target="#myModal2"><img class="img-responsive" src="images/sell3.jpg" alt="Blog"></a>
-						<div class="desc">
-							<h3><a href="#" data-toggle="modal" data-target="#myModal1">โรงพยาบาลนครพิงค์ (ป่าแงะ)</a></h3>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-							<p><button type="button" class="btn btn-danger" data-dismiss="modal">ลบ</button>
-								<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal1">แก้ไข<i class="icon-arrow-right"></i></a></p>
-						</div>
-					</div>
-				</div>
+				<?php } ?>
+				
+				
+				
+
+
+				
+
 			</div>
 		</div>
 	</div>

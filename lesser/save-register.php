@@ -11,17 +11,20 @@ if(isset($_POST["submit"])) {
         $uploadOk = 0;
     }
 }
-
-echo "<br>";
-
-
-
-
-
 	if(move_uploaded_file($_FILES["filUpload"]["tmp_name"],"myfile/".$_FILES["filUpload"]["name"]))
 	{
 		echo "Copy/Upload Complete<br>";
-        $pass = md5($_POST["password"]);
+        $pass = $_POST["password"];
+        $strSQL = "SELECT * FROM login WHERE username = '".mysqli_real_escape_string($objCon,$_POST["username"])."'";
+        $objQuery4 = mysqli_query($objCon,$strSQL);
+        $objResult4 = mysqli_fetch_array($objQuery4,MYSQLI_ASSOC);
+        if($objResult4["username"]== $_POST['username']){
+            echo "<script language=\"JavaScript\">";
+            echo "alert('ชื่อซ้ำ');";
+            echo "window.location = 'register.php'; ";
+            echo "</script>";
+            exit();
+        }else{
         $strSQL1 = "INSERT INTO login ";
         $strSQL1 .="(username,password,status) VALUES ('".$_POST["username"]."','$pass','".$_POST["status"]."')";
         $objQuery = mysqli_query($objCon,$strSQL1);
@@ -48,8 +51,10 @@ echo "<br>";
                     session_write_close();
                     header("location:register2.php?user=$user");
                 }
+        }
 
-	}
+    }
+    
 
 
 ?>

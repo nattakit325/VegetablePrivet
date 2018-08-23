@@ -1,10 +1,103 @@
-
 <?php
 	session_start();
-	include "connect.php";
+	
+    include "connect.php";
+    $name =  $_POST['name'];
+    $detail =  $_POST['detail'];
+    $type =  $_POST['type'];
+    $category =  $_POST['value'];
+    $picture =  'product.png';
+    $username = $_SESSION["username"];
+    $picture = $_POST["picture"];
+    $id = $_POST["id"];
 
-	$SellerName=$_GET["SellerName"];
-	$Productid=$_GET["Productid"];
+
+
+    //---------------------------------------//
+    if(basename($_FILES["fileToUpload"]["name"])){
+    	unlink("uploads_product/".$picture);
+    	$target_dir = "uploads_product/";
+    	$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+
+		$PictureName =  basename($_FILES["fileToUpload"]["name"]);
+		$pieces = explode(".", $PictureName);
+
+
+
+	
+
+		$t = microtime(true);
+		$micro = sprintf("%06d",($t - floor($t)) * 1000000);
+		$PictureName = $pieces[0].date("Y-m-d H:i:s").".$micro$t.";
+		$PictureName = str_replace(".","","$PictureName");
+		$PictureName = str_replace("-","","$PictureName");
+		$PictureName = str_replace(":","","$PictureName");
+		$PictureName = str_replace(" ","","$PictureName");
+	
+
+
+
+
+    	$uploadOk = 1;
+    	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    	if(isset($_POST["submit"])) {
+    		$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+    		if($check !== false) {
+        	
+        		$uploadOk = 1;
+    		} else {
+        	
+        		$uploadOk = 0;
+    		}
+		}
+
+	// Check if file already exists
+	
+	
+		if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+    	
+    		$uploadOk = 0;
+		}
+		if ($uploadOk == 0) {
+    	
+			// if everything is ok, try to upload file
+		} else {
+    		if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+    			rename("$target_file","$target_dir"."$PictureName.$pieces[1]");
+    			$PictureName = $PictureName.".".$pieces[1];
+        	
+    		} else {
+        
+    		}
+		}
+    }else{
+    	$PictureName = $picture;
+
+    }
+
+
+
+    
+
+
+
+    //---------------------------------------//
+
+
+	$strSQL = "UPDATE product SET name = '$name',detail = '$detail',type = '$type',category = '$category',picture ='$PictureName' where id ='$id'";
+	$objQuery = mysqli_query($objCon,$strSQL);
+
+
+
+	
+?>
+
+
+
+<?php
+
+	$SellerName=$username;
+	$Productid=$id;
 
 	$sql="SELECT d.name as ProductName, d.picture as picture, d.detail as detail, p.name as name, p.surname as surname,c.address as address,
 	c.phone as phone,c.facebook as facebook, c.line as line,p.picture as img  FROM selllist s INNER join product d 
@@ -91,6 +184,9 @@
 <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900' rel='stylesheet' type='text/css'>
 
 	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
+	<script src="js/google_map.js"></script>
+<script type="text/javascript" src="js/showUser.js"></script>
 		<style>
 .circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
     height: 40px;  /* ความสูงปรับให้เป็นออโต้ */
@@ -114,47 +210,14 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
 }
 </style>
-<script type="text/javascript">
-    var locations = [
-      ['Bondi Beach', -33.890542, 151.274856, 4],
-      ['Coogee Beach', -33.923036, 151.259052, 5],
-      ['Cronulla Beach', -34.028249, 151.157507, 3],
-      ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
-      ['Maroubra Beach', -33.950198, 151.259302, 1]
-    ];
-
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 10,
-      center: new google.maps.LatLng(-33.92, 151.25),
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
-
-    var infowindow = new google.maps.InfoWindow();
-
-    var marker, i;
-
-    for (i = 0; i < locations.length; i++) { 
-      marker = new google.maps.Marker({
-        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-        map: map
-      });
-
-      google.maps.event.addListener(marker, 'click', (function(marker, i) {
-        return function() {
-          infowindow.setContent(locations[i][0]);
-          infowindow.open(map, marker);
-        }
-      })(marker, i));
-    }
-  </script>
 	</head>
 	<body>
-
 	<div class="modal fade" id="myModal" role="dialog">
       <div class="modal-content">
         
         <div class="modal-body">
-			55<div id="map" data-animate-effect="fadeIn"></div>
+         
+          <div id="map" data-animate-effect="fadeIn"></div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">ออก</button>
@@ -162,7 +225,7 @@
       </div>
     
   </div>
-5555
+
 
 	<div class="modal fade" id="myModal1" role="dialog">
     <div class="modal-dialog modal-sm">
@@ -308,7 +371,7 @@
 									
 								</ul>
 								<br><br><br>
-								<center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูสถานที่ขายสินค้า</button></center>
+								<center><a href="create product.php"><button type="button" class="btn btn-success" >เพิ่มสินค้าใหม่</button></a> <a href="selllist.php"><button type="button" class="btn btn-primary" >กลับสู่หน้าหลัก</button></a></center>
 							</div>
 							
 						</div>
@@ -335,9 +398,7 @@
 	<script src="js/jquery.waypoints.min.js"></script>
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
-	<script src="js/google_map.js"></script>
-	<script type="text/javascript" src="js/showUser.js"></script>
+
 	</body>
 </html>
 

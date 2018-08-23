@@ -7,10 +7,11 @@
 
 
 
-	$sql="SELECT p.name as name,p.picture as picture, s.username as SellerName, p.id as Productid FROM selllist s
-			inner join product p
-			on s.productid=p.id
-			where p.category='$type' and p.name like '%$value%'";
+	$sql="SELECT p.name as name,p.picture as picture, s.username as SellerName, p.id 
+	as Productid,m.market,m.latitude,m.longitude FROM selllist s inner join product p 
+	on s.productid=p.id INNER JOIN profile f ON f.username=s.username INNER JOIN gmarket g 
+	ON g.username=f.username INNER JOIN market m ON m.id = g.marketid 
+	where p.category='$type' and p.name like '%$value%'";
 
 
     $query=mysqli_query($objCon,$sql);

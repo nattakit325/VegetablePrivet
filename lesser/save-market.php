@@ -26,7 +26,10 @@
        
         $i = $i + 1 ;
     }
-
+    echo "<script language=\"JavaScript\">";
+    echo "alert('สมัครสมาชิกสำเร็จ');";
+    echo "window.location = 'suscess.php'; ";
+    echo "</script>";
     
-   echo "done";
+  
 ?>
