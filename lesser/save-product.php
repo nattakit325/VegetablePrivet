@@ -12,8 +12,6 @@
 
 
     //---------------------------------------//
-if(basename($_FILES["fileToUpload"]["name"]){
-
     $target_dir = "/home/nattakit/domains/nattakitmju.com/public_html/uploads_product/";
     $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 
@@ -38,7 +36,7 @@ if(basename($_FILES["fileToUpload"]["name"]){
 	
 
 
-	
+
 
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
@@ -66,21 +64,20 @@ if(basename($_FILES["fileToUpload"]["name"]){
 	} else {
     	if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
     		rename("$target_file","$target_dir"."$PictureName.$pieces[1]");
-        	$PictureName = $PictureName.$pieces[1];
+        	
     	} else {
 
         
     	}
 	}
-}
-$PictureName = 'product.png'
+
 
 
     //---------------------------------------//
 
 
 	$strSQL = "INSERT INTO product";
-    $strSQL .="(name,detail,type,category,picture) VALUES ('$name','$detail','$type','$category','$PictureName')";
+    $strSQL .="(name,detail,type,category,picture) VALUES ('$name','$detail','$type','$category','$PictureName.$pieces[1]')";
 	$objQuery = mysqli_query($objCon,$strSQL);
 
 
