@@ -1,126 +1,7 @@
-<?php
-	session_start();
-	
-    include "connect.php";
-    $name =  $_POST['name'];
-    $detail =  $_POST['detail'];
-    $type =  $_POST['type'];
-    $category =  $_POST['value'];
-    $picture =  'product.png';
-    $username = $_SESSION["username"];
-
-
-
-    //---------------------------------------//
-    $target_dir = "/home/nattakit/domains/nattakitmju.com/public_html/uploads_product/";
-    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-
-	$PictureName =  basename($_FILES["fileToUpload"]["name"]);
-	$pieces = explode(".", $PictureName);
-
-
-	$path = getcwd();
-
-	
-
-
-	
-
-	$t = microtime(true);
-	$micro = sprintf("%06d",($t - floor($t)) * 1000000);
-	$PictureName = $pieces[0].date("Y-m-d H:i:s").".$micro$t.";
-	$PictureName = str_replace(".","","$PictureName");
-	$PictureName = str_replace("-","","$PictureName");
-	$PictureName = str_replace(":","","$PictureName");
-	$PictureName = str_replace(" ","","$PictureName");
-	
-
-
-
-
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-    if(isset($_POST["submit"])) {
-    	$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-    	if($check !== false) {
-        	
-        	$uploadOk = 1;
-    	} else {
-        	
-        	$uploadOk = 0;
-    	}
-	}
-
-	// Check if file already exists
-	
-	
-	if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
-    	
-    	$uploadOk = 0;
-	}
-	if ($uploadOk == 0) {
-    	
-		// if everything is ok, try to upload file
-	} else {
-    	if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-    		rename("$target_file","$target_dir"."$PictureName.$pieces[1]");
-        	
-    	} else {
-
-        
-    	}
-	}
-
-
-
-    //---------------------------------------//
-
-
-	$strSQL = "INSERT INTO product";
-    $strSQL .="(name,detail,type,category,picture) VALUES ('$name','$detail','$type','$category','$PictureName.$pieces[1]')";
-	$objQuery = mysqli_query($objCon,$strSQL);
-
-
-	$ProfileSQL = "SELECT MAX(id) as id FROM product WHERE name = '$name'";
-	$objQuery2 = mysqli_query($objCon,$ProfileSQL);
-	$objResult2 = mysqli_fetch_array($objQuery2 ,MYSQLI_ASSOC);
-
-	$id = $objResult2["id"];
-
-
-
-
-	$strSQL = "INSERT INTO selllist";
-    $strSQL .="(productid,username) VALUES ('$id','$username')";
-	$objQuery = mysqli_query($objCon,$strSQL);
-
-   
-
-	
+<?php 
+session_start();
+include "connect.php";
 ?>
-
-
-
-<?php
-
-	$SellerName=$username;
-	$Productid=$id;
-
-	$sql="SELECT d.name as ProductName, d.picture as picture, d.detail as detail, p.name as name, p.surname as surname,c.address as address,
-	c.phone as phone,c.facebook as facebook, c.line as line,p.picture as img  FROM selllist s INNER join product d 
-			on s.productid = d.id
-			INNER JOIN profile p 
-			on s.username = p.username
-			inner join contact c
-			on s.username = c.username
-			where s.username = '$SellerName'
-			and s.productid = '$Productid' ";
-    $query=mysqli_query($objCon,$sql);
-    $objResult = mysqli_fetch_array($query,MYSQLI_ASSOC);
-
-?>
-
-
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -129,7 +10,7 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Lesser &mdash; Free HTML5 Bootstrap Website Template by FreeHTML5.co</title>
+	<title>Add Profile</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -160,6 +41,8 @@
 	<meta name="twitter:url" content="" />
 	<meta name="twitter:card" content="" />
 
+
+
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 	<link rel="shortcut icon" href="favicon.ico">
 
@@ -178,22 +61,19 @@
 	<!-- Theme style  -->
 	<link rel="stylesheet" href="css/style.css">
 
-	<!-- Modernizr JS -->
-	<script src="js/modernizr-2.6.2.min.js"></script>
-	<!-- FOR IE9 below -->
-	<!--[if lt IE 9]>
-	<script src="js/respond.min.js"></script>
-	<![endif]-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900' rel='stylesheet' type='text/css'>
 
-	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
-	<script src="js/google_map.js"></script>
-<script type="text/javascript" src="js/showUser.js"></script>
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+
+<script>
+	function getPicture(value) {
+     alert(value)
+}
+</script>
+
 		<style>
 .circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
     height: 40px;  /* ความสูงปรับให้เป็นออโต้ */
@@ -202,39 +82,26 @@
     border-radius: 50%; /* ปรับเป็น 50% คือความโค้งของเส้นขอบ*/
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
 }
-.picture{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
-    height: 30px;  /* ความสูงปรับให้เป็นออโต้ */
-    width: 30px;  /* ความสูงปรับให้เป็นออโต้ */
-    border: 3px solid #fff; /* เส้นขอบขนาด 3px solid: เส้น #fff:โค้ดสีขาว */
-    border-radius: 50%; /* ปรับเป็น 50% คือความโค้งของเส้นขอบ*/
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
-}
 .circlein{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
-    height: 150px;  /* ความสูงปรับให้เป็นออโต้ */
+    height: 140px;  /* ความสูงปรับให้เป็นออโต้ */
     width: 140px;  /* ความสูงปรับให้เป็นออโต้ */
     border: 3px solid #fff; /* เส้นขอบขนาด 3px solid: เส้น #fff:โค้ดสีขาว */
     border-radius: 50%; /* ปรับเป็น 50% คือความโค้งของเส้นขอบ*/
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
 }
+
+
 </style>
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
 	</head>
 	<body>
 	<div class="modal fade" id="myModal" role="dialog">
-      <div class="modal-content">
-        
-        <div class="modal-body">
-         
-          <div id="map" data-animate-effect="fadeIn"></div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">ออก</button>
-        </div>
-      </div>
-    
-  </div>
-
-
-	<div class="modal fade" id="myModal1" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
@@ -298,6 +165,10 @@
     </div>
   </div>
 
+
+
+
+	
 	
 	<div id="fh5co-page">
 	<header id="fh5co-header" role="banner">
@@ -309,8 +180,8 @@
 						<li>
 							<?php if(empty($_SESSION["username"])){
 								?>
-							<a href="" data-toggle="modal" data-target="#myModal1">เข้าสู่ระบบ</a></li>
-							<a href="" data-toggle="modal" data-target="#myModal1"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
+							<a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
+							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
 						<?php }else{?>
 							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></a></li>
 							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
@@ -321,79 +192,103 @@
 			</div>
 		</div>
 	</header>
-	<div id="fh5co-about-section">
+	<form action="save-product.php" method="post" enctype="multipart/form-data">
+	<div id="fh5co-contact-section">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2><?php echo $objResult["ProductName"]; ?></h2>
+					<h2>เพิ่มสินค้า</h2>
+					<p><span>Add your Product</span></p>
 				</div>
 			</div>
+
 			<div class="row">
-				<div class="col-md-8">
+				
+				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 					<div class="row">
-						<div class="col-md-12">
-							<div class="about-inner">
-								<img class="img-responsive" src="uploads_product/<?php echo $objResult["picture"]; ?>" alt="About" height="100%" width="100%">
-								
-							</div>
+				
+				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+					
+					<div class="row">
+						
+							<div class="col-md-5 text-center">
+
+					<div class="work-inner">
+						<a  class="work-grid" style="background-image: url(images/product.png);">
+						</a>
+						<div class="desc">
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" id="fileToUpload" >
+							
 						</div>
 					</div>
 				</div>
-				
-				<div class="col-md-4">
-					<aside class="sidebar">
-						<div class="row">
-							<div class="col-md-12 side">
-								<h3><i class="fas fa-info-circle"></i>&nbsp;&nbsp;รายละเอียด</h3>
-								<ul>
-									<li>
-										<?php echo $objResult["detail"]; ?>
-									</li>
-									
-								</ul>
-							</div>
+			
+							<div class="col-md-6">
+								<div class="form-group">
 
-							<div class="col-md-12 side">
-								<h3><img class="picture" src="images/<?php echo $objResult["img"]; ?>" width="10%" height="12%" />&nbsp;&nbsp;ผู้จำหน่าย</h3>
-								<ul>
-									<li>
-										<li><?php echo $objResult["name"];?>  &nbsp;&nbsp;<?php echo $objResult["surname"];?></li>
-						
-									</li>
 									
-								</ul>
-							</div>
-							<div class="col-md-12 side">
-								<h3><i class="fas fa-address-card"></i>&nbsp;&nbsp;ช่องทางการติดต่อ</h3>
-								<ul>
-									<li>
-										<li><i class="fas fa-map-marker-alt"></i><a href="#"><?php echo $objResult["address"]; ?></a></li>
-									<li><i class="fas fa-map-pin"></i></i><a href="#"> ห่างออกไป 14 กม.</a></li>
-									<li><i class="fas fa-phone"></i><a href="#"><?php echo $objResult["phone"]; ?></a></li>
-									<li><i class="icon-facebook"></i><a href="#"><?php echo $objResult["facebook"]; ?></a></li>
-									<li><i class="fab fa-line"></i><a href="#"><?php echo $objResult["line"]; ?></a></li>
-						</a>
 
-									</li>
+									<input class="form-control" placeholder="ชื่อสินค้า" type="text" name="name" required>
+
+								</div>
+							</div>
+							<div class="col-md-6">
+							<div class="form-group">
+								<textarea name="detail" class="form-control" id="" cols="30" rows="7" placeholder="Message"></textarea>
+							</div>
+						</div>
+						<?php if($_SESSION["status"]=='เกษตรกร'){ ?>
+							<input type="hidden" name="type" value="พืชผัก">
+						<?php }else{ ?>
+							<input type="hidden" name="type" value="ปัจจัย">
+						<?php } ?>
+
+						<div class="col-md-6">
+								<div class="form-group">
+
 									
-								</ul>
-								<br><br><br>
-								<center><a href="create product.php"><button type="button" class="btn btn-success" >เพิ่มสินค้าใหม่</button></a> <a href="selllist.php"><button type="button" class="btn btn-primary" >กลับสู่หน้าหลัก</button></a></center>
+
+									<select class="form-control" name="value" required>
+
+										<option value="">เลือกประเภทสินค้า</option>
+										<?php if($_SESSION["status"]=='เกษตรกร'){ ?>
+										<option value="ดอก">ดอก</option>
+										<option value="ผล">ผล</option>
+										<option value="ราก">ราก</option>
+										<option value="ลำต้น">ลำต้น</option>
+										<option value="ใบ">ใบ</option>
+										<option value="อื่นๆ">อื่นๆ</option>
+									<?php }else{ ?>
+										<option value="ปุ๋ย">ปุ๋ย</option>
+										<option value="เครื่องมือ">เครื่องมือ</option>
+										<option value="อื่นๆ">อื่นๆ</option>
+									<?php } ?>
+									</select>
+								</div>
 							</div>
 							
-						</div>
-					</aside>
+						
+						
+					</div>
+					
 				</div>
-
 			</div>
-
+				</div>
+			</div>
 		</div>
+	</div>
 
-	</div>
 	
-	
-	</div>
-	
+  <div class="col-md-12">
+              <div class="form-group">
+                <br>
+                <center>
+                <input  class="btn btn-primary" type="submit" value="Upload Image" name="submit"> 
+                </center>
+              </div>
+            </div>
+            
+	</form>
 	
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
@@ -403,6 +298,9 @@
 	<script src="js/bootstrap.min.js"></script>
 	<!-- Waypoints -->
 	<script src="js/jquery.waypoints.min.js"></script>
+	<!-- Google Map -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
+	<script src="js/google_map.js"></script>
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
 

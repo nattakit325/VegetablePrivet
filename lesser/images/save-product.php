@@ -15,12 +15,27 @@
     $target_dir = "/home/nattakit/domains/nattakitmju.com/public_html/uploads_product/";
     $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 
+	//---------------- ควยยยยยยยยยย -----------------------
+	// print_r($_FILES);
+
+	// $file_name = $_FILES['fileToUpload']['name'];
+	// $file_size = $_FILES['fileToUpload']['size'];
+	// $file_tmp = $_FILES['fileToUpload']['tmp_name'];
+	// $file_type = $_FILES['fileToUpload']['type'];
+	// $type = explode('.', $file_name);
+	// $newName = "pbms_file".date("Y-m-d")."_".strtotime("now")."_".rand(1,10000).".".end($type);
+
+	// if(move_uploaded_file($file_tmp,"/home/nattakit/domains/nattakitmju.com/public_html/uploads_product/".$newName)){
+		
+	// }
 	$PictureName =  basename($_FILES["fileToUpload"]["name"]);
 	$pieces = explode(".", $PictureName);
 
 
 	$path = getcwd();
-
+echo "This Is Your Absolute Path: ";
+echo $path; 
+//echo $target_file;
 	
 
 
