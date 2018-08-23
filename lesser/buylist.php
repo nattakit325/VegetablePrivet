@@ -1,49 +1,17 @@
 <?php
-	session_start();
-	include "connect.php";
+session_start();
+include "connect.php";
 
-	$value=$_GET["value"];
-	$type=$_GET["type"];
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-	$sql="SELECT p.name as name,p.picture as picture, s.username as SellerName, 
-		p.id as Productid,m.market as marketname,m.latitude as latitude,m.longitude as longitude FROM selllist s inner join 
-		product p on s.productid=p.id INNER JOIN profile f ON f.username=s.username INNER JOIN 
-		gmarket g ON g.username=f.username INNER JOIN market m ON m.id = g.marketid 
-		where p.category= '$value' ";
-=======
-=======
->>>>>>> b7c06fbef6bb257c15093f9014374f377a4d9ae0
-=======
->>>>>>> b7c06fbef6bb257c15093f9014374f377a4d9ae0
-=======
->>>>>>> b7c06fbef6bb257c15093f9014374f377a4d9ae0
-=======
->>>>>>> b7c06fbef6bb257c15093f9014374f377a4d9ae0
-	$sql="SELECT p.name as name,p.picture as picture, s.username as SellerName, p.id as Productid FROM selllist s
-			inner join product p
-			on s.productid=p.id
-			where p.category='$value' and type='$type'";
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> b7c06fbef6bb257c15093f9014374f377a4d9ae0
-=======
->>>>>>> b7c06fbef6bb257c15093f9014374f377a4d9ae0
-=======
->>>>>>> b7c06fbef6bb257c15093f9014374f377a4d9ae0
-=======
->>>>>>> b7c06fbef6bb257c15093f9014374f377a4d9ae0
-=======
->>>>>>> b7c06fbef6bb257c15093f9014374f377a4d9ae0
-    $query=mysqli_query($objCon,$sql);
-	$queryC=mysqli_query($objCon,$sql);
-	$queryB=mysqli_query($objCon,$sql);
+$value = $_GET["value"];
+$type = $_GET["type"];
+$sql = "SELECT p.name as name,p.picture as picture, s.username as SellerName,
+		p.id as Productid,m.market as marketname,m.latitude as latitude,m.longitude as longitude FROM selllist s inner join
+		product p on s.productid=p.id INNER JOIN profile f ON f.username=s.username INNER JOIN
+		gmarket g ON g.username=f.username INNER JOIN market m ON m.id = g.marketid
+		where p.category= '$value' and p.type='$type'";
+$query = mysqli_query($objCon, $sql);
+$queryC = mysqli_query($objCon, $sql);
+$queryB = mysqli_query($objCon, $sql);
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -59,12 +27,12 @@
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
 	<meta name="author" content="FreeHTML5.co" />
 
-  <!-- 
+  <!--
 	//////////////////////////////////////////////////////
 
-	FREE HTML5 TEMPLATE 
+	FREE HTML5 TEMPLATE
 	DESIGNED & DEVELOPED by FreeHTML5.co
-		
+
 	Website: 		http://freehtml5.co/
 	Email: 			info@freehtml5.co
 	Twitter: 		http://twitter.com/fh5co
@@ -90,7 +58,7 @@
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900' rel='stylesheet' type='text/css'>
 
 	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
-	
+
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
 	<!-- Icomoon Icon Fonts-->
@@ -115,7 +83,7 @@
 	<![endif]-->
 
 	</head>
-	<body onload="getLocation()">
+	<body onload="setMarket()">
 
 <script type="text/javascript" src="js/showUser.js"></script>
 
@@ -144,7 +112,7 @@
 </style>
 <script>
 function showHint(str,type) {
-    
+
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -153,53 +121,109 @@ function showHint(str,type) {
         }
         xmlhttp.open("GET", "gethint.php?q="+str+"&type="+type, true);
         xmlhttp.send();
-    
+
 }
 </script>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry"></script>
 <script>
 var x = document.getElementById("demo");
-var p1;
-var p2;
+var p1 = 0;
+let p2;
 var market = [];
-//setMarket();
 function setMarket(){
-	// <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ ?>
-	// 	market.push(["<?php echo $row["SellerName"];?>",
-	// 	"<?php echo $row["picture"];?>","<?php echo $row["name"];?>",
-	// 	"<?php echo $row["Productid"];?>","<?php echo $row["marketname"];?>",
-	// 	"<?php echo $row["latitude"];?>","<?php echo $row["longitude"];?>"]);
-	// <?php } ?>
-	// alert(market[0][0]); // x
-	// alert(market[0][1]); // x
-	// alert(market[0][2]); // x
-	// market[0][3] = 20;
-	// alert(market[0][3]);
-	// alert(market[1][0]);
-	// alert(market);
+	 <?php while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {?>
+		market.push(["<?php echo $row["SellerName"]; ?>",
+		"<?php echo $row["picture"]; ?>","<?php echo $row["name"]; ?>",
+		"<?php echo $row["Productid"]; ?>","<?php echo $row["marketname"]; ?>",
+	 	"<?php echo $row["latitude"]; ?>","<?php echo $row["longitude"]; ?>"]);
+	 <?php }?>
+	getLaLongMarket();
 }
-function getLaLongMarket(la,long) {
-	p1 = new google.maps.LatLng(la, long);
+function getLaLongMarket() {
+	 for(var i=0;i<market.length;i++){
+		 market[i][7] = new google.maps.LatLng(market[i][5], market[i][6]);
+	 }
+	 getLocation();
 }
 function getLocation() {
-	
+
     if (navigator.geolocation) {
         navigator.geolocation.watchPosition(CurrentPosition);
-    } else { 
+    } else {
 	document.getElementById("demo").innerHTML = "Geolocation is not supported by this browser.";}
     }
 function CurrentPosition(position) {
-	document.getElementById("demo").innerHTML = "Paragraph changed!";
-	//alert(position.coords.latitude);
-	//x.innerHTML = "Latitude: " + position.coords.latitude + 
-    //"<br>Longitude: " + position.coords.longitude;
-	//p2 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-	//showPosition();
+	p2 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	if(p1 == 0){
+		showPosition();
+	}
 }
-// function showPosition(){
-// 	x.innerHTML = "Geolocation is not supported by this browser.";
-// 	x.innerHTML = (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) / 1000).toFixed(2);
-// }
+ function showPosition(){
+ 	p1 = 1;
+	for(var j=0;j<market.length;j++){
+		 market[j][8] = (google.maps.geometry.spherical.computeDistanceBetween(market[j][7], p2) / 1000).toFixed(2);
+	 }
+	 market.sort(function(a,b){
+    	return a[8] - b[8];
+	});
+	//alert(market.length);
+	for(var i=0;i<market.length;i++){
+		var k = i+1;
+		for(k;k<market.length;k++){
+			if(market[i][0]==market[k][0]&&market[i][3]==market[k][3]){
+			   market.splice(k, 1);
+			   k--;
+			}
+		}
+		
+	}	
+	showOnWeb()
+
+	
+}
+	function showOnWeb(){
+		
+	
+		for(var i=0;i<market.length;i++){
+		var showV  = document.getElementById('showV');
+		var div1 = document.createElement("div");
+		div1.classList.add("col-md-4","text-center");
+		var div2 = document.createElement("div");
+		div2.classList.add("work-inner");
+		var a1 = document.createElement("a");
+		a1.href = "ProductDetail.php?SellerName="+market[i][0]+"&Productid="+market[i][3];
+		a1.classList.add("work-grid");
+		a1.style.cssText = "background-image: url(uploads_product/"+market[i][1];
+		var div3 = document.createElement("div");
+		div3.classList.add("desc");
+		var h3 = document.createElement("h3");
+		var a2 = document.createElement("a");
+		a2.href = "ProductDetail.php?SellerName="+market[i][0]+"&Productid="+market[i][3];
+		var TnameVeget = document.createTextNode(market[i][2]);
+		var pDisten = document.createElement("p");
+		var TextDistan = document.createTextNode("ห่างจากคุณ "+market[i][8]+" กิโลเมตร");
+		var pLink = document.createElement("p");
+		var a3 = document.createElement("a");
+		a3.href = "ProductDetail.php?SellerName="+market[i][0]+"&Productid="+market[i][3];
+		a3.classList.add("btn","btn-primary","btn-outline","with-arrow");
+		var TextLink = document.createTextNode("ดูรายละเอียด");
+		var icon = document.createElement("i");
+		icon.classList.add("icon-arrow-right");
+		showV.appendChild(div1);
+		div1.appendChild(div2);
+		div2.appendChild(a1);
+		div2.appendChild(div3);
+		div3.appendChild(h3);
+		h3.appendChild(a2);
+		a2.appendChild(TnameVeget);
+		div3.appendChild(pDisten);
+		pDisten.appendChild(TextDistan);
+		div3.appendChild(pLink);
+		pLink.appendChild(a3);
+		a3.appendChild(TextLink);
+		a3.appendChild(icon);
+		}
+	}
 </script>
 
 
@@ -215,13 +239,13 @@ function CurrentPosition(position) {
           <center>
 						<form action="check_login.php" method="POST"  id="login_form">
 							<p id="txtHint" style="color:red; "></p>
-							
+
 							<div class="form-group">
 								<input type="text" class="form-control" name="usr" placeholder="Username" required id="usr">
 							</div>
 							<div class="form-group">
 								<input type="password" class="form-control" name="pwd" placeholder="Password" required id="pwd">
-								<input type="hidden"  name="page" value="buylist.php" id="page"> 
+								<input type="hidden"  name="page" value="buylist.php" id="page">
 							</div>
 							<button type="button" class="btn btn-success" onclick="showUser(document.getElementById('usr').value,document.getElementById('pwd').value,document.getElementById('page').value)">เข้าสู่ระบบ</button>
 							<!--<input type="submit" class="btn btn-success" placeholder="Password" value="เข้าสู่ระบบ">-->
@@ -230,7 +254,7 @@ function CurrentPosition(position) {
   <br>
   <a href="register.html">ยังไม่ได้สมัครบัญชีในระบบ</a>
         </center>
-          
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
@@ -243,23 +267,23 @@ function CurrentPosition(position) {
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><h4 class="modal-title"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></h4></center>
+          <center><h4 class="modal-title"><?php echo $_SESSION["name"]; ?> <?php echo $_SESSION["surname"]; ?></h4></center>
         </div>
         <div class="modal-body">
           <center>
-						<img class="circlein" src="images/<?php echo $_SESSION["picture"]?>" width="100%" height="100%" />
+						<img class="circlein" src="images/<?php echo $_SESSION["picture"] ?>" width="100%" height="100%" />
 						<br>
 						<br>
-						<p>FirstName : <?php echo $_SESSION["name"];?></p>
-						<p>LastName   : <?php echo $_SESSION["surname"];?></p>
-						<p>career     : <?php echo $_SESSION["career"];?></p>
-						<p>age        : <?php echo $_SESSION["age"];?></p>
+						<p>FirstName : <?php echo $_SESSION["name"]; ?></p>
+						<p>LastName   : <?php echo $_SESSION["surname"]; ?></p>
+						<p>career     : <?php echo $_SESSION["career"]; ?></p>
+						<p>age        : <?php echo $_SESSION["age"]; ?></p>
   <br>
 
   <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
   <a href="ClearSession.php"><button type="button" class="btn btn-warning" >ออกจากระบบ</button></a>
         </center>
-          
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
@@ -269,8 +293,8 @@ function CurrentPosition(position) {
   </div>
 
 
-	
-	
+
+
 	<div id="fh5co-page">
 	<header id="fh5co-header" role="banner">
 		<div class="container">
@@ -279,21 +303,21 @@ function CurrentPosition(position) {
 				<nav role="navigation">
 					<ul>
 						<li>
-							<?php if(empty($_SESSION["username"])){
-								?>
+							<?php if (empty($_SESSION["username"])) {
+    ?>
 							<a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
 							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
-						<?php }else{?>
-							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></a></li>
-							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
-						<?php } ?>
-						
+						<?php } else {?>
+							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"]; ?> <?php echo $_SESSION["surname"]; ?></a></li>
+							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"] ?>" width="10%" height="12%" /></a>
+						<?php }?>
+
 					</ul>
 				</nav>
 			</div>
 		</div>
 	</header>
-	
+
 
 	<div id="fh5co-main-services-section">
 		<div class="container">
@@ -311,54 +335,39 @@ function CurrentPosition(position) {
                             <span class="glyphicon glyphicon-search"></span>
                             ค้นหา
                         </button>
-                    </form>     
+                    </form>
 				</div>
 
             </div>
             <div id="search_result">
              <div class="row">
 				<div class="fh5co-heading">
-					<?php if(mysqli_fetch_array($queryC,MYSQLI_ASSOC)<=0){?>
+					<?php if (mysqli_fetch_array($queryC, MYSQLI_ASSOC) <= 0) {?>
 						<center><h2>ไม่มีรายการในประเภทสินค้าดังกล่าว</h2> </center>
-					<?php }else{ ?>
-					<h2>แนะนำ</h2> 
+					<?php } else {?>
+					<h2>แนะนำ</h2>
 				<?php }?>
 				</div>
             </div>
 			<div class="row" >
 				<div class="col-md-12">
-                    <div class="row">
-                    <?php while($row=mysqli_fetch_array($queryB,MYSQLI_ASSOC)){ ?>
-                        <div class="col-md-4 text-center">
-					<div class="work-inner">
-						<a href="ProductDetail.php?SellerName=<?php echo $row["SellerName"];?>&Productid=<?php echo $row["Productid"];?>" class="work-grid" style="background-image: url(uploads_product/<?php echo $row["picture"];?>);">
-						</a>
-						<div class="desc">
-							<h3><a href="ProductDetail.php?SellerName=<?php echo $row["SellerName"];?>&Productid=<?php echo $row["Productid"];?>"><?php echo $row["name"];?></a></h3>
-							<p id="demo"></p>
-							<br>
-							 <p><a href="ProductDetail.php?SellerName=<?php echo $row["SellerName"];?>&Productid=<?php echo $row["Productid"];?>" class="btn btn-primary btn-outline with-arrow">ดูรายละเอียด<i class="icon-arrow-right"></i></a></p>
-						</div>
-					</div>
-				</div>
-
-
-				    <?php } ?>
+                    <div class="row" id="showV">
+           
 			        </div>
 				</div>
 			</div>
-</div>
+	</div>
 
 	</div>
 
 </div>
-	
+
 
 <div id="search_result">
 </div>
 
 
-	
+
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
@@ -371,7 +380,7 @@ function CurrentPosition(position) {
     <script src="js/main.js"></script>
     <!-- Search -->
     <script type="text/javascript" src="jquery-1.11.2.min.js"></script>
-        
+
 	</body>
 </html>
 
