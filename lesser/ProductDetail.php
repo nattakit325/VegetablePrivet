@@ -5,18 +5,26 @@
 
 	$SellerName=$_GET["SellerName"];
 	$Productid=$_GET["Productid"];
-
-	$sql="SELECT d.name as ProductName, d.picture as picture, d.detail as detail, p.name as name, p.surname as surname,c.address as address,
-	c.phone as phone,c.facebook as facebook, c.line as line,p.picture as img  FROM selllist s INNER join product d 
-			on s.productid = d.id
-			INNER JOIN profile p 
-			on s.username = p.username
-			inner join contact c
-			on s.username = c.username
-			where s.username = '$SellerName'
-			and s.productid = '$Productid' ";
-    $query=mysqli_query($objCon,$sql);
-    $objResult = mysqli_fetch_array($query,MYSQLI_ASSOC);
+	$MarketId=$_GET["MarketId"];
+	$sql="SELECT d.name as ProductName, d.picture as picture, d.detail as detail, 
+	p.name as name, p.surname as surname,c.address as address,c.phone as phone,
+	c.facebook as facebook, c.line as line,p.picture as img ,m.market as  marketName ,
+	m.latitude as latitude , m.longitude as longitude FROM selllist s INNER join product d on 
+	s.productid = d.id INNER JOIN profile p on s.username = p.username inner join contact c on
+	s.username = c.username INNER JOIN  gmarket g ON  g.username=p.username INNER JOIN market m ON 
+	m.id=g.marketid where s.username = '$SellerName' and s.productid = '$Productid' ";
+	$queryA=mysqli_query($objCon,$sql);
+		
+	$sqlgetbyMarketid="SELECT d.name as ProductName, d.picture as picture, d.detail as detail, 
+	p.name as name, p.surname as surname,c.address as address,c.phone as phone,
+	c.facebook as facebook, c.line as line,p.picture as img ,m.market as  marketName ,
+	m.latitude as latitude , m.longitude as longitude FROM selllist s INNER join product d on 
+	s.productid = d.id INNER JOIN profile p on s.username = p.username inner join contact c on
+	s.username = c.username INNER JOIN  gmarket g ON  g.username=p.username INNER JOIN market m ON 
+	m.id=g.marketid where s.username = '$SellerName' and s.productid = '$Productid' AND m.id= $MarketId";
+		$query=mysqli_query($objCon,$sqlgetbyMarketid);
+		$objResult = mysqli_fetch_array($query,MYSQLI_ASSOC);
+	
 
 ?>
 
@@ -63,9 +71,7 @@
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 	<link rel="shortcut icon" href="favicon.ico">
 
-	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900' rel='stylesheet' type='text/css'>
 
-	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
 	
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
@@ -85,12 +91,12 @@
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900' rel='stylesheet' type='text/css'>
 
-	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO9xE9smgXJIDFDpyPaDGZcjQu-ybwOKc">
+	</script>
 		<style>
 .circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
     height: 40px;  /* ความสูงปรับให้เป็นออโต้ */
@@ -114,47 +120,20 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
 }
 </style>
-<script type="text/javascript">
-    var locations = [
-      ['Bondi Beach', -33.890542, 151.274856, 4],
-      ['Coogee Beach', -33.923036, 151.259052, 5],
-      ['Cronulla Beach', -34.028249, 151.157507, 3],
-      ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
-      ['Maroubra Beach', -33.950198, 151.259302, 1]
-    ];
 
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 10,
-      center: new google.maps.LatLng(-33.92, 151.25),
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
-
-    var infowindow = new google.maps.InfoWindow();
-
-    var marker, i;
-
-    for (i = 0; i < locations.length; i++) { 
-      marker = new google.maps.Marker({
-        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-        map: map
-      });
-
-      google.maps.event.addListener(marker, 'click', (function(marker, i) {
-        return function() {
-          infowindow.setContent(locations[i][0]);
-          infowindow.open(map, marker);
-        }
-      })(marker, i));
-    }
-  </script>
 	</head>
 	<body>
+
+		
+
+
+
 
 	<div class="modal fade" id="myModal" role="dialog">
       <div class="modal-content">
         
         <div class="modal-body">
-			55<div id="map" data-animate-effect="fadeIn"></div>
+				<div id="map"></div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">ออก</button>
@@ -162,7 +141,6 @@
       </div>
     
   </div>
-5555
 
 	<div class="modal fade" id="myModal1" role="dialog">
     <div class="modal-dialog modal-sm">
@@ -334,10 +312,38 @@
 	<!-- Waypoints -->
 	<script src="js/jquery.waypoints.min.js"></script>
 	<!-- MAIN JS -->
-	<script src="js/main.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
-	<script src="js/google_map.js"></script>
+	 
 	<script type="text/javascript" src="js/showUser.js"></script>
 	</body>
 </html>
+<script type="text/javascript">
+    var locations = [
+			<?php while ($row = mysqli_fetch_array($queryA, MYSQLI_ASSOC)) {?>
+				['<?php echo $row["marketName"]; ?>', <?php echo $row["latitude"]; ?>, <?php echo $row["longitude"]; ?>, 4],
+	 		<?php }?>
+    ];
 
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 14,
+      center: new google.maps.LatLng(<?php echo $objResult["latitude"]; ?>,<?php echo $objResult["longitude"]; ?>),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) { 
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+  </script>

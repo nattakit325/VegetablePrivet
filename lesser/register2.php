@@ -71,7 +71,7 @@
 	<link rel="stylesheet" href="css/style.css">
 
 
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2G4KpiHxEwq-geWsql29f4CL7ks4rPP0&callback=setupMap">
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO9xE9smgXJIDFDpyPaDGZcjQu-ybwOKc&callback=setupMap">
 	</script>
 	<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -112,6 +112,14 @@ function myFunction() {
     return this;
 	};
 	marketarr.remove(x.value);
+	for(var i =0;i<loname.length;i++){
+		if(x.value == loname[i]){
+			loname.remove(x.value);
+			la.splice(i,1);
+			long.splice(i,1);
+		}
+	}
+	
 	console.log(x.value);
 	console.log(marketarr);
 	x.remove(x.selectedIndex);
@@ -161,11 +169,6 @@ var myOptions = {
 };
 var map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
 
-var marker = new google.maps.Marker({
-	map: map,
-	position: new google.maps.LatLng(15.000682, 103.728207),
-	draggable: true
-});
 
 var infowindow = new google.maps.InfoWindow;
 if (navigator.geolocation) {
@@ -190,7 +193,7 @@ google.maps.event.addListener(map, 'click', function (event) {
 	html += 'location name : <input type="text" id="location_name" value="" /><br/>';
 	html += '<input type="button" value="Save" onclick="saveLatLng()" />';
 
-	infowindow.open(map, marker);
+	infowindow.open(map);
 	infowindow.setContent(html);
 	infowindow.setPosition(event.latLng);
 	marker.setPosition(event.latLng);
@@ -283,7 +286,7 @@ google.maps.event.addListener(map, 'click', function (event) {
               <div class="form-group">
                 <br>
                 <center>
-               <input value="ยืนยันการสมัครสมาชิก" class="btn btn-primary" type="button" onclick="saveMarket()">
+               <a href="/suscess.php"><input value="ยืนยันการสมัครสมาชิก" class="btn btn-primary" type="button" onclick="saveMarket()"></a>
                 </center>
               </div>
 			</div>
