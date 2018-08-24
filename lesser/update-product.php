@@ -15,7 +15,9 @@
 
     //---------------------------------------//
     if(basename($_FILES["fileToUpload"]["name"])){
+    	if($picture != "product.png"){
     	unlink("uploads_product/".$picture);
+    }
     	$target_dir = "uploads_product/";
     	$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 
