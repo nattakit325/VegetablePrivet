@@ -13,10 +13,7 @@
 
     //---------------------------------------//
     $target_dir = "uploads_product/";
-<<<<<<< HEAD
     //$target_dir = "/home/nattakit/domains/nattakitmju.com/public_html/uploads_product/";
-=======
->>>>>>> 53fe07db2d31e7d4cadd00cff1841c8ff864dcfc
     $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 
 	$PictureName =  basename($_FILES["fileToUpload"]["name"]);
