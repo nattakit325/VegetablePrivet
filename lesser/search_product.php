@@ -13,6 +13,14 @@
 	ON g.username=f.username INNER JOIN market m ON m.id = g.marketid 
 	where p.category='$type' and p.name like '%$value%'";
 
+	/*
+	SELECT p.name as name,p.picture as picture, s.username as SellerName,
+		p.id as Productid,m.market as marketname,m.latitude as latitude,m.longitude as longitude FROM selllist s inner join
+		product p on s.productid=p.id INNER JOIN profile f ON f.username=s.username INNER JOIN
+		gmarket g ON g.username=f.username INNER JOIN market m ON m.id = g.marketid
+		where p.category= '$type' and p.name like '%$value%'
+	*/
+
 
     $query=mysqli_query($objCon,$sql);
     $queryC=mysqli_query($objCon,$sql);

@@ -25,12 +25,11 @@
 }
 
 
-
 $sql="DELETE s,p
 		FROM selllist s
 		INNER JOIN product p
   		ON s.productid=p.id
-		WHERE s.username = '$username'and s.id = '$id'";
+		WHERE s.username = '$username'and s.productid = '$id'";
 
 $query=mysqli_query($objCon,$sql);
 
