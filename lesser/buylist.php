@@ -111,6 +111,7 @@ $queryB = mysqli_query($objCon, $sql);
 }
 </style>
 <script>
+
 function showHint(str,type) {
 
         var xmlhttp = new XMLHttpRequest();
@@ -132,6 +133,7 @@ var p1 = 0;
 let p2;
 var market = [];
 function setMarket(){
+
 	 <?php while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {?>
 		market.push(["<?php echo $row["SellerName"]; ?>",
 		"<?php echo $row["picture"]; ?>","<?php echo $row["name"]; ?>",
@@ -369,6 +371,7 @@ function CurrentPosition(position) {
 
 
 <div id="search_result">
+
 </div>
 
 

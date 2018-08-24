@@ -37,3 +37,4 @@ if(password.length==0){
   xmlhttp.open("GET","result_login.php?q="+str+"&password="+password,true);
   xmlhttp.send();
 }
+

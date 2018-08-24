@@ -13,6 +13,7 @@ $name = $_GET['name'];
         </div>
         <div class="modal-body">
           <center>
+            
 						
   <br>
 <form action="Condelete.php" method="POST">
