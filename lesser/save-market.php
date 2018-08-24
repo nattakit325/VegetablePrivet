@@ -34,13 +34,9 @@
         $strSQL3 .="(username,marketid) VALUES ('$user','$marketid')";
         $objQuery3 = mysqli_query($objCon,$strSQL3);
        $j = $j+1;
+
     }
     mysql_close($objCon);
-
-    echo "<script language=\"JavaScript\">";
-    echo "alert('สมัครสมาชิกสำเร็จ');";
-    echo "window.location = 'suscess.php'; ";
-    echo "</script>";
-    
+    header('location:/suscess.php');
   
 ?>

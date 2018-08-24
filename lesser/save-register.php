@@ -1,19 +1,70 @@
 <?php
 
      include "connect.php";
-if(isset($_POST["submit"])) {
-    $check = getimagesize($_FILES["filUpload"]["tmp_name"]);
-    if($check !== false) {
-        echo "File is an image - " . $check["mime"] . ".";
-        $uploadOk = 1;
-    } else {
-        echo "File is not an image.";
-        $uploadOk = 0;
-    }
-}
-	if(move_uploaded_file($_FILES["filUpload"]["tmp_name"],"myfile/".$_FILES["filUpload"]["name"]))
-	{
-		echo "Copy/Upload Complete<br>";
+
+     $target_dir = "/home/nattakit/domains/nattakitmju.com/public_html/uploads_product/";
+     $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+ 
+     $PictureName =  basename($_FILES["fileToUpload"]["name"]);
+     $pieces = explode(".", $PictureName);
+ 
+ 
+     $path = getcwd();
+ 
+     
+ 
+ 
+     
+ 
+     $t = microtime(true);
+     $micro = sprintf("%06d",($t - floor($t)) * 1000000);
+     $PictureName = $pieces[0].date("Y-m-d H:i:s").".$micro$t.";
+     $PictureName = str_replace(".","","$PictureName");
+     $PictureName = str_replace("-","","$PictureName");
+     $PictureName = str_replace(":","","$PictureName");
+     $PictureName = str_replace(" ","","$PictureName");
+     
+ 
+ 
+ 
+ 
+     $uploadOk = 1;
+     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+     if(isset($_POST["submit"])) {
+         $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+         if($check !== false) {
+             
+             $uploadOk = 1;
+         } else {
+             
+             $uploadOk = 0;
+         }
+     }
+ 
+     // Check if file already exists
+     
+     
+     if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+         
+         $uploadOk = 0;
+     }
+     if ($uploadOk == 0) {
+         
+         // if everything is ok, try to upload file
+     } else {
+         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+             rename("$target_file","$target_dir"."$PictureName.$pieces[1]");
+             
+         } else {
+ 
+         
+         }
+     }
+ 
+ 
+ 
+     //---------------------------------------//
+
         $pass = $_POST["password"];
         $strSQL = "SELECT * FROM login WHERE username = '".mysqli_real_escape_string($objCon,$_POST["username"])."'";
         $objQuery4 = mysqli_query($objCon,$strSQL);
@@ -30,7 +81,7 @@ if(isset($_POST["submit"])) {
         $objQuery = mysqli_query($objCon,$strSQL1);
         
         $strSQL2 = "INSERT INTO profile ";
-        $strSQL2 .="(name,surname,career,age,picture,username) VALUES ('".$_POST["firstname"]."','".$_POST["lastname"]."','".$_POST["status"]."','".$_POST["age"]."','".$_FILES["filUpload"]["name"]."','".$_POST["username"]."')";
+        $strSQL2 .="(name,surname,career,age,picture,username) VALUES ('".$_POST["firstname"]."','".$_POST["lastname"]."','".$_POST["status"]."','".$_POST["age"]."','$PictureName.$pieces[1]','".$_POST["username"]."')";
         $objQuery = mysqli_query($objCon,$strSQL2);
 
         $strSQL3 = "INSERT INTO `contact` ";
@@ -53,7 +104,7 @@ if(isset($_POST["submit"])) {
                 }
         }
 
-    }
+    
     
 
 

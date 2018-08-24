@@ -5,7 +5,7 @@ include "connect.php";
 $value = $_GET["value"];
 $type = $_GET["type"];
 $sql = "SELECT p.name as name,p.picture as picture, s.username as SellerName,
-		p.id as Productid,m.market as marketname,m.latitude as latitude,m.longitude as longitude FROM selllist s inner join
+		p.id as Productid,m.market as marketname,m.latitude as latitude,m.longitude as longitude, m.id as marketId FROM selllist s inner join
 		product p on s.productid=p.id INNER JOIN profile f ON f.username=s.username INNER JOIN
 		gmarket g ON g.username=f.username INNER JOIN market m ON m.id = g.marketid
 		where p.category= '$value' and p.type='$type'";
@@ -124,7 +124,8 @@ function showHint(str,type) {
 
 }
 </script>
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO9xE9smgXJIDFDpyPaDGZcjQu-ybwOKc&libraries=geometry">
+	</script>
 <script>
 var x = document.getElementById("demo");
 var p1 = 0;
@@ -135,13 +136,13 @@ function setMarket(){
 		market.push(["<?php echo $row["SellerName"]; ?>",
 		"<?php echo $row["picture"]; ?>","<?php echo $row["name"]; ?>",
 		"<?php echo $row["Productid"]; ?>","<?php echo $row["marketname"]; ?>",
-	 	"<?php echo $row["latitude"]; ?>","<?php echo $row["longitude"]; ?>"]);
+	 	"<?php echo $row["latitude"]; ?>","<?php echo $row["longitude"]; ?>",<?php echo $row["marketId"]; ?>]);
 	 <?php }?>
 	getLaLongMarket();
 }
 function getLaLongMarket() {
 	 for(var i=0;i<market.length;i++){
-		 market[i][7] = new google.maps.LatLng(market[i][5], market[i][6]);
+		 market[i][8] = new google.maps.LatLng(market[i][5], market[i][6]);
 	 }
 	 getLocation();
 }
@@ -161,10 +162,10 @@ function CurrentPosition(position) {
  function showPosition(){
  	p1 = 1;
 	for(var j=0;j<market.length;j++){
-		 market[j][8] = (google.maps.geometry.spherical.computeDistanceBetween(market[j][7], p2) / 1000).toFixed(2);
+		 market[j][9] = (google.maps.geometry.spherical.computeDistanceBetween(market[j][8], p2) / 1000).toFixed(2);
 	 }
 	 market.sort(function(a,b){
-    	return a[8] - b[8];
+    	return a[9] - b[9];
 	});
 	//alert(market.length);
 	for(var i=0;i<market.length;i++){
@@ -191,22 +192,22 @@ function CurrentPosition(position) {
 		var div2 = document.createElement("div");
 		div2.classList.add("work-inner");
 		var a1 = document.createElement("a");
-		a1.href = "ProductDetail.php?SellerName="+market[i][0]+"&Productid="+market[i][3];
+		a1.href = "ProductDetail.php?SellerName="+market[i][0]+"&Productid="+market[i][3]+"&MarketId="+market[i][7];
 		a1.classList.add("work-grid");
 		a1.style.cssText = "background-image: url(uploads_product/"+market[i][1];
 		var div3 = document.createElement("div");
 		div3.classList.add("desc");
 		var h3 = document.createElement("h3");
 		var a2 = document.createElement("a");
-		a2.href = "ProductDetail.php?SellerName="+market[i][0]+"&Productid="+market[i][3];
+		a2.href = "ProductDetail.php?SellerName="+market[i][0]+"&Productid="+market[i][3]+"&MarketId="+market[i][7];
 		var TnameVeget = document.createTextNode(market[i][2]);
 		var pDisten = document.createElement("p");
-		var TextDistan = document.createTextNode("ห่างจากคุณ "+market[i][8]+" กิโลเมตร");
+		var TextDistan = document.createTextNode("ห่างจากคุณ "+market[i][9]+" กิโลเมตร");
 		var pMarketName = document.createElement("p");
 		var TextNameMket = document.createTextNode("สถานที่ "+market[i][4]);
 		var pLink = document.createElement("p");
 		var a3 = document.createElement("a");
-		a3.href = "ProductDetail.php?SellerName="+market[i][0]+"&Productid="+market[i][3];
+		a3.href = "ProductDetail.php?SellerName="+market[i][0]+"&Productid="+market[i][3]+"&MarketId="+market[i][7];
 		a3.classList.add("btn","btn-primary","btn-outline","with-arrow");
 		var TextLink = document.createTextNode("ดูรายละเอียด");
 		var icon = document.createElement("i");

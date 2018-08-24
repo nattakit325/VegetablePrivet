@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 10, 2018 at 12:34 PM
+-- Generation Time: Aug 24, 2018 at 06:06 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -19,8 +19,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `smartfamer`
+-- Database: `smartfarmer`
 --
+CREATE DATABASE IF NOT EXISTS `smartfarmer` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `smartfarmer`;
 
 -- --------------------------------------------------------
 
@@ -45,7 +47,10 @@ INSERT INTO `contact` (`id`, `address`, `phone`, `facebook`, `line`, `username`)
 (1, '63 หมู่ 4 ต.หนองหาร อ.สันทราย จ.เชียงใหม่', '0610299050', 'Nattakit Nganrungrueang', 'Nat415', 'test'),
 (2, '43/3 หมูบ้านสหกรณ์ ต.หนองหาร อ.สันทราย จ.เชียงใหม่', '0964325543', 'Arun WaNaraaak', 'nar433', 'nat'),
 (3, 'หจก. เกษตรชัย', '02-1235543', 'KS Super', 'KS _LINE', 'seller'),
-(4, '74 Los Eden st. , Ailltons , Willing, England ', '0665332143', 'Somphon St.John', 'TheJohn', 'farm');
+(4, '74 Los Eden st. , Ailltons , Willing, England ', '0665332143', 'Somphon St.John', 'TheJohn', 'farm'),
+(5, 'tt', 'tt', 'tt', 'tt', 'kk'),
+(6, 'gfdg', 'dfg', 'dfg', 'dfg', 'cccc'),
+(7, 'dsa', 'sad', 'asd', 'asd', 'aaaa');
 
 -- --------------------------------------------------------
 
@@ -83,6 +88,23 @@ CREATE TABLE `gmarket` (
   `username` varchar(100) NOT NULL,
   `marketid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `gmarket`
+--
+
+INSERT INTO `gmarket` (`id`, `username`, `marketid`) VALUES
+(1, 'kk', 1),
+(2, 'kk', 2),
+(3, 'kk', 3),
+(4, 'test', 5),
+(16, 'test', 7),
+(17, 'test', 4),
+(18, 'test', 8),
+(19, 'cccc', 9),
+(20, 'cccc', 10),
+(21, 'cccc', 11),
+(22, 'aaaa', 4);
 
 -- --------------------------------------------------------
 
@@ -140,10 +162,13 @@ CREATE TABLE `login` (
 
 INSERT INTO `login` (`username`, `password`, `status`) VALUES
 ('1', '1', 'ปัจจัย'),
+('aaaa', 'aaaa', 'เกษตรกร'),
 ('admin', '1234', 'admin'),
 ('à¹‚à¸•à¹‰à¸‡', '1234', 'admin'),
+('cccc', 'cccc', 'เกษตรกร'),
 ('customer', '1234', 'ลูกค้า'),
 ('farm', '1234', 'เกษตรกร'),
+('kk', 'kk', 'เกษตรกร'),
 ('nat', '1234', 'เกษตรกร'),
 ('qwe', '1234', 'admin'),
 ('seller', '1234', 'ปัจจัย'),
@@ -162,6 +187,22 @@ CREATE TABLE `market` (
   `longitude` float NOT NULL,
   `type` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `market`
+--
+
+INSERT INTO `market` (`id`, `market`, `latitude`, `longitude`, `type`) VALUES
+(1, 'eee', 18.8959, 99.0261, 2),
+(2, 'hh', 18.8931, 98.9884, 2),
+(3, 'ee', 18.906, 99.0281, 2),
+(4, 'ตลาดแม่โจ้', 18.901, 99.0054, 1),
+(5, 'รวมโชค', 18.8507, 99.0111, 2),
+(7, 'กาดหลวง', 18.7151, 99.0339, 2),
+(8, 'กาดประตูเชียงใหม่', 18.7834, 98.9852, 2),
+(9, 'sad', 18.8509, 99.0275, 2),
+(10, 'กาดสามแยก', 18.8387, 99.0474, 2),
+(11, 'ee', 18.8763, 99.0007, 2);
 
 -- --------------------------------------------------------
 
@@ -206,11 +247,12 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `name`, `detail`, `type`, `category`, `picture`) VALUES
-(1, 'แครอทสวนลุงนนท์', 'อร่อย', 'พืชผัก', 'ราก', 'carrot.jpg'),
-(2, 'ส้มโอใต้ดิน', 'เปรี้ยว', 'พืชผัก', 'ราก', 'cabbage.jpg'),
-(3, 'มัลเบอรี่', 'ทำน้ำได้', 'พืชผัก', 'ผล', 'mal.jpg'),
-(4, 'ส้มไง', 'ทำน้ำได้เหมือนกัน', 'พืชผัก', 'อื่นๆ(ผัก)', 'or.jpg'),
-(5, 'ปุ๋ยดาวคะนอง', 'ซื้อ 3 แถม 8', 'ปัจจัย', 'ปุ๋ย', 'fertilizer.jpg');
+(57, 'หัว', '', 'พืชผัก', 'ราก', 'asparagus2018082317312658269115350382865827.jpg'),
+(58, 'ราก', '', 'พืชผัก', 'ราก', 'Broccoli2018082317313908139315350382990814.jpg'),
+(59, 'แครอท', '', 'พืชผัก', 'ราก', 'carrot2018082317321359571015350383335957.jpg'),
+(60, 'เห็ด', '', 'พืชผัก', 'ราก', 'cassava201808231732255779751535038345578.jpg'),
+(61, 'ไส้กรอก', '', 'พืชผัก', 'ดอก', 'p12018082318101196010815350406119601.jpg'),
+(63, 'ข้าว', '', 'พืชผัก', 'ลำต้น', 'buy201808231859069179941535043546918.jpg');
 
 -- --------------------------------------------------------
 
@@ -239,7 +281,10 @@ INSERT INTO `profile` (`id`, `name`, `surname`, `career`, `age`, `picture`, `use
 (4, 'Nakhon', 'Shongkla', 'Customer', 23, 'customer.jpg', 'customer'),
 (5, 'Qurry', 'Armen', 'CEO ', 22, 'qwe.jpg', 'qwe'),
 (6, 'Natta', 'Arun', 'Farmer', 11, 'qwe.jpg', 'nat'),
-(8, 'สมพร', 'ยอดพุ่ม', 'เกษตรกร', 33, 'man.jpg', 'farm');
+(8, 'สมพร', 'ยอดพุ่ม', 'เกษตรกร', 33, 'man.jpg', 'farm'),
+(9, 'test', 'test', 'เกษตรกร', 23, 'Admin.png', 'kk'),
+(10, 'Knight', 'Kk', 'เกษตรกร', 12, 'asparagus.jpg', 'cccc'),
+(11, 'natdanai', 'togun', 'เกษตรกร', 25, '2018082323115474441215350587147444.', 'aaaa');
 
 -- --------------------------------------------------------
 
@@ -259,12 +304,12 @@ CREATE TABLE `selllist` (
 --
 
 INSERT INTO `selllist` (`id`, `productid`, `time`, `username`) VALUES
-(1, 1, '2018-08-09 08:49:24', 'test'),
-(2, 2, '2018-08-09 08:56:01', 'test'),
-(3, 1, '2018-08-10 04:00:53', 'nat'),
-(4, 3, '2018-08-10 04:07:45', 'nat'),
-(5, 4, '2018-08-10 04:10:29', 'test'),
-(6, 5, '2018-08-10 07:25:52', 'seller');
+(58, 57, '2018-08-23 15:31:26', 'test'),
+(59, 58, '2018-08-23 15:31:39', 'test'),
+(60, 59, '2018-08-23 15:32:13', 'kk'),
+(61, 60, '2018-08-23 15:32:25', 'kk'),
+(62, 61, '2018-08-23 16:10:12', 'test'),
+(64, 63, '2018-08-23 16:59:07', 'test');
 
 --
 -- Indexes for dumped tables
@@ -354,19 +399,19 @@ ALTER TABLE `selllist`
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `gmarket`
 --
 ALTER TABLE `gmarket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `market`
 --
 ALTER TABLE `market`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `news`
@@ -378,19 +423,19 @@ ALTER TABLE `news`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `selllist`
 --
 ALTER TABLE `selllist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- Constraints for dumped tables
