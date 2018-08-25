@@ -110,9 +110,6 @@ $count=0;
   
 
   
-
-
-	
 	
 	<div id="fh5co-page">
 	<header id="fh5co-header" role="banner">
