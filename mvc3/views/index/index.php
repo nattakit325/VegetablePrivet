@@ -1,42 +1,35 @@
 <?php require_once 'views/layout/header.php';?>	
 
 
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title text-center">กรุณาเข้าสู่ระบบ</h4>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title text-center">กรุณาเข้าสู่ระบบ</h4>
+                </div>
+                <div class="modal-body text-center">
+                    <form action="/login/login" method="POST"  id="login_form">
+                        <p id="txtHint" style="color:red; "></p>                   
+                            <div class="form-group">
+                                <p id="txtHint"></p>
+                                <input type="text" class="form-control" name="usr" placeholder="Username" required id="usr">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" name="pwd" placeholder="Password" required id="pwd">             
+                            </div>
+                                <button type="button" class="btn btn-success" onclick="showUser(document.getElementById('usr').value,document.getElementById('pwd').value)">เข้าสู่ระบบ</button>
+                                    <!--<input type="submit" class="btn btn-success" placeholder="Password" value="เข้าสู่ระบบ">-->
+                    </form>
+                    <br>
+                    <a href="register.php">ยังไม่ได้สมัครบัญชีในระบบ</a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-body text-center">
-						<form action="check_login.php" method="POST"  id="login_form">
-							<p id="txtHint" style="color:red; "></p>
-							
-							<div class="form-group">
-
-								<p id="txtHint"></p>
-
-								<input type="text" class="form-control" name="usr" placeholder="Username" required id="usr">
-
-							</div>
-							<div class="form-group">
-								<input type="password" class="form-control" name="pwd" placeholder="Password" required id="pwd"> 
-								
-							</div>
-							<button type="button" class="btn btn-success" onclick="showUser(document.getElementById('usr').value,document.getElementById('pwd').value)">เข้าสู่ระบบ</button>
-							<!--<input type="submit" class="btn btn-success" placeholder="Password" value="เข้าสู่ระบบ">-->
-
-						</form>
-  <br>
-  <a href="register.php">ยังไม่ได้สมัครบัญชีในระบบ</a>
-          
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
-        </div>
-      </div>
     </div>
-  </div>
 
   <div class="modal fade" id="login" role="dialog">
     <div class="modal-dialog modal-sm">
@@ -111,7 +104,7 @@ $count=0;
 							<?php if(empty($_SESSION["username"])){
 								?>
 							<a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
-							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
+							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="/public/images/profile.png" width="10%" height="12%" /></a>
 						<?php }else{?>
 							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></a></li>
 							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>

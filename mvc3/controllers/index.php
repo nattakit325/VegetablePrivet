@@ -16,7 +16,5 @@ class index extends Controller
     {
         $this->views('index/index', null);
     }
-    
-
 }
 
