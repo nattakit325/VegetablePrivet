@@ -4,11 +4,19 @@ include "connect.php";
 
 $value = $_GET["value"];
 $type = $_GET["type"];
+if(empty($_GET["search"])){
+	$search = "";
+
+}else{
+	$search = $_GET["search"];
+
+}
+
 $sql = "SELECT p.name as name,p.picture as picture, s.username as SellerName,
 		p.id as Productid,m.market as marketname,m.latitude as latitude,m.longitude as longitude, m.id as marketId FROM selllist s inner join
 		product p on s.productid=p.id INNER JOIN profile f ON f.username=s.username INNER JOIN
 		gmarket g ON g.username=f.username INNER JOIN market m ON m.id = g.marketid
-		where p.category= '$value' and p.type='$type'";
+		where p.category= '$value' and p.type='$type' and p.name like '%$search%'";
 $query = mysqli_query($objCon, $sql);
 $queryC = mysqli_query($objCon, $sql);
 $queryB = mysqli_query($objCon, $sql);
@@ -333,12 +341,12 @@ function CurrentPosition(position) {
 					<h2>สินค้านำเสนอสำหรับคุณ</h2>
 
                     <p><span>Product for you</a></span></p>
-                    <form class="form-inline" name="searchform" id="searchform">
+                    <form class="form-inline" name="searchform" id="searchform" action="buylist.php" method="get">
                         <div class="form-group">
                             <label for="textsearch" >ชื่อสินค้า</label>
-                            <input type="text"  class="form-control" placeholder="ข้อความ คำค้นหา!" onkeyup="showHint(this.value,'<?php echo $value ?>')">
+                            <input type="text"  class="form-control" placeholder="ข้อความ คำค้นหา!" name="search">
                         </div>
-                        <button type="button" class="btn btn-primary" id="btnSearch">
+                        <button type="submit" class="btn btn-primary" id="btnSearch">
                             <span class="glyphicon glyphicon-search"></span>
                             ค้นหา
                         </button>
