@@ -2,7 +2,7 @@
     $server="localhost";
     $user="root";
     $password="";
-    $db="smartfamer";
+    $db="smartfarmer";
 
 
     $objCon = mysqli_connect($server,$user,$password,$db);
