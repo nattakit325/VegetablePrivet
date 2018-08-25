@@ -1,5 +1,26 @@
 <?php require_once 'views/layout/header.php';?>	
+<style>
+.circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
+    height: 40px;  /* ความสูงปรับให้เป็นออโต้ */
+    width: 40px;  /* ความสูงปรับให้เป็นออโต้ */
+    border: 3px solid #fff; /* เส้นขอบขนาด 3px solid: เส้น #fff:โค้ดสีขาว */
+    border-radius: 50%; /* ปรับเป็น 50% คือความโค้งของเส้นขอบ*/
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
+}
+.circlein{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
+    height: 150px;  /* ความสูงปรับให้เป็นออโต้ */
+    width: 140px;  /* ความสูงปรับให้เป็นออโต้ */
+    border: 3px solid #fff; /* เส้นขอบขนาด 3px solid: เส้น #fff:โค้ดสีขาว */
+    border-radius: 50%; /* ปรับเป็น 50% คือความโค้งของเส้นขอบ*/
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
+}
+</style>
 
+
+
+
+
+	<body>
 
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog modal-sm">
