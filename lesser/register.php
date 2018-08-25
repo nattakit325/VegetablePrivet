@@ -112,7 +112,7 @@
 						<img src="images/profile.png"  id="blah" class="work-grid">
 						</a>
 						<div class="desc">
-							<input class="form-control" placeholder="Picture" type="file" name="filUpload" Oonchange="readURL(this);">
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" Oonchange="readURL(this);">
 						</div>
 					</div>
 				</div>
