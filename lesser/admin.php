@@ -339,7 +339,7 @@ function showHint(str) {
 			<div class="row">
 				
 				<div class="col-md-6">
-					<a href="AddNews.html" class="featured-grid featured-grid-2" style="background-image: url(images/news.jpg);">
+					<a href="AddNews.php" class="featured-grid featured-grid-2" style="background-image: url(images/news.jpg);">
 						<div class="desc">
 							<h3>สร้างข่าว</h3>
 							<span>Create news</span>
