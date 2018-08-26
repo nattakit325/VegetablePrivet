@@ -78,6 +78,8 @@
     $strSQL .="(topic,detail,media,username) VALUES ('$topic','$detail','$PictureName','$username')";
     $objQuery = mysqli_query($objCon,$strSQL);
 
+    
+
 
 
 
