@@ -110,7 +110,7 @@ $count=0;
   
 
   
-<?php echo "<script type='text/javascript'>alert('$result');</script>"; ?>
+<?php echo "<script type='text/javascript'>alert('$pstm');</script>"; ?>
 
 	
 	
