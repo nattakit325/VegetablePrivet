@@ -213,7 +213,7 @@ $(document).ready(function(){
 				
 				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 					<div class="row">
-						<form action="InsertNews.php" method="post">
+						<form action="InsertNews.php" method="post" enctype="multipart/form-data">
 							<div class="col-md-4 text-center">
 
 					<div class="work-inner">
@@ -235,7 +235,14 @@ $(document).ready(function(){
 							</div>
 						</div>
 							
-						
+						<div class="col-md-12">
+              <div class="form-group">
+                <br>
+                <center>
+                <input value="สร้างข่าว" class="btn btn-primary" type="submit">
+                </center>
+              </div>
+            </div>
 						
 					</div>
 				</div>
@@ -247,14 +254,7 @@ $(document).ready(function(){
 	</div>
 
 	
-  <div class="col-md-12">
-              <div class="form-group">
-                <br>
-                <center>
-                <input value="สร้างข่าว" class="btn btn-primary" type="submit">
-                </center>
-              </div>
-            </div>
+  
             
 	
 	
