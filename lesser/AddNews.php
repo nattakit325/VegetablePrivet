@@ -213,14 +213,14 @@ $(document).ready(function(){
 				
 				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 					<div class="row">
-						<form action="InsertNews.php" method="post">
+						<form action="InsertNews.php" method="post" enctype="multipart/form-data">
 							<div class="col-md-4 text-center">
 
 					<div class="work-inner">
 						<a  class="work-grid" style="background-image: url(images/news.png);">
 						</a>
 						<div class="desc">
-							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" id="fileToUpload" >
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload">
 						</div>
 					</div>
 				</div>
@@ -235,19 +235,7 @@ $(document).ready(function(){
 							</div>
 						</div>
 							
-						
-						
-					</div>
-				</div>
-						</form>
-			</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	
-  <div class="col-md-12">
+						<div class="col-md-12">
               <div class="form-group">
                 <br>
                 <center>
@@ -255,8 +243,35 @@ $(document).ready(function(){
                 </center>
               </div>
             </div>
-            
+						
+					</div>
+				</div>
+						
+			</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	
+<<<<<<< HEAD
+<<<<<<< HEAD
+  <div class="col-md-12">
+              <div class="form-group">
+                <br>
+                <center>
+                <button value="สร้างข่าว" class="btn btn-primary" type="submit">สร้างข่าว</button>
+                </center>
+              </div>
+            </div>
+=======
+  
+>>>>>>> 998af1731f7bc46e18159df7b3d12b1d66e1ed7b
+=======
+  
+>>>>>>> 998af1731f7bc46e18159df7b3d12b1d66e1ed7b
+            
+	</form>
 	
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>

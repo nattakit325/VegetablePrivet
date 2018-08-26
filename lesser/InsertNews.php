@@ -7,9 +7,10 @@
 
 
 
-    $target_dir = "uploads_product/";
+    $target_dir = "images/";
     //$target_dir = "/home/nattakit/domains/nattakitmju.com/public_html/uploads_product/";
 
+    echo basename($_FILES["fileToUpload"]["name"]);
     if($_FILES["fileToUpload"]["name"]){
     $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 
@@ -76,6 +77,8 @@
     $strSQL = "INSERT INTO news";
     $strSQL .="(topic,detail,media,username) VALUES ('$topic','$detail','$PictureName','$username')";
     $objQuery = mysqli_query($objCon,$strSQL);
+
+    
 
 
 
