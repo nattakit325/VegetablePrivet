@@ -256,6 +256,7 @@ $(document).ready(function(){
 	
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   <div class="col-md-12">
               <div class="form-group">
                 <br>
@@ -264,6 +265,9 @@ $(document).ready(function(){
                 </center>
               </div>
             </div>
+=======
+  
+>>>>>>> 998af1731f7bc46e18159df7b3d12b1d66e1ed7b
 =======
   
 >>>>>>> 998af1731f7bc46e18159df7b3d12b1d66e1ed7b
