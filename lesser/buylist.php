@@ -344,6 +344,8 @@ function CurrentPosition(position) {
                     <form class="form-inline" name="searchform" id="searchform" action="buylist.php" method="get">
                         <div class="form-group">
                             <label for="textsearch" >ชื่อสินค้า</label>
+                            <input type="hidden" name="type" value="<?php echo $type ?>">
+                            <input type="hidden" name="value" value="<?php echo $value ?>">
                             <input type="text"  class="form-control" placeholder="ข้อความ คำค้นหา!" name="search">
                         </div>
                         <button type="submit" class="btn btn-primary" id="btnSearch">
