@@ -286,7 +286,7 @@ google.maps.event.addListener(map, 'click', function (event) {
               <div class="form-group">
                 <br>
                 <center>
-               <a href="/suscess.php"><input value="ยืนยันการสมัครสมาชิก" class="btn btn-primary" type="button" onclick="saveMarket()"></a>
+               <a href="/suscess.php?username=<?php echo $username ?>"><input value="ยืนยันการสมัครสมาชิก" class="btn btn-primary" type="button" onclick="saveMarket()"></a>
                 </center>
               </div>
 			</div>

@@ -1,4 +1,42 @@
 
+<?php 
+session_start();
+include "connect.php";
+
+$username = $_GET['username'];
+
+echo $username ;
+$sqlUser = "SELECT * FROM login WHERE username = '".$username."'";
+
+
+$sql="SELECT * FROM login WHERE username = '".$username."'";
+
+$ProfileSQL = "SELECT name ,surname ,career ,age ,picture ,username FROM profile WHERE username = '".$username."'";
+
+
+
+$result = mysqli_query($objCon,$sql);
+$objResult = mysqli_fetch_array($result,MYSQLI_ASSOC);
+
+$result1 = mysqli_query($objCon,$sqlUser);
+$objResult1 = mysqli_fetch_array($result1,MYSQLI_ASSOC);
+
+
+$objQuery2 = mysqli_query($objCon,$ProfileSQL);
+$objResult2 = mysqli_fetch_array($objQuery2 ,MYSQLI_ASSOC);
+
+		$_SESSION["status"] = $objResult["status"];
+			$_SESSION["username"] = $objResult["username"];
+			$_SESSION["password"] = $objResult["password"];
+			$_SESSION["name"] = $objResult2["name"];
+			$_SESSION["surname"] = $objResult2["surname"];
+			$_SESSION["career"] = $objResult2["career"];
+			$_SESSION["age"] = $objResult2["age"];
+			$_SESSION["picture"] = $objResult2["picture"];
+
+?>
+
+
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -80,7 +118,7 @@
                     <div class="row">
                         <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
                             <h2>ลงทะเบียนเสร็จสิ้น</h2>
-                            <p><span><a href="index.html">กลับสู่หน้าหลัก</a></span></p>
+                            <p><span><a href="index.php">กลับสู่หน้าหลัก</a></span></p>
                         </div>
                     </div>
                 </div>

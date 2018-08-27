@@ -14,7 +14,7 @@
 
 	
 	$sql = "connect.php";
-    $sql = "SELECT n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as 		surname FROM news n inner join profile p on n.username = p.username WHERE time>NOW()  order by time";
+    $sql = "SELECT n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as surname FROM news n inner join profile p on n.username = p.username WHERE time>NOW()  order by time";
 
 
 
@@ -101,7 +101,7 @@
 	<link rel="stylesheet" href="css/style.css">
 
 
-
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -115,6 +115,10 @@
 	</head>
 
 	<script type="text/javascript" src="js/showUser.js"></script>
+	<script type="text/javascript" src="js/FB.js"></script>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 
 	<style>
@@ -166,7 +170,13 @@
 							</div>
 							<button type="button" class="btn btn-success" onclick="showUser(document.getElementById('usr').value,document.getElementById('pwd').value)">เข้าสู่ระบบ</button>
 							<!--<input type="submit" class="btn btn-success" placeholder="Password" value="เข้าสู่ระบบ">-->
-
+							<br><br>
+							<fb:login-button 
+  							scope="public_profile,email"
+  							onlogin="checkLoginState();" >
+  							<button type="button" class="btn btn-primary" ><i class="fab fa-facebook"
+								></i>&nbsp;&nbsp;&nbsp;เข้าสู่ระบบโดย Facebook</button>
+							</fb:login-button>
 						</form>
   <br>
   <a href="register.php">ยังไม่ได้สมัครบัญชีในระบบ</a>
