@@ -3,7 +3,9 @@
     include "connect.php";
     $topic = $_POST["topic"];
     $detail = $_POST["detail"];
+    $dateDF = $_POST["dateDF"];
     $username = $_SESSION["username"];
+
 
 
 
@@ -70,15 +72,15 @@
     	}
 	}
 }else{
-	$PictureName = "product.png";
+	$PictureName = "news.png";
 }
 
 
     $strSQL = "INSERT INTO news";
-    $strSQL .="(topic,detail,media,username) VALUES ('$topic','$detail','$PictureName','$username')";
+    $strSQL .="(topic,detail,media,time,username) VALUES ('$topic','$detail','$PictureName','$dateDF','$username')";
     $objQuery = mysqli_query($objCon,$strSQL);
 
-    
+    header("location:admin.php");
 
 
 

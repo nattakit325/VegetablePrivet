@@ -330,8 +330,8 @@ $count=0;
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>ข่าวสารล่าสุด</h2>
-					<p>Latest News</p>
+					<h2>กิจกรรมที่กำลังจะมาถึง</h2>
+					<p>Coming soon events</p>
 				</div>
 			</div>
 			<div class="row">

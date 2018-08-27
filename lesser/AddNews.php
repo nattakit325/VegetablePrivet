@@ -225,14 +225,20 @@ $(document).ready(function(){
 					</div>
 				</div>
 							<div class="col-md-6">
-								<div class="form-group">
-									<input class="form-control" placeholder="หัวข้อข่าว" type="text" name="topic">
+								<div class="form-group">หัวข้อข่าว (ไม่เกิน 100 ตัวอักษร)
+									<input class="form-control" placeholder="หัวข้อข่าว" type="text" name="topic" required="">
 								</div>
 							</div>
 							<div class="col-md-6">
-							<div class="form-group">
+							<div class="form-group">รายละเอียด (ไม่เกิน 500 ตัวอักษร)
 								<textarea name="detail" class="form-control" id="" cols="30" rows="7" placeholder="รายละเอียด"></textarea>
 							</div>
+							วันที่จัดกิจกรรม
+							<?php $dayDF = date("Y-m-d");
+									$timeDF = date("H:i");
+									$dayDF = $dayDF."T".$timeDF 
+									?>
+							<input type="datetime-local"  class="form-control" min="<?php echo $dayDF ?>" name="dateDF">
 						</div>
 							
 						<div class="col-md-12">
@@ -254,27 +260,7 @@ $(document).ready(function(){
 	</div>
 
 	
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  <div class="col-md-12">
-              <div class="form-group">
-                <br>
-                <center>
-                <button value="สร้างข่าว" class="btn btn-primary" type="submit">สร้างข่าว</button>
-                </center>
-              </div>
-            </div>
-=======
-  
->>>>>>> 998af1731f7bc46e18159df7b3d12b1d66e1ed7b
-=======
-  
->>>>>>> 998af1731f7bc46e18159df7b3d12b1d66e1ed7b
-=======
-  
->>>>>>> 998af1731f7bc46e18159df7b3d12b1d66e1ed7b
-            
+
 	</form>
 	
 	<!-- jQuery -->
