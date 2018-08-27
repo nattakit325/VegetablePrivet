@@ -238,7 +238,7 @@ $(document).ready(function(){
 									$timeDF = date("H:i");
 									$dayDF = $dayDF."T".$timeDF 
 									?>
-							<input type="datetime-local"  class="form-control" min="<?php echo $dayDF ?>" name="dateDF">
+							<input type="datetime-local"  class="form-control" min="<?php echo $dayDF ?>" name="dateDF" required="">
 						</div>
 							
 						<div class="col-md-12">
