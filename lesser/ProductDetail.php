@@ -255,7 +255,7 @@
 								<h3><i class="fas fa-info-circle"></i>&nbsp;&nbsp;รายละเอียด</h3>
 								<ul>
 									<li>
-										<?php echo $objResult["detail"]; ?>
+										<h4><?php echo $objResult["detail"]; ?></h4>
 									</li>
 									
 								</ul>
@@ -265,7 +265,7 @@
 								<h3><img class="picture" src="images/<?php echo $objResult["img"]; ?>" width="10%" height="12%" />&nbsp;&nbsp;ผู้จำหน่าย</h3>
 								<ul>
 									<li>
-										<li><?php echo $objResult["name"];?>  &nbsp;&nbsp;<?php echo $objResult["surname"];?></li>
+										<h4><li><?php echo $objResult["name"];?>  &nbsp;&nbsp;<?php echo $objResult["surname"];?></li></h4>
 						
 									</li>
 									
@@ -275,14 +275,19 @@
 								<h3><i class="fas fa-address-card"></i>&nbsp;&nbsp;ช่องทางการติดต่อ</h3>
 								<ul>
 									<li>
-										<li><i class="fas fa-map-marker-alt"></i><a href="#"><?php echo $objResult["address"]; ?></a></li>
-									<li><i class="fas fa-map-pin"></i></i><a href="#"> ห่างออกไป 14 กม.</a></li>
-									<li><i class="fas fa-phone"></i><a href="#"><?php echo $objResult["phone"]; ?></a></li>
-									<li><i class="icon-facebook"></i><a href="#"><?php echo $objResult["facebook"]; ?></a></li>
-									<li><i class="fab fa-line"></i><a href="#"><?php echo $objResult["line"]; ?></a></li>
+										<h4><li><i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;&nbsp;ที่อยู่<br><a href="#">&nbsp;&nbsp;&nbsp;<?php echo $objResult["address"]; ?></a></li>
+											<br>
+									<li><i class="fas fa-map-pin"></i>&nbsp;&nbsp;&nbsp;ระยะทาง<br><a href="#">&nbsp; ห่างออกไป 14 กม.</a></li>
+									<br>
+									<li><i class="fas fa-phone"></i>&nbsp;&nbsp;เบอร์โทรศัพท์<br><a href="#">&nbsp;&nbsp;&nbsp;<?php echo $objResult["phone"]; ?></a></li>
+									<br>
+									<li><i class="icon-facebook"></i>&nbsp;&nbsp;&nbsp;Facebook<br><a href="#">&nbsp;&nbsp;&nbsp;<?php echo $objResult["facebook"]; ?></a></li>
+									<br>
+									<li><i class="fab fa-line"></i>&nbsp;&nbsp;&nbsp;Line ID<br><a href="#">&nbsp;&nbsp;&nbsp;<?php echo $objResult["line"]; ?></a></li>
 						</a>
 
 									</li>
+									</h4>
 									
 								</ul>
 								<br><br><br>
