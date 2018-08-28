@@ -331,6 +331,7 @@ $count=0;
 					
 				</div>
 <?php } ?>
+			
 
 			</div>
 		</div>
@@ -346,9 +347,10 @@ $count=0;
 									<form class="form-inline" name="searchform" id="searchform">
                         <div class="form-group">
                             <label for="textsearch" >วันเดือนปีที่จัดกิจกรรม</label>
-                            <input type="date"  class="form-control" placeholder="ข้อความ คำค้นหา!" onkeyup="showHint(this.value)">
+                            <input type="date"  class="form-control" >
                         </div>
-                        <button type="button" class="btn btn-primary" id="btnSearch">
+
+                        <button type="submit" class="btn btn-primary" id="btnSearch">
                             <span class="glyphicon glyphicon-search"></span>
                             ค้นหา
                         </button>
