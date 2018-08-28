@@ -79,6 +79,81 @@
 		}
 	}	
 </script>
+
+<script>
+		 var bFbStatus = false;
+  var fbID = "";
+  var fbName = "";
+  var fbEmail = "";
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '303133320267472',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v2.8'
+    });
+    FB.AppEvents.logPageView();   
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+
+function statusChangeCallback(response)
+{
+
+    if(bFbStatus == false)
+    {
+      fbID = response.authResponse.userID;
+
+        if (response.status == 'connected') {
+        getCurrentUserInfo(response)
+        } else {
+        FB.login(function(response) {
+          if (response.authResponse){
+          getCurrentUserInfo(response)
+          } else {
+          console.log('Auth cancelled.')
+          }
+        }, { scope: 'email' });
+        }
+    }
+
+
+    bFbStatus = true;
+}
+
+
+    function getCurrentUserInfo() {
+      FB.api('/me?fields=name,email', function(userInfo) {
+
+
+      
+      fbName = userInfo.name;
+      fbEmail = userInfo.email;
+
+      $("#hdnFbID").val(fbID);
+      $("#hdnName ").val(fbName);
+      $("#hdnEmail").val(fbEmail);
+      $("#frmMain").submit();
+
+      });
+    }
+
+function checkLoginState() {
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+}
+
+	</script>
+
 	<body>
 
 	
@@ -104,7 +179,7 @@
 
 				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 					<div class="row">
-						<form action="save-register.php" method="post" enctype="multipart/form-data">
+						<form action="save-register.php" method="post" enctype="multipart/form-data"  name="frmMain" id="frmMain">
 						
 			<div class="col-md-4 text-center">
 
@@ -164,6 +239,7 @@
           <h2>ช่องทางการติดต่อของคุณ</h2>
           <p ip="pp"><span>Your contact</span></p>
 
+
           <div class="col-md-6">
 
 
@@ -176,16 +252,24 @@
 									<input class="form-control" placeholder="เบอร์โทรศัพท์" type="text" name="tel">
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<input class="form-control" placeholder="Facebook" type="text" name="facebook">
-								</div>
-							</div>
+							
+							
 							<div class="col-md-6">
 								<div class="form-group">
 									<input class="form-control" placeholder="Line" type="text" name="line">
 								</div>
 							</div>
+
+							<fb:login-button 
+  							scope="public_profile,email"
+  							onlogin="checkLoginState();">
+  							<button type="button" class="btn btn-primary" ><i class="fab fa-facebook"
+								></i>&nbsp;&nbsp;&nbsp;ผูกบัญชี Facebook</button>
+							</fb:login-button>
+							
+								<input type="hidden" id="hdnFbID" name="hdnFbID">
+								<input type="hidden" id="hdnName" name="hdnName">
+								<input type="hidden" id="hdnEmail" name="hdnEmail">
 
 
         </div>

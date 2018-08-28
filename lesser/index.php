@@ -115,7 +115,9 @@
 	</head>
 
 	<script type="text/javascript" src="js/showUser.js"></script>
-	<script type="text/javascript" src="js/FB.js"></script>
+	<!--<script type="text/javascript" src="js/FB.js"></script> -->
+	
+
 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -154,7 +156,7 @@
         </div>
         <div class="modal-body">
           <center>
-						<form action="check_login.php" method="POST"  id="login_form">
+						
 							<p id="txtHint" style="color:red; "></p>
 							
 							<div class="form-group">
@@ -171,13 +173,7 @@
 							<button type="button" class="btn btn-success" onclick="showUser(document.getElementById('usr').value,document.getElementById('pwd').value)">เข้าสู่ระบบ</button>
 							<!--<input type="submit" class="btn btn-success" placeholder="Password" value="เข้าสู่ระบบ">-->
 							<br><br>
-							<fb:login-button 
-  							scope="public_profile,email"
-  							onlogin="checkLoginState();" >
-  							<button type="button" class="btn btn-primary" ><i class="fab fa-facebook"
-								></i>&nbsp;&nbsp;&nbsp;เข้าสู่ระบบโดย Facebook</button>
-							</fb:login-button>
-						</form>
+							
   <br>
   <a href="register.php">ยังไม่ได้สมัครบัญชีในระบบ</a>
         </center>

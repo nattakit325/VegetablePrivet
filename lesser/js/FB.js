@@ -1,4 +1,4 @@
-  var bFbStatus = false;
+ var bFbStatus = false;
   var fbID = "";
   var fbName = "";
   var fbEmail = "";
@@ -25,58 +25,44 @@
 function statusChangeCallback(response)
 {
 
-		if(bFbStatus == false)
-		{
-			fbID = response.authResponse.userID;
+    if(bFbStatus == false)
+    {
+      fbID = response.authResponse.userID;
 
-			  if (response.status == 'connected') {
-				getCurrentUserInfo(response)
-			  } else {
-				FB.login(function(response) {
-				  if (response.authResponse){
-					getCurrentUserInfo(response)
-				  } else {
-					console.log('Auth cancelled.')
-				  }
-				}, { scope: 'email' });
-			  }
-		}
+        if (response.status == 'connected') {
+        getCurrentUserInfo(response)
+        } else {
+        FB.login(function(response) {
+          if (response.authResponse){
+          getCurrentUserInfo(response)
+          } else {
+          console.log('Auth cancelled.')
+          }
+        }, { scope: 'email' });
+        }
+    }
 
 
-		bFbStatus = true;
+    bFbStatus = true;
 }
 
-function getCurrentUserInfo() {
-  FB.api('/me?fields=name,email', function(userInfo) {
 
-	  fbName = userInfo.name;
-	  fbEmail = userInfo.email;
+    function getCurrentUserInfo() {
+      FB.api('/me?fields=name,email', function(userInfo) {
 
-	  alert(fbID);
-	  alert(fbName);
-	  alert(fbEmail);
+      fbName = userInfo.name;
+      fbEmail = userInfo.email;
 
-  });
-}
+      $("#hdnFbID").val(fbID);
+      $("#hdnName ").val(fbName);
+      $("#hdnEmail").val(fbEmail);
+      $("#frmMain").submit();
+
+      });
+    }
 
 function checkLoginState() {
   FB.getLoginStatus(function(response) {
     statusChangeCallback(response);
   });
-}
-
-function Login(params) {
-    var httpc = new XMLHttpRequest(); // simplified for clarity
-    var url = "get_data.php";
-    httpc.open("POST", url, true); // sending as POST
-
-    httpc.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    httpc.setRequestHeader("Content-Length", params.length); // POST request MUST have a Content-Length header (as per HTTP/1.1)
-
-    httpc.onreadystatechange = function() { //Call a function when the state changes.
-    if(httpc.readyState == 4 && httpc.status == 200) { // complete and no errors
-        alert(httpc.responseText); // some processing here, or whatever you want to do with the response
-        }
-    }
-    httpc.send(params);
 }
