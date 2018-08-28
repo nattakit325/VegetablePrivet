@@ -1,25 +1,10 @@
-
-
-<?php  
-   	session_start();
-	include "connect.php";
-
-	if(empty($_SESSION["username"])){
-
-	}else{
-		if($_SESSION["status"]=='admin')
-		header("location:admin.php");
-	}
-
-
+<?php
+	session_start();
 	
-	$sql = "connect.php";
-    $sql = "SELECT n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as surname FROM news n inner join profile p on n.username = p.username WHERE time>NOW()  order by time";
+    include "connect.php";
+    $sql = "SELECT n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as 		surname ,n.PostTime as posttime FROM news n inner join profile p on n.username = p.username where n.status = 0 order by n.PostTime";
 
-
-
-	
-	$query=mysqli_query($objCon,$sql);
+    $query=mysqli_query($objCon,$sql);
 	$queryDialog=mysqli_query($objCon,$sql);
 	$count = 0;
 
@@ -36,9 +21,9 @@
 		return "$strDay $strMonthThai $strYear, เวลา $strHour:$strMinute";
 	}
 
-	
-
+    
 ?>
+
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -47,7 +32,7 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>VegetableGether</title>
+	<title>Admin</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -86,8 +71,6 @@
 	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
 
 
-
-
 	
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
@@ -102,6 +85,7 @@
 
 
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -112,14 +96,54 @@
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 	</head>
 
-	<script type="text/javascript" src="js/showUser.js"></script>
-	<script type="text/javascript" src="js/FB.js"></script>
 
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#delete").click(function(){
+    	$('#fordelete').hide();
+    	
+          //$('.row').hide();
+    });
 
+});
+
+
+
+
+function Delete(id,name) {
+    
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("DeleteDialog").innerHTML = this.responseText;
+            }
+        }
+        xmlhttp.open("GET", "DeleteOneProduct.php?id="+id+"&name="+name, true);
+        xmlhttp.send();
+    
+}
+
+
+function showHint(str) {
+    
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("search_result").innerHTML = this.responseText;
+            }
+        }
+        xmlhttp.open("GET", "getNews.php?q="+str, true);
+        xmlhttp.send();
+    
+}
+
+
+
+</script>
 
 	<style>
 .circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
@@ -130,7 +154,7 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
 }
 .circlein{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
-    height: 150px;  /* ความสูงปรับให้เป็นออโต้ */
+    height: 140px;  /* ความสูงปรับให้เป็นออโต้ */
     width: 140px;  /* ความสูงปรับให้เป็นออโต้ */
     border: 3px solid #fff; /* เส้นขอบขนาด 3px solid: เส้น #fff:โค้ดสีขาว */
     border-radius: 50%; /* ปรับเป็น 50% คือความโค้งของเส้นขอบ*/
@@ -140,12 +164,33 @@
 
 
 
-
-
 	<body>
+<div class="modal fade" id="forconfermdelete" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <center><p class="modal-title">ต้องการลบสินค้าทั้งหมดหรือไม่</p></center>
+        </div>
+        <div class="modal-body">
+          <center>
+						
+  <br>
+
+  <button type="button" class="btn btn-warning" id="delete" data-dismiss="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button>
+  <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+        </center>
+          
+        </div>
+        
+          
+        
+      </div>
+    </div>
+  </div>
 
 
-		<div class="modal fade" id="myModal" role="dialog">
+<div class="modal fade" id="myModal1" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
@@ -158,28 +203,18 @@
 							<p id="txtHint" style="color:red; "></p>
 							
 							<div class="form-group">
-
-								<p id="txtHint"></p>
-
 								<input type="text" class="form-control" name="usr" placeholder="Username" required id="usr">
-
 							</div>
 							<div class="form-group">
-								<input type="password" class="form-control" name="pwd" placeholder="Password" required id="pwd"> 
-								
+								<input type="password" class="form-control" name="pwd" placeholder="Password" required id="pwd">
+								<input type="hidden"  name="page" value="buylist.php" id="page"> 
 							</div>
-							<button type="button" class="btn btn-success" onclick="showUser(document.getElementById('usr').value,document.getElementById('pwd').value)">เข้าสู่ระบบ</button>
+							<button type="button" class="btn btn-success" onclick="showUser(document.getElementById('usr').value,document.getElementById('pwd').value,document.getElementById('page').value)">เข้าสู่ระบบ</button>
 							<!--<input type="submit" class="btn btn-success" placeholder="Password" value="เข้าสู่ระบบ">-->
-							<br><br>
-							<fb:login-button 
-  							scope="public_profile,email"
-  							onlogin="checkLoginState();" >
-  							<button type="button" class="btn btn-primary" ><i class="fab fa-facebook"
-								></i>&nbsp;&nbsp;&nbsp;เข้าสู่ระบบโดย Facebook</button>
-							</fb:login-button>
+
 						</form>
   <br>
-  <a href="register.php">ยังไม่ได้สมัครบัญชีในระบบ</a>
+  <a href="register.html">ยังไม่ได้สมัครบัญชีในระบบ</a>
         </center>
           
         </div>
@@ -189,7 +224,6 @@
       </div>
     </div>
   </div>
-
   <div class="modal fade" id="login" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -221,21 +255,52 @@
   </div>
 
 
-<?php while($row=mysqli_fetch_array($queryDialog,MYSQLI_ASSOC)){ 
-	$count++;
-	?>
-
-  <div class="modal fade" id="myModal<?php echo $count?>" role="dialog">
+  <div class="modal fade" id="myModal1" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          
-          <h4 class="modal-title"> <?php echo $row["topic"];?> </h4>
-          
+          <h4 class="modal-title">
+          <div class="form-group">
+          	หัวข้อ
+								<textarea name="" class="form-control" id="" cols="30" rows="1" > ตลาดสดหนองหอย โซนเกษตรอินทรีย์
+								</textarea>
+							</div></h4>
         </div>
         <div class="modal-body">
-          <p> <?php echo $row["detail"];?></p>
+        	<div class="form-group">
+        		รายละเอียด
+								<textarea name="" class="form-control" id="" cols="30" rows="7" >
+									ตลาด เป็นการชุมนุมกันทางสังคม แลกเปลี่ยนสินค้ากัน ในภาษาทั่วไป ตลาดหมายความรวมถึงสถานที่ที่มนุษย์มาชุมนุมกันเพื่อค้าขาย ในทางเศรษฐศาสตร์ ตลาดหมายถึงการแลกเปลี่ยนซื้อขาย โดยไม่มีความหมายของสถานที่ทางกายภาพ
+
+การค้าขายของไทยสมัยก่อนนั้น เน้นทางน้ำเป็นหลัก เพราะการคมนาคมทางน้ำเป็นการคมนาคมหลักของคนไทย ซึ่งอาจจะเห็นได้จากการมีตลาดน้ำต่าง ๆ ในสมัยรัตนโกสินทร์
+
+เป็นการเปิดโอกาสให้คนในชุมชนได้ดำเนินกิจกรรมการแลกเปลี่ยน ซื้อขายสินค้าและบริการตามความถนัดของแต่ละครอบครัว เป็นแหล่งรายได้ที่สุจริตของแต่ละครอบครัว เกิดการหมุนเวียนเศรษฐกิจภายในชุมชนรวมถึงจากภายนอกเข้าสู่ชุมชนด้วย และยังก่อให้เกิดความสัมพันธ์อันดีในระดับชุมชน รวมถึงการช่วยธำรงรักษาวัฒนธรรมประเพณีในชุมชน ในกรณีของชุมชนที่มีวัฒนธรรมความเป็นมา จากการที่กลุ่มคนในชุมชนมีการสร้างปฏิสัมพันธ์อันดีด้วยกัน
+
+คำว่า "ตลาด" สันนิษฐานว่ามาจากคำว่า "ยี่สาร" ซึ่งเพี้ยนมาจากคำว่า "บาซาร์" ในภาษาเปอร์เซีย ซึ่งแปลว่า "ตลาด" ตามชาวเปอร์เซียเริ่มเข้ามาในประเทศไทยสมัยพระเจ้าปราสาททอง
+								</textarea>
+							</div>
+         
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">บันทึก</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">ออก</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+   <div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"> ตลาดสดหนองหอย โซนเกษตรอินทรีย์</h4>
+        </div>
+        <div class="modal-body">
+          <img class="img-responsive" src="images/sell2.jpg" alt="Blog"></a>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -243,15 +308,6 @@
       </div>
     </div>
   </div>
-<?php }
-$count=0;
- ?>
-  
-  
-
-  
-
-
 	
 	
 	<div id="fh5co-page">
@@ -276,76 +332,18 @@ $count=0;
 			</div>
 		</div>
 	</header>
-	<br>
-	<br>
-	<div id="fh5co-featured-section">
-		<div class="container">
-			<div class="row">
-				<?php
-					$buy = null;
-					if(empty($_SESSION["username"])){
-						$buy = "buy.php";
-						$sell = "#";
-					}else{
-						if($_SESSION["status"]=="เกษตรกร"){
-							$buy = "buy_farmmer_first.php";
-							
-						}else{
-							$buy = "buy.php";
-							
-						}
-					}
-				 ?>
-
-
-
-				<div class="col-md-6">
-					<a href="<?php echo $buy?>" class="featured-grid featured-grid-2" style="background-image: url(images/buy.jpg);">
-						<div class="desc">
-							<h3>ชื้อสินค้า</h3>
-							<span>Buy</span>
-						</div>
-					</a>
-				</div>
-
-
-<?php if(empty($_SESSION["username"])){ ?>
-				<div class="col-md-6">
-					<a href="#" data-toggle="modal" data-target="#myModal" class="featured-grid featured-grid-2" style="background-image: url(images/sell3.jpg);">
-						<div class="desc">
-							<h3>ขายสินค้า</h3>
-							<span>Sell</span>
-						</div>
-					</a>
-					
-				</div>
-<?php }else{ ?>
-
-				<div class="col-md-6">
-					<a href="selllist.php"  class="featured-grid featured-grid-2" style="background-image: url(images/sell3.jpg);">
-						<div class="desc">
-							<h3>ขายสินค้า</h3>
-							<span>Sell</span>
-						</div>
-					</a>
-					
-				</div>
-<?php } ?>
-
-			</div>
-		</div>
-	</div>
+	
 
 	<div id="fh5co-blog-section" class="fh5co-grey-bg-section">
 		<div class="container">
-			<div class="row">
+			<div class="row" >
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>กิจกรรมที่กำลังจะมาถึง</h2>
-					<p>Coming soon events</p>
+					<h2>ข่าวที่สร้างไว้ทั้งหมด</h2>
+					<p>All News that created</p>
 					<div class="form-group">
 									<form class="form-inline" name="searchform" id="searchform">
                         <div class="form-group">
-                            <label for="textsearch" >วันเดือนปีที่จัดกิจกรรม</label>
+                            <label for="textsearch" >วันเดือนปีที่ลงข่าว</label>
                             <input type="date"  class="form-control" placeholder="ข้อความ คำค้นหา!" onkeyup="showHint(this.value)">
                         </div>
                         <button type="button" class="btn btn-primary" id="btnSearch">
@@ -358,6 +356,7 @@ $count=0;
 										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ลบทั้งหมด
 										
 									</div>
+							
 				</div>
 			</div>
 			<div class="row">
@@ -371,10 +370,10 @@ $count=0;
 						</a>
 						<div class="desc">
 							<h3><?php echo $row["topic"];?></h3>
-							<p>เวลา <?php echo DateThai($row["time"]);?></p>
+							<p>ประกาศเมื่อ <?php echo DateThai($row["posttime"]);?></p>
 							<p>โดย <?php echo $row["name"]." ".$row["surname"];?></p>
-							
-							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">ดูรายละเอียด<i class="icon-arrow-right"></i></a>
+							<button type="button" class="btn btn-danger" data-toggle="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ลบ</span></button>
+							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">แก้ไขข่าว<i class="icon-arrow-right"></i></a>
 						</div>
 					</div>
 				</div>

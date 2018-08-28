@@ -2,7 +2,7 @@
 	session_start();
 	
     include "connect.php";
-    $sql = "SELECT n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as 		surname ,n.PostTime as posttime FROM news n inner join profile p on n.username = p.username order by n.PostTime";
+    $sql = "SELECT n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as 		surname ,n.PostTime as posttime FROM news n inner join profile p on n.username = p.username where n.status = 1 order by n.PostTime";
 
     $query=mysqli_query($objCon,$sql);
 	$queryDialog=mysqli_query($objCon,$sql);
@@ -347,7 +347,7 @@ function showHint(str) {
 					</a>
 				</div>
 				<div class="col-md-6">
-					<a href="#" data-toggle="modal" data-target="#myModal" class="featured-grid featured-grid-2" style="background-image: url(images/report.jpg);">
+					<a href="report.php" class="featured-grid featured-grid-2" style="background-image: url(images/report.jpg);">
 						<div class="desc">
 							<h3>ดูรายงาน</h3>
 							<span>Report</span>
@@ -363,22 +363,16 @@ function showHint(str) {
 		<div class="container">
 			<div class="row" >
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>ข่าวที่สร้างไว้ทั้งหมด</h2>
-					<p>All News that created</p>
+					<h2>ข่าวที่รอการอนุมัติ</h2>
+					<p>All News that waiting for approval</p>
 					<div class="form-group">
 									<form class="form-inline" name="searchform" id="searchform">
-                        <div class="form-group">
-                            <label for="textsearch" >วันเดือนปีที่ลงข่าว</label>
-                            <input type="date"  class="form-control" placeholder="ข้อความ คำค้นหา!" onkeyup="showHint(this.value)">
-                        </div>
-                        <button type="button" class="btn btn-primary" id="btnSearch">
-                            <span class="glyphicon glyphicon-search"></span>
-                            ค้นหา
-                        </button>
+                        
+                        
                     </form> 
                     <br>
-									<a href="AddNews.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;สร้างข่าวใหม่</button></span></a>
-										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ลบทั้งหมด
+									<a href="AddNews.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;อนุมัติทั้งหมด</button></span></a>
+										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ปฏิเสธทั้งหมด
 										
 									</div>
 							
@@ -397,8 +391,9 @@ function showHint(str) {
 							<h3><?php echo $row["topic"];?></h3>
 							<p>ประกาศเมื่อ <?php echo DateThai($row["posttime"]);?></p>
 							<p>โดย <?php echo $row["name"]." ".$row["surname"];?></p>
-							<button type="button" class="btn btn-danger" data-toggle="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ลบ</span></button>
-							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">แก้ไขข่าว<i class="icon-arrow-right"></i></a>
+							
+							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">อนุมัติ<i class="icon-arrow-right"></i></a>
+							<button type="button" class="btn btn-danger" data-toggle="modal">ปฏิเสธ</span></button>
 						</div>
 					</div>
 				</div>
