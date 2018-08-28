@@ -2,7 +2,7 @@
 	session_start();
 	
     include "connect.php";
-    $sql = "SELECT n.id,n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as 		surname ,n.PostTime as posttime FROM news n inner join profile p on n.username = p.username where n.status = 1 order by n.PostTime";
+    $sql = "SELECT n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as 		surname ,n.PostTime as posttime FROM news n inner join profile p on n.username = p.username where n.status = 0 order by n.PostTime";
 
     $query=mysqli_query($objCon,$sql);
 	$queryDialog=mysqli_query($objCon,$sql);
@@ -165,20 +165,19 @@ function showHint(str) {
 
 
 	<body>
-
 <div class="modal fade" id="forconfermdelete" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><p class="modal-title">ต้องการปฏิเสธข่าวหมดหรือไม่</p></center>
+          <center><p class="modal-title">ต้องการลบสินค้าทั้งหมดหรือไม่</p></center>
         </div>
         <div class="modal-body">
           <center>
 						
   <br>
 
-  <a href="DeleteAllNews.php"><button type="button" class="btn btn-warning"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button></a>
+  <button type="button" class="btn btn-warning" id="delete" data-dismiss="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button>
   <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
         </center>
           
@@ -189,68 +188,6 @@ function showHint(str) {
       </div>
     </div>
   </div>
-
-
-  <div class="modal fade" id="forconfermAP" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><p class="modal-title">ต้องการอนุมัติข่าวหมดหรือไม่</p></center>
-        </div>
-        <div class="modal-body">
-          <center>
-						
-  <br>
-
-  <a href="apAllNews.php"><button type="button" class="btn btn-success"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button></a>
-  <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
-        </center>
-          
-        </div>
-        
-          
-        
-      </div>
-    </div>
-  </div>
-
-
-<?php while($row=mysqli_fetch_array($queryDialog,MYSQLI_ASSOC)){ 
-	$count++;
-	?>
-
-  <div class="modal fade" id="myModal<?php echo $count?>" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          
-          <h3>หัวข้อข่าว</h3><h4 class="modal-title"><?php echo $row["topic"];?> </h4>
-          
-        </div>
-        <div class="modal-header">
-        
-          <h3>วันเวลาจัดงาน</h3><h4 class="modal-title"><?php echo DateThai($row["time"]);?> </h4>
-        
-        </div>
-        <div class="modal-body">
-          <h3>รายละเอียด</h3><p> <?php echo $row["detail"];?></p>
-        </div>
-        <div class="modal-footer">
-        	<a href="APnews.php?id=<?php echo $row["id"]; ?>" class="btn btn-primary btn-outline with-arrow">อนุมัติ<i class="icon-arrow-right"></i></a>
-							<a href="RFnews.php?id=<?php echo $row["id"]; ?>"><button type="button" class="btn btn-danger" >ปฏิเสธ</span></button></a>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-<?php }
-$count=0;
- ?>
-
-
-
 
 
 <div class="modal fade" id="myModal1" role="dialog">
@@ -318,11 +255,59 @@ $count=0;
   </div>
 
 
- 
+  <div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">
+          <div class="form-group">
+          	หัวข้อ
+								<textarea name="" class="form-control" id="" cols="30" rows="1" > ตลาดสดหนองหอย โซนเกษตรอินทรีย์
+								</textarea>
+							</div></h4>
+        </div>
+        <div class="modal-body">
+        	<div class="form-group">
+        		รายละเอียด
+								<textarea name="" class="form-control" id="" cols="30" rows="7" >
+									ตลาด เป็นการชุมนุมกันทางสังคม แลกเปลี่ยนสินค้ากัน ในภาษาทั่วไป ตลาดหมายความรวมถึงสถานที่ที่มนุษย์มาชุมนุมกันเพื่อค้าขาย ในทางเศรษฐศาสตร์ ตลาดหมายถึงการแลกเปลี่ยนซื้อขาย โดยไม่มีความหมายของสถานที่ทางกายภาพ
+
+การค้าขายของไทยสมัยก่อนนั้น เน้นทางน้ำเป็นหลัก เพราะการคมนาคมทางน้ำเป็นการคมนาคมหลักของคนไทย ซึ่งอาจจะเห็นได้จากการมีตลาดน้ำต่าง ๆ ในสมัยรัตนโกสินทร์
+
+เป็นการเปิดโอกาสให้คนในชุมชนได้ดำเนินกิจกรรมการแลกเปลี่ยน ซื้อขายสินค้าและบริการตามความถนัดของแต่ละครอบครัว เป็นแหล่งรายได้ที่สุจริตของแต่ละครอบครัว เกิดการหมุนเวียนเศรษฐกิจภายในชุมชนรวมถึงจากภายนอกเข้าสู่ชุมชนด้วย และยังก่อให้เกิดความสัมพันธ์อันดีในระดับชุมชน รวมถึงการช่วยธำรงรักษาวัฒนธรรมประเพณีในชุมชน ในกรณีของชุมชนที่มีวัฒนธรรมความเป็นมา จากการที่กลุ่มคนในชุมชนมีการสร้างปฏิสัมพันธ์อันดีด้วยกัน
+
+คำว่า "ตลาด" สันนิษฐานว่ามาจากคำว่า "ยี่สาร" ซึ่งเพี้ยนมาจากคำว่า "บาซาร์" ในภาษาเปอร์เซีย ซึ่งแปลว่า "ตลาด" ตามชาวเปอร์เซียเริ่มเข้ามาในประเทศไทยสมัยพระเจ้าปราสาททอง
+								</textarea>
+							</div>
+         
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">บันทึก</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">ออก</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
-   
+   <div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"> ตลาดสดหนองหอย โซนเกษตรอินทรีย์</h4>
+        </div>
+        <div class="modal-body">
+          <img class="img-responsive" src="images/sell2.jpg" alt="Blog"></a>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 	
 	
 	<div id="fh5co-page">
@@ -347,67 +332,28 @@ $count=0;
 			</div>
 		</div>
 	</header>
-	<br>
-	<br>
-	<div id="fh5co-featured-section">
-		<div class="container">
-			<div class="row">
-				
-				<div class="col-md-6">
-					<a href="AddNews.php" class="featured-grid featured-grid-2" style="background-image: url(images/news.jpg);">
-						<div class="desc">
-							<h3>สร้างข่าว</h3>
-							<span>Create news</span>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-6">
-					<a href="report.php" class="featured-grid featured-grid-2" style="background-image: url(images/report.jpg);">
-						<div class="desc">
-							<h3>ดูรายงาน</h3>
-							<span>Report</span>
-						</div>
-					</a>
-					
-				</div>
-				<div class="col-md-6">
-					<a href="report.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
-						<div class="desc">
-							<h3>เพิ่มสถานที่</h3>
-							<span>Add location</span>
-						</div>
-					</a>
-					
-				</div>
-
-				<div class="col-md-6">
-					<a href="report.php" class="featured-grid featured-grid-2" style="background-image: url(images/bin.jpg);">
-						<div class="desc">
-							<h3>การจัดการข้อมูล</h3>
-							<span>Data management</span>
-						</div>
-					</a>
-					
-				</div>
-				
-			</div>
-		</div>
-	</div>
+	
 
 	<div id="fh5co-blog-section" class="fh5co-grey-bg-section">
 		<div class="container">
 			<div class="row" >
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>ข่าวที่รอการอนุมัติ</h2>
-					<p>All News that waiting for approval</p>
+					<h2>ข่าวที่สร้างไว้ทั้งหมด</h2>
+					<p>All News that created</p>
 					<div class="form-group">
 									<form class="form-inline" name="searchform" id="searchform">
-                        
-                        
+                        <div class="form-group">
+                            <label for="textsearch" >วันเดือนปีที่ลงข่าว</label>
+                            <input type="date"  class="form-control" placeholder="ข้อความ คำค้นหา!" onkeyup="showHint(this.value)">
+                        </div>
+                        <button type="button" class="btn btn-primary" id="btnSearch">
+                            <span class="glyphicon glyphicon-search"></span>
+                            ค้นหา
+                        </button>
                     </form> 
                     <br>
-									<button type="button" class="btn btn-success" data-toggle="modal" data-target="#forconfermAP"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;อนุมัติทั้งหมด</button></span>
-										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ปฏิเสธทั้งหมด
+									<a href="AddNews.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;สร้างข่าวใหม่</button></span></a>
+										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ลบทั้งหมด
 										
 									</div>
 							
@@ -420,15 +366,14 @@ $count=0;
 				 	?>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a class="work-grid"  style="background-image: url(images/<?php echo $row['media'];?>); ">
+						<a class="work-grid" style="background-image: url(images/<?php echo $row['media'];?>);">
 						</a>
 						<div class="desc">
 							<h3><?php echo $row["topic"];?></h3>
 							<p>ประกาศเมื่อ <?php echo DateThai($row["posttime"]);?></p>
 							<p>โดย <?php echo $row["name"]." ".$row["surname"];?></p>
-							
-							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">ดูรายระเอียด<i class="icon-arrow-right"></i></a>
-							
+							<button type="button" class="btn btn-danger" data-toggle="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ลบ</span></button>
+							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">แก้ไขข่าว<i class="icon-arrow-right"></i></a>
 						</div>
 					</div>
 				</div>
