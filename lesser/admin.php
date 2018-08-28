@@ -2,7 +2,7 @@
 	session_start();
 	
     include "connect.php";
-    $sql = "SELECT n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as 		surname ,n.PostTime as posttime FROM news n inner join profile p on n.username = p.username where n.status = 1 order by n.PostTime";
+    $sql = "SELECT n.id,n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as 		surname ,n.PostTime as posttime FROM news n inner join profile p on n.username = p.username where n.status = 1 order by n.PostTime";
 
     $query=mysqli_query($objCon,$sql);
 	$queryDialog=mysqli_query($objCon,$sql);
@@ -166,6 +166,56 @@ function showHint(str) {
 
 	<body>
 
+<div class="modal fade" id="forconfermdelete" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <center><p class="modal-title">ต้องการปฏิเสธข่าวหมดหรือไม่</p></center>
+        </div>
+        <div class="modal-body">
+          <center>
+						
+  <br>
+
+  <a href="DeleteAllNews.php"><button type="button" class="btn btn-warning"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button></a>
+  <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+        </center>
+          
+        </div>
+        
+          
+        
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="forconfermAP" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <center><p class="modal-title">ต้องการอนุมัติข่าวหมดหรือไม่</p></center>
+        </div>
+        <div class="modal-body">
+          <center>
+						
+  <br>
+
+  <a href="apAllNews.php"><button type="button" class="btn btn-success"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button></a>
+  <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+        </center>
+          
+        </div>
+        
+          
+        
+      </div>
+    </div>
+  </div>
+
+
 <?php while($row=mysqli_fetch_array($queryDialog,MYSQLI_ASSOC)){ 
 	$count++;
 	?>
@@ -188,8 +238,8 @@ function showHint(str) {
           <h3>รายละเอียด</h3><p> <?php echo $row["detail"];?></p>
         </div>
         <div class="modal-footer">
-        	<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">อนุมัติ<i class="icon-arrow-right"></i></a>
-							<button type="button" class="btn btn-danger" data-toggle="modal">ปฏิเสธ</span></button>
+        	<a href="APnews.php?id=<?php echo $row["id"]; ?>" class="btn btn-primary btn-outline with-arrow">อนุมัติ<i class="icon-arrow-right"></i></a>
+							<a href="RFnews.php?id=<?php echo $row["id"]; ?>"><button type="button" class="btn btn-danger" >ปฏิเสธ</span></button></a>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -200,29 +250,7 @@ $count=0;
  ?>
 
 
-<div class="modal fade" id="forconfermdelete" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><p class="modal-title">ต้องการลบสินค้าทั้งหมดหรือไม่</p></center>
-        </div>
-        <div class="modal-body">
-          <center>
-						
-  <br>
 
-  <button type="button" class="btn btn-warning" id="delete" data-dismiss="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button>
-  <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
-        </center>
-          
-        </div>
-        
-          
-        
-      </div>
-    </div>
-  </div>
 
 
 <div class="modal fade" id="myModal1" role="dialog">
@@ -358,7 +386,7 @@ $count=0;
                         
                     </form> 
                     <br>
-									<a href="AddNews.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;อนุมัติทั้งหมด</button></span></a>
+									<button type="button" class="btn btn-success" data-toggle="modal" data-target="#forconfermAP"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;อนุมัติทั้งหมด</button></span>
 										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ปฏิเสธทั้งหมด
 										
 									</div>
