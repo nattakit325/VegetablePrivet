@@ -14,7 +14,7 @@
 
 	
 	$sql = "connect.php";
-    $sql = "SELECT n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as surname FROM news n inner join profile p on n.username = p.username WHERE time>NOW()  order by time";
+    $sql = "SELECT n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as surname FROM news n inner join profile p on n.username = p.username WHERE time>NOW() and n.status=0  order by time";
 
 
 
@@ -352,10 +352,16 @@ $count=0;
                             <span class="glyphicon glyphicon-search"></span>
                             ค้นหา
                         </button>
+                        <?php if(empty($_SESSION["username"])){ ?>
+                        <a href="#" data-toggle="modal" data-target="#myModal"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;เสนอข่าวใหม่</button></span></a>
+
+                    <?php }else{ ?>
+                        <a href="AddNews.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;เสนอข่าวใหม่</button></span></a>
+                    <?php } ?>
                     </form> 
                     <br>
-									<a href="AddNews.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;สร้างข่าวใหม่</button></span></a>
-										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ลบทั้งหมด
+									
+										
 										
 									</div>
 				</div>

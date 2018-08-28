@@ -5,6 +5,16 @@
     $detail = $_POST["detail"];
     $dateDF = $_POST["dateDF"];
     $username = $_SESSION["username"];
+    $status = $_SESSION["status"];
+    $st = 0;
+
+    if($status == 'admin'){
+        $st = 0;
+    }else{
+        $st=1;
+    }
+
+
 
 
 
@@ -77,13 +87,17 @@
 
 
     $strSQL = "INSERT INTO news";
-    $strSQL .="(topic,detail,media,time,username) VALUES ('$topic','$detail','$PictureName','$dateDF','$username')";
+    $strSQL .="(topic,detail,media,time,username,status) VALUES ('$topic','$detail','$PictureName','$dateDF','$username','$st')";
     $objQuery = mysqli_query($objCon,$strSQL);
 
-    header("location:admin.php");
 
 
+    if($status == 'admin'){
+        header("location:admin.php");
+    }else{
 
-
+        header("location:SendToAP.php");
+    }
 
 ?>
+

@@ -165,6 +165,41 @@ function showHint(str) {
 
 
 	<body>
+
+<?php while($row=mysqli_fetch_array($queryDialog,MYSQLI_ASSOC)){ 
+	$count++;
+	?>
+
+  <div class="modal fade" id="myModal<?php echo $count?>" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          
+          <h3>หัวข้อข่าว</h3><h4 class="modal-title"><?php echo $row["topic"];?> </h4>
+          
+        </div>
+        <div class="modal-header">
+        
+          <h3>วันเวลาจัดงาน</h3><h4 class="modal-title"><?php echo DateThai($row["time"]);?> </h4>
+        
+        </div>
+        <div class="modal-body">
+          <h3>รายละเอียด</h3><p> <?php echo $row["detail"];?></p>
+        </div>
+        <div class="modal-footer">
+        	<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">อนุมัติ<i class="icon-arrow-right"></i></a>
+							<button type="button" class="btn btn-danger" data-toggle="modal">ปฏิเสธ</span></button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<?php }
+$count=0;
+ ?>
+
+
 <div class="modal fade" id="forconfermdelete" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -255,59 +290,11 @@ function showHint(str) {
   </div>
 
 
-  <div class="modal fade" id="myModal1" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">
-          <div class="form-group">
-          	หัวข้อ
-								<textarea name="" class="form-control" id="" cols="30" rows="1" > ตลาดสดหนองหอย โซนเกษตรอินทรีย์
-								</textarea>
-							</div></h4>
-        </div>
-        <div class="modal-body">
-        	<div class="form-group">
-        		รายละเอียด
-								<textarea name="" class="form-control" id="" cols="30" rows="7" >
-									ตลาด เป็นการชุมนุมกันทางสังคม แลกเปลี่ยนสินค้ากัน ในภาษาทั่วไป ตลาดหมายความรวมถึงสถานที่ที่มนุษย์มาชุมนุมกันเพื่อค้าขาย ในทางเศรษฐศาสตร์ ตลาดหมายถึงการแลกเปลี่ยนซื้อขาย โดยไม่มีความหมายของสถานที่ทางกายภาพ
-
-การค้าขายของไทยสมัยก่อนนั้น เน้นทางน้ำเป็นหลัก เพราะการคมนาคมทางน้ำเป็นการคมนาคมหลักของคนไทย ซึ่งอาจจะเห็นได้จากการมีตลาดน้ำต่าง ๆ ในสมัยรัตนโกสินทร์
-
-เป็นการเปิดโอกาสให้คนในชุมชนได้ดำเนินกิจกรรมการแลกเปลี่ยน ซื้อขายสินค้าและบริการตามความถนัดของแต่ละครอบครัว เป็นแหล่งรายได้ที่สุจริตของแต่ละครอบครัว เกิดการหมุนเวียนเศรษฐกิจภายในชุมชนรวมถึงจากภายนอกเข้าสู่ชุมชนด้วย และยังก่อให้เกิดความสัมพันธ์อันดีในระดับชุมชน รวมถึงการช่วยธำรงรักษาวัฒนธรรมประเพณีในชุมชน ในกรณีของชุมชนที่มีวัฒนธรรมความเป็นมา จากการที่กลุ่มคนในชุมชนมีการสร้างปฏิสัมพันธ์อันดีด้วยกัน
-
-คำว่า "ตลาด" สันนิษฐานว่ามาจากคำว่า "ยี่สาร" ซึ่งเพี้ยนมาจากคำว่า "บาซาร์" ในภาษาเปอร์เซีย ซึ่งแปลว่า "ตลาด" ตามชาวเปอร์เซียเริ่มเข้ามาในประเทศไทยสมัยพระเจ้าปราสาททอง
-								</textarea>
-							</div>
-         
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">บันทึก</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">ออก</button>
-        </div>
-      </div>
-    </div>
-  </div>
+ 
 
 
 
-   <div class="modal fade" id="myModal2" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title"> ตลาดสดหนองหอย โซนเกษตรอินทรีย์</h4>
-        </div>
-        <div class="modal-body">
-          <img class="img-responsive" src="images/sell2.jpg" alt="Blog"></a>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
+   
 	
 	
 	<div id="fh5co-page">
@@ -385,15 +372,15 @@ function showHint(str) {
 				 	?>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a class="work-grid" style="background-image: url(images/<?php echo $row['media'];?>);">
+						<a class="work-grid"  style="background-image: url(images/<?php echo $row['media'];?>); ">
 						</a>
 						<div class="desc">
 							<h3><?php echo $row["topic"];?></h3>
 							<p>ประกาศเมื่อ <?php echo DateThai($row["posttime"]);?></p>
 							<p>โดย <?php echo $row["name"]." ".$row["surname"];?></p>
 							
-							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">อนุมัติ<i class="icon-arrow-right"></i></a>
-							<button type="button" class="btn btn-danger" data-toggle="modal">ปฏิเสธ</span></button>
+							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">ดูรายระเอียด<i class="icon-arrow-right"></i></a>
+							
 						</div>
 					</div>
 				</div>
