@@ -226,7 +226,7 @@ google.maps.event.addListener(map, 'click', function (event) {
 			</body>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-dismiss="modal">เพิ่ม</button>
+          <button type="button" class="btn btn-success" data-dismiss="modal">ออก</button>
         </div>
       </div>
     
@@ -274,7 +274,7 @@ google.maps.event.addListener(map, 'click', function (event) {
 			</div>
             <div class="col-md-6">
 				<div class="form-group">
-					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">เพิ่มสถานที่ของคุณ</button>
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">เพิ่มตลาดอื่นๆ</button>
 				</div>
 			</div>
         </div>

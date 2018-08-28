@@ -1,30 +1,29 @@
 
 <?php
-	session_start();
-	include "connect.php";
+session_start();
+include "connect.php";
 
-	$SellerName=$_GET["SellerName"];
-	$Productid=$_GET["Productid"];
-	$MarketId=$_GET["MarketId"];
-	$sql="SELECT d.name as ProductName, d.picture as picture, d.detail as detail, 
+$SellerName = $_GET["SellerName"];
+$Productid = $_GET["Productid"];
+$MarketId = $_GET["MarketId"];
+$sql = "SELECT d.name as ProductName, d.picture as picture, d.detail as detail,
 	p.name as name, p.surname as surname,c.address as address,c.phone as phone,
 	c.facebook as facebook, c.line as line,p.picture as img ,m.market as  marketName ,
-	m.latitude as latitude , m.longitude as longitude FROM selllist s INNER join product d on 
+	m.latitude as latitude , m.longitude as longitude, m.openDate as openDate , m.openingTime as OpenTime , m.closingTime as CloseTime FROM selllist s INNER join product d on
 	s.productid = d.id INNER JOIN profile p on s.username = p.username inner join contact c on
-	s.username = c.username INNER JOIN  gmarket g ON  g.username=p.username INNER JOIN market m ON 
+	s.username = c.username INNER JOIN  gmarket g ON  g.username=p.username INNER JOIN market m ON
 	m.id=g.marketid where s.username = '$SellerName' and s.productid = '$Productid' ";
-	$queryA=mysqli_query($objCon,$sql);
-		
-	$sqlgetbyMarketid="SELECT d.name as ProductName, d.picture as picture, d.detail as detail, 
+$queryA = mysqli_query($objCon, $sql);
+
+$sqlgetbyMarketid = "SELECT d.name as ProductName, d.picture as picture, d.detail as detail,
 	p.name as name, p.surname as surname,c.address as address,c.phone as phone,
 	c.facebook as facebook, c.line as line,p.picture as img ,m.market as  marketName ,
-	m.latitude as latitude , m.longitude as longitude FROM selllist s INNER join product d on 
+	m.latitude as latitude , m.longitude as longitude, m.openDate as openDate , m.openingTime as OpenTime , m.closingTime as CloseTime FROM selllist s INNER join product d on
 	s.productid = d.id INNER JOIN profile p on s.username = p.username inner join contact c on
-	s.username = c.username INNER JOIN  gmarket g ON  g.username=p.username INNER JOIN market m ON 
+	s.username = c.username INNER JOIN  gmarket g ON  g.username=p.username INNER JOIN market m ON
 	m.id=g.marketid where s.username = '$SellerName' and s.productid = '$Productid' AND m.id= $MarketId";
-		$query=mysqli_query($objCon,$sqlgetbyMarketid);
-		$objResult = mysqli_fetch_array($query,MYSQLI_ASSOC);
-	
+$query = mysqli_query($objCon, $sqlgetbyMarketid);
+$objResult = mysqli_fetch_array($query, MYSQLI_ASSOC);
 
 ?>
 
@@ -43,12 +42,12 @@
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
 	<meta name="author" content="FreeHTML5.co" />
 
-  <!-- 
+  <!--
 	//////////////////////////////////////////////////////
 
-	FREE HTML5 TEMPLATE 
+	FREE HTML5 TEMPLATE
 	DESIGNED & DEVELOPED by FreeHTML5.co
-		
+
 	Website: 		http://freehtml5.co/
 	Email: 			info@freehtml5.co
 	Twitter: 		http://twitter.com/fh5co
@@ -72,7 +71,7 @@
 	<link rel="shortcut icon" href="favicon.ico">
 
 
-	
+
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
 	<!-- Icomoon Icon Fonts-->
@@ -91,12 +90,11 @@
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	
+
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO9xE9smgXJIDFDpyPaDGZcjQu-ybwOKc">
-	</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO9xE9smgXJIDFDpyPaDGZcjQu-ybwOKc&libraries=geometry"></script>
 		<style>
 .circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
     height: 40px;  /* ความสูงปรับให้เป็นออโต้ */
@@ -122,16 +120,16 @@
 </style>
 
 	</head>
-	<body>
+	<body onload="setMarket()">
 
-		
+
 
 
 
 
 	<div class="modal fade" id="myModal" role="dialog">
       <div class="modal-content">
-        
+
         <div class="modal-body">
 				<div id="map"></div>
         </div>
@@ -139,7 +137,7 @@
           <button type="button" class="btn btn-danger" data-dismiss="modal">ออก</button>
         </div>
       </div>
-    
+
   </div>
 
 	<div class="modal fade" id="myModal1" role="dialog">
@@ -153,13 +151,13 @@
           <center>
 						<form action="check_login.php" method="POST"  id="login_form">
 							<p id="txtHint" style="color:red; "></p>
-							
+
 							<div class="form-group">
 								<input type="text" class="form-control" name="usr" placeholder="Username" required id="usr">
 							</div>
 							<div class="form-group">
 								<input type="password" class="form-control" name="pwd" placeholder="Password" required id="pwd">
-								<input type="hidden"  name="page" value="buylist.php" id="page"> 
+								<input type="hidden"  name="page" value="buylist.php" id="page">
 							</div>
 							<button type="button" class="btn btn-success" onclick="showUser(document.getElementById('usr').value,document.getElementById('pwd').value,document.getElementById('page').value)">เข้าสู่ระบบ</button>
 							<!--<input type="submit" class="btn btn-success" placeholder="Password" value="เข้าสู่ระบบ">-->
@@ -168,7 +166,7 @@
   <br>
   <a href="register.html">ยังไม่ได้สมัครบัญชีในระบบ</a>
         </center>
-          
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
@@ -181,23 +179,23 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><h4 class="modal-title"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></h4></center>
+          <center><h4 class="modal-title"><?php echo $_SESSION["name"]; ?> <?php echo $_SESSION["surname"]; ?></h4></center>
         </div>
         <div class="modal-body">
           <center>
-						<img class="circlein" src="images/<?php echo $_SESSION["picture"]?>" width="100%" height="100%" />
+						<img class="circlein" src="images/<?php echo $_SESSION["picture"] ?>" width="100%" height="100%" />
 						<br>
 						<br>
-						<p>FirstName : <?php echo $_SESSION["name"];?></p>
-						<p>LastName   : <?php echo $_SESSION["surname"];?></p>
-						<p>career     : <?php echo $_SESSION["career"];?></p>
-						<p>age        : <?php echo $_SESSION["age"];?></p>
+						<p>FirstName : <?php echo $_SESSION["name"]; ?></p>
+						<p>LastName   : <?php echo $_SESSION["surname"]; ?></p>
+						<p>career     : <?php echo $_SESSION["career"]; ?></p>
+						<p>age        : <?php echo $_SESSION["age"]; ?></p>
   <br>
 
   <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
   <a href="ClearSession.php"><button type="button" class="btn btn-warning" >ออกจากระบบ</button></a>
         </center>
-          
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
@@ -206,7 +204,7 @@
     </div>
   </div>
 
-	
+
 	<div id="fh5co-page">
 	<header id="fh5co-header" role="banner">
 		<div class="container">
@@ -215,15 +213,15 @@
 				<nav role="navigation">
 					<ul>
 						<li>
-							<?php if(empty($_SESSION["username"])){
-								?>
+							<?php if (empty($_SESSION["username"])) {
+    ?>
 							<a href="" data-toggle="modal" data-target="#myModal1">เข้าสู่ระบบ</a></li>
 							<a href="" data-toggle="modal" data-target="#myModal1"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
-						<?php }else{?>
-							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></a></li>
-							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
-						<?php } ?>
-						
+						<?php } else {?>
+							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"]; ?> <?php echo $_SESSION["surname"]; ?></a></li>
+							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"] ?>" width="10%" height="12%" /></a>
+						<?php }?>
+
 					</ul>
 				</nav>
 			</div>
@@ -242,12 +240,12 @@
 						<div class="col-md-12">
 							<div class="about-inner">
 								<img class="img-responsive" src="uploads_product/<?php echo $objResult["picture"]; ?>" alt="About" height="100%" width="100%">
-								
+
 							</div>
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="col-md-4">
 					<aside class="sidebar">
 						<div class="row">
@@ -257,7 +255,7 @@
 									<li>
 										<h4><?php echo $objResult["detail"]; ?></h4>
 									</li>
-									
+
 								</ul>
 							</div>
 
@@ -265,19 +263,27 @@
 								<h3><img class="picture" src="images/<?php echo $objResult["img"]; ?>" width="10%" height="12%" />&nbsp;&nbsp;ผู้จำหน่าย</h3>
 								<ul>
 									<li>
-										<h4><li><?php echo $objResult["name"];?>  &nbsp;&nbsp;<?php echo $objResult["surname"];?></li></h4>
-						
+										<h4><li><?php echo $objResult["name"]; ?>  &nbsp;&nbsp;<?php echo $objResult["surname"]; ?></li></h4>
+
 									</li>
-									
+
 								</ul>
 							</div>
 							<div class="col-md-12 side">
 								<h3><i class="fas fa-address-card"></i>&nbsp;&nbsp;ช่องทางการติดต่อ</h3>
 								<ul>
 									<li>
-										<h4><li><i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;&nbsp;ที่อยู่<br><a href="#">&nbsp;&nbsp;&nbsp;<?php echo $objResult["address"]; ?></a></li>
-											<br>
-									<li><i class="fas fa-map-pin"></i>&nbsp;&nbsp;&nbsp;ระยะทาง<br><a href="#">&nbsp; ห่างออกไป 14 กม.</a></li>
+									<h4><li><i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;&nbsp;ที่อยู่<br><a href="#">&nbsp;&nbsp;&nbsp;<?php echo $objResult["address"]; ?></a></li>
+									<br>
+									<li><i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;&nbsp;สถานที่ขาย<br><a href="#">&nbsp;&nbsp;&nbsp;<?php echo $objResult["marketName"]; ?></a></li>
+									<br>
+									<li><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;&nbsp;วันที่เปิด<br><a href="#">&nbsp;&nbsp;&nbsp;<?php echo $objResult["openDate"]; ?></a></li>
+									<br>
+									<li><i class="far fa-clock"></i></i>&nbsp;&nbsp;&nbsp;เวลาเปิด<br><a href="#">&nbsp;&nbsp;&nbsp;<?php echo $objResult["OpenTime"]; ?></a></li>
+									<br>
+									<li><i class="fas fa-clock"></i></i>&nbsp;&nbsp;&nbsp;เวลาปิด<br><a href="#">&nbsp;&nbsp;&nbsp;<?php echo $objResult["CloseTime"]; ?></a></li>
+									<br>
+									<li><i class="fas fa-map-pin"></i>&nbsp;&nbsp;&nbsp;ระยะทาง<br><a href="#">&nbsp; <p id="distance"></p></a></li>
 									<br>
 									<li><i class="fas fa-phone"></i>&nbsp;&nbsp;เบอร์โทรศัพท์<br><a href="#">&nbsp;&nbsp;&nbsp;<?php echo $objResult["phone"]; ?></a></li>
 									<br>
@@ -288,12 +294,12 @@
 
 									</li>
 									</h4>
-									
+
 								</ul>
 								<br><br><br>
 								<center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูสถานที่ขายสินค้า</button></center>
 							</div>
-							
+
 						</div>
 					</aside>
 				</div>
@@ -303,11 +309,11 @@
 		</div>
 
 	</div>
-	
-	
+
+
 	</div>
-	
-	
+
+
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
@@ -317,17 +323,61 @@
 	<!-- Waypoints -->
 	<script src="js/jquery.waypoints.min.js"></script>
 	<!-- MAIN JS -->
-	 
+
 	<script type="text/javascript" src="js/showUser.js"></script>
 	</body>
 </html>
-<script type="text/javascript">
-    var locations = [
-			<?php while ($row = mysqli_fetch_array($queryA, MYSQLI_ASSOC)) {?>
-				['<?php echo $row["marketName"]; ?>', <?php echo $row["latitude"]; ?>, <?php echo $row["longitude"]; ?>, 4],
-	 		<?php }?>
-    ];
 
+<script type="text/javascript">
+var p1 = 0;
+let p2;
+var market = [];
+var locations = [];
+function setMarket(){
+
+	 <?php while ($row = mysqli_fetch_array($queryA, MYSQLI_ASSOC)) {?>
+		market.push(["<?php echo $row["marketName"]; ?>","<?php echo $row["latitude"]; ?>",
+			"<?php echo $row["longitude"]; ?>","<?php echo $row["openDate"]; ?>",
+			"<?php echo $row["OpenTime"]; ?>","<?php echo $row["CloseTime"]; ?>"]);
+	 <?php }?>
+	getLaLongMarket();
+}
+function getLaLongMarket() {
+	 for(var i=0;i<market.length;i++){
+		 market[i][6] = new google.maps.LatLng(market[i][1], market[i][2]);
+	 }
+	 getLocation();
+}
+function getLocation() {
+
+    if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(CurrentPosition);
+    } else {
+	document.getElementById("demo").innerHTML = "Geolocation is not supported by this browser.";}
+    }
+function CurrentPosition(position) {
+	p2 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	if(p1 == 0){
+		showPosition();
+	}
+}
+function showPosition(){
+ 	p1 = 1;
+	for(var j=0;j<market.length;j++){
+		market[j][7] = (google.maps.geometry.spherical.computeDistanceBetween(market[j][6], p2) / 1000).toFixed(2);
+	 }
+	 let marketmap = new google.maps.LatLng(<?php echo $objResult["latitude"]; ?>, <?php echo $objResult["longitude"]; ?>);
+	 var distanceMarket = (google.maps.geometry.spherical.computeDistanceBetween(marketmap, p2) / 1000).toFixed(2);
+	 document.getElementById("distance").innerHTML = distanceMarket+"กิโลเมตร";
+	 ShowMarker();
+}
+function ShowMarker(){
+	for(k= 0;k<market.length;k++){
+		locations.push([ market[k][0]+"<br>ระยะทาง "+market[k][7]+" กิโลเมตร"+"<br> "+market[k][3]+"<br>เปิด "
+			+market[k][4]+" ปิด "+market[k][5], market[k][1], market[k][2], k ]);
+	}
+	
+  
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 14,
       center: new google.maps.LatLng(<?php echo $objResult["latitude"]; ?>,<?php echo $objResult["longitude"]; ?>),
@@ -338,7 +388,7 @@
 
     var marker, i;
 
-    for (i = 0; i < locations.length; i++) { 
+    for (i = 0; i < locations.length; i++) {
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(locations[i][1], locations[i][2]),
         map: map
@@ -351,4 +401,5 @@
         }
       })(marker, i));
     }
-  </script>
+}
+</script>
