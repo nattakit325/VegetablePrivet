@@ -73,7 +73,7 @@
  
      //---------------------------------------//
 
-        $pass = $_POST["password"];
+        $pass = md5($_POST["password"]);
         $strSQL = "SELECT * FROM login WHERE username = '".mysqli_real_escape_string($objCon,$_POST["username"])."'";
         $objQuery4 = mysqli_query($objCon,$strSQL);
         $objResult4 = mysqli_fetch_array($objQuery4,MYSQLI_ASSOC);
