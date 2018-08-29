@@ -2,13 +2,20 @@
 session_start();
 include("dbconnect.php");
 // ถ้ามี session ของคนที่กำลังใช้งานอยู่ และมีค่า id ของคนที่เป็นจะส่งไปหา และข้อความไม่ว่าง ส่งมาเพิ่มข้อมูล
-if(isset($_SESSION['ses_user_id']) && $_SESSION['ses_user_id']!="" 
-&& isset($_POST['user2']) && $_POST['user2']!="" 
+
+if(empty($_SESSION['username'])){
+	$user = 'Nomember';
+}else{
+	$user = $_SESSION['username'];
+}
+
+if(isset($_POST['user2']) && $_POST['user2']!="" 
 && isset($_POST['msg']) && $_POST['msg']!="" ){
+
 	$sql="
 	INSERT INTO tbl_chat SET 
 	chat_msg='".$_POST['msg']."',
-	chat_user1='".$_SESSION['ses_user_id']."',  
+	chat_user1='".$user."',  
 	chat_user2='".$_POST['user2']."',
 	chat_datetime='".date("Y-m-d H:i:s")."'			
 	";
@@ -25,8 +32,8 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 		$sql="
 		SELECT * FROM tbl_chat WHERE chat_id>'".$_POST['maxID']."' AND
 		(
-			(chat_user1='".$_SESSION['ses_user_id']."' AND chat_user2='".$_POST['userID']."') OR 
-			(chat_user1='".$_POST['userID']."' AND chat_user2='".$_SESSION['ses_user_id']."')
+			(chat_user1='".$user."' AND chat_user2='".$_POST['userID']."') OR 
+			(chat_user1='".$_POST['userID']."' AND chat_user2='".$user."')
 		)	
 		ORDER BY chat_id 
 		";
@@ -36,8 +43,8 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 		$sql="
 		SELECT * FROM tbl_chat WHERE chat_id>'".$_POST['maxID']."' AND
 		(
-			(chat_user1='".$_SESSION['ses_user_id']."' AND chat_user2='".$_POST['userID']."') OR 
-			(chat_user1='".$_POST['userID']."' AND chat_user2='".$_SESSION['ses_user_id']."')
+			(chat_user1='".$user."' AND chat_user2='".$_POST['userID']."') OR 
+			(chat_user1='".$_POST['userID']."' AND chat_user2='".$user."')
 		)	
 		ORDER BY chat_id LIMIT 1
 		";
@@ -47,7 +54,7 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 		while($row = $result->fetch_array()){
 			$json_data[]=array(
 				"max_id"=>$row['chat_id'],
-				"data_align"=>($_SESSION['ses_user_id']==$row['chat_user1'])?"right":"left",// ถ้าเป็นข้อความที่ส่งจากผู้ใช้ขณะนั้น
+				"data_align"=>($user==$row['chat_user1'])?"right":"left",// ถ้าเป็นข้อความที่ส่งจากผู้ใช้ขณะนั้น
 				"data_msg"=>$row['chat_msg']			
 			);	
 		}

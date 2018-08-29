@@ -198,32 +198,7 @@
   </div>
 
 
-<?php while($row=mysqli_fetch_array($queryDialog,MYSQLI_ASSOC)){ 
-	$count++;
-	?>
 
-  <div class="modal fade" id="myModal<?php echo $count?>" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          
-          <h4 class="modal-title"> <?php echo $row["topic"];?> </h4>
-          
-        </div>
-        <div class="modal-body">
-          <p> <?php echo $row["detail"];?></p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-<?php }
-$count=0;
- ?>
-  
   
 
   
@@ -246,6 +221,7 @@ $count=0;
 						<?php }else{?>
 							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></a></li>
 							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
+							<h5 style="color:red; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;มี 10 ข้อความใหม่</h5>
 						<?php } ?>
 						
 					</ul>
@@ -289,40 +265,7 @@ $count=0;
 		</div>
 	</div>
 
-	<div id="fh5co-blog-section" class="fh5co-grey-bg-section">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>ข่าวสารล่าสุด</h2>
-					<p>Latest News</p>
-				</div>
-			</div>
-			<div class="row">
 
-				 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ 
-				 	$count++
-				 	?>
-				<div class="col-md-4 text-center">
-					<div class="blog-inner">
-						<a href="#" data-toggle="modal" data-target="#myModal<?php echo $count?>"><img class="img-responsive" src="images/<?php echo $row["media"]?>" alt="Blog"></a>
-						<div class="desc">
-							<h3><a href="#" data-toggle="modal" data-target="#myModal<?php echo $count?>" > <?php echo $row["topic"];?></a></h3>
-							<p>เวลา <?php echo DateThai($row["time"]);?></p>
-							<p><a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">ดูรายละเอียด<i class="icon-arrow-right"></i></a></p>
-						</div>
-					</div>
-				</div>
-				<?php } ?>
-				
-				
-				
-
-
-				
-
-			</div>
-		</div>
-	</div>
 	
 	
 	
