@@ -371,7 +371,7 @@ $count=0;
 					
 				</div>
 				<div class="col-md-6">
-					<a href="report.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
+					<a href="addMarketAdmin.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
 						<div class="desc">
 							<h3>เพิ่มสถานที่</h3>
 							<span>Add location</span>

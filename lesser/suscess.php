@@ -3,9 +3,7 @@
 session_start();
 include "connect.php";
 
-$username = $_GET['username'];
-
-echo $username ;
+$username = $_SESSION["username"];
 $sqlUser = "SELECT * FROM login WHERE username = '".$username."'";
 
 
