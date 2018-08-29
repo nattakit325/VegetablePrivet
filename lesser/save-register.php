@@ -4,7 +4,6 @@
 
      $target_dir = "images/";
 
-     $facebook = "https://www.facebook.com/app_scoped_user_id/".$_POST["hdnFbID"]."/";
     //$target_dir = "/home/nattakit/domains/nattakitmju.com/public_html/uploads_product/";
 
     if($_FILES["fileToUpload"]["name"]){
@@ -94,7 +93,7 @@
         $objQuery = mysqli_query($objCon,$strSQL2);
 
         $strSQL3 = "INSERT INTO `contact` ";
-        $strSQL3 .="(address,phone,facebook,line,username) VALUES ('".$_POST["address"]."','".$_POST["tel"]."','$facebook','".$_POST["line"]."','".$_POST["username"]."')";
+        $strSQL3 .="(address,phone,facebook,line,username) VALUES ('".$_POST["address"]."','".$_POST["tel"]."','".$_POST["facebook"]."','".$_POST["line"]."','".$_POST["username"]."')";
         $objQuery = mysqli_query($objCon,$strSQL3);
         
         $user = $_POST["username"];

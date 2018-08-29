@@ -260,17 +260,11 @@ function checkLoginState() {
 								</div>
 							</div>
 
-							<fb:login-button 
-  							scope="public_profile,email"
-  							onlogin="checkLoginState();">
-  							<button type="button" class="btn btn-primary" ><i class="fab fa-facebook"
-								></i>&nbsp;&nbsp;&nbsp;ผูกบัญชี Facebook</button>
-							</fb:login-button>
-							
-								<input type="hidden" id="hdnFbID" name="hdnFbID">
-								<input type="hidden" id="hdnName" name="hdnName">
-								<input type="hidden" id="hdnEmail" name="hdnEmail">
-
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="form-control" placeholder="facebook" type="text" name="facebook">
+								</div>
+							</div>
 
         </div>
       </div>
