@@ -4,7 +4,6 @@
 
 	$sql="SELECT * FROM market WHERE type = 1 ";
 	$query=mysqli_query($objCon,$sql);
-	$username = $_GET['user'];
 	$market = array();
 	while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){
 		array_push($market,$row["market"]);
@@ -171,7 +170,6 @@ function saveLatLng() {
     	var option = document.createElement("option");
     	option.text = location_name;
 		show.add(option);
-		
 		$('#market1').modal('hide');
 	}else{
 		alert('กรุณากรอกให้ครบ');
@@ -179,7 +177,7 @@ function saveLatLng() {
 	
 }
 function saveMarket() {
-	var user = "<?php echo $username; ?>";
+	var user = "<?php echo $_SESSION["username"];?>";
 $.ajax({
 	method: "POST",
 	url: "save-market.php",
@@ -190,7 +188,7 @@ $.ajax({
 				alert(data);
                 //the controller function count_votes returns an integer.
                 //echo that with the fade in here.
-                }
+        }
 	});
 
 }

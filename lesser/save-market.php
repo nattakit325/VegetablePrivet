@@ -1,7 +1,5 @@
 <?php
-    header("Content-Type: application/json; charset=UTF-8");
      include "connect.php";
-
      $loname= $_POST['loname'];
      $user= $_POST['user'];
      $marketarr= $_POST['marketarr'];
@@ -38,7 +36,7 @@
             $strSQL3 = "INSERT INTO gmarket";
             $strSQL3 .="(username,marketid) VALUES ('$user','$marketid')";
             $objQuery3 = mysqli_query($objCon,$strSQL3);
-           $j = $j+1;
+            $j = $j+1;
     
         }
     mysql_close($objCon);

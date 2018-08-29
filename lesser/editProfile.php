@@ -1,29 +1,21 @@
 <?php
 	session_start();
-	
     include "connect.php";
-    $sql = "SELECT n.id,n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as 		surname ,n.PostTime as posttime FROM news n inner join profile p on n.username = p.username where n.status = 1 order by n.PostTime";
+    $username =  $_SESSION["username"];
+    $sql = "SELECT m.id as id,m.market as market FROM market m INNER JOIN gmarket g on m.id = g.marketid where g.username = '$username'";
+    $queryA = mysqli_query($objCon, $sql);
 
-    $query=mysqli_query($objCon,$sql);
-	$queryDialog=mysqli_query($objCon,$sql);
-	$count = 0;
+    $Profilesql = "SELECT * FROM `profile` WHERE username = '$username'";
+    $queryPro = mysqli_query($objCon, $Profilesql);
+    $objResult = mysqli_fetch_array($queryPro,MYSQLI_ASSOC);
 
-	function DateThai($strDate)
-	{
-		$strYear = date("Y",strtotime($strDate))+543;
-		$strMonth= date("n",strtotime($strDate));
-		$strDay= date("j",strtotime($strDate));
-		$strHour= date("H",strtotime($strDate));
-		$strMinute= date("i",strtotime($strDate));
-		$strSeconds= date("s",strtotime($strDate));
-		$strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
-		$strMonthThai=$strMonthCut[$strMonth];
-		return "$strDay $strMonthThai $strYear, เวลา $strHour:$strMinute";
-	}
+    $Contactsql = "SELECT * FROM `contact` WHERE username = '$username'";
+    $queryCon = mysqli_query($objCon, $Contactsql);
+    $objResult2 = mysqli_fetch_array($queryCon,MYSQLI_ASSOC);
 
-    
+
+
 ?>
-
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -32,18 +24,18 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Admin</title>
+	<title>Register</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
 	<meta name="author" content="FreeHTML5.co" />
 
-  <!-- 
+  <!--
 	//////////////////////////////////////////////////////
 
-	FREE HTML5 TEMPLATE 
+	FREE HTML5 TEMPLATE
 	DESIGNED & DEVELOPED by FreeHTML5.co
-		
+
 	Website: 		http://freehtml5.co/
 	Email: 			info@freehtml5.co
 	Twitter: 		http://twitter.com/fh5co
@@ -63,6 +55,8 @@
 	<meta name="twitter:url" content="" />
 	<meta name="twitter:card" content="" />
 
+
+
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 	<link rel="shortcut icon" href="favicon.ico">
 
@@ -70,8 +64,6 @@
 
 	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
 
-
-	
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
 	<!-- Icomoon Icon Fonts-->
@@ -82,13 +74,7 @@
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<!-- Theme style  -->
 	<link rel="stylesheet" href="css/style.css">
-
-
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-	
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
 	<!-- FOR IE9 below -->
@@ -96,56 +82,95 @@
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
 	</head>
+ 
+<script type="text/javascript">
+	function readURL(input) {
+		if (input.files && input.files[0]) {
 
-
-<script>
-$(document).ready(function(){
-    $("#delete").click(function(){
-    	$('#fordelete').hide();
-    	
-          //$('.row').hide();
-    });
-
-});
-
-
-
-
-function Delete(id,name) {
-    
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("DeleteDialog").innerHTML = this.responseText;
-            }
-        }
-        xmlhttp.open("GET", "DeleteOneProduct.php?id="+id+"&name="+name, true);
-        xmlhttp.send();
-    
-}
-
-
-function showHint(str) {
-    
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("search_result").innerHTML = this.responseText;
-            }
-        }
-        xmlhttp.open("GET", "getNews.php?q="+str, true);
-        xmlhttp.send();
-    
-}
-
-
-
+			var reader = new FileReader();
+			reader.onload = function (e) {
+				$('#blah').attr('src', e.target.result);
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}	
 </script>
 
-	<style>
+<script>
+		 var bFbStatus = false;
+  var fbID = "";
+  var fbName = "";
+  var fbEmail = "";
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '303133320267472',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v2.8'
+    });
+    FB.AppEvents.logPageView();   
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+
+function statusChangeCallback(response)
+{
+
+    if(bFbStatus == false)
+    {
+      fbID = response.authResponse.userID;
+
+        if (response.status == 'connected') {
+        getCurrentUserInfo(response)
+        } else {
+        FB.login(function(response) {
+          if (response.authResponse){
+          getCurrentUserInfo(response)
+          } else {
+          console.log('Auth cancelled.')
+          }
+        }, { scope: 'email' });
+        }
+    }
+
+
+    bFbStatus = true;
+}
+
+
+    function getCurrentUserInfo() {
+      FB.api('/me?fields=name,email', function(userInfo) {
+
+
+      
+      fbName = userInfo.name;
+      fbEmail = userInfo.email;
+
+      $("#hdnFbID").val(fbID);
+      $("#hdnName ").val(fbName);
+      $("#hdnEmail").val(fbEmail);
+      $("#frmMain").submit();
+
+      });
+    }
+
+function checkLoginState() {
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+}
+
+	</script>
+<style>
 .circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
     height: 40px;  /* ความสูงปรับให้เป็นออโต้ */
     width: 40px;  /* ความสูงปรับให้เป็นออโต้ */
@@ -161,24 +186,21 @@ function showHint(str) {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
 }
 </style>
-
-
-
 	<body>
-
+    
 <div class="modal fade" id="forconfermdelete" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><p class="modal-title">ต้องการปฏิเสธข่าวหมดหรือไม่</p></center>
+          <center><p class="modal-title">ต้องลบตลาดที่คุณเลือกหรือไม่</p></center>
         </div>
         <div class="modal-body">
           <center>
 						
   <br>
 
-  <a href="DeleteAllNews.php"><button type="button" class="btn btn-warning"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button></a>
+ 	<button type="button" class="btn btn-warning" onclick="deleteMarket()"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button>
   <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
         </center>
           
@@ -191,69 +213,10 @@ function showHint(str) {
   </div>
 
 
-  <div class="modal fade" id="forconfermAP" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><p class="modal-title">ต้องการอนุมัติข่าวหมดหรือไม่</p></center>
-        </div>
-        <div class="modal-body">
-          <center>
-						
-  <br>
-
-  <a href="apAllNews.php"><button type="button" class="btn btn-success"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button></a>
-  <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
-        </center>
-          
-        </div>
-        
-          
-        
-      </div>
-    </div>
-  </div>
-
-
-<?php while($row=mysqli_fetch_array($queryDialog,MYSQLI_ASSOC)){ 
-	$count++;
-	?>
-
-  <div class="modal fade" id="myModal<?php echo $count?>" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          
-          <h3>หัวข้อข่าว</h3><h4 class="modal-title"><?php echo $row["topic"];?> </h4>
-          
-        </div>
-        <div class="modal-header">
-        
-          <h3>วันเวลาจัดงาน</h3><h4 class="modal-title"><?php echo DateThai($row["time"]);?> </h4>
-        
-        </div>
-        <div class="modal-body">
-          <h3>รายละเอียด</h3><p> <?php echo $row["detail"];?></p>
-        </div>
-        <div class="modal-footer">
-        	<a href="APnews.php?id=<?php echo $row["id"]; ?>" class="btn btn-primary btn-outline with-arrow">อนุมัติ<i class="icon-arrow-right"></i></a>
-							<a href="RFnews.php?id=<?php echo $row["id"]; ?>"><button type="button" class="btn btn-danger" >ปฏิเสธ</span></button></a>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-<?php }
-$count=0;
- ?>
 
 
 
-
-
-<div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
@@ -318,13 +281,7 @@ $count=0;
   </div>
 
 
- 
 
-
-
-   
-	
-	
 	<div id="fh5co-page">
 	<header id="fh5co-header" role="banner">
 		<div class="container">
@@ -349,106 +306,136 @@ $count=0;
 	</header>
 	<br>
 	<br>
-	<div id="fh5co-featured-section">
+	<div id="fh5co-contact-section">
 		<div class="container">
 			<div class="row">
-				
-				<div class="col-md-6">
-					<a href="AddNews.php" class="featured-grid featured-grid-2" style="background-image: url(images/news.jpg);">
-						<div class="desc">
-							<h3>สร้างข่าว</h3>
-							<span>Create news</span>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-6">
-					<a href="report.php" class="featured-grid featured-grid-2" style="background-image: url(images/report.jpg);">
-						<div class="desc">
-							<h3>ดูรายงาน</h3>
-							<span>Report</span>
-						</div>
-					</a>
-					
-				</div>
-				<div class="col-md-6">
-					<a href="addMarketAdmin.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
-						<div class="desc">
-							<h3>เพิ่มสถานที่</h3>
-							<span>Add location</span>
-						</div>
-					</a>
-					
-				</div>
-
-				<div class="col-md-6">
-					<a href="report.php" class="featured-grid featured-grid-2" style="background-image: url(images/bin.jpg);">
-						<div class="desc">
-							<h3>การจัดการข้อมูล</h3>
-							<span>Data management</span>
-						</div>
-					</a>
-					
-				</div>
-				
-			</div>
-		</div>
-	</div>
-
-	<div id="fh5co-blog-section" class="fh5co-grey-bg-section">
-		<div class="container">
-			<div class="row" >
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>ข่าวที่รอการอนุมัติ</h2>
-					<p>All News that waiting for approval</p>
-					<div class="form-group">
-									<form class="form-inline" name="searchform" id="searchform">
-                        
-                        
-                    </form> 
-                    <br>
-									<button type="button" class="btn btn-success" data-toggle="modal" data-target="#forconfermAP"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;อนุมัติทั้งหมด</button>
-										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ปฏิเสธทั้งหมด</button>
-										
-									</div>
-							
+					<h2>แก้ไขโปรไฟล์</h2>
+					<p><span>Edit Profile</span></p>
 				</div>
 			</div>
 			<div class="row">
 
-				 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ 
-				 	$count++
-				 	?>
-				<div class="col-md-4 text-center">
+				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+					<div class="row">
+						<form action="Update-Profile.php" method="post" enctype="multipart/form-data"  name="frmMain" id="frmMain">
+						
+			<div class="col-md-4 text-center">
+
 					<div class="work-inner">
-						<a class="work-grid"  style="background-image: url(images/<?php echo $row['media'];?>); ">
+						<img src="images/<?php echo $_SESSION["picture"]?>"  id="blah" class="work-grid">
 						</a>
 						<div class="desc">
-							<h3><?php echo $row["topic"];?></h3>
-							<p>ประกาศเมื่อ <?php echo DateThai($row["posttime"]);?></p>
-							<p>โดย <?php echo $row["name"]." ".$row["surname"];?></p>
-							
-							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">ดูรายระเอียด<i class="icon-arrow-right"></i></a>
-							
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" Oonchange="readURL(this);">
 						</div>
 					</div>
 				</div>
-				<?php } ?>
-				
-				
-				
+
+							<div class="col-md-6">
+                                <input type="hidden" name="pictureold" value="<?php echo $_SESSION["picture"]?>">
+
+								<div class="form-group">
+                                    <label>ชื่อ</label>
+									<input class="form-control" placeholder="ชื่อจริง" type="text" name="firstname" value="<?php echo $objResult["name"];?>">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+                                <label>สกุล</label>
+									<input class="form-control" placeholder="นามสกุล" type="text" name="lastname" value="<?php echo $objResult["surname"];?>">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+                                    <label>อายุ</label>
+									<input class="form-control" placeholder="อายุ" type="number" name="age" value="<?php echo $objResult["age"];?>">
+								</div>
+							</div>
 
 
-				
-
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-	
-	
-	
-	</div>
-	
-	
+<div class="row">
+        <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+          <h2>ช่องทางการติดต่อของคุณ</h2>
+          <p ip="pp"><span>Your contact</span></p>
+
+
+                            <div class="col-md-6">
+								<div class="form-group">
+                                    <label>ที่อยู่</label>
+									<input class="form-control" placeholder="ที่อยู่" type="text" name="address" value="<?php echo $objResult2["address"];?>">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									 <label>เบอร์โทรศัพท์</label>
+									<input class="form-control" placeholder="เบอร์โทรศัพท์" type="text" name="tel" value="<?php echo $objResult2["phone"];?>">
+								</div>
+							</div>
+							
+							
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>Line</label>
+									<input class="form-control" placeholder="Line" type="text" name="line" value="<?php echo $objResult2["line"];?>">
+								</div>
+							</div>
+
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>Facebook</label>
+									<input class="form-control" placeholder="facebook" type="text" name="facebook" value="<?php echo $objResult2["facebook"];?>">
+								</div>
+							</div>
+
+        </div>
+</div>
+
+<div class="row">
+        <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+         			    <h2>ตลาดของคุณ</h2>
+          				<p ip="pp"><span>Your Market</span></p>
+          					<div class="col-md-6">
+								<div class="form-group">
+									<select class="form-control" name="status" id="place">
+										<?php while($row=mysqli_fetch_array($queryA,MYSQLI_ASSOC)){ ?>
+											<option value="<?php echo $row["id"] ?>"><?php echo $row["market"] ?></option>
+										<?php } ?>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ลบที่คุณเลิอก</button>
+								</div>
+	                        </div>
+                            <div class="col-md-6">
+								<div class="form-group">
+									<a href="register2.php"><button type="button" class="btn btn-success" >เพิ่มตลาดที่คุณขาย</button></a>
+								</div>
+	                        </div>
+
+
+        </div>
+</div>
+
+
+  			<div class="col-md-12">
+              <div class="form-group">
+                <br>
+                <center>
+                <input value="ยืนยันการแก้ไข" class="btn btn-primary" type="submit" name="submit">
+                </center>
+              </div>
+			</div>
+		</form>
+
+
+
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
@@ -457,9 +444,29 @@ $count=0;
 	<script src="js/bootstrap.min.js"></script>
 	<!-- Waypoints -->
 	<script src="js/jquery.waypoints.min.js"></script>
+	<!-- Google Map -->
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
+   	<script type="text/javascript">
+	function deleteMarket() {
+		var place = document.getElementById("place");
+        var placevalue = place.value;
+       // var kk ="<?php echo $_SESSION["username"];?>";
+       $.ajax({
+            method: "POST",
+            url: "delete-market-profile.php",
+            cache: false,
+            data: { placevalue:placevalue },
+            success: function(data){
+                        alert(data);
+                        //the controller function count_votes returns an integer.
+                        //echo that with the fade in here.
+                }
+            });
+		
+		location.reload();
+    }
+   	</script>
 
 	</body>
 </html>
-
