@@ -1,20 +1,11 @@
-<?php
-    $server="localhost";
-    $user="root";
-    $password="";
-    $db="smartfarmer";
-
-
-    $objCon = mysqli_connect($server,$user,$password,$db);
-    if($objCon){
-        
-    }
-    mysqli_set_charset($objCon,"utf8");
-
-
-
-
-
-
-
-?>
+<?php  
+$mysqli = new mysqli("localhost", "root","","smartfarmer");  
+/* check connection */  
+if (mysqli_connect_errno()) {  
+    printf("Connect failed: %sn", mysqli_connect_error());  
+    exit();  
+}  
+if(!$mysqli->set_charset("utf8")) {  
+    printf("Error loading character set utf8: %sn", $mysqli->error);  
+    exit();  
+}  
