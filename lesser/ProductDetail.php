@@ -200,8 +200,8 @@ div#messagesDiv{
   
   <div class="col-xs-12">
 <!--  input hidden สำหรับ เก็บ chat_id ล่าสุดที่แสดง-->
-<input name="userID1" type="hidden" id="userID1" value="<?php echo $_SESSION["username"] ?>">
-  <input name="userID2" type="hidden" id="userID2" value="<?php echo $objResult["username"]; ?>">
+<input name="userID1" type="hidden" id="userID1" value="<?php echo $_SESSION["username"]; ?>">
+  <input name="userID2" type="hidden" id="userID2" value="2">
   <!--  input hidden สำหรับ เก็บ chat_id ล่าสุดที่แสดง-->
   <input name="h_maxID" type="hidden" id="h_maxID" value="0" >
   <input type="text" class="form-control" name="msg" id="msg" placeholder="Message">
