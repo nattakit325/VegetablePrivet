@@ -1,5 +1,5 @@
 <?php
-
+     session_start();
      include "connect.php";
 
      $target_dir = "images/";
@@ -95,18 +95,25 @@
         $strSQL3 = "INSERT INTO `contact` ";
         $strSQL3 .="(address,phone,facebook,line,username) VALUES ('".$_POST["address"]."','".$_POST["tel"]."','".$_POST["facebook"]."','".$_POST["line"]."','".$_POST["username"]."')";
         $objQuery = mysqli_query($objCon,$strSQL3);
-        
-        $user = $_POST["username"];
+           
+       
+       
 
         if($objResult["status"] != "ADMIN")
                 {
-                    session_start();
-                    $strSQL = "SELECT * FROM login WHERE username = '".mysqli_real_escape_string($objCon,$_POST["username"])."' 
-	                and password = '".mysqli_real_escape_string($objCon,$_POST["password"])."'";
-	                $objQuery = mysqli_query($objCon,$strSQL);
-	                $objResult = mysqli_fetch_array($objQuery,MYSQLI_ASSOC);
+                    $strSQL = "SELECT * FROM login WHERE username = '".mysqli_real_escape_string($objCon,$_POST['usr'])."' 
+                     and password = '".mysqli_real_escape_string($objCon,$_POST['pwd'])."'";
+                     $ProfileSQL = "SELECT name ,surname ,career ,age ,picture ,username FROM profile WHERE username = '".mysqli_real_escape_string($objCon,$_POST['usr'])."'";
+                    $objQuery = mysqli_query($objCon,$strSQL);
+                    $objResult = mysqli_fetch_array($objQuery,MYSQLI_ASSOC);
                     $_SESSION["status"] = $objResult["status"];
                     $_SESSION["username"] = $objResult["username"];
+                    $_SESSION["password"] = $objResult["password"];
+                    $_SESSION["name"] = $objResult2["name"];
+                    $_SESSION["surname"] = $objResult2["surname"];
+                    $_SESSION["career"] = $objResult2["career"];
+                    $_SESSION["age"] = $objResult2["age"];
+                    $_SESSION["picture"] = $objResult2["picture"];
                     session_write_close();
                     header("location:register2.php?user=$user");
                 }

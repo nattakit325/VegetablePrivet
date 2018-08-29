@@ -1,13 +1,12 @@
 <?php
-	session_start();
+    session_start();
 	include "connect.php";
 
 	$sql="SELECT * FROM market WHERE type = 1 ";
 	$query=mysqli_query($objCon,$sql);
-	$username = $_GET['user'];
 	$market = array();
 	while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){
-		array_push($market,$row["market"]);
+        array_push($market,$row["market"]);
 	 } 
 
 ?>
@@ -19,7 +18,7 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Register</title>
+	<title>เพิ่มสถานที่</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -75,8 +74,7 @@
 	</script>
 	<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<style>
+	<style>
 .circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
     height: 40px;  /* ความสูงปรับให้เป็นออโต้ */
     width: 40px;  /* ความสูงปรับให้เป็นออโต้ */
@@ -93,7 +91,6 @@
 }
 </style>
 <script>
-
 	var marketarr = [];
 $(document).ready(function(){
     $("#place").change(function(){
@@ -179,13 +176,12 @@ function saveLatLng() {
 	
 }
 function saveMarket() {
-	var user = "<?php echo $username; ?>";
 $.ajax({
 	method: "POST",
 	url: "save-market.php",
 	dataType:"json",
 	cache: false,
-	data: { marketarr: marketarr, la: la, long: long, loname:loname ,  user:user , openDate:openDate , openTime:openTime , closeTime:closeTime},
+	data: { marketarr: marketarr, la: la, long: long, loname:loname , openDate:openDate , openTime:openTime , closeTime:closeTime},
 	success: function(data){
 				alert(data);
                 //the controller function count_votes returns an integer.
@@ -251,7 +247,6 @@ google.maps.event.addListener(map, 'click', function (event) {
 
 	</head>
 	<body>
-	
 	<div class="modal fade" id="market1" role="dialog">
       <div class="modal-content">
         
@@ -368,8 +363,7 @@ google.maps.event.addListener(map, 'click', function (event) {
 <div id="fh5co-contact-section">
 	<div class="row">
         <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-          <h2>กำหนดสถานที่ขายสินค้าของคุณ</h2>
-          <p><span>Set location where your products sold</span></p>
+          <h2>เพิ่มสถานที่</h2>
                         <div class="col-md-6">
 							<div class="form-group">
 								<select class="form-control" name="status"  id="show" size="0">
@@ -388,16 +382,6 @@ google.maps.event.addListener(map, 'click', function (event) {
         <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
             <div class="col-md-6">
 				<div class="form-group">
-					<select class="form-control" name="status" id="place">
-						<option selected>เลือกตลาด</option>
-						<?php foreach($market as $value){ ?>
-						<option value="<?php echo $value ?>"><?php echo $value ?></option>
-						<?php } ?>
-					</select>
-				</div>
-			</div>
-            <div class="col-md-6">
-				<div class="form-group">
 					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#market1">เพิ่มตลาดอื่นๆ</button>
 				</div>
 			</div>
@@ -410,7 +394,7 @@ google.maps.event.addListener(map, 'click', function (event) {
               <div class="form-group">
                 <br>
                 <center>
-               <a href="/suscess.php"><input value="ยืนยันการสมัครสมาชิก" class="btn btn-primary" type="button" onclick="saveMarket()"></a>
+               <a href="/suscess.php"><input value="ยืนยัน" class="btn btn-primary" type="button" onclick="saveMarket()"></a>
                 </center>
               </div>
 			</div>
