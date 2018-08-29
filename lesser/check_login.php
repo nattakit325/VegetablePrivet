@@ -12,9 +12,10 @@
 	$objQuery = mysqli_query($objCon,$strSQL);
 	$objResult = mysqli_fetch_array($objQuery,MYSQLI_ASSOC);
 
-
 	$objQuery2 = mysqli_query($objCon,$ProfileSQL);
 	$objResult2 = mysqli_fetch_array($objQuery2 ,MYSQLI_ASSOC);
+
+
 	if(!$objResult)
 	{
 			echo "Username and Password Incorrect!";
