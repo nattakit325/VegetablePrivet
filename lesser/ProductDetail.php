@@ -9,7 +9,7 @@ $MarketId = $_GET["MarketId"];
 $sql = "SELECT d.name as ProductName, d.picture as picture, d.detail as detail,
 	p.name as name, p.surname as surname,c.address as address,c.phone as phone,
 	c.facebook as facebook, c.line as line,p.picture as img ,m.market as  marketName ,
-	m.latitude as latitude , m.longitude as longitude, m.openDate as openDate , m.openingTime as OpenTime , m.closingTime as CloseTime FROM selllist s INNER join product d on
+	m.latitude as latitude , m.longitude as longitude, m.openDate as openDate , m.openingTime as OpenTime , m.closingTime as CloseTime,s.username as Ownusername FROM selllist s INNER join product d on
 	s.productid = d.id INNER JOIN profile p on s.username = p.username inner join contact c on
 	s.username = c.username INNER JOIN  gmarket g ON  g.username=p.username INNER JOIN market m ON
 	m.id=g.marketid where s.username = '$SellerName' and s.productid = '$Productid' ";
@@ -18,7 +18,7 @@ $queryA = mysqli_query($objCon, $sql);
 $sqlgetbyMarketid = "SELECT d.name as ProductName, d.picture as picture, d.detail as detail,
 	p.name as name, p.surname as surname,c.address as address,c.phone as phone,
 	c.facebook as facebook, c.line as line,p.picture as img ,m.market as  marketName ,
-	m.latitude as latitude , m.longitude as longitude, m.openDate as openDate , m.openingTime as OpenTime , m.closingTime as CloseTime FROM selllist s INNER join product d on
+	m.latitude as latitude , m.longitude as longitude, m.openDate as openDate , m.openingTime as OpenTime , m.closingTime as CloseTime ,s.username as Ownusername FROM selllist s INNER join product d on
 	s.productid = d.id INNER JOIN profile p on s.username = p.username inner join contact c on
 	s.username = c.username INNER JOIN  gmarket g ON  g.username=p.username INNER JOIN market m ON
 	m.id=g.marketid where s.username = '$SellerName' and s.productid = '$Productid' AND m.id= $MarketId";
@@ -118,9 +118,50 @@ $objResult = mysqli_fetch_array($query, MYSQLI_ASSOC);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
 }
 </style>
+<style type="text/css">
+div#messagesDiv{
+    display: block;
+    height: 280px;
+    overflow: auto;
+    background-color: #FDFDE0;
+    width: 100%;
+    margin: 5px 0px;
+    border: 1px solid #CCC;
+}
+.left_box_chat{
+    border: 1px solid #CCC;
+    border-radius: 25px;
+    margin: 5px;
+    padding: 0px 10px;
+    display:inline-block;
+    float:left;
+    clear:both;
+    text-align:left;
+    background-color:#FFF;  
+}
+.right_box_chat{
+    border: 1px solid #CCC;
+    border-radius: 25px;
+    margin: 5px;
+    padding: 0px 10px;
+    display:inline-block;
+    float:right;
+    clear:both;
+    text-align:right;
+    background-color:#9F6;
+}
+</style>
 
 	</head>
 	<body onload="setMarket()">
+
+
+
+
+
+
+
+
 
 
 
@@ -138,6 +179,61 @@ $objResult = mysqli_fetch_array($query, MYSQLI_ASSOC);
         </div>
       </div>
 
+  </div>
+
+
+
+  <div class="modal fade" id="myChat" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <center><h4 class="modal-title"><?php echo $objResult["name"]; ?>  &nbsp;&nbsp;<?php echo $objResult["surname"]; ?></h4></center>
+        </div>
+        <div class="modal-body">
+          <center>
+          	<div id="messagesDiv">
+<div class="left_box_chat">gfhgfhfgh</div>
+<div class="right_box_chat">fgfhgfgf</div>
+</div>
+<div class="bg-info" style="width:100%;padding:5px 0px;">
+<div class="row">
+  
+  <div class="col-xs-12">
+<!--  input hidden สำหรับ เก็บ chat_id ล่าสุดที่แสดง-->
+<form>
+  <input name="h_maxID" type="hidden" id="h_maxID" value="0">
+  <input name="userID" type="hidden" id="1" value="0">
+  <input name="userID2" id="userID2" value="<?php echo $objResult["Ownusername"]; ?>" type="hidden">
+  <?php
+  if(empty($_SESSION["username"])){ ?>
+  	<input name="userID1" id="userID1" value="NotMember" type="hidden">
+  <?php }else{
+   ?>
+  <input name="userID1" id="userID1" value="<?php echo $_SESSION["username"]; ?>" type="hidden">
+<?php } ?>
+  <input type="text" class="form-control" name="msg" id="msg" placeholder="Message" >
+  <br>
+  <button type="button" id="myBtn" class="btn btn-primary" onclick="send(document.getElementById('msg').value,document.getElementById('userID1').value,document.getElementById('userID2').value)">ส่งข้อความ</button>
+  <br>
+  </form>
+  </div>
+</div>
+</div>
+
+
+						
+  <br>
+
+  
+        </center>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">ออก</button>
+        </div>
+      </div>
+    </div>
   </div>
 
 	<div class="modal fade" id="myModal1" role="dialog">
@@ -297,7 +393,9 @@ $objResult = mysqli_fetch_array($query, MYSQLI_ASSOC);
 
 								</ul>
 								<br><br><br>
-								<center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูสถานที่ขายสินค้า</button></center>
+								<center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูสถานที่ขายสินค้า</button>
+									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myChat"><i class="fas fa-comments"></i></i>&nbsp;&nbsp;พูดคุยกับผู้ขาย</button>
+								</center>
 							</div>
 
 						</div>
@@ -402,4 +500,32 @@ function ShowMarker(){
       })(marker, i));
     }
 }
+</script>
+
+
+
+
+<!--------chat --->
+<script>
+
+function send(msg,user1,user2){
+	if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+  } else { // code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+      document.getElementById("chat").innerHTML=this.responseText;
+      
+      this.responseText = "";
+    }
+  }
+  xmlhttp.open("GET","chat.php?msg="+msg+"&user1="+user1+"user2="+user2,true);
+  xmlhttp.send();
+
+}
+
+
 </script>

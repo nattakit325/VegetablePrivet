@@ -41,6 +41,13 @@ else{
     </div>    
 
     <div id="chatbox">
+        <?php $fp = fopen("log.php", 'r'); 
+        fread($fp, filesize("log.php"));
+        fclose($fp);
+
+
+        ?>
+
     </div>
     
      
