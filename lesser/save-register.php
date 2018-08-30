@@ -101,21 +101,24 @@
 
         if($objResult["status"] != "ADMIN")
                 {
-                    $strSQL = "SELECT * FROM login WHERE username = '".mysqli_real_escape_string($objCon,$_POST['usr'])."' 
-                     and password = '".mysqli_real_escape_string($objCon,$_POST['pwd'])."'";
-                     $ProfileSQL = "SELECT name ,surname ,career ,age ,picture ,username FROM profile WHERE username = '".mysqli_real_escape_string($objCon,$_POST['usr'])."'";
+                    $strSQL = "SELECT * FROM login WHERE username = '".mysqli_real_escape_string($objCon,$_POST['username'])."' 
+                     and password = '$pass'";
+                     $ProfileSQL = "SELECT name ,surname ,career ,age ,picture ,username FROM profile WHERE username = '".mysqli_real_escape_string($objCon,$_POST['username'])."'";
                     $objQuery = mysqli_query($objCon,$strSQL);
                     $objResult = mysqli_fetch_array($objQuery,MYSQLI_ASSOC);
+
+                    $objQuery4 = mysqli_query($objCon,$ProfileSQL);
+                    $objResult4 = mysqli_fetch_array($objQuery4,MYSQLI_ASSOC);
                     $_SESSION["status"] = $objResult["status"];
                     $_SESSION["username"] = $objResult["username"];
                     $_SESSION["password"] = $objResult["password"];
-                    $_SESSION["name"] = $objResult2["name"];
-                    $_SESSION["surname"] = $objResult2["surname"];
-                    $_SESSION["career"] = $objResult2["career"];
-                    $_SESSION["age"] = $objResult2["age"];
-                    $_SESSION["picture"] = $objResult2["picture"];
+                    $_SESSION["name"] = $objResult4["name"];
+                    $_SESSION["surname"] = $objResult4["surname"];
+                    $_SESSION["career"] = $objResult4["career"];
+                    $_SESSION["age"] = $objResult4["age"];
+                    $_SESSION["picture"] = $objResult4["picture"];
                     session_write_close();
-                    header("location:register2.php?user=$user");
+                    header("location:register2.php");
                 }
         }
 
