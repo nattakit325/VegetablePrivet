@@ -386,7 +386,11 @@ div#messagesDiv{
 								</ul>
 								<br><br><br>
 								<center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูสถานที่ขายสินค้า</button>
-									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myChat"><i class="fas fa-comments"></i></i>&nbsp;&nbsp;พูดคุยกับผู้ขาย</button>
+									<?php if(empty($_SESSION['username'])){ ?>
+									
+									<?php }else{ ?>
+										<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myChat"><i class="fas fa-comments"></i></i>&nbsp;&nbsp;พูดคุยกับผู้ขาย</button>
+										<?php } ?>
 								</center>
 							</div>
 
