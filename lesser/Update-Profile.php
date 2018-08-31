@@ -82,7 +82,7 @@
     $objQuery2 = mysqli_query($objCon,$UpdateContactSQL);
     
     $_SESSION["name"] =  $firstname;
-	$_SESSION["surname"] =   $firstname;
+	$_SESSION["surname"] =   $lastname;
 	$_SESSION["age"] =  $age;
 	$_SESSION["picture"] =  $PictureName;
     header("location:index.php");
