@@ -85,6 +85,6 @@
 	$_SESSION["surname"] =   $firstname;
 	$_SESSION["age"] =  $age;
 	$_SESSION["picture"] =  $PictureName;
-    header("location:editProfile.php");
+    header("location:index.php");
 
 ?>
