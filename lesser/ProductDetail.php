@@ -377,7 +377,7 @@ div#messagesDiv{
 									<br>
 									<li><i class="icon-facebook"></i>&nbsp;&nbsp;&nbsp;Facebook<br><a href="#">&nbsp;&nbsp;&nbsp;<?php echo $objResult["facebook"]; ?></a></li>
 									<br>
-									<li><i class="fab fa-line"></i>&nbsp;&nbsp;&nbsp;Line ID<br><a href="http://line.me/ti/p/~<?php echo $objResult["line"]; ?>">&nbsp;&nbsp;&nbsp;<?php echo $objResult["line"]; ?></a></li>
+									<li><i class="fab fa-line"></i>&nbsp;&nbsp;&nbsp;Line ID<br><a href="http://line.me/ti/p/~<?php echo $objResult["line"]; ?>" target="_blank">&nbsp;&nbsp;&nbsp;<?php echo $objResult["line"]; ?></a></li>
 						</a>
 
 									</li>
