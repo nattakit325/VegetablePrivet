@@ -266,6 +266,8 @@ $count=0;
 						<?php }else{?>
 							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></a></li>
 							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
+							<br>
+							&nbsp;&nbsp;<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">คุณมี 14 ข้อความใหม่<i class="icon-arrow-right"></i></a>
 							
 						<?php } ?>
 						
@@ -329,6 +331,8 @@ $count=0;
 					
 				</div>
 <?php } ?>
+
+
 
 			
 

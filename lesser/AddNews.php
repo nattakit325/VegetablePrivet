@@ -187,6 +187,7 @@ $(document).ready(function(){
 						<?php }else{?>
 							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></a></li>
 							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
+							
 						<?php } ?>
 						
 					</ul>
