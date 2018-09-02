@@ -258,12 +258,10 @@ include "connect.php";
 
 										<option value="">เลือกประเภทสินค้า</option>
 										<?php if($_SESSION["status"]=='เกษตรกร'){ ?>
-										<option value="ดอก">ดอก</option>
-										<option value="ผล">ผล</option>
-										<option value="ราก">ราก</option>
-										<option value="ลำต้น">ลำต้น</option>
-										<option value="ใบ">ใบ</option>
-										<option value="อื่นๆ">อื่นๆ</option>
+										<option value="ผักพื้นบ้าน">ผักพื้นบ้าน</option>
+										<option value="ผักทั่วไป">ผักทั่วไป</option>
+										<option value="ผลไม้">ผลไม้</option>
+										<option value="สินค้าแปรรูป">สินค้าแปรรูป</option>
 									<?php }else{ ?>
 										<option value="ปุ๋ย">ปุ๋ย</option>
 										<option value="เครื่องมือ">เครื่องมือ</option>

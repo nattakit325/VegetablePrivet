@@ -2,12 +2,10 @@
 	session_start();
 	include "connect.php";
 	
-	$value1='ราก';
-	$value2='ลำต้น';
-	$value3='ใบ';
-	$value4='ดอก';
-	$value5='ผล';
-	$value6='อื่นๆ';
+	$value1='ผักพื้นบ้าน';
+	$value2='ผักทั่วไป ';
+	$value3='ผลไม้';
+	$value4='สินค้าแปรรูป';
 	$type='พืชผัก';
 
 ?>
@@ -212,7 +210,7 @@
 						<a href="buylist.php?value=<?php echo $value1;?>&type=<?php echo $type; ?>" class="work-grid" style="background-image: url(images/carrot.jpg);">
 						</a>
 						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value1;?>&type=<?php echo $type; ?>">ราก</a></h3>
+							<h3><a href="buylist.php?value=<?php echo $value1;?>&type=<?php echo $type; ?>">ผักพื้นบ้าน</a></h3>
 							<span>Root</span>
 						</div>
 					</div>
@@ -222,7 +220,7 @@
 						<a href="buylist.php?value=<?php echo $value2;?>&type=<?php echo $type; ?>" class="work-grid" style="background-image: url(images/asparagus.jpg);">
 						</a>
 						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value2;?>&type=<?php echo $type; ?>">ลำต้น</a></h3>
+							<h3><a href="buylist.php?value=<?php echo $value2;?>&type=<?php echo $type; ?>">ผักทั่วไป</a></h3>
 							<span>trunk</span>
 						</div>
 					</div>
@@ -232,7 +230,7 @@
 						<a href="buylist.php?value=<?php echo $value3;?>&type=<?php echo $type; ?>" class="work-grid" style="background-image: url(images/cabbage.jpg);">
 						</a>
 						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value3;?>&type=<?php echo $type; ?>">ใบ</a></h3>
+							<h3><a href="buylist.php?value=<?php echo $value3;?>&type=<?php echo $type; ?>">ผลไม้</a></h3>
 							<span>Leaves</span>
 						</div>
 					</div>
@@ -242,28 +240,8 @@
 						<a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>" class="work-grid" style="background-image: url(images/Broccoli.jpg);">
 						</a>
 						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $typ;e ?>">ดอก</a></h3>
+							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $typ;e ?>">สินค้าแปรรูป</a></h3>
 							<span>blossom</span>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 text-center">
-					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value5;?>&type=<?php echo $type; ?>" class="work-grid" style="background-image: url(images/tomato.jpg);">
-						</a>
-						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value5;?>&type=<?php echo $type; ?>">ผล</a></h3>
-							<span>fruit</span>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 text-center">
-					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value6;?>&type=<?php echo $type; ?>" class="work-grid" style="background-image: url(images/vegetable.jpg);">
-						</a>
-						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value6;?>&type=<?php echo $type; ?>">อื่นๆ</a></h3>
-							<span>other</span>
 						</div>
 					</div>
 				</div>
