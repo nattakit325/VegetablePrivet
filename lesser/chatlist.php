@@ -15,44 +15,25 @@
 		}
 		
 	}
-
-
-	
-	$sql = "connect.php";
-    $sql = "SELECT n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as surname FROM news n inner join profile p on n.username = p.username WHERE time>NOW() and n.status=0  order by time";
-
-    $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname'";
-
-
-
-	
-	$query=mysqli_query($objCon,$sql);
-	$queryDialog=mysqli_query($objCon,$sql);
-
+	$sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname'";
 	$queryForNotification=mysqli_query($objCon,$sqlForNotification);
 	$objResult = mysqli_fetch_array($queryForNotification, MYSQLI_ASSOC);
 
 
+	$sqlChatUser = "SELECT  p.name as name,p.surname as surname,p.picture as picture, c.chat_msg  as msg from tbl_chat c inner join profile p on  c.chat_user1 = p.username where c.chat_user2='$usermname' group by c.chat_user1 ORDER by chat_datetime DESC";
 
 
-	$count = 0;
 
-	function DateThai($strDate)
-	{
-		$strYear = date("Y",strtotime($strDate))+543;
-		$strMonth= date("n",strtotime($strDate));
-		$strDay= date("j",strtotime($strDate));
-		$strHour= date("H",strtotime($strDate));
-		$strMinute= date("i",strtotime($strDate));
-		$strSeconds= date("s",strtotime($strDate));
-		$strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
-		$strMonthThai=$strMonthCut[$strMonth];
-		return "$strDay $strMonthThai $strYear, เวลา $strHour:$strMinute";
-	}
+	$queryForChatUser=mysqli_query($objCon,$sqlChatUser);
 
-	
 
-?>
+
+	$sqlTopChat = "SELECT  p.name as name,p.surname as surname,p.picture as picture, c.chat_msg  as msg from tbl_chat c inner join profile p on  c.chat_user1 = p.username where c.chat_user2='$usermname' group by c.chat_user1 ORDER by chat_datetime DESC limit 1";
+	$queryForTopUser=mysqli_query($objCon,$sqlTopChat);
+	$objResult1 = mysqli_fetch_array($queryForTopUser, MYSQLI_ASSOC);
+
+
+	?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -61,7 +42,7 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>VegetableGether</title>
+	<title>Lesser &mdash; Free HTML5 Bootstrap Website Template by FreeHTML5.co</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -98,10 +79,6 @@
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900' rel='stylesheet' type='text/css'>
 
 	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
-
-
-
-
 	
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
@@ -114,11 +91,6 @@
 	<!-- Theme style  -->
 	<link rel="stylesheet" href="css/style.css">
 
-
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
 	<!-- FOR IE9 below -->
@@ -128,16 +100,13 @@
 
 	</head>
 
+
 	<script type="text/javascript" src="js/showUser.js"></script>
-	<!--<script type="text/javascript" src="js/FB.js"></script> -->
-	
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-
-
-	<style>
+<style>
 .circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
     height: 50px;  /* ความสูงปรับให้เป็นออโต้ */
     width: 50px;  /* ความสูงปรับให้เป็นออโต้ */
@@ -156,13 +125,10 @@
 </style>
 
 
-
-
-
 	<body>
 
 
-		<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
@@ -230,39 +196,6 @@
       </div>
     </div>
   </div>
-
-
-<?php while($row=mysqli_fetch_array($queryDialog,MYSQLI_ASSOC)){ 
-	$count++;
-	?>
-
-  <div class="modal fade" id="myModal<?php echo $count?>" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          
-          <h4 class="modal-title"> <?php echo $row["topic"];?> </h4>
-          
-        </div>
-        <div class="modal-body">
-          <p> <?php echo $row["detail"];?></p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-<?php }
-$count=0;
- ?>
-  
-  
-
-  
-
-
 	
 	
 	<div id="fh5co-page">
@@ -295,131 +228,45 @@ $count=0;
 			</div>
 		</div>
 	</header>
-	<br>
-	<br>
-	<div id="fh5co-featured-section">
-		<div class="container">
-			<div class="row">
-				<?php
-					$buy = null;
-					if(empty($_SESSION["username"])){
-						$buy = "buy.php";
-						$sell = "#";
-					}else{
-						if($_SESSION["status"]=="เกษตรกร"){
-							$buy = "buy_farmmer_first.php";
-							
-						}else{
-							$buy = "buy.php";
-							
-						}
-					}
-				 ?>
-
-
-
-				<div class="col-md-6">
-					<a href="<?php echo $buy?>" class="featured-grid featured-grid-2" style="background-image: url(images/buy.jpg);">
-						<div class="desc">
-							<h3>ชื้อสินค้า</h3>
-							<span>Buy</span>
-						</div>
-					</a>
-				</div>
-
-
-<?php if(empty($_SESSION["username"])){ ?>
-				<div class="col-md-6">
-					<a href="#" data-toggle="modal" data-target="#myModal" class="featured-grid featured-grid-2" style="background-image: url(images/sell3.jpg);">
-						<div class="desc">
-							<h3>ขายสินค้า</h3>
-							<span>Sell</span>
-						</div>
-					</a>
-					
-				</div>
-<?php }else{ ?>
-
-				<div class="col-md-6">
-					<a href="selllist.php"  class="featured-grid featured-grid-2" style="background-image: url(images/sell3.jpg);">
-						<div class="desc">
-							<h3>ขายสินค้า</h3>
-							<span>Sell</span>
-						</div>
-					</a>
-					
-				</div>
-<?php } ?>
-
-
-
-			
-
-			</div>
-		</div>
-	</div>
-
-	<div id="fh5co-blog-section" class="fh5co-grey-bg-section">
+	<div id="fh5co-main-services-section">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>กิจกรรมที่กำลังจะมาถึง</h2>
-					<p>Coming soon events</p>
-					<div class="form-group">
-									<form class="form-inline" name="searchform" id="searchform">
-                        <div class="form-group">
-                            <label for="textsearch" >วันเดือนปีที่จัดกิจกรรม</label>
-                            <input type="date"  class="form-control" >
-                        </div>
-
-                        <button type="submit" class="btn btn-primary" id="btnSearch">
-                            <span class="glyphicon glyphicon-search"></span>
-                            ค้นหา
-                        </button>
-                        <?php if(empty($_SESSION["username"])){ ?>
-                        <a href="#" data-toggle="modal" data-target="#myModal"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;เสนอข่าวใหม่</button></span></a>
-
-                    <?php }else{ ?>
-                        <a href="AddNews.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;เสนอข่าวใหม่</button></span></a>
-                    <?php } ?>
-                    </form> 
-                    <br>
-									
-										
-										
-									</div>
+					<h2>พูดคุย กับ <?php echo $objResult1['name'] ?>&nbsp;&nbsp;<?php echo $objResult1['surname'] ?></h2>
+					<p><span>Chat to <?php echo $objResult1['name'] ?>&nbsp;&nbsp;<?php echo $objResult1['surname'] ?> </span></p>
 				</div>
 			</div>
 			<div class="row">
-
-				 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ 
-				 	$count++
+				<div class="col-md-4">
+					<?php while($row=mysqli_fetch_array($queryForChatUser,MYSQLI_ASSOC)){ 
+				 	
 				 	?>
-				<div class="col-md-4 text-center">
-					<div class="work-inner">
-						<a class="work-grid" style="background-image: url(images/<?php echo $row['media'];?>);">
-						</a>
-						<div class="desc">
-							<h3><?php echo $row["topic"];?></h3>
-							<p>เวลา <?php echo DateThai($row["time"]);?></p>
-							<p>โดย <?php echo $row["name"]." ".$row["surname"];?></p>
-							
-							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">ดูรายละเอียด<i class="icon-arrow-right"></i></a>
-						</div>
+					<div class="row">
+						<div class="col-md-12 services-inner">
+							<span><img class="circle" src="images/<?php echo $row['picture'];?>"></span>
+							<div class="desc">
+
+								<br><u><h3><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row["surname"];?></h3></u>
+							</div>
+							</div>
+						
 					</div>
+					<?php } ?>
+					
 				</div>
-				<?php } ?>
-				
-				
-				
-
-
-				
-
+				<div class="col-md-8">
+					<aside class="sidebar">
+						<div class="row">
+							<div class="col-md-12 side">
+								
+							</div>
+							
+						</div>
+					</aside>
+				</div>
 			</div>
 		</div>
 	</div>
-	
 	
 	
 	</div>
@@ -439,3 +286,64 @@ $count=0;
 	</body>
 </html>
 
+<!--------chat -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>      
+<script type="text/javascript">
+var load_chat; // กำหนดตัวแปร สำหรับเป็นฟังก์ชั่นเรียกข้อมูลมาแสดง
+var first_load=1; // กำหนดตัวแปรสำหรับโหลดข้อมูลครั้งแรกให้เท่ากับ 1
+load_chat = function(userID){
+	var maxID = $("#h_maxID").val(); // chat_id ล่าสุดที่แสดง
+	$.post("ajax_chat.php",{
+		viewData:first_load,
+		userID:userID,
+		maxID:maxID
+	},function(data){
+		if(first_load==1){ // ถ้าเป็นการโหลดครั้งแรก ให้ดึงข้อมูลทั้งหมดที่เคยบันทึกมาแสดง
+			for(var k=0;k<data.length;k++){ // วนลูปแสดงข้อความ chat ที่เคยบันทึกไว้ทั้งหมด
+				if(parseInt(data[0].max_id)>parseInt(maxID)){ // เทียบว่าข้อมูล chat_id .ใหม่กว่าที่แสดงหรือไม่
+					$("#h_maxID").val(data[k].max_id); // เก็บ chat_id เป็น ค่าล่าสุด
+					// แสดงข้อความการ chat มีการประยุกต์ใช้ ตำแหน่งข้อความ เพื่อจัด css class ของข้อความที่แสดง
+					$("#messagesDiv").append("<div class=\""+data[k].data_align+"_box_chat\">"+data[k].data_msg+"</div>"); 
+					$("#messagesDiv")[0].scrollTop = $("#messagesDiv")[0].scrollHeight; // เลือน scroll ไปข้อความล่าสุด  	
+				}
+			};
+		}else{ // ถ้าเป็นข้อมูลที่เพิ่งส่งไปล่าสุด
+			if(parseInt(data[0].max_id)>parseInt(maxID)){ // เทียบว่าข้อมูล chat_id .ใหม่กว่าที่แสดงหรือไม่
+				$("#h_maxID").val(data[0].max_id); // เก็บ chat_id เป็น ค่าล่าสุด
+				// แสดงข้อความการ chat มีการประยุกต์ใช้ ตำแหน่งข้อความ เพื่อจัด css class ของข้อความที่แสดง
+				$("#messagesDiv").append("<div class=\""+data[0].data_align+"_box_chat\">"+data[0].data_msg+"</div>"); 
+				$("#messagesDiv")[0].scrollTop = $("#messagesDiv")[0].scrollHeight;   // เลือน scroll ไปข้อความล่าสุด
+			}
+		}
+		first_load++;// บวกค่า first_load
+	});		
+}
+// กำหนดให้ทำงานทกๆ 2.5 วินาทีเพิ่มแสดงข้อมูลคู่สนทนา
+setInterval(function(){
+	var userID = $("#userID2").val(); // id user ของผู้รับ
+	load_chat(userID); // เรียกใช้งานฟังก์ช่นแสดงข้อความล่าสุด
+},2500);	
+$(function(){
+	
+
+ /// เมื่อพิมพ์ข้อความ แล้วกดส่ง
+  $("#msg").keypress(function (e) { // เมื่อกดที่ ช่องข้อความ  
+	if (e.keyCode == 13) { // ถ้ากดปุ่ม enter  
+	  var user1 = $("#userID1").val(); // เก็บ id user  ผู้ใช้ที่ส่ง
+	  var user2 = $("#userID2").val(); // เก็บ id user  ผู้ใช้ที่รับ
+	  var msg = $("#msg").val();  // เก็บค่าข้อความ  
+	  $.post("ajax_chat.php",{
+		  user1:user1,
+		  user2:user2,
+		  msg:msg
+	  },function(data){
+		  	load_chat(user2);// เรียกใช้งานฟังก์ช่นแสดงข้อความล่าสุด
+	  		$("#msg").val(""); // ล้างค่าช่องข้อความ ให้พร้อมป้อนข้อความใหม่  		  
+	  });
+
+	}  
+  });  
+  
+});
+
+</script>
