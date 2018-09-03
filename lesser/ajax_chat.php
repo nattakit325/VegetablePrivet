@@ -6,7 +6,7 @@ include("dbconnect.php");
 if(empty($_SESSION['username'])){
 	$user = 'Nomember';
 }else{
-	$user = $_POST['user1'];
+	$user = $_SESSION['username'];
 }
 
 if(isset($_POST['user2']) && $_POST['user2']!="" 
