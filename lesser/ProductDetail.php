@@ -42,7 +42,7 @@ $usermname = '';
 		}
 		
 	}
-	$sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname'";
+	$sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' and status = 1";
 	$queryForNotification=mysqli_query($objCon,$sqlForNotification);
 	$objResult2 = mysqli_fetch_array($queryForNotification, MYSQLI_ASSOC);
 
@@ -516,7 +516,7 @@ function ShowMarker(){
 			+"<br>Link:"+place[k][2]+"<br>ระยะทาง"+place[k][9] , 
 			place[k][6], place[k][7], 0 ]);
 	}
-	alert(place.length);
+	
 	
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 14,

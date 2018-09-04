@@ -14,7 +14,7 @@ $usermname = '';
 		}
 		
 	}
-	$sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname'";
+	$sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' and status = 1";
 	$queryForNotification=mysqli_query($objCon,$sqlForNotification);
 	$objResult2 = mysqli_fetch_array($queryForNotification, MYSQLI_ASSOC);
 

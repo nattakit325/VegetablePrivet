@@ -17,7 +17,8 @@ if(isset($_POST['user2']) && $_POST['user2']!=""
 	chat_msg='".$_POST['msg']."',
 	chat_user1='".$user."',  
 	chat_user2='".$_POST['user2']."',
-	chat_datetime='".date("Y-m-d H:i:s")."'			
+	chat_datetime='".date("Y-m-d H:i:s")."'	,
+	status=1		
 	";
 	$mysqli->query($sql);
 	exit;

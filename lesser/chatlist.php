@@ -15,7 +15,19 @@
 		}
 		
 	}
-	$sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname'";
+
+	$chat = $_GET['chatname'];
+
+
+	$strSQL = "UPDATE tbl_chat SET status = 0  where chat_user1 ='$chat'";
+	$objQuery = mysqli_query($objCon,$strSQL);
+
+
+
+
+
+
+	$sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' and status = 1";
 	$queryForNotification=mysqli_query($objCon,$sqlForNotification);
 	$objResult = mysqli_fetch_array($queryForNotification, MYSQLI_ASSOC);
 

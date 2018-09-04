@@ -16,12 +16,14 @@
 		
 	}
 
+	
+
 
 	
 	$sql = "connect.php";
     $sql = "SELECT n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as surname FROM news n inner join profile p on n.username = p.username WHERE time>NOW() and n.status=0  order by time";
 
-    $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname'";
+    $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' and status = 1 ";
 
 
 
