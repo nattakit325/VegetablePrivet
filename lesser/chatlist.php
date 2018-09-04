@@ -20,11 +20,13 @@
 	$objResult = mysqli_fetch_array($queryForNotification, MYSQLI_ASSOC);
 
 
-	$sqlChatUser = "SELECT  p.name as name,p.surname as surname,p.picture as picture, c.chat_msg  as msg from tbl_chat c inner join profile p on  c.chat_user1 = p.username where c.chat_user2='$usermname' group by c.chat_user1 ORDER by chat_datetime DESC";
+	$sqlChatUser = "SELECT  p.name as name,p.surname as surname,p.picture as picture, c.chat_msg  as msg, p.username as chatname from tbl_chat c inner join profile p on  c.chat_user1 = p.username where c.chat_user2='$usermname' group by c.chat_user1 ORDER by chat_datetime DESC";
 
 
 
 	$queryForChatUser=mysqli_query($objCon,$sqlChatUser);
+
+
 
 
 
@@ -279,7 +281,7 @@ div#messagesDiv{
 							<span><img class="circle" src="images/<?php echo $row['picture'];?>"></span>
 							<div class="desc">
 
-								<br><u><h3><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row["surname"];?></h3></u>
+								<br><u><a href="chatlist.php?name=<?php echo $row['name'];?>&surname=<?php echo $row['surname'];?>&chatname=<?php echo $row['chatname'];?>"><h3><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row["surname"];?></h3></a></u>
 							</div>
 							</div>
 						
@@ -304,7 +306,7 @@ div#messagesDiv{
 
 <input name="userID1" type="hidden" id="userID1" value="<?php echo $_SESSION['username']; ?>">
 
-  <input name="userID2" type="hidden" id="userID2" value="<?php echo $_GET['name']; ?>">
+  <input name="userID2" type="hidden" id="userID2" value="<?php echo $_GET['chatname']; ?>">
   <!--  input hidden สำหรับ เก็บ chat_id ล่าสุดที่แสดง-->
   <input name="h_maxID" type="hidden" id="h_maxID" value="0" >
   <input type="text" class="form-control" name="msg" id="msg" placeholder="Message">
