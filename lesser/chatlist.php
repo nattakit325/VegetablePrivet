@@ -28,9 +28,7 @@
 
 
 
-	$sqlTopChat = "SELECT  p.name as name,p.surname as surname,p.picture as picture, c.chat_msg  as msg from tbl_chat c inner join profile p on  c.chat_user1 = p.username where c.chat_user2='$usermname' group by c.chat_user1 ORDER by chat_datetime DESC limit 1";
-	$queryForTopUser=mysqli_query($objCon,$sqlTopChat);
-	$objResult1 = mysqli_fetch_array($queryForTopUser, MYSQLI_ASSOC);
+	
 
 
 	?>
@@ -123,6 +121,41 @@
 }
 
 </style>
+
+<style type="text/css">
+div#messagesDiv{
+    display: block;
+    height: 280px;
+    overflow: auto;
+    background-color: #FDFDE0;
+    width: 100%;
+    margin: 5px 0px;
+    border: 1px solid #CCC;
+}
+.left_box_chat{
+    border: 1px solid #CCC;
+    border-radius: 25px;
+    margin: 5px;
+    padding: 0px 10px;
+    display:inline-block;
+    float:left;
+    clear:both;
+    text-align:left;
+    background-color:#FFF;  
+}
+.right_box_chat{
+    border: 1px solid #CCC;
+    border-radius: 25px;
+    margin: 5px;
+    padding: 0px 10px;
+    display:inline-block;
+    float:right;
+    clear:both;
+    text-align:right;
+    background-color:#9F6;
+}
+</style>
+
 
 
 	<body>
@@ -218,7 +251,7 @@
 
 							}
 							?>
-							<a href="chatlist.php" title="คุณมี <?php echo $objResult['chatAM'] ?> ข้อความ"><i class="fas fa-bell" style="color: <?php echo $color ?>">&nbsp;<?php echo $objResult['chatAM'] ?></i></a>
+							<a href="TopChat.php" title="คุณมี <?php echo $objResult['chatAM'] ?> ข้อความ"><i class="fas fa-bell" style="color: <?php echo $color ?>">&nbsp;<?php echo $objResult['chatAM'] ?></i></a>
 							<a data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
 							
 						<?php } ?>
@@ -232,8 +265,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>พูดคุย กับ <?php echo $objResult1['name'] ?>&nbsp;&nbsp;<?php echo $objResult1['surname'] ?></h2>
-					<p><span>Chat to <?php echo $objResult1['name'] ?>&nbsp;&nbsp;<?php echo $objResult1['surname'] ?> </span></p>
+					<h2>พูดคุย กับ <?php echo $_GET['name'] ?>&nbsp;&nbsp;<?php echo $_GET['surname'] ?></h2>
+					<p><span>Chat to <?php echo $_GET['name'] ?>&nbsp;&nbsp;<?php echo $_GET['surname'] ?> </span></p>
 				</div>
 			</div>
 			<div class="row">
@@ -258,6 +291,27 @@
 					<aside class="sidebar">
 						<div class="row">
 							<div class="col-md-12 side">
+								<div class="modal-body">
+          <center>
+          	<div id="messagesDiv">
+
+</div>
+<div class="bg-info" style="width:100%;padding:5px 0px;">
+<div class="row">
+  
+  <div class="col-xs-12">
+<!--  input hidden สำหรับ เก็บ chat_id ล่าสุดที่แสดง-->
+
+<input name="userID1" type="hidden" id="userID1" value="<?php echo $_SESSION['username']; ?>">
+
+  <input name="userID2" type="hidden" id="userID2" value="<?php echo $_GET['name']; ?>">
+  <!--  input hidden สำหรับ เก็บ chat_id ล่าสุดที่แสดง-->
+  <input name="h_maxID" type="hidden" id="h_maxID" value="0" >
+  <input type="text" class="form-control" name="msg" id="msg" placeholder="Message">
+  </div>
+
+</div>
+</div>
 								
 							</div>
 							
