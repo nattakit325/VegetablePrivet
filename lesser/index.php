@@ -3,26 +3,40 @@
 <?php  
    	session_start();
 	include "connect.php";
+	$usermname = '';
 
 	if(empty($_SESSION["username"])){
 
 	}else{
-		if($_SESSION["status"]=='admin')
-		header("location:admin.php");
+		if($_SESSION["status"]=='admin'){
+			header("location:admin.php");
+		}else{
+			$usermname = $_SESSION["username"];
+		}
+		
 	}
+
+	
 
 
 	
 	$sql = "connect.php";
     $sql = "SELECT n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as surname FROM news n inner join profile p on n.username = p.username WHERE time>NOW() and n.status=0  order by time";
 
-    $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='test'";
+    $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' and status = 1 ";
 
 
 
 	
 	$query=mysqli_query($objCon,$sql);
 	$queryDialog=mysqli_query($objCon,$sql);
+
+	$queryForNotification=mysqli_query($objCon,$sqlForNotification);
+	$objResult = mysqli_fetch_array($queryForNotification, MYSQLI_ASSOC);
+
+
+
+
 	$count = 0;
 
 	function DateThai($strDate)
@@ -265,8 +279,15 @@ $count=0;
 								?>
 							<a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
 							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
-						<?php }else{?>
-							<a href="AddNews.php" title="คุณมี 12 ข้อความ"><i class="fas fa-bell" style="color: red">&nbsp;12</i></a>
+						<?php }else{
+							if ($objResult['chatAM']>0) {
+								$color = 'red';
+							}else{
+								$color = 'gray';
+
+							}
+							?>
+							<a href="TopChat.php" title="คุณมี <?php echo $objResult['chatAM'] ?> ข้อความ"><i class="fas fa-bell" style="color: <?php echo $color ?>">&nbsp;<?php echo $objResult['chatAM'] ?></i></a>
 							<a data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
 							
 						<?php } ?>
