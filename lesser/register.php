@@ -67,18 +67,7 @@
 
 	</head>
  
-<script type="text/javascript">
-	function readURL(input) {
-		if (input.files && input.files[0]) {
 
-			var reader = new FileReader();
-			reader.onload = function (e) {
-				$('#blah').attr('src', e.target.result);
-			}
-			reader.readAsDataURL(input.files[0]);
-		}
-	}	
-</script>
 
 <script>
 		 var bFbStatus = false;
@@ -154,6 +143,21 @@ function checkLoginState() {
 
 	</script>
 
+
+	<script type="text/javascript">
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah').attr('style', 'background-image: url('+e.target.result+');');
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+
 	<body>
 
 	
@@ -179,15 +183,15 @@ function checkLoginState() {
 
 				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 					<div class="row">
-						<form action="save-register.php" method="post" enctype="multipart/form-data"  name="frmMain" id="frmMain">
+						<form action="save-register.php" method="post" enctype="multipart/form-data"  name="frmMain" id="frmMain" runat="server">
 						
 			<div class="col-md-4 text-center">
 
 					<div class="work-inner">
-						<img src="images/profile.png"  id="blah" class="work-grid">
+						<a  class="work-grid" style="background-image: url(images/profile.png);" id="blah" >
 						</a>
 						<div class="desc">
-							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" Oonchange="readURL(this);">
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" Oonchange="readURL(this);" onchange="readURL(this);">
 						</div>
 					</div>
 				</div>
