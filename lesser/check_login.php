@@ -6,7 +6,7 @@
 
  
 	$password = md5($_POST['pwd']);
-	echo $password;
+	// echo $password;
 	$strSQL = "SELECT * FROM login WHERE username = '".mysqli_real_escape_string($objCon,$_POST['usr'])."' 
 	and password = '$password'";
 	$ProfileSQL = "SELECT name ,surname ,career ,age ,picture ,username FROM profile WHERE username = '".mysqli_real_escape_string($objCon,$_POST['usr'])."'";
@@ -40,11 +40,11 @@
 			}
 			else if($objResult["status"] == "ปัจจัย")
 			{
-				//header("location:index.php");
+				header("location:index.php");
 			}
 			else
 			{
-				//header("location:index.php");
+				header("location:index.php");
 			}
 	}
 	mysqli_close($objCon);

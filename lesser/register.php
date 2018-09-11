@@ -183,7 +183,7 @@ function checkLoginState() {
 
 				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 					<div class="row">
-						<form action="save-register.php" method="post" enctype="multipart/form-data"  name="frmMain" id="frmMain" runat="server">
+						<form action="save-register.php" method="post" enctype="multipart/form-data"  name="frmMain" id="frmMain" runat="server" onSubmit="JavaScript:return fncSubmit();">
 						
 			<div class="col-md-4 text-center">
 
@@ -303,7 +303,42 @@ function checkLoginState() {
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
 
-
+	<script language="javascript">
+		function fncSubmit()
+		{
+			if(document.frmMain.firstname.value == "")
+			{
+				alert('กรุณากรอกชื่อจริง');
+				document.frmMain.firstname.focus();
+				return false;
+			}   
+			if(document.frmMain.lastname.value == "")
+			{
+				alert('กรุณากรอกนามสกุล');
+				document.frmMain.lastname.focus();      
+				return false;
+			}
+			if(document.frmMain.username.value == "")
+			{
+				alert('กรุณากรอกชื่อผู้ใช้');
+				document.frmMain.username.focus();      
+				return false;
+			}  
+			if(document.frmMain.password.value == "")
+			{
+				alert('กรุณากรอกรหัสผ่าน');
+				document.frmMain.password.focus();      
+				return false;
+			}
+			if(document.frmMain.age.value == "")
+			{
+				alert('กรุณากรอกวันเกิด');
+				document.frmMain.age.focus();      
+				return false;
+			}       
+			document.frmMain.submit();
+		}
+	</script>
 
 	</body>
 </html>
