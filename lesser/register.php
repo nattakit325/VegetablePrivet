@@ -215,7 +215,12 @@ function checkLoginState() {
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control" placeholder="รหัสผ่าน" type="password" name="password">
+									<input class="form-control" placeholder="รหัสผ่าน" type="password" name="password" id="p1">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="form-control" placeholder="ยืนยันรหัสผ่านอีกครั้ง" type="password"name="confirm-password" id="p2">
 								</div>
 							</div>
 							<div class="col-md-6">
