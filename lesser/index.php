@@ -155,7 +155,25 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
 }
 
+
+
 </style>
+<script type="text/javascript">
+	function showHint(str) {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("search_result").innerHTML = this.responseText;
+            }
+        }
+        xmlhttp.open("GET", "getEvent.php?q="+str, true);
+        xmlhttp.send();
+    
+}
+
+</script>
+</script>
+
 
 
 
@@ -368,13 +386,13 @@ $count=0;
 					<h2>กิจกรรมที่กำลังจะมาถึง</h2>
 					<p>Coming soon events</p>
 					<div class="form-group">
-									<form class="form-inline" name="searchform" id="searchform">
+									<form >
                         <div class="form-group">
                             <label for="textsearch" >วันเดือนปีที่จัดกิจกรรม</label>
-                            <input type="date"  class="form-control" >
+                            <input type="date"  class="form-control" name="dateToserch" id="dateToserch">
                         </div>
 
-                        <button type="submit" class="btn btn-primary" id="btnSearch">
+                        <button type="button" class="btn btn-primary" id="btnSearch" onclick="showHint(document.getElementById('dateToserch').value)">
                             <span class="glyphicon glyphicon-search"></span>
                             ค้นหา
                         </button>
