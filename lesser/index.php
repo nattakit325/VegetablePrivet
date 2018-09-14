@@ -166,7 +166,7 @@
                 document.getElementById("search_result").innerHTML = this.responseText;
             }
         }
-        xmlhttp.open("GET", "getEvent.php?q="+str, true);
+        xmlhttp.open("GET", "getevent.php?q="+str, true);
         xmlhttp.send();
     
 }
@@ -251,7 +251,6 @@
     </div>
   </div>
 
-
 <?php while($row=mysqli_fetch_array($queryDialog,MYSQLI_ASSOC)){ 
 	$count++;
 	?>
@@ -277,6 +276,7 @@
 <?php }
 $count=0;
  ?>
+
   
   
 
@@ -389,7 +389,8 @@ $count=0;
 									<form >
                         <div class="form-group">
                             <label for="textsearch" >วันเดือนปีที่จัดกิจกรรม</label>
-                            <input type="date"  class="form-control" name="dateToserch" id="dateToserch">
+
+                            <input type="date"  class="form-control" name="dateToserch" id="dateToserch" data-date-format="mm-dd-yyyy">
                         </div>
 
                         <button type="button" class="btn btn-primary" id="btnSearch" onclick="showHint(document.getElementById('dateToserch').value)">
@@ -410,6 +411,7 @@ $count=0;
 									</div>
 				</div>
 			</div>
+			<div id="search_result">
 			<div class="row">
 
 				 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ 
@@ -429,6 +431,7 @@ $count=0;
 					</div>
 				</div>
 				<?php } ?>
+			</div>
 				
 				
 				

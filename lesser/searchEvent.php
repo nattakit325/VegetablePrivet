@@ -2,45 +2,37 @@
 	session_start();
 	include "connect.php";
 
-	$value=$_GET["p"];
+	$value=$_GET["value"];
+	echo $value;
 
 
 
-	$sql="SELECT p.name as name,p.picture as picture, s.username as SellerName, p.id as Productid FROM selllist s
-			inner join product p
-			on s.productid=p.id
-			where s.username='$username' and p.name like '%$value%'";
+
+	$sql = "SELECT n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as surname FROM news n inner join profile p on n.username = p.username WHERE time>='$value' and n.status=0  order by time";
 
 
     $query=mysqli_query($objCon,$sql);
-    $queryC=mysqli_query($objCon,$sql);
+	$queryDialog=mysqli_query($objCon,$sql);
 
 
 
 ?>
-<?php if(mysqli_fetch_array($queryC,MYSQLI_ASSOC)<=0){ ?>
-			<center><h3>ไม่มีรายการสินค้าที่ลงขาย</h3></center>
-			<?php } ?>
+<div class="row">
 
-			<div class="row" id="fordelete">
-
-<?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ ?>
+				 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ 
+				 	$count++
+				 	?>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a class="work-grid" style="background-image: url(uploads_product/<?php echo $row['picture'];?>);">
+						<a class="work-grid" style="background-image: url(images/<?php echo $row['media'];?>);">
 						</a>
 						<div class="desc">
-							<h3><a ><?php echo $row["name"];?></a></h3>
-							<div class="foo">
-							<span> <button type="button" class="btn btn-primary" ><i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;แก้ไข</span>
-								<span> <button type="button" class="btn btn-danger" 
-									data-toggle="modal" data-target="#forconfermdeleteeach"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ลบ</span>
-								</div>
+							<h3><?php echo $row["topic"];?></h3>
+							<p>เวลา <?php echo DateThai($row["time"]);?></p>
+							<p>โดย <?php echo $row["name"]." ".$row["surname"];?></p>
+							
+							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">ดูรายละเอียด<i class="icon-arrow-right"></i></a>
 						</div>
 					</div>
 				</div>
-				
-<?php } ?>
-
-
-			</div>
+				<?php } ?>
