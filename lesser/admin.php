@@ -373,11 +373,28 @@ $count=0;
 				<div class="col-md-6">
 					<a href="addMarketAdmin.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
 						<div class="desc">
-							<h3>เพิ่มสถานที่</h3>
+							<h3>เพิ่มสถานที่ขายพืชผักอินทรีย์</h3>
 							<span>Add location</span>
 						</div>
-					</a>
-					
+					</a>	
+				</div>
+
+				<div class="col-md-6">
+					<a href="addSellLocation.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
+						<div class="desc">
+							<h3>เพิ่มสถานที่รับสินค้า</h3>
+							<span>Add location</span>
+						</div>
+					</a>	
+				</div>
+
+				<div class="col-md-6">
+					<a href="addFarmerLocation.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
+						<div class="desc">
+							<h3>เพิ่มข้อมูลเกษตรกร</h3>
+							<span>Add farmer</span>
+						</div>
+					</a>	
 				</div>
 
 				<div class="col-md-6">
