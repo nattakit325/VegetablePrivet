@@ -99,6 +99,20 @@ $(document).ready(function(){
 
 
 </style>
+
+<script type="text/javascript">
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah').attr('style', 'background-image: url('+e.target.result+');');
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
 	<!-- FOR IE9 below -->
@@ -214,14 +228,14 @@ $(document).ready(function(){
 				
 				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 					<div class="row">
-						<form action="InsertNews.php" method="post" enctype="multipart/form-data">
+						<form action="InsertNews.php" method="post" enctype="multipart/form-data" runat="server">
 							<div class="col-md-4 text-center">
 
 					<div class="work-inner">
-						<a  class="work-grid" style="background-image: url(images/news.png);">
+						<a  class="work-grid" style="background-image: url(images/news.png);" id="blah" >
 						</a>
 						<div class="desc">
-							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload">
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" onchange="readURL(this);">
 						</div>
 					</div>
 				</div>

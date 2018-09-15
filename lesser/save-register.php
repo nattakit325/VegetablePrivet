@@ -83,6 +83,11 @@
             echo "window.location = 'register.php'; ";
             echo "</script>";
             exit();
+        }else if($_POST["password"] != $_POST["confirm-password"]){
+            echo "<script language=\"JavaScript\">";
+            echo "alert('รหัสผ่านไม่ตรงกัน');";
+            echo "window.location = 'register.php'; ";
+            echo "</script>";
         }else{
         $strSQL1 = "INSERT INTO login ";
         $strSQL1 .="(username,password,status) VALUES ('".$_POST["username"]."','$pass','".$_POST["status"]."')";

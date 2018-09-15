@@ -112,6 +112,21 @@ $usermname = '';
 
 
 </style>
+
+
+<script type="text/javascript">
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah').attr('style', 'background-image: url('+e.target.result+');');
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
@@ -223,7 +238,7 @@ $usermname = '';
 			</div>
 		</div>
 	</header>
-	<form action="save-product.php" method="post" enctype="multipart/form-data">
+	<form action="save-product.php" method="post" enctype="multipart/form-data" runat="server">
 	<div id="fh5co-contact-section">
 		<div class="container">
 			<div class="row">
@@ -245,10 +260,11 @@ $usermname = '';
 							<div class="col-md-5 text-center">
 
 					<div class="work-inner">
-						<a  class="work-grid" style="background-image: url(images/product.png);">
+						<a  class="work-grid" style="background-image: url(images/product.png);" id="blah" >
 						</a>
 						<div class="desc">
-							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" id="fileToUpload" >
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" id="fileToUpload" onchange="readURL(this);">
+
 							
 						</div>
 					</div>
