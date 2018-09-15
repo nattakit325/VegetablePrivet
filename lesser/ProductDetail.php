@@ -25,8 +25,6 @@ $sqlgetbyMarketid = "SELECT d.name as ProductName, d.picture as picture, d.detai
 $query = mysqli_query($objCon, $sqlgetbyMarketid);
 $objResult = mysqli_fetch_array($query, MYSQLI_ASSOC);
 
-$sqlgetPlace = "SELECT * FROM `place` WHERE place_type = 'โรงพยาบาล'  ";
-$query2 = mysqli_query($objCon, $sqlgetPlace);
 ?>
 
 
@@ -429,9 +427,10 @@ div#messagesDiv{
 <script type="text/javascript">
 var p1 = 0;
 let p2;
+let p3;
+let p4;
 var market = [];
 var locations = [];
-var place = [];
 function setMarket(){
 
 	 <?php while ($row = mysqli_fetch_array($queryA, MYSQLI_ASSOC)) {?>
@@ -439,20 +438,11 @@ function setMarket(){
 			"<?php echo $row["longitude"]; ?>","<?php echo $row["openDate"]; ?>",
 			"<?php echo $row["OpenTime"]; ?>","<?php echo $row["CloseTime"]; ?>"]);
 	 <?php }?>
-	 <?php while ($row = mysqli_fetch_array($query2, MYSQLI_ASSOC)) {?>
-		place.push(["<?php echo $row["place_name"]; ?>","<?php echo $row["place_address"]; ?>",
-			"<?php echo $row["place_link"]; ?>","<?php echo $row["place_tel"]; ?>",
-			"<?php echo $row["place_district"]; ?>","<?php echo $row["place_type"]; ?>"
-			,"<?php echo $row["place_la"]; ?>","<?php echo $row["place_long"]; ?>"]);
-	 <?php }?>
 	getLaLongMarket();
 }
 function getLaLongMarket() {
 	 for(var i=0;i<market.length;i++){
 		 market[i][6] = new google.maps.LatLng(market[i][1], market[i][2]);
-	 }
-	 for(var i=0;i<place.length;i++){
-		 place[i][8] = new google.maps.LatLng(place[i][6], place[i][7]);
 	 }
 	 getLocation();
 }
@@ -465,6 +455,8 @@ function getLocation() {
     }
 function CurrentPosition(position) {
 	p2 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	p3 = position.coords.latitude;
+	p4 = position.coords.longitude;
 	if(p1 == 0){
 		showPosition();
 	}
@@ -473,9 +465,6 @@ function showPosition(){
  	p1 = 1;
 	for(var j=0;j<market.length;j++){
 		market[j][7] = (google.maps.geometry.spherical.computeDistanceBetween(market[j][6], p2) / 1000).toFixed(2);
-	 }
-	 for(var j=0;j<place.length;j++){
-		place[j][9] = (google.maps.geometry.spherical.computeDistanceBetween(place[j][8], p2) / 1000).toFixed(2);
 	 }
 	 let marketmap = new google.maps.LatLng(<?php echo $objResult["latitude"]; ?>, <?php echo $objResult["longitude"]; ?>);
 	 var distanceMarket = (google.maps.geometry.spherical.computeDistanceBetween(marketmap, p2) / 1000).toFixed(2);
@@ -487,17 +476,7 @@ function ShowMarker(){
 		locations.push([ market[k][0]+"<br>ระยะทาง "+market[k][7]+" กิโลเมตร"+"<br> "+market[k][3]+"<br>เปิด "
 			+market[k][4]+" ปิด "+market[k][5], market[k][1], market[k][2], 0 ]);
 	}
-	for(k= 0;k<place.length;k++){
-		if(place[k][9]>10){
-			place.splice(k,1);
-			k--;
-		}else{
-			locations.push(["สถานที่:"+place[k][0]+"<br>ที่อยู๋:"+place[k][1]
-			+"<br>Link:"+place[k][2]+"<br>ระยะทาง"+place[k][9] , 
-			place[k][6], place[k][7], 0 ]);
-		}
-	}
-	
+	//locations.push(['คุณอยู่ตรงนี้',p3,p4,2]);
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 14,
       center: new google.maps.LatLng(<?php echo $objResult["latitude"]; ?>,<?php echo $objResult["longitude"]; ?>),
@@ -512,6 +491,10 @@ function ShowMarker(){
 			origin: new google.maps.Point(0,0), // origin
 			anchor: new google.maps.Point(0, 0) // anchor
 		};
+		var marker2 = new google.maps.Marker({
+    	position: p2,
+    	map: map
+  	});
     for (i = 0; i < locations.length; i++) {
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(locations[i][1], locations[i][2]),
