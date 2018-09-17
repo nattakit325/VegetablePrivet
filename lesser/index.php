@@ -21,7 +21,7 @@
 
 	
 	$sql = "connect.php";
-    $sql = "SELECT n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as surname FROM news n inner join profile p on n.username = p.username WHERE time>NOW() and n.status=0  order by time";
+    $sql = "SELECT  n.id as id, n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as surname FROM news n inner join profile p on n.username = p.username WHERE time>NOW() and n.status=0  order by time";
 
     $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' and status = 1 ";
 
@@ -252,10 +252,10 @@
   </div>
 
 <?php while($row=mysqli_fetch_array($queryDialog,MYSQLI_ASSOC)){ 
-	$count++;
+	
 	?>
 
-  <div class="modal fade" id="myModal<?php echo $count?>" role="dialog">
+  <div class="modal fade" id="myModal<?php echo $row["id"]?>" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -418,6 +418,7 @@ $count=0;
 									</div>
 				</div>
 			</div>
+
 			<div id="search_result">
 			<div class="row">
 
@@ -433,7 +434,7 @@ $count=0;
 							<p>เวลา <?php echo DateThai($row["time"]);?></p>
 							<p>โดย <?php echo $row["name"]." ".$row["surname"];?></p>
 							
-							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">ดูรายละเอียด<i class="icon-arrow-right"></i></a>
+							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $row["id"]?>">ดูรายละเอียด<i class="icon-arrow-right"></i></a>
 						</div>
 					</div>
 				</div>
