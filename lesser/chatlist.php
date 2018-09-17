@@ -321,11 +321,18 @@ div#messagesDiv{
   <input name="userID2" type="hidden" id="userID2" value="<?php echo $_GET['chatname']; ?>">
   <!--  input hidden สำหรับ เก็บ chat_id ล่าสุดที่แสดง-->
   <input name="h_maxID" type="hidden" id="h_maxID" value="0" >
-  <input type="text" class="form-control" name="msg" id="msg" placeholder="Message">
-  </div>
+
+  <input type="text" class="control-label col-sm-9"  name="msg" id="msg" placeholder="Message">
+  <button type="button" class="btn btn-primary" id="send" name="send">
+                            <span></span>
+                            <i class="fas fa-arrow-circle-up"></i>&nbsp;&nbsp;ส่งข้อความ
+                        </button>
+
 
 </div>
+
 </div>
+
 								
 							</div>
 							
@@ -387,6 +394,9 @@ load_chat = function(userID){
 	});		
 }
 // กำหนดให้ทำงานทกๆ 2.5 วินาทีเพิ่มแสดงข้อมูลคู่สนทนา
+
+
+
 setInterval(function(){
 	var userID = $("#userID2").val(); // id user ของผู้รับ
 	load_chat(userID); // เรียกใช้งานฟังก์ช่นแสดงข้อความล่าสุด
@@ -410,7 +420,29 @@ $(function(){
 	  });
 
 	}  
-  });  
+  });
+
+   $( "#send" ).click(function(e) {
+   	if (e.keyCode == 13) { // ถ้ากดปุ่ม enter  
+	  var user1 = $("#userID1").val(); // เก็บ id user  ผู้ใช้ที่ส่ง
+	  var user2 = $("#userID2").val(); // เก็บ id user  ผู้ใช้ที่รับ
+	  var msg = $("#msg").val();  // เก็บค่าข้อความ  
+	  $.post("ajax_chat.php",{
+		  user1:user1,
+		  user2:user2,
+		  msg:msg
+	  },function(data){
+		  	load_chat(user2);// เรียกใช้งานฟังก์ช่นแสดงข้อความล่าสุด
+	  		$("#msg").val(""); // ล้างค่าช่องข้อความ ให้พร้อมป้อนข้อความใหม่  		  
+	  });
+
+	}  
+  
+});
+
+
+
+
   
 });
 
