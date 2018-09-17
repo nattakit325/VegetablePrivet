@@ -372,12 +372,32 @@ $count=0;
 <?php } ?>
 
 				<div class="col-md-6">
-					<a href="search-Consignee.php" class="featured-grid featured-grid-2" style="background-image: url(images/buy.jpg);">
+					<a href="search-Consignee.php" class="featured-grid featured-grid-2" style="background-image: url(images/hotel.jpg);">
 						<div class="desc">
 							<h3>ค้นหาผู้รับสินค้า</h3>
 							<span>search</span>
 						</div>
 					</a>
+				</div>
+
+				<div class="col-md-6">
+					<?php if(empty($_SESSION["username"])){ ?>
+					<a href="#" data-toggle="modal" data-target="#myModal" class="featured-grid featured-grid-2" style="background-image: url(images/news.jpg);">
+						<div class="desc">
+							<h3>นำเสนอข่าว</h3>
+							<span>Create news</span>
+						</div>
+					</a>
+					<?php }else{ ?>
+					<a href="AddNews.php" class="featured-grid featured-grid-2" style="background-image: url(images/news.jpg);">
+						<div class="desc">
+							<h3>นำเสนอข่าว</h3>
+							<span>Create news</span>
+						</div>
+					</a>
+
+					<?php } ?>
+
 				</div>
 
 			
