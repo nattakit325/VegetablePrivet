@@ -3,6 +3,19 @@
 session_start();
 include "connect.php";
 
+$usermname = '';
+
+	if(empty($_SESSION["username"])){
+
+	}else{
+		if($_SESSION["status"]=='admin'){
+			header("location:admin.php");
+		}else{
+			$usermname = $_SESSION["username"];
+		}
+		
+	}
+
 $SellerName = $_GET["SellerName"];
 $Productid = $_GET["Productid"];
 $MarketId = $_GET["MarketId"];
@@ -24,6 +37,12 @@ $sqlgetbyMarketid = "SELECT d.name as ProductName, d.picture as picture, d.detai
 	m.id=g.marketid where s.username = '$SellerName' and s.productid = '$Productid' AND m.id= $MarketId";
 $query = mysqli_query($objCon, $sqlgetbyMarketid);
 $objResult = mysqli_fetch_array($query, MYSQLI_ASSOC);
+
+
+
+	$sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' and status = 1";
+	$queryForNotification=mysqli_query($objCon,$sqlForNotification);
+	$objResultNoti = mysqli_fetch_array($queryForNotification, MYSQLI_ASSOC);
 
 ?>
 
@@ -206,7 +225,11 @@ div#messagesDiv{
   <input name="userID2" type="hidden" id="userID2" value="<?php echo $objResult["Ownusername"]; ?>">
   <!--  input hidden สำหรับ เก็บ chat_id ล่าสุดที่แสดง-->
   <input name="h_maxID" type="hidden" id="h_maxID" value="0" >
-  <input type="text" class="form-control" name="msg" id="msg" placeholder="Message">
+  <input type="text" class="control-label col-sm-6"  name="msg" id="msg" placeholder="Message">
+  <button type="button" class="btn btn-primary" id="send" name="send">
+                            <span></span>
+                            <i class="fas fa-arrow-circle-up"></i>&nbsp;&nbsp;ส่งข้อความ
+                        </button>
   </div>
 
 </div>
@@ -304,12 +327,16 @@ div#messagesDiv{
     ?>
 							<a href="" data-toggle="modal" data-target="#myModal1">เข้าสู่ระบบ</a></li>
 							<a href="" data-toggle="modal" data-target="#myModal1"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
-						<?php } else {?>
-							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"]; ?> <?php echo $_SESSION["surname"]; ?></a></li>
-							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"] ?>" width="10%" height="12%" /></a>
-							<br>
-							&nbsp;&nbsp;<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">คุณมี 14 ข้อความใหม่<i class="icon-arrow-right"></i></a>
-							
+						<?php } else {
+							if ($objResultNoti['chatAM']>0) {
+								$color = 'red';
+							}else{
+								$color = 'gray';
+
+							}
+							?>
+							<a href="TopChat.php" title="คุณมี <?php echo $objResultNoti['chatAM'] ?> ข้อความ"><i class="fas fa-bell" style="color: <?php echo $color ?>">&nbsp;<?php echo $objResultNoti['chatAM'] ?></i></a>
+							<a data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
 						<?php }?>
 
 					</ul>
@@ -571,7 +598,24 @@ $(function(){
 	  });
 
 	}  
-  });  
+  });
+   $( "#send" ).click(function(e) {
+   	
+   		 var user1 = $("#userID1").val(); // เก็บ id user  ผู้ใช้ที่ส่ง
+	  var user2 = $("#userID2").val(); // เก็บ id user  ผู้ใช้ที่รับ
+	  var msg = $("#msg").val();  // เก็บค่าข้อความ  
+	  $.post("ajax_chat.php",{
+		  user1:user1,
+		  user2:user2,
+		  msg:msg
+	  },function(data){
+		  	load_chat(user2);// เรียกใช้งานฟังก์ช่นแสดงข้อความล่าสุด
+	  		$("#msg").val(""); // ล้างค่าช่องข้อความ ให้พร้อมป้อนข้อความใหม่  		  
+	  });
+
+   	  
+  
+});  
   
 });
 

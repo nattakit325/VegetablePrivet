@@ -375,20 +375,20 @@ $count=0;
 					<a href="search-Consignee.php" class="featured-grid featured-grid-2" style="background-image: url(images/hotel.jpg);">
 						<div class="desc">
 							<h3>ค้นหาผู้รับสินค้า</h3>
-							<span>search</span>
+							<span>Search The Customer</span>
 						</div>
 					</a>
 				</div>
 				<div class="col-md-6">
-					<a href="search-farmer.php" class="featured-grid featured-grid-2" style="background-image: url(images/hotel.jpg);">
+					<a href="search-farmer.php" class="featured-grid featured-grid-2" style="background-image: url(images/seller.jpg);">
 						<div class="desc">
 							<h3>ค้นหาเกษตรกรต้นแบบ</h3>
-							<span>search</span>
+							<span>Good Example Farmer</span>
 						</div>
 					</a>
 				</div>
 
-				<div class="col-md-6">
+				<!--<div class="col-md-6">
 					<?php if(empty($_SESSION["username"])){ ?>
 					<a href="#" data-toggle="modal" data-target="#myModal" class="featured-grid featured-grid-2" style="background-image: url(images/news.jpg);">
 						<div class="desc">
@@ -406,7 +406,7 @@ $count=0;
 
 					<?php } ?>
 
-				</div>
+				</div>-->
 
 			
 
