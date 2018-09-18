@@ -379,6 +379,14 @@ $count=0;
 						</div>
 					</a>
 				</div>
+				<div class="col-md-6">
+					<a href="search-farmer.php" class="featured-grid featured-grid-2" style="background-image: url(images/hotel.jpg);">
+						<div class="desc">
+							<h3>ค้นหาเกษตรกรต้นแบบ</h3>
+							<span>search</span>
+						</div>
+					</a>
+				</div>
 
 				<div class="col-md-6">
 					<?php if(empty($_SESSION["username"])){ ?>

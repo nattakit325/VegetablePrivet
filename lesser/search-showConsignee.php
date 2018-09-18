@@ -25,6 +25,15 @@ $queryA=mysqli_query($objCon,$sql);
 
 $place_type_id= $_POST['place_type_id'];
 $district_id= $_POST['district_id'];
+
+$sql="SELECT * FROM `districts` WHERE district_id = $district_id";
+$querydistrict = mysqli_query($objCon,$sql);
+$objResultdistrict = mysqli_fetch_array($querydistrict, MYSQLI_ASSOC);
+
+$sql="SELECT * FROM `place_type` WHERE place_type_id = $place_type_id";
+$queryplacetype = mysqli_query($objCon,$sql);
+$objResultplacetype = mysqli_fetch_array($queryplacetype, MYSQLI_ASSOC);
+
 $sql="SELECT * FROM place WHERE place_type_id = $place_type_id AND district_id = $district_id";
 $queryB=mysqli_query($objCon,$sql);
 
@@ -161,7 +170,18 @@ function showHint(str,username) {
 
 
 </style>
+<div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-content">
 
+        <div class="modal-body">
+				<div id="map"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">ออก</button>
+        </div>
+      </div>
+
+  </div>
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -308,8 +328,20 @@ function showHint(str,username) {
                             ค้นหา
                         </button>
                     	</div>
-                    	</form> 
-							
+                    	</form>
+						<br>
+					</div>
+				
+						<div class="form-group col-md-12 row">
+							<p>อำเภอที่คุณเลือก: <?php echo $objResultdistrict['district_name']  ?></p>
+						</div>
+						<div class="form-group col-md-12 row">
+							<p>ประเภทสถานที่ที่คุณเลือก: <?php echo $objResultplacetype['place_type_name']  ?></p>
+						</div>
+					
+						
+					<div class="form-group  col-md-6 col-md-offset-3 row center">
+						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูแผนที่</button>
 					</div>
 					
 				</div>
@@ -321,18 +353,19 @@ var p1 = 0;
 let p2;
 let p3;
 let p4;
+var place = [];
 var locations = [];
 function setMarket(){
 	<?php while ($row = mysqli_fetch_array($queryB, MYSQLI_ASSOC)) {?>
-		locations.push(["<?php echo $row["place_name"]; ?>","<?php echo $row["place_la"]; ?>",
+		place.push(["<?php echo $row["place_name"]; ?>","<?php echo $row["place_la"]; ?>",
 			"<?php echo $row["place_long"]; ?>","<?php echo $row["place_address"]; ?>",
 			"<?php echo $row["place_link"]; ?>","<?php echo $row["place_tel"]; ?>"]);
 	 <?php }?>
 	getLaLongMarket();
 }
 function getLaLongMarket() {
-	 for(var i=0;i<locations.length;i++){
-        locations[i][6] = new google.maps.LatLng(locations[i][1], locations[i][2]);
+	 for(var i=0;i<place.length;i++){
+        place[i][6] = new google.maps.LatLng(place[i][1], place[i][2]);
 	 }
 	 getLocation();
 }
@@ -353,20 +386,20 @@ function CurrentPosition(position) {
 }
 function showPosition(){
  	p1 = 1;
-	for(var j=0;j<locations.length;j++){
-		locations[j][7] = (google.maps.geometry.spherical.computeDistanceBetween(locations[j][6], p2) / 1000).toFixed(2);
+	for(var j=0;j<place.length;j++){
+		place[j][7] = (google.maps.geometry.spherical.computeDistanceBetween(place[j][6], p2) / 1000).toFixed(2);
 	 }
 	 ShowMarker();
 }
 function ShowMarker(){
-	for(k= 0;k<locations.length;k++){
-		locations.push([ locations[k][0]+"<br>ระยะทาง "+locations[k][7]+" กิโลเมตร"+"<br> "+locations[k][3]+"<br>เปิด "
-			+locations[k][4]+" ปิด "+locations[k][5], locations[k][1], locations[k][2], 0 ]);
+	for(k= 0;k<place.length;k++){
+		locations.push([ place[k][0]+"<br>ระยะทาง "+place[k][7]+" กิโลเมตร"+"<br> "+place[k][3]+"<br>Link: "
+			+place[k][4]+"<br> เบอร์โทรศัพท์ "+place[k][5], place[k][1], place[k][2], 0 ]);
 	}
 	//locations.push(['คุณอยู่ตรงนี้',p3,p4,2]);
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 14,
-      center: new google.maps.LatLng(18.78087607180,98.97892840490),
+      center: new google.maps.LatLng(p3,p4),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
@@ -382,9 +415,9 @@ function ShowMarker(){
     	position: p2,
     	map: map
   	});
-    for (i = 0; i < locations.length; i++) {
+    for (i = 0; i < place.length; i++) {
       marker = new google.maps.Marker({
-        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        position: new google.maps.LatLng(place[i][1], place[i][2]),
         map: map,
 				icon: icon
       });
