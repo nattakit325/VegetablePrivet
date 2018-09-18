@@ -423,8 +423,8 @@ $(function(){
   });
 
    $( "#send" ).click(function(e) {
-   	if (e.keyCode == 13) { // ถ้ากดปุ่ม enter  
-	  var user1 = $("#userID1").val(); // เก็บ id user  ผู้ใช้ที่ส่ง
+   	
+   		 var user1 = $("#userID1").val(); // เก็บ id user  ผู้ใช้ที่ส่ง
 	  var user2 = $("#userID2").val(); // เก็บ id user  ผู้ใช้ที่รับ
 	  var msg = $("#msg").val();  // เก็บค่าข้อความ  
 	  $.post("ajax_chat.php",{
@@ -436,7 +436,7 @@ $(function(){
 	  		$("#msg").val(""); // ล้างค่าช่องข้อความ ให้พร้อมป้อนข้อความใหม่  		  
 	  });
 
-	}  
+   	  
   
 });
 
