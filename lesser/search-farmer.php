@@ -10,15 +10,16 @@ include "connect.php";
 		if($_SESSION["status"]=='admin'){
 			header("location:admin.php");
 		}else{
-			$usermname = $_SESSION["username"];
+            $usermname = $_SESSION["username"];
+            $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' and status = 1";
+            $queryForNotification=mysqli_query($objCon,$sqlForNotification);
+        $objResult2 = mysqli_fetch_array($queryForNotification, MYSQLI_ASSOC);
 		}
 		
 	}
-$sql="SELECT * FROM `place_type`";
-$query=mysqli_query($objCon,$sql);
+$sql="SELECT * FROM `famers`";
+$queryB=mysqli_query($objCon,$sql);
 
-$sql="SELECT * FROM `districts`";
-$queryA=mysqli_query($objCon,$sql);
 ?>
 
 <!DOCTYPE html>
@@ -92,9 +93,9 @@ $queryA=mysqli_query($objCon,$sql);
 	<!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
-
+	
 	</head>
-
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO9xE9smgXJIDFDpyPaDGZcjQu-ybwOKc&libraries=geometry"></script>
 
 
 
@@ -130,10 +131,7 @@ function showHint(str,username) {
 
 </script>
 
-
-
-
-	<body>
+	<body onload="setMarket()"> 
 
 
 
@@ -155,10 +153,18 @@ function showHint(str,username) {
 
 
 </style>
+<div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-content">
 
+        <div class="modal-body">
+				<div id="map"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">ออก</button>
+        </div>
+      </div>
 
-
-
+  </div>
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -224,29 +230,6 @@ function showHint(str,username) {
   </div>
 
 
-  <div class="modal fade" id="forconfermdelete" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><p class="modal-title">ต้องการลบสินค้าทั้งหมดหรือไม่</p></center>
-        </div>
-        <div class="modal-body">
-          <center>
-						
-  <br>
-
-  <a href="DeleteAllProduct.php"><button type="button" class="btn btn-warning"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button></a>
-  <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
-        </center>
-          
-        </div>
-        
-          
-        
-      </div>
-    </div>
-  </div>
 <div class="modal fade" id="forconfermdeleteeach" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -299,46 +282,98 @@ function showHint(str,username) {
 					<h2>ค้นหาผู้รับสินค้าทางการเกษตร</h2>
 					<p><span>Search Consignee</a></span></p>
 
-
-					<div class="form-group col-md-12">
-						<form class="form-inline" name="searchform" id="searchform">
-                        <div class="form-group col-md-4">
-                            <label for="textsearch" >เลือกอำเภอ</label>
-                            <select class="form-control" name="district_id">
-                            	<?php while ($row = mysqli_fetch_array($queryA, MYSQLI_ASSOC)) {?>
-									<option value="<?php echo $row["district_id"] ?>"><?php echo $row["district_name"] ?></option>
-								<?php }?>
-                            </select>
-                            
-                            
-                        </div>
-                        <div class="form-group  col-md-4">
-                            <label for="textsearch" >เลือกประเภทสถานที่</label>
-                            <select class="form-control" name="place_tpye">
-                            	<?php while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {?>
-									<option value="<?php echo $row["place_type_id"] ?>"><?php echo $row["place_type_name"] ?></option>
-								<?php }?>
-                            </select>
-                            
-                            
-                        </div>
-                        <div class="form-group  col-md-4">
-                        <button type="button" class="btn btn-primary" id="btnSearch">
-                            <span class="glyphicon glyphicon-search"></span>
-                            ค้นหา
-                        </button>
-                    	</div>
-                    	</form> 
-							
+					<div class="form-group  col-md-6 col-md-offset-3 row center">
+						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูแผนที่</button>
 					</div>
-
-
-
+					
 				</div>
 			</div>
 		</div>
 	</div>
-	
+	<script type="text/javascript">
+var p1 = 0;
+let p2;
+let p3;
+let p4;
+var place = [];
+var locations = [];
+function setMarket(){
+	<?php while ($row = mysqli_fetch_array($queryB, MYSQLI_ASSOC)) {?>
+			place.push(["<?php echo $row["famer_name"]; ?>","<?php echo $row["famer_lati"]; ?>",
+			"<?php echo $row["famer_longti"]; ?>","<?php echo $row["famer_address"]; ?>",
+			"<?php echo $row["famer_plant"]; ?>","<?php echo $row["famer_brand"]; ?>"]);
+	 <?php }?>
+	getLaLongMarket();
+}
+function getLaLongMarket() {
+	 for(var i=0;i<place.length;i++){
+        place[i][6] = new google.maps.LatLng(place[i][1], place[i][2]);
+	 }
+	 getLocation();
+}
+function getLocation() {
+
+    if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(CurrentPosition);
+    } else {
+	document.getElementById("demo").innerHTML = "Geolocation is not supported by this browser.";}
+    }
+function CurrentPosition(position) {
+	p2 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	p3 = position.coords.latitude;
+	p4 = position.coords.longitude;
+	if(p1 == 0){
+		showPosition();
+	}
+}
+function showPosition(){
+ 	p1 = 1;
+	for(var j=0;j<place.length;j++){
+		place[j][7] = (google.maps.geometry.spherical.computeDistanceBetween(place[j][6], p2) / 1000).toFixed(2);
+	 }
+	 ShowMarker();
+}
+function ShowMarker(){
+	for(k= 0;k<place.length;k++){
+		locations.push([ place[k][0]+"<br>ระยะทาง "+place[k][7]+" กิโลเมตร"+"<br> "+place[k][3]+"<br>Link: "
+			+place[k][4]+"<br> เบอร์โทรศัพท์ "+place[k][5], place[k][1], place[k][2], 0 ]);
+	}
+	//locations.push(['คุณอยู่ตรงนี้',p3,p4,2]);
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 14,
+      center: new google.maps.LatLng(p3,p4),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+    var marker, i;
+		var icon = {
+			url: "icon/market-512.png", // url
+			scaledSize: new google.maps.Size(50, 50), // scaled size
+			origin: new google.maps.Point(0,0), // origin
+			anchor: new google.maps.Point(0, 0) // anchor
+		};
+		var marker2 = new google.maps.Marker({
+    	position: p2,
+    	map: map
+  	});
+    for (i = 0; i < place.length; i++) {
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(place[i][1], place[i][2]),
+        map: map,
+				icon: icon
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+}
+</script>
+
 	
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
@@ -350,7 +385,7 @@ function showHint(str,username) {
 	<script src="js/jquery.waypoints.min.js"></script>
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
-
+	
 	</body>
 </html>
 
