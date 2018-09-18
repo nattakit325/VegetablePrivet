@@ -32,7 +32,13 @@
 	$objResult = mysqli_fetch_array($queryForNotification, MYSQLI_ASSOC);
 
 
-	$sqlChatUser = "SELECT  p.name as name,p.surname as surname,p.picture as picture, c.chat_msg  as msg, p.username as chatname from tbl_chat c inner join profile p on  c.chat_user1 = p.username where c.chat_user2='$usermname' group by c.chat_user1 ORDER by chat_datetime DESC";
+	$sqlChatUser = "SELECT p.name as name,p.surname as surname,p.picture as picture, c.chat_msg  as msg, p.username as chatname,c.status as status , c.chat_datetime
+from tbl_chat c inner join profile p on  c.chat_user1 = p.username 
+where c.chat_user2='$usermname'  
+and c.chat_datetime = (SELECT c2.chat_datetime from tbl_chat c2
+                       				where c2.chat_user1 = c.chat_user1 
+                       				and c2.chat_user2 = '$usermname'  
+                       			ORDER by c2.chat_datetime DESC LIMIT 1 )";
 
 
 
@@ -292,8 +298,12 @@ div#messagesDiv{
 						<div class="col-md-12 services-inner">
 							<span><img class="circle" src="images/<?php echo $row['picture'];?>"></span>
 							<div class="desc">
+								<?php if($row['status']==1){ ?>
+								<br><u><a href="chatlist.php?name=<?php echo $row['name'];?>&surname=<?php echo $row['surname'];?>&chatname=<?php echo $row['chatname'];?>"><h3 style="color: red"><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row["surname"];?></h3></a></u>
+							<?php }else{ ?>
+								<a href="chatlist.php?name=<?php echo $row['name'];?>&surname=<?php echo $row['surname'];?>&chatname=<?php echo $row['chatname'];?>"><h3><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row["surname"];?></h3></a>
 
-								<br><u><a href="chatlist.php?name=<?php echo $row['name'];?>&surname=<?php echo $row['surname'];?>&chatname=<?php echo $row['chatname'];?>"><h3><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row["surname"];?></h3></a></u>
+							<?php } ?>
 							</div>
 							</div>
 						
@@ -423,8 +433,8 @@ $(function(){
   });
 
    $( "#send" ).click(function(e) {
-   	if (e.keyCode == 13) { // ถ้ากดปุ่ม enter  
-	  var user1 = $("#userID1").val(); // เก็บ id user  ผู้ใช้ที่ส่ง
+   	
+   		 var user1 = $("#userID1").val(); // เก็บ id user  ผู้ใช้ที่ส่ง
 	  var user2 = $("#userID2").val(); // เก็บ id user  ผู้ใช้ที่รับ
 	  var msg = $("#msg").val();  // เก็บค่าข้อความ  
 	  $.post("ajax_chat.php",{
@@ -436,7 +446,7 @@ $(function(){
 	  		$("#msg").val(""); // ล้างค่าช่องข้อความ ให้พร้อมป้อนข้อความใหม่  		  
 	  });
 
-	}  
+   	  
   
 });
 
