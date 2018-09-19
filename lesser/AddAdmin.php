@@ -111,12 +111,12 @@
 
 				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 					<div class="row">
-						<form action="save-register.php" method="post" enctype="multipart/form-data"  name="frmMain" id="frmMain" runat="server" onSubmit="JavaScript:return fncSubmit();">
+						<form action="save-register-admin.php" method="post" enctype="multipart/form-data"  name="frmMain" id="frmMain" runat="server" onSubmit="JavaScript:return fncSubmit();">
 						
 			<div class="col-md-4 text-center">
 
 					<div class="work-inner">
-						<a  class="work-grid" style="background-image: url(images/profile.png);" id="blah" >
+						<a  class="work-grid" style="background-image: url(images/Admin.png);" id="blah" >
 						</a>
 						<div class="desc">
 							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" Oonchange="readURL(this);" onchange="readURL(this);">
