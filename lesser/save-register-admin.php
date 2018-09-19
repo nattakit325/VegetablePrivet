@@ -90,12 +90,20 @@
             echo "</script>";
         }else{
         $strSQL1 = "INSERT INTO login ";
-        $strSQL1 .="(username,password,status) VALUES ('".$_POST["username"]."','$pass','".$_POST["status"]."')";
+        $strSQL1 .="(username,password,status) VALUES ('".$_POST["username"]."','$pass','admin')";
         $objQuery = mysqli_query($objCon,$strSQL1);
         
         $strSQL2 = "INSERT INTO profile ";
         $strSQL2 .="(name,surname,career,age,picture,username) VALUES ('".$_POST["firstname"]."','".$_POST["lastname"]."','admin','".$_POST["age"]."','$PictureName','".$_POST["username"]."')";
         $objQuery = mysqli_query($objCon,$strSQL2);
+
+
+
+
+        echo "<script language=\"JavaScript\">";
+            echo "alert('เพิ่มผู้ดูแลระบบสำเร็จ');";
+            echo "window.location = 'AccountMG.php'; ";
+            echo "</script>";
 
         
            
@@ -103,8 +111,8 @@
        
 
         
-        header("location:index.php");
-                
+         
+         
         }
 
     

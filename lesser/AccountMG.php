@@ -391,8 +391,8 @@ $count=0;
 				<div class="col-md-6">
 					<a href="report.php" class="featured-grid featured-grid-2" style="background-image: url(images/pp.jpg);">
 						<div class="desc">
-							<h3>ยกเลิกบัญชี</h3>
-							<span>Cancle an account</span>
+							<h3>รายการบัญชี</h3>
+							<span>Account list</span>
 						</div>
 					</a>
 					

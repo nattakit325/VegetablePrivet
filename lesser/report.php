@@ -338,22 +338,28 @@ function showHint(str) {
 		<div class="container">
 			<div class="row" >
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>ข่าวที่สร้างไว้ทั้งหมด</h2>
-					<p>All News that created</p>
+					<h2>บัญชีที่มีทั้งหมด</h2>
+					<p>All account</p>
 					<div class="form-group">
 									<form class="form-inline" name="searchform" id="searchform">
                         <div class="form-group">
-                            <label for="textsearch" >วันเดือนปีที่ลงข่าว</label>
-                            <input type="date"  class="form-control" placeholder="ข้อความ คำค้นหา!" onkeyup="showHint(this.value)">
+
+                            <input type="text"  class="form-control" placeholder="ชื่อบัญชี" onkeyup="showHint(this.value)">
                         </div>
+                        <div class="form-group">
+									<select class="form-control" name="status">
+										<option value="เกษตรกร">ผู้ดูและระบบ</option>
+										<option value="ปัจจัย">ผู้ใช้งานทั่วไป</option>
+									</select>
+								</div>
                         <button type="button" class="btn btn-primary" id="btnSearch">
                             <span class="glyphicon glyphicon-search"></span>
                             ค้นหา
                         </button>
                     </form> 
                     <br>
-									<a href="AddNews.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;สร้างข่าวใหม่</button></span></a>
-										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ลบทั้งหมด
+									<a href="AddNews.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;เพิ่มผู้ดูและระบบ</button></span></a>
+										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ยกเลิกบัญชีทั้งหมด
 										
 									</div>
 							
