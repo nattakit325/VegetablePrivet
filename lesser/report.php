@@ -357,7 +357,7 @@ function showHint(str) {
                         </button>
                     </form> 
                     <br>
-									<a href="AddNews.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;เพิ่มผู้ดูและระบบ</button></span></a>
+									<a href="AddAdmin.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;เพิ่มผู้ดูและระบบ</button></span></a>
 										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ยกเลิกบัญชีทั้งหมด
 										
 									</div>
