@@ -389,7 +389,7 @@ $count=0;
 					</a>
 				</div>
 				<div class="col-md-6">
-					<a href="report.php" class="featured-grid featured-grid-2" style="background-image: url(images/pp.jpg);">
+					<a href="report.php?value=' '&type=admin" class="featured-grid featured-grid-2" style="background-image: url(images/pp.jpg);">
 						<div class="desc">
 							<h3>รายการบัญชี</h3>
 							<span>Account list</span>

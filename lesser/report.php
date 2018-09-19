@@ -2,24 +2,23 @@
 	session_start();
 	
     include "connect.php";
-    $sql = "SELECT n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as 		surname ,n.PostTime as posttime FROM news n inner join profile p on n.username = p.username where n.status = 0 order by n.PostTime";
+
+
+    $type = $_GET['type'];
+    $value = $_GET['value'];
+    if($type=='admin'){
+    	 $sql = "SELECT p.id as id, p.name as name,p.surname as surname, p.career as career, p.age as age,p.picture as picture  from profile p inner join login l on p.username=l.username where l.status = '$type' and p.name like '%$value%'";
+
+    }else{
+    	$sql = "SELECT p.id as id, p.name as name,p.surname as surname, p.career as career, p.age as age,p.picture as picture  from profile p inner join login l on p.username=l.username where l.status != '$type' and p.name like '%$value%'";
+    }
+   
 
     $query=mysqli_query($objCon,$sql);
 	$queryDialog=mysqli_query($objCon,$sql);
-	$count = 0;
+	
 
-	function DateThai($strDate)
-	{
-		$strYear = date("Y",strtotime($strDate))+543;
-		$strMonth= date("n",strtotime($strDate));
-		$strDay= date("j",strtotime($strDate));
-		$strHour= date("H",strtotime($strDate));
-		$strMinute= date("i",strtotime($strDate));
-		$strSeconds= date("s",strtotime($strDate));
-		$strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
-		$strMonthThai=$strMonthCut[$strMonth];
-		return "$strDay $strMonthThai $strYear, เวลา $strHour:$strMinute";
-	}
+	
 
     
 ?>
@@ -341,18 +340,18 @@ function showHint(str) {
 					<h2>บัญชีที่มีทั้งหมด</h2>
 					<p>All account</p>
 					<div class="form-group">
-									<form class="form-inline" name="searchform" id="searchform">
+					<form class="form-inline" name="searchform" id="searchform" action="report.php" method="get">
                         <div class="form-group">
 
-                            <input type="text"  class="form-control" placeholder="ชื่อบัญชี" onkeyup="showHint(this.value)">
+                            <input type="text"  class="form-control" placeholder="ชื่อบัญชี" name="value">
                         </div>
                         <div class="form-group">
-									<select class="form-control" name="status">
-										<option value="เกษตรกร">ผู้ดูและระบบ</option>
-										<option value="ปัจจัย">ผู้ใช้งานทั่วไป</option>
+									<select class="form-control" name="type">
+										<option value="admin">ผู้ดูและระบบ</option>
+										<option value="user">ผู้ใช้งานทั่วไป</option>
 									</select>
 								</div>
-                        <button type="button" class="btn btn-primary" id="btnSearch">
+                        <button type="submit" class="btn btn-primary" id="btnSearch">
                             <span class="glyphicon glyphicon-search"></span>
                             ค้นหา
                         </button>
@@ -366,24 +365,43 @@ function showHint(str) {
 				</div>
 			</div>
 			<div class="row">
+				<?php if($type=='user'){ ?>
 
 				 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ 
-				 	$count++
+				 	
 				 	?>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a class="work-grid" style="background-image: url(images/<?php echo $row['media'];?>);">
+						<a class="work-grid" style="background-image: url(images/<?php echo $row['picture'];?>);">
 						</a>
 						<div class="desc">
-							<h3><?php echo $row["topic"];?></h3>
-							<p>ประกาศเมื่อ <?php echo DateThai($row["posttime"]);?></p>
-							<p>โดย <?php echo $row["name"]." ".$row["surname"];?></p>
-							<button type="button" class="btn btn-danger" data-toggle="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ลบ</span></button>
-							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">แก้ไขข่าว<i class="icon-arrow-right"></i></a>
+							<h3><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row["surname"];?></h3>
+							<p>อาชีพ <?php echo $row["career"];?></p></p>
+							<p>อายุ <?php echo $row["age"]?>&nbsp;ปี</p>
+							<button type="button" class="btn btn-danger" data-toggle="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ยกเลิกบัญชี</span></button>
+							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">ดูรายละเอียด<i class="icon-arrow-right"></i></a>
 						</div>
 					</div>
 				</div>
-				<?php } ?>
+				<?php } }else{?>
+					<?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ 
+				 	
+				 	?>
+				<div class="col-md-4 text-center">
+					<div class="work-inner">
+						<a class="work-grid" style="background-image: url(images/<?php echo $row['picture'];?>);">
+						</a>
+						<div class="desc">
+							<h3><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row["surname"];?></h3>
+							<p>อายุ <?php echo $row["age"]?>&nbsp;ปี</p>
+							<button type="button" class="btn btn-danger" data-toggle="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ยกเลิกบัญชีผู้ดูแลระบบ</span></button>
+							
+						</div>
+					</div>
+				</div>
+
+
+				<?php } } ?>
 				
 				
 				
