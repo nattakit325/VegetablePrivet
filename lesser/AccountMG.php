@@ -381,112 +381,29 @@ $count=0;
 			<div class="row">
 				
 				<div class="col-md-6">
-					<a href="AddNews.php" class="featured-grid featured-grid-2" style="background-image: url(images/news.jpg);">
+					<a href="AddAdmin.php" class="featured-grid featured-grid-2" style="background-image: url(images/am.jpg);">
 						<div class="desc">
-							<h3>สร้างข่าว</h3>
-							<span>Create news</span>
+							<h3>เพิ่มผู้ดูแลระบบ</h3>
+							<span>Create new admin</span>
 						</div>
 					</a>
 				</div>
 				<div class="col-md-6">
-					<a href="AccountMG.php" class="featured-grid featured-grid-2" style="background-image: url(images/report.jpg);">
+					<a href="report.php" class="featured-grid featured-grid-2" style="background-image: url(images/pp.jpg);">
 						<div class="desc">
-							<h3>การจัดการบัญชี</h3>
-							<span>Account management</span>
-						</div>
-					</a>
-					
-				</div>
-				<div class="col-md-6">
-					<a href="addMarketAdmin.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
-						<div class="desc">
-							<h3>เพิ่มสถานที่ขายพืชผักอินทรีย์</h3>
-							<span>Add location</span>
-						</div>
-					</a>	
-				</div>
-
-				<div class="col-md-6">
-					<a href="addSellLocation.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
-						<div class="desc">
-							<h3>เพิ่มสถานที่รับสินค้า</h3>
-							<span>Add location</span>
-						</div>
-					</a>	
-				</div>
-
-				<div class="col-md-6">
-					<a href="addFarmerLocation.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
-						<div class="desc">
-							<h3>เพิ่มข้อมูลเกษตรกร</h3>
-							<span>Add farmer</span>
-						</div>
-					</a>	
-				</div>
-
-				<div class="col-md-6">
-					<a href="dataMG.php" class="featured-grid featured-grid-2" style="background-image: url(images/bin.jpg);">
-						<div class="desc">
-							<h3>การจัดการข้อมูล</h3>
-							<span>Data management</span>
+							<h3>ยกเลิกบัญชี</h3>
+							<span>Cancle an account</span>
 						</div>
 					</a>
 					
 				</div>
 				
+				
 			</div>
 		</div>
 	</div>
 
-	<div id="fh5co-blog-section" class="fh5co-grey-bg-section">
-		<div class="container">
-			<div class="row" >
-				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>ข่าวที่รอการอนุมัติ</h2>
-					<p>All News that waiting for approval</p>
-					<div class="form-group">
-									<form class="form-inline" name="searchform" id="searchform">
-                        
-                        
-                    </form> 
-                    <br>
-									<button type="button" class="btn btn-success" data-toggle="modal" data-target="#forconfermAP"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;อนุมัติทั้งหมด</button>
-										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ปฏิเสธทั้งหมด</button>
-										
-									</div>
-							
-				</div>
-			</div>
-			<div class="row">
-
-				 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ 
-				 	$count++
-				 	?>
-				<div class="col-md-4 text-center">
-					<div class="work-inner">
-						<a class="work-grid"  style="background-image: url(images/<?php echo $row['media'];?>); ">
-						</a>
-						<div class="desc">
-							<h3><?php echo $row["topic"];?></h3>
-							<p>ประกาศเมื่อ <?php echo DateThai($row["posttime"]);?></p>
-							<p>โดย <?php echo $row["name"]." ".$row["surname"];?></p>
-							
-							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">ดูรายระเอียด<i class="icon-arrow-right"></i></a>
-							
-						</div>
-					</div>
-				</div>
-				<?php } ?>
-				
-				
-				
-
-
-				
-
-			</div>
-		</div>
-	</div>
+	
 	
 	
 	

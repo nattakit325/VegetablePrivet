@@ -3,18 +3,11 @@
 <?php  
    	session_start();
 	include "connect.php";
-	$usermname = '';
+	
 
-	if(empty($_SESSION["username"])){
-
-	}else{
-		if($_SESSION["status"]=='admin'){
-			header("location:admin.php");
-		}else{
-			$usermname = $_SESSION["username"];
-		}
-		
-	}
+	
+	$usermname = $_SESSION["username"];
+	
 
 	$chat = $_GET['chatname'];
 
@@ -291,6 +284,15 @@ div#messagesDiv{
 			</div>
 			<div class="row">
 				<div class="col-md-4">
+					<div class="row">
+						<div class="col-md-12 services-inner">
+							<span><img class="circle" src="images/Admin.png"></span>
+							<div class="desc">
+								<a href="chatlist.php?name=admin&surname=&chatname=admin"><h3>Admin</h3></a>
+							</div>
+							</div>
+						
+					</div>
 					<?php while($row=mysqli_fetch_array($queryForChatUser,MYSQLI_ASSOC)){ 
 				 	
 				 	?>
