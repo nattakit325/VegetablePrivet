@@ -169,7 +169,7 @@ function showHint(str) {
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><p class="modal-title">ต้องการลบสินค้าทั้งหมดหรือไม่</p></center>
+          <center><p class="modal-title">ต้องการยกเลิกบัญชีทั้งหมดหรือไม่</p></center>
         </div>
         <div class="modal-body">
           <center>
