@@ -403,7 +403,7 @@ function showHint(str) {
 						</a>
 						<div class="desc">
 							<h3><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row["surname"];?> </h3>
-							<p>อายุ <?php echo $row["age"]?>&nbsp;ปี </p><?php echo $row['picture'];?>
+							<p>อายุ <?php echo $row["age"]?>&nbsp;ปี </p>
 							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#forconfermdeleteeach" onclick="Delete('<?php echo $row['id'] ?>','<?php echo $row['name'] ?>','<?php echo $row['surname'] ?>','<?php echo $row['picture'] ?>')"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ยกเลิกบัญชีผู้ดูแลระบบ</span></button>
 							
 						</div>

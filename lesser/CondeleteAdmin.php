@@ -6,15 +6,14 @@
     $picture =  $_POST['picture'];
 
 
-    echo $id;
-    echo $picture;
+    
 
 
     if(empty($picture)){
 
     }else{
 	if($picture!='Admin.png'){
-			unlink("uploads_product/".$picture);
+			unlink("images/".$picture);
 	}
 }
 
@@ -27,6 +26,6 @@ $sql2="DELETE from login where username= '$id'";
 $query2=mysqli_query($objCon,$sql2);
 
 
-//header("location:report.php?value=' '&type=admin");
+header("location:report.php?value=' '&type=admin");
 
 ?>
