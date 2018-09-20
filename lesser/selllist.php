@@ -2,11 +2,12 @@
 <?php 
 session_start();
 include "connect.php";
+$value = $_GET["value"];
 $username = $_SESSION["username"];
 $sql="SELECT p.name as name,p.picture as picture, s.username as SellerName, p.id as Productid FROM selllist s
 			inner join product p
 			on s.productid=p.id
-			where username='$username' ";
+			where username='$username' and p.name like '%$value%'";
 $query=mysqli_query($objCon,$sql);
 $queryC=mysqli_query($objCon,$sql);
 
@@ -124,18 +125,7 @@ function Delete(id,name) {
 }
 
 
-function showHint(str,username) {
-    
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("search_result").innerHTML = this.responseText;
-            }
-        }
-        xmlhttp.open("GET", "getproduct.php?q="+str+"&username="+username, true);
-        xmlhttp.send();
-    
-}
+
 
 </script>
 
@@ -310,12 +300,12 @@ function showHint(str,username) {
 
 
 								<div class="form-group">
-									<form class="form-inline" name="searchform" id="searchform">
+									<form class="form-inline" name="searchform" id="searchform" action="selllist.php" method="get">
                         <div class="form-group">
                             <label for="textsearch" >ชื่อสินค้า</label>
-                            <input type="text"  class="form-control" placeholder="ข้อความ คำค้นหา!" onkeyup="showHint(this.value,'<?php echo $username ?>')">
+                            <input type="text"  class="form-control" placeholder="ข้อความ คำค้นหา!" name="value">
                         </div>
-                        <button type="button" class="btn btn-primary" id="btnSearch">
+                        <button type="submit" class="btn btn-primary" id="btnSearch">
                             <span class="glyphicon glyphicon-search"></span>
                             ค้นหา
                         </button>

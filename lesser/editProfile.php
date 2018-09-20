@@ -85,17 +85,18 @@
 	</head>
  
 <script type="text/javascript">
-	function readURL(input) {
-		if (input.files && input.files[0]) {
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
-			var reader = new FileReader();
-			reader.onload = function (e) {
-				$('#blah').attr('src', e.target.result);
-			}
-			reader.readAsDataURL(input.files[0]);
-		}
-	}	
-</script>
+                reader.onload = function (e) {
+                    $('#blah').attr('style', 'background-image: url('+e.target.result+');');
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 
 <script>
 		 var bFbStatus = false;
@@ -325,10 +326,11 @@ function checkLoginState() {
 			<div class="col-md-4 text-center">
 
 					<div class="work-inner">
-						<img src="images/<?php echo $_SESSION["picture"]?>"  id="blah" class="work-grid">
+						<a  class="work-grid" style="background-image: url(images/<?php echo $_SESSION["picture"]?>);" id="blah" >
 						</a>
+						
 						<div class="desc">
-							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" Oonchange="readURL(this);">
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" onchange="readURL(this);">
 						</div>
 					</div>
 				</div>

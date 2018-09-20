@@ -128,6 +128,20 @@ $usermname = '';
 
 
 </style>
+
+<script type="text/javascript">
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah').attr('style', 'background-image: url('+e.target.result+');');
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
 	<!-- FOR IE9 below -->
@@ -258,10 +272,10 @@ $usermname = '';
 							<div class="col-md-5 text-center">
 
 					<div class="work-inner">
-						<a  class="work-grid" style="background-image: url(uploads_product/<?php echo $objResult["picture"] ?>);">
+						<a  class="work-grid" style="background-image: url(uploads_product/<?php echo $objResult["picture"] ?>);" id="blah">
 						</a>
 						<div class="desc">
-							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" id="fileToUpload" >
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" id="fileToUpload" onchange="readURL(this);">
 							
 						</div>
 					</div>

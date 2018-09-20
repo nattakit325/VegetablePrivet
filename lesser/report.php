@@ -394,7 +394,7 @@ function showHint(str) {
 						<div class="desc">
 							<h3><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row["surname"];?></h3>
 							<p>อายุ <?php echo $row["age"]?>&nbsp;ปี</p>
-							<button type="button" class="btn btn-danger" data-toggle="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ยกเลิกบัญชีผู้ดูแลระบบ</span></button>
+							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#forconfermdeleteeach"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ยกเลิกบัญชีผู้ดูแลระบบ</span></button>
 							
 						</div>
 					</div>

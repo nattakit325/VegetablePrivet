@@ -361,7 +361,7 @@ $count=0;
 <?php }else{ ?>
 
 				<div class="col-md-6">
-					<a href="selllist.php"  class="featured-grid featured-grid-2" style="background-image: url(images/sell3.jpg);">
+					<a href="selllist.php?value=' '"  class="featured-grid featured-grid-2" style="background-image: url(images/sell3.jpg);">
 						<div class="desc">
 							<h3>ขายสินค้า</h3>
 							<span>Sell</span>
