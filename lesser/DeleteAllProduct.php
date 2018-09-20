@@ -31,7 +31,7 @@ $query=mysqli_query($objCon,$sql);
 
 
 
-header("location:selllist.php");
+header("location:selllist.php?value=' '");
 
 ?>
 
