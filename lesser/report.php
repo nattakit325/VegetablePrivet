@@ -7,7 +7,7 @@
     $type = $_GET['type'];
     $value = $_GET['value'];
     if($type=='admin'){
-    	 $sql = "SELECT p.id as id, p.name as name,p.surname as surname, p.career as career, p.age as age,p.picture as picture  from profile p inner join login l on p.username=l.username where l.status = '$type' and p.name like '%$value%'";
+    	 $sql = "SELECT l.username as id, p.name as name,p.surname as surname, p.career as career, p.age as age,p.picture as picture  from profile p inner join login l on p.username=l.username where l.status = '$type' and p.name like '%$value%'";
 
     }else{
     	$sql = "SELECT p.id as id, p.name as name,p.surname as surname, p.career as career, p.age as age,p.picture as picture  from profile p inner join login l on p.username=l.username where l.status != '$type' and p.name like '%$value%'";
@@ -113,7 +113,7 @@ $(document).ready(function(){
 
 
 
-function Delete(id,name) {
+function Delete(id,name,surname,picture) {
     
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
@@ -121,7 +121,7 @@ function Delete(id,name) {
                 document.getElementById("DeleteDialog").innerHTML = this.responseText;
             }
         }
-        xmlhttp.open("GET", "DeleteOneProduct.php?id="+id+"&name="+name, true);
+        xmlhttp.open("GET", "DeleteOneAdmin.php?id="+id+"&name="+name+"&surname="+surname+"&picture="+picture, true);
         xmlhttp.send();
     
 }
@@ -307,6 +307,15 @@ function showHint(str) {
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="forconfermdeleteeach" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+<div id="DeleteDialog">
+</div>
+  </div>
+    </div>
+  </div>
 	
 	
 	<div id="fh5co-page">
@@ -390,11 +399,12 @@ function showHint(str) {
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
 						<a class="work-grid" style="background-image: url(images/<?php echo $row['picture'];?>);">
+
 						</a>
 						<div class="desc">
-							<h3><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row["surname"];?></h3>
-							<p>อายุ <?php echo $row["age"]?>&nbsp;ปี</p>
-							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#forconfermdeleteeach"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ยกเลิกบัญชีผู้ดูแลระบบ</span></button>
+							<h3><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row["surname"];?> </h3>
+							<p>อายุ <?php echo $row["age"]?>&nbsp;ปี </p><?php echo $row['picture'];?>
+							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#forconfermdeleteeach" onclick="Delete('<?php echo $row['id'] ?>','<?php echo $row['name'] ?>','<?php echo $row['surname'] ?>','<?php echo $row['picture'] ?>')"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ยกเลิกบัญชีผู้ดูแลระบบ</span></button>
 							
 						</div>
 					</div>
