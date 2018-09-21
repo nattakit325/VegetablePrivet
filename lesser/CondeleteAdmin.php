@@ -17,6 +17,14 @@
 	}
 }
 
+$sql3="DELETE from tbl_chat where chat_user1= '$id' or chat_user2= '$id'";
+
+$query3=mysqli_query($objCon,$sql3);
+
+$sql4="DELETE from news where username= '$id'";
+
+$query4=mysqli_query($objCon,$sql4);
+
 
 $sql="DELETE from profile where username= '$id'";
 

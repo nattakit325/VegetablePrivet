@@ -176,7 +176,7 @@ function showHint(str) {
 						
   <br>
 
-  <button type="button" class="btn btn-warning" id="delete" data-dismiss="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button>
+  <a href="DeleteAllAccount.php?value=<?php echo $value; ?>&type=<?php echo $type; ?>"><button type="button" class="btn btn-warning" ><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button></a>
   <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
         </center>
           

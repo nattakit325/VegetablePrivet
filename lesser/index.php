@@ -8,7 +8,7 @@
 	if(empty($_SESSION["username"])){
 
 	}else{
-		if($_SESSION["status"]=='admin'){
+		if($_SESSION["status"]=='admin'||$_SESSION["status"]=='superAdmin'){
 			header("location:admin.php");
 		}else{
 			$usermname = $_SESSION["username"];
