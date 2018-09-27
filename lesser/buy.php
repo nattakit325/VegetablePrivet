@@ -19,11 +19,19 @@
 	$queryForNotification=mysqli_query($objCon,$sqlForNotification);
 	$objResult = mysqli_fetch_array($queryForNotification, MYSQLI_ASSOC);
 
-	
+	$MarketId = filter_input(INPUT_GET, 'MarketId', FILTER_SANITIZE_NUMBER_INT);
 	$value1='ผักพื้นบ้าน';
 	$value2='ผักทั่วไป ';
-	$value3='ผลไม้';
-	$value4='สินค้าแปรรูป';
+	$value3='ผักสลัด';
+	$value4='ผลไม้';
+	$value5='ธัญพืช';
+	$value6='แปรรูป (อาหาร)';
+	$value7='แปรรูป (อุปโภค)';
+	$value8='ข้าว';
+	$value9='สมุนไพร';
+	$value10='ไข่';
+	$value11='เสื้อผ้า เครื่องนุ่งห่ม (ธรรมชาติ)';
+	$value12='อื่นๆ';
 	$type='พืชผัก';
 
 ?>
@@ -164,17 +172,15 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><h4 class="modal-title"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></h4></center>
+         <center><h4 class="modal-title"><?php echo $_SESSION["name_surname"];?> </h4></center>
         </div>
         <div class="modal-body">
           <center>
 						<img class="circlein" src="images/<?php echo $_SESSION["picture"]?>" width="100%" height="100%" />
 						<br>
 						<br>
-						<p>FirstName : <?php echo $_SESSION["name"];?></p>
-						<p>LastName   : <?php echo $_SESSION["surname"];?></p>
-						<p>career     : <?php echo $_SESSION["career"];?></p>
-						<p>age        : <?php echo $_SESSION["age"];?></p>
+						<p>FirstName : <?php echo $_SESSION["name_surname"];?></p>
+						<p>career     : <?php echo $_SESSION["status"];?></p>
   <br>
 
   <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
@@ -233,40 +239,126 @@
 			<div class="row">
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value1;?>&type=<?php echo $type; ?>" class="work-grid" style="background-image: url(images/carrot.jpg);">
+						<a href="buylist.php?value=<?php echo $value1;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/carrot.jpg);">
 						</a>
 						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value1;?>&type=<?php echo $type; ?>">ผักพื้นบ้าน</a></h3>
+							<h3><a href="buylist.php?value=<?php echo $value1;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">ผักพื้นบ้าน(เชียงดา,ตำลึง)</a></h3>
 							<span>Root</span>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value2;?>&type=<?php echo $type; ?>" class="work-grid" style="background-image: url(images/asparagus.jpg);">
+						<a href="buylist.php?value=<?php echo $value2;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/asparagus.jpg);">
 						</a>
 						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value2;?>&type=<?php echo $type; ?>">ผักทั่วไป</a></h3>
+							<h3><a href="buylist.php?value=<?php echo $value2;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">ผักทั่วไป(ผักกาด,คะน้า,กวางตุ้ง)</a></h3>
 							<span>trunk</span>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value3;?>&type=<?php echo $type; ?>" class="work-grid" style="background-image: url(images/cabbage.jpg);">
+						<a href="buylist.php?value=<?php echo $value3;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/cabbage.jpg);">
 						</a>
 						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value3;?>&type=<?php echo $type; ?>">ผลไม้</a></h3>
+							<h3><a href="buylist.php?value=<?php echo $value3;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">ผักสลัด</a></h3>
 							<span>Leaves</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 text-center">
+					<div class="work-inner">
+						<a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/Broccoli.jpg);">
+						</a>
+						<div class="desc">
+							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">ผลไม้</a></h3>
+							<span>blossom</span>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>" class="work-grid" style="background-image: url(images/Broccoli.jpg);">
+						<a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/Broccoli.jpg);">
 						</a>
 						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $typ;e ?>">สินค้าแปรรูป</a></h3>
+							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">ธัญพืช</a></h3>
+							<span>blossom</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 text-center">
+					<div class="work-inner">
+						<a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/Broccoli.jpg);">
+						</a>
+						<div class="desc">
+							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">แปรรูป (อาหาร)</a></h3>
+							<span>blossom</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 text-center">
+					<div class="work-inner">
+						<a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/Broccoli.jpg);">
+						</a>
+						<div class="desc">
+							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">แปรรูป (อุปโภค)</a></h3>
+							<span>blossom</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 text-center">
+					<div class="work-inner">
+						<a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/Broccoli.jpg);">
+						</a>
+						<div class="desc">
+							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">ข้าว</a></h3>
+							<span>blossom</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 text-center">
+					<div class="work-inner">
+						<a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/Broccoli.jpg);">
+						</a>
+						<div class="desc">
+							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">สมุนไพร</a></h3>
+							<span>blossom</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 text-center">
+					<div class="work-inner">
+						<a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/Broccoli.jpg);">
+						</a>
+						<div class="desc">
+							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">ไข่</a></h3>
+							<span>blossom</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 text-center">
+					<div class="work-inner">
+						<a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/Broccoli.jpg);">
+						</a>
+						<div class="desc">
+							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">เสื้อผ้า เครื่องนุ่งห่ม (ธรรมชาติ)</a></h3>
+							<span>blossom</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 text-center">
+					<div class="work-inner">
+						<a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/Broccoli.jpg);">
+						</a>
+						<div class="desc">
+							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">อื่นๆ</a></h3>
 							<span>blossom</span>
 						</div>
 					</div>

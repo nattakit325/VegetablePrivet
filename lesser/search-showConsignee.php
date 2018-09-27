@@ -171,7 +171,7 @@ function showHint(str,username) {
 
 
 </style>
-<div class="modal fade" id="myModal" role="dialog">
+<div class="modal fade" id="myModal2" role="dialog">
       <div class="modal-content">
 
         <div class="modal-body">
@@ -341,7 +341,7 @@ function showHint(str,username) {
 						
 						
 					<div class="form-group  col-md-6 col-md-offset-3 row center">
-						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูแผนที่</button>
+						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal2"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูแผนที่</button>
 					</div>
 					
 				</div>

@@ -2,8 +2,12 @@
     session_start();
 	include "connect.php";
 
-	
-
+	$sql="SELECT * FROM `market_type`";
+	$query=mysqli_query($objCon,$sql);
+	if($_SESSION["status"] == null)
+	{
+		header("location:index.php");
+	}
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -86,111 +90,15 @@
 }
 </style>
 <script>
-	var marketarr = [];
-$(document).ready(function(){
-    $("#place").change(function(){
-	var place1 = document.getElementById("place");
-    var show = document.getElementById("show");
-    var option = document.createElement("option");
-	option.text = place1.value;
-	show.add(option);
-	marketarr.push(place1.value);
-	console.log(marketarr);
-	$("#place option:selected").remove();
+function ShowMarker(){
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 14,
+      center: new google.maps.LatLng(10,10),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
-});
-function myFunction() {
-    var x = document.getElementById("show");
-	var place = document.getElementById("place");
-    var option = document.createElement("option");
-    
-	Array.prototype.remove = function() {
-    var what, a = arguments, L = a.length, ax;
-    while (L && this.length) {
-        what = a[--L];
-        while ((ax = this.indexOf(what)) !== -1) {
-            this.splice(ax, 1);
-        }
-    }
-    return this;
-	};
-	marketarr.remove(x.value);
-	for(var i =0;i<loname.length;i++){
-		if(x.value == loname[i]){
-			loname.remove(x.value);
-			la.splice(i,1);
-			long.splice(i,1);
-			openDate.splice(i,1);
-			openTime.splice(i,1);
-			closeTime.splice(i,1);
-		}
-	}
-	
-	console.log(x.value);
-	console.log(marketarr);
-	x.remove(x.selectedIndex);
-	
-}
-var la = [];
-var long = [];
-var loname = [];
-var openDate = [];
-var openTime = [];
-var closeTime = [];
-function saveLatLng() {
-
-	var lat = $("#lat").val();
-	var lng = $("#lng").val();
-	var location_name = $("#location_name").val();
-	var openDate1 = $("#openDate").val();
-	var openTime1 = $("#openTime").val();
-	var closeTime1 = $("#closeTime").val();
-	if(location_name != null && openDate1 != '' && openTime1 != '' && closeTime1 != '' ){
-		la.push(lat);
-		long.push(lng);
-		loname.push(location_name);
-		openDate.push(openDate1);
-		openTime.push(openTime1);
-		closeTime.push(closeTime1);
-		var show = document.getElementById("show");
-    	var option = document.createElement("option");
-    	option.text = location_name;
-		show.add(option);
-		
-		$('#market1').modal('hide');
-	}else{
-		alert('กรุณากรอกให้ครบ');
-	}
-	
-}
-function saveMarket() {
-$.ajax({
-	method: "POST",
-	url: "save-market.php",
-	dataType:"json",
-	cache: false,
-	data: { marketarr: marketarr, la: la, long: long, loname:loname , openDate:openDate , openTime:openTime , closeTime:closeTime},
-	success: function(data){
-				alert(data);
-                //the controller function count_votes returns an integer.
-                //echo that with the fade in here.
-                }
-	});
-
-}
-
-function setupMap() {
-var myOptions = {
-	zoom: 13,
-	center: new google.maps.LatLng(16.024695711685314, 103.13690185546875),
-	mapTypeId: google.maps.MapTypeId.ROADMAP
-};
-var map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
-
-
-var infowindow = new google.maps.InfoWindow;
-if (navigator.geolocation) {
+    var infowindow = new google.maps.InfoWindow();
+    if (navigator.geolocation) {
 	navigator.geolocation.getCurrentPosition(function (position) {
 		var pos = {
 			lat: position.coords.latitude,
@@ -202,27 +110,26 @@ if (navigator.geolocation) {
 		map.setCenter(pos);
 	});
 
-}
-
-google.maps.event.addListener(map, 'click', function (event) {
+	}
+	google.maps.event.addListener(map, 'click', function (event) {
 
 	var html = '';
 	html += 'lat : <input type="text" id="lat" value="' + event.latLng.lat() + '" readonly/><br/>';
 	html += 'lng : <input type="text" id="lng" value="' + event.latLng.lng() + '" readonly/><br/>';
-	html += 'ชื่อสถานที่ : <input type="text" id="location_name" value="" /><br/>';
-	html += 'วันที่เปิดทำการ : <input type="text" id="openDate" value="" placeholder="Ex. ทุกวัน" /><br/>';
-	html += 'เวลาที่เปิด : <input type="text" id="openTime" value="" placeholder="Ex. 07.00" /><br/>';
-	html += 'เวลาที่ปิด : <input type="text" id="closeTime" value="" placeholder="Ex. 15.00" /><br/>';
-	html += '<input type="button" value="Save" onclick="saveLatLng()" />';
-
+	html += '<input type="button" value="ตกลง" onclick="Addlatlong()" />';
 	infowindow.open(map);
 	infowindow.setContent(html);
 	infowindow.setPosition(event.latLng);
 	//marker.setPosition(event.latLng);
 
 });
-
-
+}
+function Addlatlong(){
+	var lat = $("#lat").val();
+	var lng = $("#lng").val();
+	document.getElementById("lati").value = lat;
+	document.getElementById("longi").value = lng;
+	$('#myModal2').modal('hide');
 }
 </script>
 
@@ -235,23 +142,19 @@ google.maps.event.addListener(map, 'click', function (event) {
 	<![endif]-->
 
 	</head>
-	<body>
-	<div class="modal fade" id="market1" role="dialog">
+	<body onload="ShowMarker()">
+<div class="modal fade" id="myModal2" role="dialog">
       <div class="modal-content">
-        
+
         <div class="modal-body">
-			<body onload="setupMap()">
-
-				<div id="map_canvas" style="width:800px;height:450px;"></div>
-
-			</body>
+				<div id="map"></div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-dismiss="modal">ออก</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">ออก</button>
         </div>
       </div>
-    
-  </div>
+
+ </div>
 
 	<div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
@@ -347,33 +250,98 @@ google.maps.event.addListener(map, 'click', function (event) {
 	</header>
 	<br>
 	<br>
-<div id="fh5co-contact-section">
-	<div class="row">
-        <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-          <h2>เพิ่มสถานที่</h2>
-                        <div class="col-md-6">
-							<div class="form-group">
-								<select class="form-control" name="status"  id="show" size="0">
-									
-								</select>
-							</div>
-                        </div>
-                        <div class="col-md-6">
-							<div class="form-group">
-								<button type="button" class="btn btn-info" data-toggle="modal" onclick="myFunction()">ลบที่คุณเลือก</button>
-							</div>
-                        </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-            <div class="col-md-6">
-				<div class="form-group">
-					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#market1">เพิ่มตลาดอื่นๆ</button>
+	<div id="fh5co-contact-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+					<h2>ลงทะเบียนสมาชิกใหม่</h2>
+					<p><span>New Member Registration</span></p>
 				</div>
 			</div>
-        </div>
-    </div>
+			<div class="row">
+
+				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
+					<div class="row">
+						<form action="save-market-admin.php" method="post" enctype="multipart/form-data">
+						
+			<div class="col-md-4 text-center">
+
+					<div class="work-inner">
+						<a  class="work-grid" style="background-image: url(images/profile.png);" id="blah" >
+						</a>
+						<div class="desc">
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" Oonchange="readURL(this);" onchange="readURL(this);">
+						</div>
+					</div>
+				</div>
+
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>ชื่อสถานที่</label>
+									<input class="form-control" placeholder="ชื่อสถานที่" type="text" name="market_name" required="">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>latitude</label>
+									<input class="form-control" placeholder="" id="lati" type="text" name="latitude" readonly="" required="">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>longitude</label>
+									<input class="form-control" placeholder="" id="longi" type="text" name="longitude" readonly="" required="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal2"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;เพิ่มพิกัด</button>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>เวลาที่เปิด</label>
+									<input class="form-control" placeholder="เวลาที่เปิด" type="time"name="openingTime" id="p2">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>เวลาปิด</label>
+									<input class="form-control" placeholder="เวลาปิด" type="time" name="closingTime">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>ประเภทสถานที่</label>
+									<select class="form-control" name="market_type">
+										<?php while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {?>
+											<option value="<?php echo $row["market_type_id"] ?>"><?php echo $row["market_type_name"] ?></option>
+										<?php }?>
+									</select>
+								</div>
+							</div>
+							<br>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>วันที่เปิด</label><br>
+									<div class="col-md-6">
+										<input type="checkbox" name="openDate[]" value="ทุกวัน">ทุกวัน<br>
+										<input type="checkbox" name="openDate[]" value="วันจันทร์">วันจันทร์<br>
+										<input type="checkbox" name="openDate[]" value="วันอังคาร">วันอังคาร<br>
+										<input type="checkbox" name="openDate[]" value="วันพุธ">วันพุธ<br>
+									</div>
+									<div class="col-md-6">
+										<input type="checkbox" name="openDate[]" value="วันพฤหัสบดี">วันพฤหัสบดี<br>
+										<input type="checkbox" name="openDate[]" value="วันศุกร์">วันศุกร์<br>
+										<input type="checkbox" name="openDate[]" value="วันเสาร์">วันเสาร์<br>
+										<input type="checkbox" name="openDate[]" value="วันอาทิตย์">วันอาทิตย์<br>
+									</div>
+								</div>
+							</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 	
 	
@@ -381,7 +349,7 @@ google.maps.event.addListener(map, 'click', function (event) {
               <div class="form-group">
                 <br>
                 <center>
-               <a href="/suscess.php"><input value="ยืนยัน" class="btn btn-primary" type="button" onclick="saveMarket()"></a>
+            		<input value="ยืนยัน" class="btn btn-primary" type="submit">
                 </center>
               </div>
 			</div>
@@ -400,8 +368,19 @@ google.maps.event.addListener(map, 'click', function (event) {
 	<!-- Google Map -->
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
+	<script type="text/javascript">
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
+                reader.onload = function (e) {
+                    $('#blah').attr('style', 'background-image: url('+e.target.result+');');
+                }
 
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 
 	</body>
 </html>
