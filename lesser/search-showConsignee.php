@@ -23,19 +23,20 @@ $query=mysqli_query($objCon,$sql);
 $sql="SELECT * FROM `districts`";
 $queryA=mysqli_query($objCon,$sql);
 
-$place_type_id= $_POST['place_type_id'];
-$district_id= $_POST['district_id'];
+$place_type_id = filter_input(INPUT_POST, 'place_type_id', FILTER_SANITIZE_STRING);
+$district_id = filter_input(INPUT_POST, 'district_id', FILTER_SANITIZE_STRING);
+if($place_type_id !=null && $district_id != null){
+	$sql="SELECT * FROM `districts` WHERE district_id = $district_id";
+	$querydistrict = mysqli_query($objCon,$sql);
+	$objResultdistrict = mysqli_fetch_array($querydistrict, MYSQLI_ASSOC);
 
-$sql="SELECT * FROM `districts` WHERE district_id = $district_id";
-$querydistrict = mysqli_query($objCon,$sql);
-$objResultdistrict = mysqli_fetch_array($querydistrict, MYSQLI_ASSOC);
+	$sql="SELECT * FROM `place_type` WHERE place_type_id = $place_type_id";
+	$queryplacetype = mysqli_query($objCon,$sql);
+	$objResultplacetype = mysqli_fetch_array($queryplacetype, MYSQLI_ASSOC);
 
-$sql="SELECT * FROM `place_type` WHERE place_type_id = $place_type_id";
-$queryplacetype = mysqli_query($objCon,$sql);
-$objResultplacetype = mysqli_fetch_array($queryplacetype, MYSQLI_ASSOC);
-
-$sql="SELECT * FROM place WHERE place_type_id = $place_type_id AND district_id = $district_id";
-$queryB=mysqli_query($objCon,$sql);
+	$sql="SELECT * FROM place WHERE place_type_id = $place_type_id AND district_id = $district_id";
+	$queryB=mysqli_query($objCon,$sql);
+}
 
 ?>
 
@@ -112,7 +113,7 @@ $queryB=mysqli_query($objCon,$sql);
 	<![endif]-->
 	
 	</head>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO9xE9smgXJIDFDpyPaDGZcjQu-ybwOKc&libraries=geometry"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEz_mT_qAClwNBVA53F2zBzE1nQpD19Lk&libraries=geometry"></script>
 
 
 
@@ -221,17 +222,15 @@ function showHint(str,username) {
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><h4 class="modal-title"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></h4></center>
+					<center><h4 class="modal-title"><?php echo $_SESSION["name_surname"];?> </h4></center>
         </div>
         <div class="modal-body">
           <center>
 						<img class="circlein" src="images/<?php echo $_SESSION["picture"]?>" width="100%" height="100%" />
 						<br>
 						<br>
-						<p>FirstName : <?php echo $_SESSION["name"];?></p>
-						<p>LastName   : <?php echo $_SESSION["surname"];?></p>
-						<p>career     : <?php echo $_SESSION["career"];?></p>
-						<p>age        : <?php echo $_SESSION["age"];?></p>
+						<p>FirstName : <?php echo $_SESSION["name_surname"];?></p>
+						<p>career     : <?php echo $_SESSION["status"];?></p>
   <br>
 
   <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
@@ -331,14 +330,15 @@ function showHint(str,username) {
                     	</form>
 						<br>
 					</div>
-				
-						<div class="form-group col-md-12 row">
-							<p>อำเภอที่คุณเลือก: <?php echo $objResultdistrict['district_name']  ?></p>
-						</div>
-						<div class="form-group col-md-12 row">
-							<p>ประเภทสถานที่ที่คุณเลือก: <?php echo $objResultplacetype['place_type_name']  ?></p>
-						</div>
-					
+						<?php if($place_type_id !=null && $district_id != null){ ?>
+							<div class="form-group col-md-12 row">
+								<p>อำเภอที่คุณเลือก: <?php echo $objResultdistrict['district_name']  ?></p>
+							</div>
+							<div class="form-group col-md-12 row">
+								<p>ประเภทสถานที่ที่คุณเลือก: <?php echo $objResultplacetype['place_type_name']  ?></p>
+							</div>
+						<?php } ?>
+						
 						
 					<div class="form-group  col-md-6 col-md-offset-3 row center">
 						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูแผนที่</button>

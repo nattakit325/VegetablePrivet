@@ -21,7 +21,7 @@
 
 	
 	$sql = "connect.php";
-    $sql = "SELECT  n.id as id, n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name as name,p.surname as surname FROM news n inner join profile p on n.username = p.username WHERE time>NOW() and n.status=0  order by time";
+    $sql = "SELECT  n.id as id, n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name_surname as name_surname FROM news n inner join profile p on n.username = p.username WHERE time>NOW() and n.status=0  order by time";
 
     $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' and status = 1 ";
 
@@ -226,17 +226,15 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><h4 class="modal-title"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></h4></center>
+          <center><h4 class="modal-title"><?php echo $_SESSION["name_surname"];?> </h4></center>
         </div>
         <div class="modal-body">
           <center>
 						<img class="circlein" src="images/<?php echo $_SESSION["picture"]?>" width="100%" height="100%" />
 						<br>
 						<br>
-						<p>FirstName : <?php echo $_SESSION["name"];?></p>
-						<p>LastName   : <?php echo $_SESSION["surname"];?></p>
-						<p>career     : <?php echo $_SESSION["career"];?></p>
-						<p>age        : <?php echo $_SESSION["age"];?></p>
+						<p>FirstName : <?php echo $_SESSION["name_surname"];?></p>
+						<p>career     : <?php echo $_SESSION["status"];?></p>
   <br>
 
   <a href="editProfile.php"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
@@ -372,7 +370,7 @@ $count=0;
 <?php } ?>
 
 				<div class="col-md-6">
-					<a href="search-Consignee.php" class="featured-grid featured-grid-2" style="background-image: url(images/hotel.jpg);">
+					<a href="search-showConsignee.php" class="featured-grid featured-grid-2" style="background-image: url(images/hotel.jpg);">
 						<div class="desc">
 							<h3>ค้นหาผู้รับสินค้า</h3>
 							<span>Search The Customer</span>
@@ -460,7 +458,7 @@ $count=0;
 						<div class="desc">
 							<h3><?php echo $row["topic"];?></h3>
 							<p>เวลา <?php echo DateThai($row["time"]);?></p>
-							<p>โดย <?php echo $row["name"]." ".$row["surname"];?></p>
+							<p>โดย <?php echo $row["name_surname"];?></p>
 							
 							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $row["id"]?>">ดูรายละเอียด<i class="icon-arrow-right"></i></a>
 						</div>

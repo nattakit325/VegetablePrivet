@@ -2,12 +2,7 @@
     session_start();
 	include "connect.php";
 
-	$sql="SELECT * FROM market WHERE type = 1 ";
-	$query=mysqli_query($objCon,$sql);
-	$market = array();
-	while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){
-        array_push($market,$row["market"]);
-	 } 
+	
 
 ?>
 <!DOCTYPE html>
@@ -109,12 +104,6 @@ function myFunction() {
     var x = document.getElementById("show");
 	var place = document.getElementById("place");
     var option = document.createElement("option");
-	<?php foreach($market as $value){ ?>
-		if(x.value == "<?php echo $value ?>"){
-			option.text = x.value;
-    		place.add(option);
-		}
-	<?php } ?>
     
 	Array.prototype.remove = function() {
     var what, a = arguments, L = a.length, ax;
@@ -303,17 +292,15 @@ google.maps.event.addListener(map, 'click', function (event) {
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><h4 class="modal-title"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></h4></center>
+          <center><h4 class="modal-title"><?php echo $_SESSION["name_surname"];?> </h4></center>
         </div>
         <div class="modal-body">
           <center>
 						<img class="circlein" src="images/<?php echo $_SESSION["picture"]?>" width="100%" height="100%" />
 						<br>
 						<br>
-						<p>FirstName : <?php echo $_SESSION["name"];?></p>
-						<p>LastName   : <?php echo $_SESSION["surname"];?></p>
-						<p>career     : <?php echo $_SESSION["career"];?></p>
-						<p>age        : <?php echo $_SESSION["age"];?></p>
+						<p>FirstName : <?php echo $_SESSION["name_surname"];?></p>
+						<p>career     : <?php echo $_SESSION["status"];?></p>
   <br>
 
   <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
@@ -349,7 +336,7 @@ google.maps.event.addListener(map, 'click', function (event) {
 							<a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
 							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
 						<?php }else{?>
-							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></a></li>
+							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name_surname"];?></a></li>
 							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
 						<?php } ?>
 						
