@@ -1,4 +1,10 @@
 
+<?php
+session_start();
+	include "connect.php";
+
+ ?>
+
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -254,6 +260,20 @@ function checkLoginState() {
 
 								<div class="form-group">
 									<input class="form-control" placeholder="ที่อยู่" type="text" name="address">
+								</div>
+							</div>
+							<div class="col-md-6">
+
+
+								<div class="form-group">
+									<input class="form-control" placeholder="ตำบล" type="text" name="address">
+								</div>
+							</div>
+							<div class="col-md-6">
+
+
+								<div class="form-group">
+									<input class="form-control" placeholder="อำเภอ" type="text" name="address">
 								</div>
 							</div>
 							<div class="col-md-6">
