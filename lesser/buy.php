@@ -21,12 +21,12 @@
 
 	$MarketId = filter_input(INPUT_GET, 'MarketId', FILTER_SANITIZE_NUMBER_INT);
 	$value1='ผักพื้นบ้าน';
-	$value2='ผักทั่วไป ';
+	$value2='ผักทั่วไป';
 	$value3='ผักสลัด';
 	$value4='ผลไม้';
 	$value5='ธัญพืช';
-	$value6='แปรรูป (อาหาร)';
-	$value7='แปรรูป (อุปโภค)';
+	$value6='แปรรูป(อาหาร)';
+	$value7='แปรรูป(อุปโภค)';
 	$value8='ข้าว';
 	$value9='สมุนไพร';
 	$value10='ไข่';
