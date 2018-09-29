@@ -20,15 +20,6 @@ $sellername = filter_input(INPUT_GET, 'sellername', FILTER_SANITIZE_STRING);
 $MarketId = filter_input(INPUT_GET, 'MarketId', FILTER_SANITIZE_NUMBER_INT);
 $sql = "SELECT profile.name_surname as name_surname,profile.address as address,profile.subdictrict as subdictrict ,districts.district_name as  district_name,profile.phone as phone, profile.facebook as facebook ,profile.line as LineId , profile.email as EmailName , profile.brand as brand , profile.farmer_group as farmer_group , profile.link_youtube as linkYoutube ,profile.latitude as latitude , profile.longitude as  longitude, profile.picture as Profilepicture,product.id as productId ,product.name as ProductName, product.detail as ProductDetail, product.price as price ,product.picture as ProductPicture, market.id as marketId,market.market as market ,market.latitude as marketLatitude,market.longitude as marketLongitude,market.openDate as openDate,market.openingTime as openingTime,market.closingTime as closingTime FROM `product` INNER JOIN selllist ON product.id = selllist.productid INNER JOIN profile ON selllist.username = profile.username INNER JOIN login ON profile.username = login.username INNER JOIN gmarket ON login.username = gmarket.username INNER JOIN market ON gmarket.marketid = market.id INNER JOIN districts ON profile.district_id = districts.district_id WHERE profile.name_surname = 'Nattakit' and product.id = 68 AND market.id= 16";
 $queryA = mysqli_query($objCon, $sql);
-$sqlgetbyMarketid = "SELECT d.name as ProductName, d.picture as picture, d.detail as detail,
-	p.name as name, p.surname as surname,c.address as address,c.phone as phone,
-	c.facebook as facebook, c.line as line,p.picture as img ,m.market as  marketName ,
-	m.latitude as latitude , m.longitude as longitude, m.openDate as openDate , m.openingTime as OpenTime , m.closingTime as CloseTime ,s.username as Ownusername FROM selllist s INNER join product d on
-	s.productid = d.id INNER JOIN profile p on s.username = p.username inner join contact c on
-	s.username = c.username INNER JOIN  gmarket g ON  g.username=p.username INNER JOIN market m ON
-	m.id=g.marketid where s.username = '$SellerName' and s.productid = '$Productid' AND m.id= $MarketId";
-$query = mysqli_query($objCon, $sqlgetbyMarketid);
-$objResult = mysqli_fetch_array($query, MYSQLI_ASSOC);
 $objResult = mysqli_fetch_array($queryA, MYSQLI_ASSOC);
 
 

@@ -17,7 +17,7 @@ include "connect.php";
 		}
 		
 	}
-$sql="SELECT * FROM `famers`";
+$sql="SELECT * FROM `profile` INNER JOIN districts ON profile.district_id = districts.district_id  WHERE farmer_type_id = 1";
 $queryB=mysqli_query($objCon,$sql);
 
 ?>
@@ -33,7 +33,7 @@ $queryB=mysqli_query($objCon,$sql);
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Search Consignee</title>
+	<title>Search Farmer</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -277,8 +277,8 @@ function showHint(str,username) {
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>ค้นหาผู้รับสินค้าทางการเกษตร</h2>
-					<p><span>Search Consignee</a></span></p>
+					<h2>ค้นหาเกษตรกรต้นแบบ</h2>
+					<p><span>Search Farmer</a></span></p>
 
 					<div class="form-group  col-md-6 col-md-offset-3 row center">
 						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูแผนที่</button>
@@ -297,14 +297,19 @@ var place = [];
 var locations = [];
 function setMarket(){
 	<?php while ($row = mysqli_fetch_array($queryB, MYSQLI_ASSOC)) {?>
-		place.push(["<?php echo $row["famer_name"];?>"]);
+		place.push(["<?php echo $row["name_surname"];?>","<?php echo $row["address"];?>",
+			"<?php echo $row["subdictrict"];?>","<?php echo $row["district_name"];?>",
+			"<?php echo $row["phone"];?>","<?php echo $row["facebook"];?>",
+			"<?php echo $row["line"];?>","<?php echo $row["email"];?>",
+			"<?php echo $row["brand"];?>","<?php echo $row["sellproduct"];?>",
+			"<?php echo $row["link_youtube"];?>",<?php echo $row["latitude"];?>,
+			<?php echo $row["longitude"];?>]);
 	 <?php }?>
-	 alert(place);
-	//getLaLongMarket();
+	getLaLongMarket();
 }
 function getLaLongMarket() {
 	 for(var i=0;i<place.length;i++){
-        place[i][6] = new google.maps.LatLng(place[i][1], place[i][2]);
+        place[i][13] = new google.maps.LatLng(place[i][11], place[i][12]);
 	 }
 	 getLocation();
 }
@@ -326,14 +331,13 @@ function CurrentPosition(position) {
 function showPosition(){
  	p1 = 1;
 	for(var j=0;j<place.length;j++){
-		place[j][7] = (google.maps.geometry.spherical.computeDistanceBetween(place[j][6], p2) / 1000).toFixed(2);
+		place[j][14] = (google.maps.geometry.spherical.computeDistanceBetween(place[j][13], p2) / 1000).toFixed(2);
 	 }
 	 ShowMarker();
 }
 function ShowMarker(){
 	for(k= 0;k<place.length;k++){
-		locations.push([ place[k][0]+"<br>ระยะทาง "+place[k][7]+" กิโลเมตร"+"<br> "+place[k][3]+"<br>Link: "
-			+place[k][4]+"<br> เบอร์โทรศัพท์ "+place[k][5], place[k][1], place[k][2], 0 ]);
+		locations.push(["ชื่อเกษตรกร: "+ place[k][0]+"<br>ระยะทาง: "+place[k][14]+" กิโลเมตร"+"<br>ที่อยู่: "+place[k][1]+place[k][2]+place[k][3]+"<br>Link: <a href="+place[k][10]+">"+place[k][10]+"</a><br> เบอร์โทรศัพท์: "+place[k][4]+"<br> facebook:"+place[k][5]+"<br> Line:"+place[k][6]+"<br> สถานที่ขาย: "+place[k][9], place[k][11], place[k][12], 0 ]);
 	}
 	//locations.push(['คุณอยู่ตรงนี้',p3,p4,2]);
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -356,7 +360,7 @@ function ShowMarker(){
   	});
     for (i = 0; i < place.length; i++) {
       marker = new google.maps.Marker({
-        position: new google.maps.LatLng(place[i][1], place[i][2]),
+        position: new google.maps.LatLng(place[i][11], place[i][12]),
         map: map,
 				icon: icon
       });

@@ -25,7 +25,8 @@ $queryA=mysqli_query($objCon,$sql);
 
 $place_type_id = filter_input(INPUT_POST, 'place_type_id', FILTER_SANITIZE_STRING);
 $district_id = filter_input(INPUT_POST, 'district_id', FILTER_SANITIZE_STRING);
-if($place_type_id !=null && $district_id != null){
+$subdistrict = filter_input(INPUT_POST, 'subdistrict', FILTER_SANITIZE_STRING);
+if($place_type_id !=null && $district_id != null && $subdistrict == "ทั้งหมด"){
 	$sql="SELECT * FROM `districts` WHERE district_id = $district_id";
 	$querydistrict = mysqli_query($objCon,$sql);
 	$objResultdistrict = mysqli_fetch_array($querydistrict, MYSQLI_ASSOC);
@@ -35,6 +36,17 @@ if($place_type_id !=null && $district_id != null){
 	$objResultplacetype = mysqli_fetch_array($queryplacetype, MYSQLI_ASSOC);
 
 	$sql="SELECT * FROM place WHERE place_type_id = $place_type_id AND district_id = $district_id";
+	$queryB=mysqli_query($objCon,$sql);
+}else{
+	$sql="SELECT * FROM `districts` WHERE district_id = $district_id";
+	$querydistrict = mysqli_query($objCon,$sql);
+	$objResultdistrict = mysqli_fetch_array($querydistrict, MYSQLI_ASSOC);
+
+	$sql="SELECT * FROM `place_type` WHERE place_type_id = $place_type_id";
+	$queryplacetype = mysqli_query($objCon,$sql);
+	$objResultplacetype = mysqli_fetch_array($queryplacetype, MYSQLI_ASSOC);
+
+	$sql="SELECT * FROM place WHERE place_type_id = $place_type_id AND district_id = $district_id AND subdictrict = '$subdistrict'";
 	$queryB=mysqli_query($objCon,$sql);
 }
 
@@ -301,9 +313,9 @@ function showHint(str,username) {
 
 					<div class="form-group col-md-12">
                     <form action="search-showConsignee.php" method="POST"  class="form-inline" name="searchform" id="searchform">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label for="textsearch" >เลือกอำเภอ</label>
-                            <select class="form-control" name="district_id">
+                            <select class="form-control" name="district_id" id="district_id">
                             	<?php while ($row = mysqli_fetch_array($queryA, MYSQLI_ASSOC)) {?>
 									<option value="<?php echo $row["district_id"] ?>"><?php echo $row["district_name"] ?></option>
 								<?php }?>
@@ -313,7 +325,7 @@ function showHint(str,username) {
                         </div>
                         <div class="form-group  col-md-4">
                             <label for="textsearch" >เลือกประเภทสถานที่</label>
-                            <select class="form-control" name="place_type_id">
+                            <select class="form-control" name="place_type_id" id="place_type_id">
                             	<?php while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {?>
 									<option value="<?php echo $row["place_type_id"] ?>"><?php echo $row["place_type_name"] ?></option>
 								<?php }?>
@@ -321,7 +333,17 @@ function showHint(str,username) {
                             
                             
                         </div>
-                        <div class="form-group  col-md-4">
+                        <div class="form-group col-md-4">
+                            <label for="textsearch" >เลือกตำบล</label>
+                            <select class="form-control" name="subdistrict" id="subdistrict">
+                            	
+									<option value="ทั้งหมด">ทั้งหมด</option>
+							
+                            </select>
+                            
+                            
+                        </div>
+                        <div class="form-group  col-md-1">
                         <button type="subm" class="btn btn-primary" id="btnSearch">
                             <span class="glyphicon glyphicon-search"></span>
                             ค้นหา
@@ -336,6 +358,9 @@ function showHint(str,username) {
 							</div>
 							<div class="form-group col-md-12 row">
 								<p>ประเภทสถานที่ที่คุณเลือก: <?php echo $objResultplacetype['place_type_name']  ?></p>
+							</div>
+							<div class="form-group col-md-12 row">
+								<p>ตำบลที่คุณเลือก: <?php echo $subdistrict ?></p>
 							</div>
 						<?php } ?>
 						
@@ -355,6 +380,22 @@ let p3;
 let p4;
 var place = [];
 var locations = [];
+var subdistrictName = ['ศรีภูมิ','พระสิงห์','หายยา','ช้างม่อย','ช้างคลาน','วัดเกต','ช้างเผือก','สุเทพ','แม่เหียะ','ป่าแดด','หนองหอย','ท่าศาลา','หนองป่าครั่ง','ฟ้าฮ่าม','ป่าตัน','สันผีเสื้อ'];
+$( "#place_type_id" ).change(function() {
+  	var district_id = document.getElementById("district_id");
+  	var place_type_id = document.getElementById("place_type_id");
+  	if(district_id.value == 1 && (place_type_id.value ==2 || place_type_id.value == 6)){
+  		var subdistrict = document.getElementById("subdistrict");
+  		for(var i=0;i<subdistrictName.length;i++){
+  			var option1 = document.createElement("option");
+		    option1.text = subdistrictName[i];
+		    subdistrict.add(option1);
+  		}
+  	}else{
+  		$('#subdistrict').empty().append('<option value="ทั้งหมด">ทั้งหมด</option>')
+;
+  	}
+});
 function setMarket(){
 	<?php while ($row = mysqli_fetch_array($queryB, MYSQLI_ASSOC)) {?>
 		place.push(["<?php echo $row["place_name"]; ?>","<?php echo $row["place_la"]; ?>",
