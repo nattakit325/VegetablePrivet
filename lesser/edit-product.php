@@ -8,8 +8,7 @@ $sql="SELECT p.picture as picture,
 			p.name as name,
 			p.detail as detail,
 			p.category as category,
-			p.price as price,
-			p.unit as unit
+			p.price as price
 		FROM selllist s
 		INNER JOIN product p
   		ON s.productid=p.id
@@ -18,11 +17,10 @@ $sql="SELECT p.picture as picture,
 $query=mysqli_query($objCon,$sql);
 $objResult = mysqli_fetch_array($query,MYSQLI_ASSOC);
 
-
 $usermname = '';
 
 	if(empty($_SESSION["username"])){
-
+		header("location:index.php");
 	}else{
 		if($_SESSION["status"]=='admin'){
 			header("location:admin.php");
@@ -294,17 +292,12 @@ $usermname = '';
 							</div>
 							<div class="col-md-6">
 							<div class="form-group">
-								รายละเอียดสินค้า<textarea name="detail" value="<?php echo $objResult["detail"] ?>" class="form-control" id="" cols="30" rows="7" placeholder="<?php echo $objResult["detail"] ?>"></textarea>
+								รายละเอียดสินค้า<textarea name="detail" class="form-control" id="" cols="30" rows="7" placeholder="<?php echo $objResult["detail"] ?>"><?php echo $objResult["detail"] ?></textarea>
 							</div>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-6">
 							<div class="form-group">
-								รายละเอียดสินค้า<input name="detail" type="number" value="<?php echo $objResult["price"] ?>" class="form-control" id="" placeholder="<?php echo $objResult["price"] ?>"></textarea>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								รายละเอียดสินค้า<input name="detail" type="text" value="<?php echo $objResult["unit"] ?>" class="form-control" id="" placeholder="<?php echo $objResult["unit"] ?>"></textarea>
+								ราคา<input name="price" type="text" value="<?php echo $objResult["price"] ?>" class="form-control" id="" placeholder="<?php echo $objResult["price"] ?>"></textarea>
 							</div>
 						</div>
 						<?php if($_SESSION["status"]=='เกษตรกร'){ ?>
@@ -321,17 +314,23 @@ $usermname = '';
 									ประเภทสินค้า<select class="form-control" name="value">
 
 										<option value="<?php echo $objResult["category"] ?>"><?php echo $objResult["category"] ?></option>
-										<?php if($_SESSION["status"]=='เกษตรกร'){ ?>
-										<option value="ดอก">ดอก</option>
-										<option value="ผล">ผล</option>
-										<option value="ราก">ราก</option>
-										<option value="ลำต้น">ลำต้น</option>
-										<option value="ใบ">ใบ</option>
+									<?php if($_SESSION["status"]=='เกษตรกร'){ ?>
+										<option value="ผักพื้นบ้าน">ผักพื้นบ้าน</option>
+										<option value="ผักทั่วไป">ผักทั่วไป</option>
+										<option value="ผักสลัด">ผักสลัด</option>
+										<option value="ผลไม้">ผลไม้</option>
+										<option value="ธัญพืช">ธัญพืช</option>
+										<option value="แปรรูป(อาหาร)">แปรรูป(อาหาร)</option>
+										<option value="แปรรูป(อุปโภค)">แปรรูป(อุปโภค)</option>
+										<option value="ข้าว">ข้าว</option>
+										<option value="สมุนไพร">สมุนไพร</option>
+										<option value="ไข่">ไข่</option>
+										<option value="เสื้อผ้า เครื่องนุ่งห่ม (ธรรมชาติ)">เสื้อผ้า เครื่องนุ่งห่ม (ธรรมชาติ)</option>
 										<option value="อื่นๆ">อื่นๆ</option>
 									<?php }else{ ?>
-										<option value="ปุ๋ย">ปุ๋ย</option>
-										<option value="เครื่องมือ">เครื่องมือ</option>
-										<option value="อื่นๆ">อื่นๆ</option>
+										<option value="ปุ๋ยหมัก">ปุ๋ยหมัก</option>
+										<option value="ปุ๋ยอินทรีย์">ปุ๋ยอินทรีย์</option>
+										<option value="เมล็ดพันธุ์">เมล็ดพันธุ์</option>
 									<?php } ?>
 									</select>
 								</div>

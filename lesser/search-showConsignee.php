@@ -37,7 +37,7 @@ if($place_type_id !=null && $district_id != null && $subdistrict == "ทั้�
 
 	$sql="SELECT * FROM place WHERE place_type_id = $place_type_id AND district_id = $district_id";
 	$queryB=mysqli_query($objCon,$sql);
-}else{
+}else if($place_type_id !=null && $district_id != null && $subdistrict != null){
 	$sql="SELECT * FROM `districts` WHERE district_id = $district_id";
 	$querydistrict = mysqli_query($objCon,$sql);
 	$objResultdistrict = mysqli_fetch_array($querydistrict, MYSQLI_ASSOC);

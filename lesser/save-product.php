@@ -2,13 +2,11 @@
 	session_start();
 	
     include "connect.php";
-    $name =  $_POST['name'];
-	$detail =  $_POST['detail'];
-	$price = $_POST['price'];
-	$unit = $_POST['unit'];
-    $type =  $_POST['type'];
-    $category =  $_POST['value'];
-    $picture =  'product.png';
+    $name= filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+    $detail= filter_input(INPUT_POST, 'detail', FILTER_SANITIZE_STRING);
+    $price= filter_input(INPUT_POST, 'price', FILTER_SANITIZE_STRING);
+    $type= filter_input(INPUT_POST, 'type', FILTER_SANITIZE_STRING);
+    $category= filter_input(INPUT_POST, 'value', FILTER_SANITIZE_STRING);
     $username = $_SESSION["username"];
 
 
@@ -89,8 +87,8 @@
 
 
 	$strSQL = "INSERT INTO product";
-	$strSQL .="(name,detail,price,unit,type,category,picture) 
-				VALUES ('$name','$detail','$price','$unit','$type','$category','$PictureName')";
+	$strSQL .="(name,detail,price,type,category,picture) 
+				VALUES ('$name','$detail','$price','$type','$category','$PictureName')";
 	$objQuery = mysqli_query($objCon,$strSQL);
 
 

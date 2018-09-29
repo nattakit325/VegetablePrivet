@@ -15,7 +15,7 @@ $queryC=mysqli_query($objCon,$sql);
 $usermname = '';
 
 	if(empty($_SESSION["username"])){
-
+		header("location:index.php");
 	}else{
 		if($_SESSION["status"]=='admin'){
 			header("location:admin.php");
@@ -309,7 +309,7 @@ function Delete(id,name) {
                         </button>
                     </form> 
                     <br>
-									<a href="create product.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;สร้างสินค้าใหม่</button></span></a>
+									<a href="create_product.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;สร้างสินค้าใหม่</button></span></a>
 										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ลบทั้งหมด
 										
 									</div>

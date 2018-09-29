@@ -2,14 +2,15 @@
 	session_start();
 	
     include "connect.php";
-    $name =  $_POST['name'];
-    $detail =  $_POST['detail'];
-    $type =  $_POST['type'];
-    $category =  $_POST['value'];
+    $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+    $detail = filter_input(INPUT_POST, 'detail', FILTER_SANITIZE_STRING);
+    $type = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_STRING);
+    $category = filter_input(INPUT_POST, 'value', FILTER_SANITIZE_STRING);
+    $price = filter_input(INPUT_POST, 'price', FILTER_SANITIZE_STRING);
+    $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_STRING);
     $picture =  'product.png';
     $username = $_SESSION["username"];
     $picture = $_POST["picture"];
-    $id = $_POST["id"];
 
 
 
@@ -86,7 +87,7 @@
     //---------------------------------------//
 
 
-	$strSQL = "UPDATE product SET name = '$name',detail = '$detail',type = '$type',category = '$category',picture ='$PictureName' where id ='$id'";
+	$strSQL = "UPDATE product SET name = '$name',detail = '$detail',price = '$price',type = '$type',category = '$category',picture ='$PictureName' where id ='$id'";
 	$objQuery = mysqli_query($objCon,$strSQL);
 
 
@@ -101,15 +102,16 @@
 	$SellerName=$username;
 	$Productid=$id;
 
-	$sql="SELECT d.name as ProductName, d.picture as picture, d.detail as detail, p.name as name, p.surname as surname,c.address as address,
-	c.phone as phone,c.facebook as facebook, c.line as line,p.picture as img  FROM selllist s INNER join product d 
-			on s.productid = d.id
-			INNER JOIN profile p 
-			on s.username = p.username
-			inner join contact c
-			on s.username = c.username
-			where s.username = '$SellerName'
-			and s.productid = '$Productid' ";
+	$sql="SELECT p.picture as picture,
+			p.name as name,
+			p.detail as detail,
+			p.category as category,
+			p.price as price
+		FROM selllist s
+		INNER JOIN product p
+  		ON s.productid=p.id
+		WHERE s.username = '$username'
+		and p.id = '$id'";
     $query=mysqli_query($objCon,$sql);
     $objResult = mysqli_fetch_array($query,MYSQLI_ASSOC);
 
@@ -124,7 +126,7 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Lesser &mdash; Free HTML5 Bootstrap Website Template by FreeHTML5.co</title>
+	<title>Update Product</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -268,18 +270,17 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><h4 class="modal-title"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></h4></center>
+          <center><h4 class="modal-title"><?php echo $_SESSION["name_surname"];?> </h4></center>
         </div>
         <div class="modal-body">
           <center>
 						<img class="circlein" src="images/<?php echo $_SESSION["picture"]?>" width="100%" height="100%" />
 						<br>
 						<br>
-						<p>FirstName : <?php echo $_SESSION["name"];?></p>
-						<p>LastName   : <?php echo $_SESSION["surname"];?></p>
-						<p>career     : <?php echo $_SESSION["career"];?></p>
-						<p>age        : <?php echo $_SESSION["age"];?></p>
+						<p>FirstName : <?php echo $_SESSION["name_surname"];?></p>
+						<p>career     : <?php echo $_SESSION["status"];?></p>
   <br>
+
 
   <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
   <a href="ClearSession.php"><button type="button" class="btn btn-warning" >ออกจากระบบ</button></a>
@@ -307,7 +308,7 @@
 							<a href="" data-toggle="modal" data-target="#myModal1">เข้าสู่ระบบ</a></li>
 							<a href="" data-toggle="modal" data-target="#myModal1"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
 						<?php }else{?>
-							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></a></li>
+							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name_surname"];?></a></li>
 							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
 						<?php } ?>
 						
@@ -320,7 +321,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2><?php echo $objResult["ProductName"]; ?></h2>
+					<h2><?php echo $objResult["name"]; ?></h2>
 				</div>
 			</div>
 			<div class="row">
@@ -347,35 +348,24 @@
 									
 								</ul>
 							</div>
-
 							<div class="col-md-12 side">
-								<h3><img class="picture" src="images/<?php echo $objResult["img"]; ?>" width="10%" height="12%" />&nbsp;&nbsp;ผู้จำหน่าย</h3>
+								<h3><i class="fas fa-info-circle"></i>&nbsp;&nbsp;ราคา</h3>
 								<ul>
 									<li>
-										<li><?php echo $objResult["name"];?>  &nbsp;&nbsp;<?php echo $objResult["surname"];?></li>
-						
+										<?php echo $objResult["price"]; ?>
 									</li>
 									
 								</ul>
 							</div>
 							<div class="col-md-12 side">
-								<h3><i class="fas fa-address-card"></i>&nbsp;&nbsp;ช่องทางการติดต่อ</h3>
+								<h3><i class="fas fa-info-circle"></i>&nbsp;&nbsp;ประเภท</h3>
 								<ul>
 									<li>
-										<li><i class="fas fa-map-marker-alt"></i><a href="#"><?php echo $objResult["address"]; ?></a></li>
-									<li><i class="fas fa-map-pin"></i></i><a href="#"> ห่างออกไป 14 กม.</a></li>
-									<li><i class="fas fa-phone"></i><a href="#"><?php echo $objResult["phone"]; ?></a></li>
-									<li><i class="icon-facebook"></i><a href="#"><?php echo $objResult["facebook"]; ?></a></li>
-									<li><i class="fab fa-line"></i><a href="#"><?php echo $objResult["line"]; ?></a></li>
-						</a>
-
+										<?php echo $objResult["category"]; ?>
 									</li>
 									
 								</ul>
-								<br><br><br>
-								<center><a href="create product.php"><button type="button" class="btn btn-success" >เพิ่มสินค้าใหม่</button></a> <a href="selllist.php?value=' '"><button type="button" class="btn btn-primary" >กลับสู่หน้าหลัก</button></a></center>
 							</div>
-							
 						</div>
 					</aside>
 				</div>

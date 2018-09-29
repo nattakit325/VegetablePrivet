@@ -5,7 +5,7 @@ include "connect.php";
 $usermname = '';
 
 	if(empty($_SESSION["username"])){
-
+		header("location:index.php");
 	}else{
 		if($_SESSION["status"]=='admin'){
 			header("location:admin.php");
@@ -14,6 +14,7 @@ $usermname = '';
 		}
 		
 	}
+
 	$sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' and status = 1";
 	$queryForNotification=mysqli_query($objCon,$sqlForNotification);
 	$objResult2 = mysqli_fetch_array($queryForNotification, MYSQLI_ASSOC);
@@ -30,7 +31,7 @@ $usermname = '';
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Edit Product</title>
+	<title>Add Product</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -178,19 +179,16 @@ $usermname = '';
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><h4 class="modal-title"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></h4></center>
+           <center><h4 class="modal-title"><?php echo $_SESSION["name_surname"];?> </h4></center>
         </div>
         <div class="modal-body">
           <center>
 						<img class="circlein" src="images/<?php echo $_SESSION["picture"]?>" width="100%" height="100%" />
 						<br>
 						<br>
-						<p>FirstName : <?php echo $_SESSION["name"];?></p>
-						<p>LastName   : <?php echo $_SESSION["surname"];?></p>
-						<p>career     : <?php echo $_SESSION["career"];?></p>
-						<p>age        : <?php echo $_SESSION["age"];?></p>
+						<p>FirstName : <?php echo $_SESSION["name_surname"];?></p>
+						<p>career     : <?php echo $_SESSION["status"];?></p>
   <br>
-
   <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
   <a href="ClearSession.php"><button type="button" class="btn btn-warning" >ออกจากระบบ</button></a>
         </center>
@@ -284,14 +282,9 @@ $usermname = '';
 								<textarea name="detail" class="form-control" id="" cols="30" rows="7" placeholder="รายละเียด"></textarea>
 							</div>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-6">
 							<div class="form-group">
-								<input name="price" type="number" class="form-control" id="" placeholder="ราคา">
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<input name="unit" type="text" class="form-control" id="" placeholder="หน่วย">
+								<input name="price" type="text" class="form-control" id="" placeholder="ราคา/หน่วย">
 							</div>
 						</div>
 						<?php if($_SESSION["status"]=='เกษตรกร'){ ?>
@@ -306,24 +299,28 @@ $usermname = '';
 									
 
 									<select class="form-control" name="value" required>
-
 										<option value="">เลือกประเภทสินค้า</option>
-										<?php if($_SESSION["status"]=='เกษตรกร'){ ?>
+									<?php if($_SESSION["status"]=='เกษตรกร'){ ?>
 										<option value="ผักพื้นบ้าน">ผักพื้นบ้าน</option>
 										<option value="ผักทั่วไป">ผักทั่วไป</option>
+										<option value="ผักสลัด">ผักสลัด</option>
 										<option value="ผลไม้">ผลไม้</option>
-										<option value="สินค้าแปรรูป">สินค้าแปรรูป</option>
-									<?php }else{ ?>
-										<option value="ปุ๋ย">ปุ๋ย</option>
-										<option value="เครื่องมือ">เครื่องมือ</option>
+										<option value="ธัญพืช">ธัญพืช</option>
+										<option value="แปรรูป(อาหาร)">แปรรูป(อาหาร)</option>
+										<option value="แปรรูป(อุปโภค)">แปรรูป(อุปโภค)</option>
+										<option value="ข้าว">ข้าว</option>
+										<option value="สมุนไพร">สมุนไพร</option>
+										<option value="ไข่">ไข่</option>
+										<option value="เสื้อผ้า เครื่องนุ่งห่ม (ธรรมชาติ)">เสื้อผ้า เครื่องนุ่งห่ม (ธรรมชาติ)</option>
 										<option value="อื่นๆ">อื่นๆ</option>
+									<?php }else{ ?>
+										<option value="ปุ๋ยหมัก">ปุ๋ยหมัก</option>
+										<option value="ปุ๋ยอินทรีย์">ปุ๋ยอินทรีย์</option>
+										<option value="เมล็ดพันธุ์">เมล็ดพันธุ์</option>
 									<?php } ?>
 									</select>
 								</div>
-							</div>
-							
-						
-						
+							</div>		
 					</div>
 					
 				</div>
