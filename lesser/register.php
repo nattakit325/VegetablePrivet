@@ -235,9 +235,9 @@ function checkLoginState() {
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<select class="form-control" name="status">
+									<select class="form-control" name="status" onchange="">
 										<option value="เกษตรกร">เกษตรกร</option>
-										<option value="ปัจจัย">ปัจจัย</option>
+										<option value="ปัจจัย">ผู้ขายปัจจัย</option>
 									</select>
 								</div>
 							</div>
@@ -303,7 +303,22 @@ function checkLoginState() {
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control" placeholder="Facebook" type="email" name="Facebook">
+									<input class="form-control" placeholder="Email" type="email" name="email">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="form-control" placeholder="Brand" type="text" name="brand">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="form-control" placeholder="Farmmer Group" type="text" name="farmmergroup">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="form-control" placeholder="Youtube Link" type="text" name="youtubelink">
 								</div>
 							</div>
 
