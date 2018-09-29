@@ -2,7 +2,10 @@
 	session_start();
 	
     include "connect.php";
-
+    if($_SESSION["status"] != "admin")
+	{
+		header("location:index.php");
+	}
     
 
 
@@ -432,7 +435,7 @@ $count=0;
 				</div>
 			<?php } ?>
 				<div class="col-md-6">
-					<a href="addMarketAdmin.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
+					<a href="addMarket.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
 						<div class="desc">
 							<h3>เพิ่มสถานที่ขายพืชผักอินทรีย์</h3>
 							<span>Add location</span>

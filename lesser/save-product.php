@@ -3,7 +3,9 @@
 	
     include "connect.php";
     $name =  $_POST['name'];
-    $detail =  $_POST['detail'];
+	$detail =  $_POST['detail'];
+	$price = $_POST['price'];
+	$unit = $_POST['unit'];
     $type =  $_POST['type'];
     $category =  $_POST['value'];
     $picture =  'product.png';
@@ -87,7 +89,8 @@
 
 
 	$strSQL = "INSERT INTO product";
-    $strSQL .="(name,detail,type,category,picture) VALUES ('$name','$detail','$type','$category','$PictureName')";
+	$strSQL .="(name,detail,price,unit,type,category,picture) 
+				VALUES ('$name','$detail','$price','$unit','$type','$category','$PictureName')";
 	$objQuery = mysqli_query($objCon,$strSQL);
 
 
@@ -116,15 +119,14 @@
 	$SellerName=$username;
 	$Productid=$id;
 
-	$sql="SELECT d.name as ProductName, d.picture as picture, d.detail as detail, p.name as name, p.surname as surname,c.address as address,
-	c.phone as phone,c.facebook as facebook, c.line as line,p.picture as img  FROM selllist s INNER join product d 
-			on s.productid = d.id
-			INNER JOIN profile p 
-			on s.username = p.username
-			inner join contact c
-			on s.username = c.username
-			where s.username = '$SellerName'
-			and s.productid = '$Productid' ";
+	$sql="SELECT d.name as ProductName, d.picture as picture, d.detail as detail, p.name_surname as name_surname,p.address as address,
+		  p.phone as phone,p.facebook as facebook, p.line as line,p.picture as img  
+		  FROM selllist s INNER join product d 
+		  on s.productid = d.id
+		  INNER JOIN profile p 
+		  on s.username = p.username
+		  where s.username = '$SellerName'
+		  and s.productid = '$Productid' ";
     $query=mysqli_query($objCon,$sql);
     $objResult = mysqli_fetch_array($query,MYSQLI_ASSOC);
 
@@ -283,15 +285,14 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><h4 class="modal-title"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></h4></center>
+          <center><h4 class="modal-title"><?php echo $_SESSION["name_surname"];?></h4></center>
         </div>
         <div class="modal-body">
           <center>
 						<img class="circlein" src="images/<?php echo $_SESSION["picture"]?>" width="100%" height="100%" />
 						<br>
 						<br>
-						<p>FirstName : <?php echo $_SESSION["name"];?></p>
-						<p>LastName   : <?php echo $_SESSION["surname"];?></p>
+						<p>Name : <?php echo $_SESSION["name_surname"];?></p>
 						<p>career     : <?php echo $_SESSION["career"];?></p>
 						<p>age        : <?php echo $_SESSION["age"];?></p>
   <br>
@@ -322,7 +323,7 @@
 							<a href="" data-toggle="modal" data-target="#myModal1">เข้าสู่ระบบ</a></li>
 							<a href="" data-toggle="modal" data-target="#myModal1"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
 						<?php }else{?>
-							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></a></li>
+							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name_surname"];?></a></li>
 							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
 							<br>
 							&nbsp;&nbsp;<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">คุณมี 14 ข้อความใหม่<i class="icon-arrow-right"></i></a>
@@ -369,7 +370,7 @@
 								<h3><img class="picture" src="images/<?php echo $objResult["img"]; ?>" width="10%" height="12%" />&nbsp;&nbsp;ผู้จำหน่าย</h3>
 								<ul>
 									<li>
-										<li><?php echo $objResult["name"];?>  &nbsp;&nbsp;<?php echo $objResult["surname"];?></li>
+										<li><?php echo $_SESSION["name_surname"];?></li>
 						
 									</li>
 									

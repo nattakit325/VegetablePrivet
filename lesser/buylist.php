@@ -2,8 +2,10 @@
 session_start();
 include "connect.php";
 
-$value = $_GET["value"];
-$type = $_GET["type"];
+
+$MarketId = filter_input(INPUT_GET, 'MarketId', FILTER_SANITIZE_NUMBER_INT);
+$value = filter_input(INPUT_GET, 'value', FILTER_SANITIZE_STRING);
+$type = filter_input(INPUT_GET, 'type', FILTER_SANITIZE_STRING);
 if(empty($_GET["search"])){
 	$search = "";
 
@@ -12,11 +14,7 @@ if(empty($_GET["search"])){
 
 }
 
-$sql = "SELECT p.name as name,p.picture as picture, s.username as SellerName,
-		p.id as Productid,m.market as marketname,m.latitude as latitude,m.longitude as longitude, m.id as marketId FROM selllist s inner join
-		product p on s.productid=p.id INNER JOIN profile f ON f.username=s.username INNER JOIN
-		gmarket g ON g.username=f.username INNER JOIN market m ON m.id = g.marketid
-		where p.category= '$value' and p.type='$type' and p.name like '%$search%'";
+$sql = "";
 $query = mysqli_query($objCon, $sql);
 $queryC = mysqli_query($objCon, $sql);
 $queryB = mysqli_query($objCon, $sql);
@@ -155,113 +153,6 @@ function showHint(str,type) {
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO9xE9smgXJIDFDpyPaDGZcjQu-ybwOKc&libraries=geometry">
 	</script>
-<script>
-var x = document.getElementById("demo");
-var p1 = 0;
-let p2;
-var market = [];
-function setMarket(){
-
-	 <?php while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {?>
-		market.push(["<?php echo $row["SellerName"]; ?>",
-		"<?php echo $row["picture"]; ?>","<?php echo $row["name"]; ?>",
-		"<?php echo $row["Productid"]; ?>","<?php echo $row["marketname"]; ?>",
-	 	"<?php echo $row["latitude"]; ?>","<?php echo $row["longitude"]; ?>",<?php echo $row["marketId"]; ?>]);
-	 <?php }?>
-	getLaLongMarket();
-}
-function getLaLongMarket() {
-	 for(var i=0;i<market.length;i++){
-		 market[i][8] = new google.maps.LatLng(market[i][5], market[i][6]);
-	 }
-	 getLocation();
-}
-function getLocation() {
-
-    if (navigator.geolocation) {
-        navigator.geolocation.watchPosition(CurrentPosition);
-    } else {
-	document.getElementById("demo").innerHTML = "Geolocation is not supported by this browser.";}
-    }
-function CurrentPosition(position) {
-	p2 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-	if(p1 == 0){
-		showPosition();
-	}
-}
- function showPosition(){
- 	p1 = 1;
-	for(var j=0;j<market.length;j++){
-		 market[j][9] = (google.maps.geometry.spherical.computeDistanceBetween(market[j][8], p2) / 1000).toFixed(2);
-	 }
-	 market.sort(function(a,b){
-    	return a[9] - b[9];
-	});
-	//alert(market.length);
-	for(var i=0;i<market.length;i++){
-		var k = i+1;
-		for(k;k<market.length;k++){
-			if(market[i][0]==market[k][0]&&market[i][3]==market[k][3]){
-			   market.splice(k, 1);
-			   k--;
-			}
-		}
-		
-	}	
-	showOnWeb()
-
-	
-}
-	function showOnWeb(){
-		
-	
-		for(var i=0;i<market.length;i++){
-		var showV  = document.getElementById('showV');
-		var div1 = document.createElement("div");
-		div1.classList.add("col-md-4","text-center");
-		var div2 = document.createElement("div");
-		div2.classList.add("work-inner");
-		var a1 = document.createElement("a");
-		a1.href = "ProductDetail.php?SellerName="+market[i][0]+"&Productid="+market[i][3]+"&MarketId="+market[i][7];
-		a1.classList.add("work-grid");
-		a1.style.cssText = "background-image: url(uploads_product/"+market[i][1];
-		var div3 = document.createElement("div");
-		div3.classList.add("desc");
-		var h3 = document.createElement("h3");
-		var a2 = document.createElement("a");
-		a2.href = "ProductDetail.php?SellerName="+market[i][0]+"&Productid="+market[i][3]+"&MarketId="+market[i][7];
-		var TnameVeget = document.createTextNode(market[i][2]);
-		var pDisten = document.createElement("p");
-		var TextDistan = document.createTextNode("ห่างจากคุณ "+market[i][9]+" กิโลเมตร");
-		var pMarketName = document.createElement("p");
-		var TextNameMket = document.createTextNode("สถานที่ "+market[i][4]);
-		var pLink = document.createElement("p");
-		var a3 = document.createElement("a");
-		a3.href = "ProductDetail.php?SellerName="+market[i][0]+"&Productid="+market[i][3]+"&MarketId="+market[i][7];
-		a3.classList.add("btn","btn-primary","btn-outline","with-arrow");
-		var TextLink = document.createTextNode("ดูรายละเอียด");
-		var icon = document.createElement("i");
-		icon.classList.add("icon-arrow-right");
-		showV.appendChild(div1);
-		div1.appendChild(div2);
-		div2.appendChild(a1);
-		div2.appendChild(div3);
-		div3.appendChild(h3);
-		h3.appendChild(a2);
-		a2.appendChild(TnameVeget);
-		div3.appendChild(pMarketName);
-		pMarketName.appendChild(TextNameMket);
-		div3.appendChild(pDisten);
-		pDisten.appendChild(TextDistan);
-		div3.appendChild(pLink);
-		pLink.appendChild(a3);
-		a3.appendChild(TextLink);
-		a3.appendChild(icon);
-		}
-	}
-</script>
-
-
 
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
@@ -302,17 +193,15 @@ function CurrentPosition(position) {
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><h4 class="modal-title"><?php echo $_SESSION["name"]; ?> <?php echo $_SESSION["surname"]; ?></h4></center>
+           <center><h4 class="modal-title"><?php echo $_SESSION["name_surname"];?> </h4></center>
         </div>
         <div class="modal-body">
           <center>
-						<img class="circlein" src="images/<?php echo $_SESSION["picture"] ?>" width="100%" height="100%" />
+						<img class="circlein" src="images/<?php echo $_SESSION["picture"]?>" width="100%" height="100%" />
 						<br>
 						<br>
-						<p>FirstName : <?php echo $_SESSION["name"]; ?></p>
-						<p>LastName   : <?php echo $_SESSION["surname"]; ?></p>
-						<p>career     : <?php echo $_SESSION["career"]; ?></p>
-						<p>age        : <?php echo $_SESSION["age"]; ?></p>
+						<p>FirstName : <?php echo $_SESSION["name_surname"];?></p>
+						<p>career     : <?php echo $_SESSION["status"];?></p>
   <br>
 
   <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
@@ -396,9 +285,38 @@ function CurrentPosition(position) {
             </div>
 			<div class="row" >
 				<div class="col-md-12">
-                    <div class="row" id="showV">
-           
-			        </div>
+                   <div class="row">
+						<div class="col-md-4 text-center">
+							<div class="work-inner">
+								<a href="buylist.html" class="work-grid" style="background-image: url(images/carrot.jpg);">
+								</a>
+								<div class="desc">
+									<h3><a href="buylist.html">แครอท</a></h3>
+									<span>ห่างจากคุณ 1 กม.</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 text-center">
+							<div class="work-inner">
+								<a href="buylist.html" class="work-grid" style="background-image: url(images/asparagus.jpg);">
+								</a>
+								<div class="desc">
+									<h3><a href="buylist.html">หน่อไม้ฟรั่ง</a></h3>
+									<span>ห่างจากคุณ 1 กม.</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 text-center">
+							<div class="work-inner">
+								<a href="buylist.html" class="work-grid" style="background-image: url(images/cabbage.jpg);">
+								</a>
+								<div class="desc">
+									<h3><a href="buylist.html">กะหล่ำปลี</a></h3>
+									<span>ห่างจากคุณ 1.2 กม.</span>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 	</div>

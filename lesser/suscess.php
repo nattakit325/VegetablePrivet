@@ -9,9 +9,7 @@ $sqlUser = "SELECT * FROM login WHERE username = '".$username."'";
 
 $sql="SELECT * FROM login WHERE username = '".$username."'";
 
-$ProfileSQL = "SELECT name ,surname ,career ,age ,picture ,username FROM profile WHERE username = '".$username."'";
-
-
+$ProfileSQL = "SELECT name_surname,picture ,username FROM profile WHERE username = '".$username."'";
 
 $result = mysqli_query($objCon,$sql);
 $objResult = mysqli_fetch_array($result,MYSQLI_ASSOC);
@@ -26,10 +24,7 @@ $objResult2 = mysqli_fetch_array($objQuery2 ,MYSQLI_ASSOC);
 		$_SESSION["status"] = $objResult["status"];
 			$_SESSION["username"] = $objResult["username"];
 			$_SESSION["password"] = $objResult["password"];
-			$_SESSION["name"] = $objResult2["name"];
-			$_SESSION["surname"] = $objResult2["surname"];
-			$_SESSION["career"] = $objResult2["career"];
-			$_SESSION["age"] = $objResult2["age"];
+			$_SESSION["name_surname"] = $objResult2["name_surname"];
 			$_SESSION["picture"] = $objResult2["picture"];
 
 ?>
@@ -156,17 +151,15 @@ $objResult2 = mysqli_fetch_array($objQuery2 ,MYSQLI_ASSOC);
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><h4 class="modal-title"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></h4></center>
+          <center><h4 class="modal-title"><?php echo $_SESSION["name_surname"];?> </h4></center>
         </div>
         <div class="modal-body">
           <center>
 						<img class="circlein" src="images/<?php echo $_SESSION["picture"]?>" width="100%" height="100%" />
 						<br>
 						<br>
-						<p>FirstName : <?php echo $_SESSION["name"];?></p>
-						<p>LastName   : <?php echo $_SESSION["surname"];?></p>
-						<p>career     : <?php echo $_SESSION["career"];?></p>
-						<p>age        : <?php echo $_SESSION["age"];?></p>
+						<p>FirstName : <?php echo $_SESSION["name_surname"];?></p>
+						<p>career     : <?php echo $_SESSION["status"];?></p>
   <br>
 
   <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
@@ -194,7 +187,7 @@ $objResult2 = mysqli_fetch_array($objQuery2 ,MYSQLI_ASSOC);
 							<a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
 							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
 						<?php }else{?>
-							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></a></li>
+							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name_surname"];?></a></li>
 							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
 						<?php } ?>
 						

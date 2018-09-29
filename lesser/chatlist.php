@@ -25,7 +25,7 @@
 	$objResult = mysqli_fetch_array($queryForNotification, MYSQLI_ASSOC);
 
 
-	$sqlChatUser = "SELECT p.name as name,p.surname as surname,p.picture as picture, c.chat_msg  as msg, p.username as chatname,c.status as status , c.chat_datetime
+	$sqlChatUser = "SELECT p.name_surname as name_surname,p.picture as picture, c.chat_msg  as msg, p.username as chatname,c.status as status , c.chat_datetime
 from tbl_chat c inner join profile p on  c.chat_user1 = p.username 
 where c.chat_user2='$usermname'  
 and c.chat_datetime = (SELECT c2.chat_datetime from tbl_chat c2
@@ -218,17 +218,15 @@ div#messagesDiv{
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><h4 class="modal-title"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></h4></center>
+         <center><h4 class="modal-title"><?php echo $_SESSION["name_surname"];?> </h4></center>
         </div>
         <div class="modal-body">
           <center>
 						<img class="circlein" src="images/<?php echo $_SESSION["picture"]?>" width="100%" height="100%" />
 						<br>
 						<br>
-						<p>FirstName : <?php echo $_SESSION["name"];?></p>
-						<p>LastName   : <?php echo $_SESSION["surname"];?></p>
-						<p>career     : <?php echo $_SESSION["career"];?></p>
-						<p>age        : <?php echo $_SESSION["age"];?></p>
+						<p>FirstName : <?php echo $_SESSION["name_surname"];?></p>
+						<p>career     : <?php echo $_SESSION["status"];?></p>
   <br>
 
   <a href="editProfile.php"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
@@ -278,8 +276,8 @@ div#messagesDiv{
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>พูดคุย กับ <?php echo $_GET['name'] ?>&nbsp;&nbsp;<?php echo $_GET['surname'] ?></h2>
-					<p><span>Chat to <?php echo $_GET['name'] ?>&nbsp;&nbsp;<?php echo $_GET['surname'] ?> </span></p>
+					<h2>พูดคุย กับ <?php echo $_GET['name'] ?></h2>
+					<p><span>Chat to <?php echo $_GET['name'] ?> </span></p>
 				</div>
 			</div>
 			<div class="row">
@@ -303,7 +301,7 @@ div#messagesDiv{
 								<?php if($row['status']==1){ ?>
 								<br><u><a href="chatlist.php?name=<?php echo $row['name'];?>&surname=<?php echo $row['surname'];?>&chatname=<?php echo $row['chatname'];?>"><h3 style="color: red"><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row["surname"];?></h3></a></u>
 							<?php }else{ ?>
-								<a href="chatlist.php?name=<?php echo $row['name'];?>&surname=<?php echo $row['surname'];?>&chatname=<?php echo $row['chatname'];?>"><h3><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row["surname"];?></h3></a>
+								<a href="chatlist.php?name=<?php echo $row['name_surname'];?>&chatname=<?php echo $row['chatname'];?>"><h3><?php echo $row["name_surname"];?></h3></a>
 
 							<?php } ?>
 							</div>

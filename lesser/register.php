@@ -1,4 +1,14 @@
 
+<?php
+session_start();
+	include "connect.php";
+
+	$sql = "SELECT district_id as id,district_name as name from districts";
+
+	$query=mysqli_query($objCon,$sql);
+
+ ?>
+
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -260,21 +270,28 @@ function checkLoginState() {
 
 
 								<div class="form-group">
+
 									<input class="form-control" placeholder="ตำบล" type="text" name="sub">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<select class="form-control" name="status">
-										<option value="">กรุณาเลือกอำเภอ</option>
-										
-										<option value="ปัจจัย">ปัจจัย</option>
+									<select class="form-control" name="district">
+										<option value="">เลือกอำเภอ</option>
+										 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ ?>
+										<option value="<?php echo $row["id"];?>"><?php echo $row["name"];?></option>
+										<?php } ?>
 									</select>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<input class="form-control" placeholder="เบอร์โทรศัพท์" type="text" name="tel">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="form-control" placeholder="Facebook" type="text" name="Facebook">
 								</div>
 							</div>
 							
@@ -284,12 +301,13 @@ function checkLoginState() {
 									<input class="form-control" placeholder="Line" type="text" name="line">
 								</div>
 							</div>
-
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control" placeholder="facebook" type="text" name="facebook">
+									<input class="form-control" placeholder="Facebook" type="email" name="Facebook">
 								</div>
 							</div>
+
+							
 
         </div>
       </div>

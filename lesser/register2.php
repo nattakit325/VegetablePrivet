@@ -2,7 +2,7 @@
 	session_start();
 	include "connect.php";
 
-	$sql="SELECT * FROM market WHERE type = 1 ";
+	$sql="SELECT * FROM market WHERE market_type_id = 1 ";
 	$query=mysqli_query($objCon,$sql);
 	$market = array();
 	while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){
@@ -93,8 +93,9 @@
 </style>
 <script>
 
-	var marketarr = [];
+var marketarr = [];
 $(document).ready(function(){
+
     $("#place").change(function(){
 	var place1 = document.getElementById("place");
     var show = document.getElementById("show");
@@ -102,12 +103,11 @@ $(document).ready(function(){
 	option.text = place1.value;
 	show.add(option);
 	marketarr.push(place1.value);
-	console.log(marketarr);
 	$("#place option:selected").remove();
     });
-
+    console.log(marketarr);
 });
-function myFunction() {
+function DeleteOption() {
     var x = document.getElementById("show");
 	var place = document.getElementById("place");
     var option = document.createElement("option");
@@ -129,112 +129,16 @@ function myFunction() {
     return this;
 	};
 	marketarr.remove(x.value);
-	for(var i =0;i<loname.length;i++){
-		if(x.value == loname[i]){
-			loname.remove(x.value);
-			la.splice(i,1);
-			long.splice(i,1);
-			openDate.splice(i,1);
-			openTime.splice(i,1);
-			closeTime.splice(i,1);
-		}
-	}
-	
-	console.log(x.value);
-	console.log(marketarr);
 	x.remove(x.selectedIndex);
 	
 }
-var la = [];
-var long = [];
-var loname = [];
-var openDate = [];
-var openTime = [];
-var closeTime = [];
-function saveLatLng() {
-
-	var lat = $("#lat").val();
-	var lng = $("#lng").val();
-	var location_name = $("#location_name").val();
-	var openDate1 = $("#openDate").val();
-	var openTime1 = $("#openTime").val();
-	var closeTime1 = $("#closeTime").val();
-	if(location_name != null && openDate1 != '' && openTime1 != '' && closeTime1 != '' ){
-		la.push(lat);
-		long.push(lng);
-		loname.push(location_name);
-		openDate.push(openDate1);
-		openTime.push(openTime1);
-		closeTime.push(closeTime1);
-		var show = document.getElementById("show");
-    	var option = document.createElement("option");
-    	option.text = location_name;
-		show.add(option);
-		$('#market1').modal('hide');
-	}else{
-		alert('กรุณากรอกให้ครบ');
-	}
-	
-}
 function saveMarket() {
-	var user = "<?php echo $_SESSION["username"];?>";
-$.ajax({
-	method: "POST",
-	url: "save-market.php",
-	dataType:"json",
-	cache: false,
-	data: { marketarr: marketarr, la: la, long: long, loname:loname ,  user:user , openDate:openDate , openTime:openTime , closeTime:closeTime},
-	success: function(data){
-				alert(data);
-                //the controller function count_votes returns an integer.
-                //echo that with the fade in here.
-        }
-	});
+	selectBox = document.getElementById("show");
 
-}
-
-function setupMap() {
-var myOptions = {
-	zoom: 13,
-	center: new google.maps.LatLng(16.024695711685314, 103.13690185546875),
-	mapTypeId: google.maps.MapTypeId.ROADMAP
-};
-var map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
-
-
-var infowindow = new google.maps.InfoWindow;
-if (navigator.geolocation) {
-	navigator.geolocation.getCurrentPosition(function (position) {
-		var pos = {
-			lat: position.coords.latitude,
-			lng: position.coords.longitude
-		};
-		infowindow.setPosition(pos);
-		infowindow.setContent('คุณอยู่ตรงนี้');
-		infowindow.open(map);
-		map.setCenter(pos);
-	});
-
-}
-
-google.maps.event.addListener(map, 'click', function (event) {
-
-	var html = '';
-	html += 'lat : <input type="text" id="lat" value="' + event.latLng.lat() + '" readonly/><br/>';
-	html += 'lng : <input type="text" id="lng" value="' + event.latLng.lng() + '" readonly/><br/>';
-	html += 'ชื่อสถานที่ : <input type="text" id="location_name" value="" /><br/>';
-	html += 'วันที่เปิดทำการ : <input type="text" id="openDate" value="" placeholder="Ex. ทุกวัน" /><br/>';
-	html += 'เวลาที่เปิด : <input type="text" id="openTime" value="" placeholder="Ex. 07.00" /><br/>';
-	html += 'เวลาที่ปิด : <input type="text" id="closeTime" value="" placeholder="Ex. 15.00" /><br/>';
-	html += '<input type="button" value="Save" onclick="saveLatLng()" />';
-
-	infowindow.open(map);
-	infowindow.setContent(html);
-	infowindow.setPosition(event.latLng);
-	//marker.setPosition(event.latLng);
-
-});
-
+        for (var i = 0; i < selectBox.options.length; i++) 
+        { 
+             selectBox.options[i].selected = true; 
+        } 
 
 }
 </script>
@@ -250,23 +154,6 @@ google.maps.event.addListener(map, 'click', function (event) {
 	</head>
 	<body>
 	
-	<div class="modal fade" id="market1" role="dialog">
-      <div class="modal-content">
-        
-        <div class="modal-body">
-			<body onload="setupMap()">
-
-				<div id="map_canvas" style="width:800px;height:450px;"></div>
-
-			</body>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-dismiss="modal">ออก</button>
-        </div>
-      </div>
-    
-  </div>
-
 	<div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -291,7 +178,7 @@ google.maps.event.addListener(map, 'click', function (event) {
 
 						</form>
   <br>
-  <a href="register.html">ยังไม่ได้สมัครบัญชีในระบบ</a>
+  <a href="register.php">ยังไม่ได้สมัครบัญชีในระบบ</a>
         </center>
           
         </div>
@@ -306,17 +193,15 @@ google.maps.event.addListener(map, 'click', function (event) {
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><h4 class="modal-title"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></h4></center>
+           <center><h4 class="modal-title"><?php echo $_SESSION["name_surname"];?> </h4></center>
         </div>
         <div class="modal-body">
           <center>
 						<img class="circlein" src="images/<?php echo $_SESSION["picture"]?>" width="100%" height="100%" />
 						<br>
 						<br>
-						<p>FirstName : <?php echo $_SESSION["name"];?></p>
-						<p>LastName   : <?php echo $_SESSION["surname"];?></p>
-						<p>career     : <?php echo $_SESSION["career"];?></p>
-						<p>age        : <?php echo $_SESSION["age"];?></p>
+						<p>FirstName : <?php echo $_SESSION["name_surname"];?></p>
+						<p>career     : <?php echo $_SESSION["status"];?></p>
   <br>
 
   <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
@@ -352,7 +237,7 @@ google.maps.event.addListener(map, 'click', function (event) {
 							<a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
 							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
 						<?php }else{?>
-							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></a></li>
+							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name_surname"];?></a></li>
 							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
 						<?php } ?>
 						
@@ -363,56 +248,58 @@ google.maps.event.addListener(map, 'click', function (event) {
 	</header>
 	<br>
 	<br>
-<div id="fh5co-contact-section">
-	<div class="row">
-        <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-          <h2>กำหนดสถานที่ขายสินค้าของคุณ</h2>
-          <p><span>Set location where your products sold</span></p>
-                        <div class="col-md-6">
-							<div class="form-group">
-								<select class="form-control" name="status"  id="show" size="0">
-									
-								</select>
-							</div>
-                        </div>
-                        <div class="col-md-6">
-							<div class="form-group">
-								<button type="button" class="btn btn-info" data-toggle="modal" onclick="myFunction()">ลบที่คุณเลือก</button>
-							</div>
-                        </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-            <div class="col-md-6">
-				<div class="form-group">
-					<select class="form-control" name="status" id="place">
-						<option selected>เลือกตลาด</option>
-						<?php foreach($market as $value){ ?>
-						<option value="<?php echo $value ?>"><?php echo $value ?></option>
-						<?php } ?>
-					</select>
-				</div>
-			</div>
-            <div class="col-md-6">
-				<div class="form-group">
-					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#market1">เพิ่มตลาดอื่นๆ</button>
-				</div>
-			</div>
-        </div>
-    </div>
-</div>
+	<form method="post" action="save-market.php">
+		<div id="fh5co-contact-section">
+			<div class="row">
+		        <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+		          <h2>กำหนดสถานที่ขายสินค้าของคุณ</h2>
+		          <p><span>Set location where your products sold</span></p>
+		          	<input type="hidden" name="user" value="<?php echo $_SESSION["username"];?>">
+		                        <div class="col-md-6">
+									<div class="form-group">
+										<select class="form-control" name="market[]"  id="show" multiple>
+											
+										</select>
+									</div>
+		                        </div>
+		                        <div class="col-md-6">
+									<div class="form-group">
+										<button type="button" class="btn btn-info" data-toggle="modal" onclick="DeleteOption()">ลบที่คุณเลือก</button>
+									</div>
+		                        </div>
+		        </div>
+		    </div>
+		    <div class="row">
+		        <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+		            <div class="col-md-6">
+						<div class="form-group">
+							<select class="form-control" name="status" id="place">
+								<option selected>เลือกตลาด</option>
+								<?php foreach($market as $value){ ?>
+								<option value="<?php echo $value ?>"><?php echo $value ?></option>
+								<?php } ?>
+							</select>
+						</div>
+					</div>
+		            <div class="col-md-6">
+						<div class="form-group">
+							<a href="addMarket.php"><button type="button" class="btn btn-info">เพิ่มตลาดอื่นๆ</button></a>
+						</div>
+					</div>
+		        </div>
+		    </div>
+		</div>
 	
 	
-  			<div class="col-md-12">
-              <div class="form-group">
-                <br>
-                <center>
-               <a href="/suscess.php"><input value="ยืนยันการสมัครสมาชิก" class="btn btn-primary" type="button" onclick="saveMarket()"></a>
-                </center>
+  		<div class="col-md-12">
+             <div class="form-group">
+             <br>
+             <center>
+              	<input value="ยืนยันการสมัครสมาชิก" class="btn btn-primary" type="submit" onclick="saveMarket()">
+             </center>
               </div>
-			</div>
-		</form>	
+		</div>
+	</form>	
             
 	
 	

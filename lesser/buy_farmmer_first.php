@@ -267,7 +267,7 @@
 
 
 				<div class="col-md-6">
-					<a href="buy.php" class="featured-grid featured-grid-2" style="background-image: url(images/sell2.jpg);">
+					<a href="marketList.php" class="featured-grid featured-grid-2" style="background-image: url(images/sell2.jpg);">
 						<div class="desc">
 							<h3>ชื้อสินค้าทางการเกษตร</h3>
 							<span>Buy agricultural products</span>

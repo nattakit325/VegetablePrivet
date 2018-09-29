@@ -281,7 +281,17 @@ $usermname = '';
 							</div>
 							<div class="col-md-6">
 							<div class="form-group">
-								<textarea name="detail" class="form-control" id="" cols="30" rows="7" placeholder="Message"></textarea>
+								<textarea name="detail" class="form-control" id="" cols="30" rows="7" placeholder="รายละเียด"></textarea>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<input name="price" type="number" class="form-control" id="" placeholder="ราคา">
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<input name="unit" type="text" class="form-control" id="" placeholder="หน่วย">
 							</div>
 						</div>
 						<?php if($_SESSION["status"]=='เกษตรกร'){ ?>

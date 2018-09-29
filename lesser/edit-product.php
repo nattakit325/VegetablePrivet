@@ -7,7 +7,9 @@ $username = $_SESSION["username"];
 $sql="SELECT p.picture as picture,
 			p.name as name,
 			p.detail as detail,
-			p.category as category
+			p.category as category,
+			p.price as price,
+			p.unit as unit
 		FROM selllist s
 		INNER JOIN product p
   		ON s.productid=p.id
@@ -293,6 +295,16 @@ $usermname = '';
 							<div class="col-md-6">
 							<div class="form-group">
 								รายละเอียดสินค้า<textarea name="detail" value="<?php echo $objResult["detail"] ?>" class="form-control" id="" cols="30" rows="7" placeholder="<?php echo $objResult["detail"] ?>"></textarea>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								รายละเอียดสินค้า<input name="detail" type="number" value="<?php echo $objResult["price"] ?>" class="form-control" id="" placeholder="<?php echo $objResult["price"] ?>"></textarea>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								รายละเอียดสินค้า<input name="detail" type="text" value="<?php echo $objResult["unit"] ?>" class="form-control" id="" placeholder="<?php echo $objResult["unit"] ?>"></textarea>
 							</div>
 						</div>
 						<?php if($_SESSION["status"]=='เกษตรกร'){ ?>
