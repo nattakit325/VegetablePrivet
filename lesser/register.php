@@ -257,6 +257,22 @@ function checkLoginState() {
 								</div>
 							</div>
 							<div class="col-md-6">
+
+
+								<div class="form-group">
+									<input class="form-control" placeholder="ตำบล" type="text" name="sub">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<select class="form-control" name="status">
+										<option value="">กรุณาเลือกอำเภอ</option>
+										
+										<option value="ปัจจัย">ปัจจัย</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6">
 								<div class="form-group">
 									<input class="form-control" placeholder="เบอร์โทรศัพท์" type="text" name="tel">
 								</div>
