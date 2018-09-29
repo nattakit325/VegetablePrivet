@@ -14,7 +14,7 @@ if(empty($_GET["search"])){
 
 }
 
-$sql = "";
+$sql = "SELECT product.picture as picture,product.price as price,product.name as productName,name_surname, product.detail as detail,product.id as productId FROM `product` INNER JOIN selllist ON product.id = selllist.productid INNER JOIN profile ON selllist.username = profile.username INNER JOIN login ON profile.username = login.username INNER JOIN gmarket ON login.username = gmarket.username INNER JOIN market ON gmarket.marketid = market.id WHERE market.market_type_id = 1 AND market.id = $MarketId AND product.type = '$type' AND product.category = '$value'";
 $query = mysqli_query($objCon, $sql);
 $queryC = mysqli_query($objCon, $sql);
 $queryB = mysqli_query($objCon, $sql);
@@ -280,45 +280,34 @@ function showHint(str,type) {
 						<center><h2>ไม่มีรายการในประเภทสินค้าดังกล่าว</h2> </center>
 					<?php } else {?>
 					<h2>แนะนำ</h2>
+						<div class="row" >
+							<div class="col-md-12">
+			                   <div class="row">
+			                   		<?php while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {?>
+										<div class="col-md-4 text-center">
+											<div class="work-inner">
+												<a href="buylist.html" class="work-grid" style="background-image: url(uploads_product/<?php echo $row["picture"]; ?>);">
+												</a>
+												<div class="desc">
+													<h3><a href="ProductDetail.php"><?php echo $row["productName"]; ?></a></h3>
+													<span>ชื่อผู้ขาย:<?php echo $row["name_surname"]; ?></span><br>
+													<span>รายละเอียด:<?php echo $row["detail"]; ?></span><br>
+													<span>ราคา:<?php echo $row["price"]; ?></span><br>
+													<a href="ProductDetail.php?marketId=<?php echo $MarketId ?>&sellername=<?php echo $row["name_surname"]; ?>&productId=<?php echo $row["productId"]; ?>"><button class="btn btn-primary btn-outline with-arrow">ดูรายละเอียด<i class="icon-arrow-right"></i></button></a>
+												</div>
+											</div>
+										</div>
+									 <?php }?>
+									
+
+								</div>
+							</div>
+						</div>
+
 				<?php }?>
 				</div>
             </div>
-			<div class="row" >
-				<div class="col-md-12">
-                   <div class="row">
-						<div class="col-md-4 text-center">
-							<div class="work-inner">
-								<a href="buylist.html" class="work-grid" style="background-image: url(images/carrot.jpg);">
-								</a>
-								<div class="desc">
-									<h3><a href="buylist.html">แครอท</a></h3>
-									<span>ห่างจากคุณ 1 กม.</span>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4 text-center">
-							<div class="work-inner">
-								<a href="buylist.html" class="work-grid" style="background-image: url(images/asparagus.jpg);">
-								</a>
-								<div class="desc">
-									<h3><a href="buylist.html">หน่อไม้ฟรั่ง</a></h3>
-									<span>ห่างจากคุณ 1 กม.</span>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4 text-center">
-							<div class="work-inner">
-								<a href="buylist.html" class="work-grid" style="background-image: url(images/cabbage.jpg);">
-								</a>
-								<div class="desc">
-									<h3><a href="buylist.html">กะหล่ำปลี</a></h3>
-									<span>ห่างจากคุณ 1.2 กม.</span>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			
 	</div>
 
 	</div>

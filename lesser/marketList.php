@@ -2,10 +2,10 @@
 session_start();
 include "connect.php";
 
-$sql = "SELECT * FROM `market` WHERE market_type_id = 1";
+$type = filter_input(INPUT_GET, 'type', FILTER_SANITIZE_NUMBER_INT);
+$sql = "SELECT * FROM `market` WHERE market_type_id = $type";
 $query = mysqli_query($objCon, $sql);
 $queryC = mysqli_query($objCon, $sql);
-
 $usermname = '';
 
 	if(empty($_SESSION["username"])){
@@ -156,13 +156,19 @@ $( document ).ready(function() {
 	
 	var d1 = new Date();
 	var total = 0;
-	for(var i=0;i<marketList.length;i++){
-		var openDateT = marketList[i][4].split(",");
-		for(var j=0;j<openDateT.length;j++){
-			if(openDateT[j]==toDay[d1.getDay()]||openDateT[j]=="ทุกวัน"){
-				market.push(marketList[i]);
+	if(<?php echo $type; ?>==1){
+		for(var i=0;i<marketList.length;i++){
+			var openDateT = marketList[i][4].split(",");
+			for(var j=0;j<openDateT.length;j++){
+				if(openDateT[j]==toDay[d1.getDay()]||openDateT[j]=="ทุกวัน"){
+					market.push(marketList[i]);
+				}
 			}
 		}
+	}else{
+		for(var j=0;j<marketList.length;j++){			
+				market.push(marketList[j]);
+			}
 	}
 	getLaLongMarket();
 });
@@ -208,9 +214,16 @@ function CurrentPosition(position) {
 		var div2 = document.createElement("div");
 		div2.classList.add("work-inner");
 		var a1 = document.createElement("a");
-		a1.href = "buy.php?&MarketId="+market[i][7];
-		a1.classList.add("work-grid");
-		a1.style.cssText = "background-image: url(uploads_product/"+market[i][1];
+		if(<?php echo $type; ?>==1){
+			
+			a1.href = "buy.php?&MarketId="+market[i][7];
+			a1.classList.add("work-grid");
+			a1.style.cssText = "background-image: url(uploads_product/"+market[i][1];
+		}else{
+			a1.href = "buy-farmer.php?&MarketId="+market[i][7];
+			a1.classList.add("work-grid");
+			a1.style.cssText = "background-image: url(uploads_product/"+market[i][1];
+		}
 		var div3 = document.createElement("div");
 		div3.classList.add("desc");
 		var h3 = document.createElement("h3");
@@ -225,8 +238,14 @@ function CurrentPosition(position) {
 		var TextOpenAndClose = document.createTextNode("เวลาเปิด "+market[i][5]+ " เวลาปิด "+market[i][6]);
 		var pLink = document.createElement("p");
 		var a3 = document.createElement("a");
-		a3.href = "buy.php?&MarketId="+market[i][7];
-		a3.classList.add("btn","btn-primary","btn-outline","with-arrow");
+		if(<?php echo $type; ?>==1){
+			
+			a3.href = "buy.php?&MarketId="+market[i][7];
+			a3.classList.add("btn","btn-primary","btn-outline","with-arrow");
+		}else{
+			a3.href = "buy-farmer.php?&MarketId="+market[i][7];
+			a3.classList.add("btn","btn-primary","btn-outline","with-arrow");
+		}
 		var TextLink = document.createTextNode("ดูรายละเอียด");
 		var icon = document.createElement("i");
 		icon.classList.add("icon-arrow-right");

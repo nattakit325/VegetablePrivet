@@ -267,7 +267,7 @@
 
 
 				<div class="col-md-6">
-					<a href="marketList.php" class="featured-grid featured-grid-2" style="background-image: url(images/sell2.jpg);">
+					<a href="marketList.php?type=1" class="featured-grid featured-grid-2" style="background-image: url(images/sell2.jpg);">
 						<div class="desc">
 							<h3>ชื้อสินค้าทางการเกษตร</h3>
 							<span>Buy agricultural products</span>
@@ -279,7 +279,7 @@
 
 
 				<div class="col-md-6">
-					<a href="buy-farmer.php"  class="featured-grid featured-grid-2" style="background-image: url(images/shovel.jpg);">
+					<a href="marketList.php?type=2"  class="featured-grid featured-grid-2" style="background-image: url(images/shovel.jpg);">
 						<div class="desc">
 							<h3>ซื้อสินค้าปัจจัยทางการเกษตร</h3>
 							<span>Buy agricultural factor products</span>
