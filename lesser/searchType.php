@@ -13,7 +13,7 @@
 
 	<?php 
 
-	}else{
+	}else if($value=='เกษตรกร'){
 		$sql = "SELECT farmer_type_id as id , farmer_type_name as name from farmer_type";
 		$query=mysqli_query($objCon,$sql);
 		?>
@@ -27,6 +27,22 @@
 										<option value="<?php echo $row["id"];?>"><?php echo $row["name"];?></option>
 										<?php } ?>
 									</select>
+							</div>
+
+
+
+	
+	<?php 
+
+	}else{
+		
+		?>
+
+
+		<div class="col-md-6">
+								<div class="form-group">
+									<input class="form-control" placeholder="กรุณาเลือกประเภทผู้ใช้งานก่อน" type="text" name="link_youtube" disabled>
+								</div>
 							</div>
 
 
