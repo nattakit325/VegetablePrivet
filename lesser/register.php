@@ -166,6 +166,16 @@ function checkLoginState() {
                 reader.readAsDataURL(input.files[0]);
             }
         }
+        function  ForSelectType(str) {
+            var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("result").innerHTML = this.responseText;
+            }
+        }
+        xmlhttp.open("GET", "getTypeForSelect.php?q="+str, true);
+        xmlhttp.send();
+        }
     </script>
 
 	<body>
@@ -210,14 +220,10 @@ function checkLoginState() {
 
 
 								<div class="form-group">
-									<input class="form-control" placeholder="ชื่อจริง" type="text" name="firstname">
+									<input class="form-control" placeholder="ชื่อ-นามสกุล" type="text" name="name">
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<input class="form-control" placeholder="นามสกุล" type="text" name="lastname">
-								</div>
-							</div>
+							
 							<div class="col-md-6">
 								<div class="form-group">
 									<input class="form-control" placeholder="ชื่อผู้ใช้งาน" type="text" name="username">
@@ -235,7 +241,8 @@ function checkLoginState() {
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<select class="form-control" name="status" onchange="">
+									<select class="form-control" name="status" onchange="ForSelectType(this.value)" required="">
+										<option value="">เลือกประเภทผู้ใช้งาน</option>
 										<option value="เกษตรกร">เกษตรกร</option>
 										<option value="ปัจจัย">ผู้ขายปัจจัย</option>
 									</select>
@@ -271,12 +278,12 @@ function checkLoginState() {
 
 								<div class="form-group">
 
-									<input class="form-control" placeholder="ตำบล" type="text" name="sub">
+									<input class="form-control" placeholder="ตำบล" type="text" name="subdictrict">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<select class="form-control" name="district">
+									<select class="form-control" name="district_id">
 										<option value="">เลือกอำเภอ</option>
 										 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ ?>
 										<option value="<?php echo $row["id"];?>"><?php echo $row["name"];?></option>
@@ -286,12 +293,12 @@ function checkLoginState() {
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control" placeholder="เบอร์โทรศัพท์" type="text" name="tel">
+									<input class="form-control" placeholder="เบอร์โทรศัพท์" type="text" name="phone">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control" placeholder="Facebook" type="text" name="Facebook">
+									<input class="form-control" placeholder="Facebook" type="text" name="facebook">
 								</div>
 							</div>
 							
@@ -318,8 +325,11 @@ function checkLoginState() {
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control" placeholder="Youtube Link" type="text" name="youtubelink">
+									<input class="form-control" placeholder="Youtube Link" type="text" name="link_youtube">
 								</div>
+							</div>
+							<div id="result">
+								
 							</div>
 
 							

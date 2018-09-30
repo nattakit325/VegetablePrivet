@@ -94,12 +94,10 @@
         $objQuery = mysqli_query($objCon,$strSQL1);
         
         $strSQL2 = "INSERT INTO profile ";
-        $strSQL2 .="(name,surname,career,age,picture,username) VALUES ('".$_POST["firstname"]."','".$_POST["lastname"]."','".$_POST["status"]."','".$_POST["age"]."','$PictureName','".$_POST["username"]."')";
+        $strSQL2 .="(name_surname,address,subdictrict,district_id,phone,facebook,line,email,brand,farmer_group,link_youtube,career,age,picture,username) VALUES ('".$_POST["name"]."','".$_POST["address"]."','".$_POST["subdictrict"]."','".$_POST["district_id"]."','".$_POST["phone"]."','".$_POST["facebook"]."','".$_POST["line"]."','".$_POST["email"]."','".$_POST["brand"]."','".$_POST["farmer_group"]."','".$_POST["link_youtube"]."','".$_POST["status"]."','".$_POST["age"]."','$PictureName','".$_POST["username"]."','".$_POST["username"]."')";
         $objQuery = mysqli_query($objCon,$strSQL2);
 
-        $strSQL3 = "INSERT INTO `contact` ";
-        $strSQL3 .="(address,phone,facebook,line,username) VALUES ('".$_POST["address"]."','".$_POST["tel"]."','".$_POST["facebook"]."','".$_POST["line"]."','".$_POST["username"]."')";
-        $objQuery = mysqli_query($objCon,$strSQL3);
+        
            
        
        
