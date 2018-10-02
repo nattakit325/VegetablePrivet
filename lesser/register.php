@@ -70,6 +70,9 @@ session_start();
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
+
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO9xE9smgXJIDFDpyPaDGZcjQu-ybwOKc&callback=setupMap">
+	</script>
 	<!-- FOR IE9 below -->
 	<!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
@@ -168,8 +171,63 @@ function checkLoginState() {
         }
         
     </script>
+    <script>
+function ShowMarker(){
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 14,
+      center: new google.maps.LatLng(10,10),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
 
-	<body>
+    var infowindow = new google.maps.InfoWindow();
+    if (navigator.geolocation) {
+	navigator.geolocation.getCurrentPosition(function (position) {
+		var pos = {
+			lat: position.coords.latitude,
+			lng: position.coords.longitude
+		};
+		infowindow.setPosition(pos);
+		infowindow.setContent('คุณอยู่ตรงนี้');
+		infowindow.open(map);
+		map.setCenter(pos);
+	});
+
+	}
+	google.maps.event.addListener(map, 'click', function (event) {
+
+	var html = '';
+	html += 'lat : <input type="text" id="lat" value="' + event.latLng.lat() + '" readonly/><br/>';
+	html += 'lng : <input type="text" id="lng" value="' + event.latLng.lng() + '" readonly/><br/>';
+	html += '<input type="button" value="ตกลง" onclick="Addlatlong()" />';
+	infowindow.open(map);
+	infowindow.setContent(html);
+	infowindow.setPosition(event.latLng);
+	//marker.setPosition(event.latLng);
+
+});
+}
+function Addlatlong(){
+	var lat = $("#lat").val();
+	var lng = $("#lng").val();
+	document.getElementById("lati").value = lat;
+	document.getElementById("longi").value = lng;
+	$('#myModal2').modal('hide');
+}
+</script>
+
+	<body onload="ShowMarker()">
+		<div class="modal fade" id="myModal2" role="dialog">
+      <div class="modal-content">
+
+        <div class="modal-body">
+				<div id="map"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">ออก</button>
+        </div>
+      </div>
+
+ </div>
 
 	
 
@@ -239,11 +297,7 @@ function checkLoginState() {
 									</select>
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<input class="form-control" placeholder="อายุ" type="number" name="age">
-								</div>
-							</div>
+							
 
 
 					</div>
@@ -319,8 +373,21 @@ function checkLoginState() {
 									<input class="form-control" placeholder="Youtube Link" type="text" name="link_youtube">
 								</div>
 							</div>
-							<div id="result">
-								
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>latitude</label>
+									<input class="form-control" placeholder="" id="lati" type="text" name="latitude" readonly="" required="">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>longitude</label>
+									<input class="form-control" placeholder="" id="longi" type="text" name="longitude" readonly="" required="">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<br>
+								<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal2"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;เพิ่มพิกัด</button>
 							</div>
 
 							

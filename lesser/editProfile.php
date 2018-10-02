@@ -5,13 +5,17 @@
     $sql = "SELECT m.id as id,m.market as market FROM market m INNER JOIN gmarket g on m.id = g.marketid where g.username = '$username'";
     $queryA = mysqli_query($objCon, $sql);
 
-    $Profilesql = "SELECT * FROM `profile` WHERE username = '$username'";
+    $Profilesql = "SELECT p.name_surname as name_surname,p.address as address,p.subdictrict as subdictrict,d.district_name as district_name,d.district_id as district_id,p.phone as phone,p.facebook as facebook,p.line as line,p.email as email, p.brand as brand,p.farmer_group as farmer_group, p.link_youtube as link_youtube,p.username as username,p.latitude as latitude,p.longitude as longitude FROM profile p INNER join districts d on p.district_id = d.district_id  WHERE p.username = '$username'";
     $queryPro = mysqli_query($objCon, $Profilesql);
     $objResult = mysqli_fetch_array($queryPro,MYSQLI_ASSOC);
 
-    $Contactsql = "SELECT * FROM `contact` WHERE username = '$username'";
-    $queryCon = mysqli_query($objCon, $Contactsql);
-    $objResult2 = mysqli_fetch_array($queryCon,MYSQLI_ASSOC);
+    $sql = "SELECT district_id as id,district_name as name from districts";
+
+	$query=mysqli_query($objCon,$sql);
+
+	
+
+ 
 
 
 
@@ -24,7 +28,7 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Register</title>
+	<title>Edit Profile</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -77,6 +81,9 @@
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
+
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO9xE9smgXJIDFDpyPaDGZcjQu-ybwOKc&callback=setupMap">
+	</script>
 	<!-- FOR IE9 below -->
 	<!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
@@ -171,6 +178,49 @@ function checkLoginState() {
 }
 
 	</script>
+	 <script>
+function ShowMarker(){
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 14,
+      center: new google.maps.LatLng(10,10),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+    if (navigator.geolocation) {
+	navigator.geolocation.getCurrentPosition(function (position) {
+		var pos = {
+			lat: position.coords.latitude,
+			lng: position.coords.longitude
+		};
+		infowindow.setPosition(pos);
+		infowindow.setContent('คุณอยู่ตรงนี้');
+		infowindow.open(map);
+		map.setCenter(pos);
+	});
+
+	}
+	google.maps.event.addListener(map, 'click', function (event) {
+
+	var html = '';
+	html += 'lat : <input type="text" id="lat" value="' + event.latLng.lat() + '" readonly/><br/>';
+	html += 'lng : <input type="text" id="lng" value="' + event.latLng.lng() + '" readonly/><br/>';
+	html += '<input type="button" value="ตกลง" onclick="Addlatlong()" />';
+	infowindow.open(map);
+	infowindow.setContent(html);
+	infowindow.setPosition(event.latLng);
+	//marker.setPosition(event.latLng);
+
+});
+}
+function Addlatlong(){
+	var lat = $("#lat").val();
+	var lng = $("#lng").val();
+	document.getElementById("lati").value = lat;
+	document.getElementById("longi").value = lng;
+	$('#myModal2').modal('hide');
+}
+</script>
 <style>
 .circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
     height: 40px;  /* ความสูงปรับให้เป็นออโต้ */
@@ -187,7 +237,19 @@ function checkLoginState() {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
 }
 </style>
-	<body>
+	<body onload="ShowMarker()">
+		<div class="modal fade" id="myModal2" role="dialog">
+      <div class="modal-content">
+
+        <div class="modal-body">
+				<div id="map"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">ออก</button>
+        </div>
+      </div>
+
+ </div>
     
 <div class="modal fade" id="forconfermdelete" role="dialog">
     <div class="modal-dialog modal-sm">
@@ -294,10 +356,10 @@ function checkLoginState() {
 							<a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
 							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
 						<?php }else{?>
-							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></a></li>
+							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name_surname"];?> </a></li>
 							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
 							<br>
-							&nbsp;&nbsp;<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">คุณมี 14 ข้อความใหม่<i class="icon-arrow-right"></i></a>
+							
 						<?php } ?>
 						
 					</ul>
@@ -337,22 +399,23 @@ function checkLoginState() {
                                 <input type="hidden" name="pictureold" value="<?php echo $_SESSION["picture"]?>">
 
 								<div class="form-group">
-                                    <label>ชื่อ</label>
-									<input class="form-control" placeholder="ชื่อจริง" type="text" name="firstname" value="<?php echo $objResult["name"];?>">
+                                    <label>ชื่อ - นามสกุล</label>
+									<input class="form-control" placeholder="ชื่อจริง" type="text" name="firstname" value="<?php echo $objResult["name_surname"];?>">
 								</div>
 							</div>
 							<div class="col-md-6">
+								<label>ชื่อผู้ใช้งาน</label>
 								<div class="form-group">
-                                <label>สกุล</label>
-									<input class="form-control" placeholder="นามสกุล" type="text" name="lastname" value="<?php echo $objResult["surname"];?>">
+									<input class="form-control" placeholder="ชื่อผู้ใช้งาน" type="text" name="username" value="<?php echo $objResult["username"];?>" >
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-                                    <label>อายุ</label>
-									<input class="form-control" placeholder="อายุ" type="number" name="age" value="<?php echo $objResult["age"];?>">
-								</div>
-							</div>
+							
+							
+							
+
+							
+							
+							
 
 
 					</div>
@@ -367,59 +430,96 @@ function checkLoginState() {
 
 
                             <div class="col-md-6">
+
+                            	<label>ที่อยู่</label>
 								<div class="form-group">
-                                    <label>ที่อยู่</label>
-									<input class="form-control" placeholder="ที่อยู่" type="text" name="address" value="<?php echo $objResult2["address"];?>">
+									<input class="form-control" placeholder="ที่อยู่" type="text" name="address"
+									value="<?php echo $objResult["address"];?>">
 								</div>
 							</div>
 							<div class="col-md-6">
+
+								<label>ตำบล</label>
 								<div class="form-group">
-									 <label>เบอร์โทรศัพท์</label>
-									<input class="form-control" placeholder="เบอร์โทรศัพท์" type="text" name="tel" value="<?php echo $objResult2["phone"];?>">
+
+									<input class="form-control" placeholder="ตำบล" type="text" name="subdictrict" value="<?php echo $objResult["subdictrict"];?>">
 								</div>
 							</div>
-							
-							
 							<div class="col-md-6">
+								<label>อำเภอ</label>
 								<div class="form-group">
-									<label>Line</label>
-									<input class="form-control" placeholder="Line" type="text" name="line" value="<?php echo $objResult2["line"];?>">
-								</div>
-							</div>
-
-							<div class="col-md-6">
-								<div class="form-group">
-									<label>Facebook</label>
-									<input class="form-control" placeholder="facebook" type="text" name="facebook" value="<?php echo $objResult2["facebook"];?>">
-								</div>
-							</div>
-
-        </div>
-</div>
-
-<div class="row">
-        <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-         			    <h2>ตลาดของคุณ</h2>
-          				<p ip="pp"><span>Your Market</span></p>
-          					<div class="col-md-6">
-								<div class="form-group">
-									<select class="form-control" name="status" id="place">
-										<?php while($row=mysqli_fetch_array($queryA,MYSQLI_ASSOC)){ ?>
-											<option value="<?php echo $row["id"] ?>"><?php echo $row["market"] ?></option>
+									<select class="form-control" name="district_id">
+										<option value="<?php echo $objResult["district_id"];?>"><?php echo $objResult["district_name"];?></option>
+										 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ ?>
+										<option value="<?php echo $row["id"];?>"><?php echo $row["name"];?></option>
 										<?php } ?>
 									</select>
 								</div>
 							</div>
 							<div class="col-md-6">
+								<label>เบอร์โทรศัพท์</label>
 								<div class="form-group">
-									<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ลบที่คุณเลิอก</button>
+									<input class="form-control" placeholder="เบอร์โทรศัพท์" type="text" name="phone" value="<?php echo $objResult["phone"];?>">
 								</div>
-	                        </div>
-                            <div class="col-md-6">
+							</div>
+							<div class="col-md-6">
+								<label>Facebook</label>
 								<div class="form-group">
-									<a href="register2.php"><button type="button" class="btn btn-success" >เพิ่มตลาดที่คุณขาย</button></a>
+									<input class="form-control" placeholder="Facebook" type="text" name="facebook" value="<?php echo $objResult["facebook"];?>">
 								</div>
-	                        </div>
+							</div>
+							
+							
+							<div class="col-md-6">
+								<label>Line</label>
+								<div class="form-group">
+									<input class="form-control" placeholder="Line" type="text" name="line" value="<?php echo $objResult["line"];?>"> 
+								</div>
+							</div>
+							<div class="col-md-6">
+								<label>Email</label>
+								<div class="form-group">
+									<input class="form-control" placeholder="Email" type="email" name="email"
+									value="<?php echo $objResult["email"];?>">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<label>Brand</label>
+								<div class="form-group">
+									<input class="form-control" placeholder="Brand" type="text" name="brand"
+									value="<?php echo $objResult["brand"];?>">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<label>Farmmer Group</label>
+								<div class="form-group">
+									<input class="form-control" placeholder="Farmmer Group" type="text" name="farmer_group" value="<?php echo $objResult["farmer_group"];?>">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<label>Youtube Link</label>
+								<div class="form-group">
+									<input class="form-control" placeholder="Youtube Link" type="text" name="link_youtube" value="<?php echo $objResult["link_youtube"];?>">
+								</div>
+							</div>
+							<div class="col-md-3">
+								
+								<div class="form-group">
+									<label>latitude</label>
+									<input class="form-control" placeholder="" id="lati" type="text" name="latitude" readonly=""  value="<?php echo $objResult["latitude"];?>">
+								</div>
+							</div>
+							<div class="col-md-3">
+
+								<div class="form-group">
+									<label>longitude</label>
+									<input class="form-control" placeholder="" id="longi" type="text" name="longitude" readonly=""  value="<?php echo $objResult["longitude"];?>">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<br>
+								<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal2"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;เพิ่มพิกัด</button>
+							</div>
 
 
         </div>

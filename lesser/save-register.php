@@ -105,6 +105,8 @@
         $farmer_group = $_POST["farmer_group"];
         $link_youtube = $_POST["link_youtube"];
         $username = $_POST["username"];
+        $latitude = $_POST["latitude"];
+        $longitude = $_POST["longitude"];
 
         $farmer_type_id = '2';
 
@@ -139,7 +141,7 @@
 
 
         
-        $strSQL2 = "INSERT INTO profile (id, name_surname, address, subdictrict, district_id, phone, facebook, line, email, brand, farmer_group, link_youtube, latitude, longitude, picture, farmer_type_id, username) VALUES (NULL, '$name', '$address', '$subdictrict', '$district_id', '$phone', '$facebook', '$line', '$email', '$brand', '$farmer_group', '$link_youtube', null, null, '$PictureName', '$farmer_type_id', '$username');";
+        $strSQL2 = "INSERT INTO profile (id, name_surname, address, subdictrict, district_id, phone, facebook, line, email, brand, farmer_group, link_youtube, latitude, longitude, picture, farmer_type_id, username) VALUES (NULL, '$name', '$address', '$subdictrict', '$district_id', '$phone', '$facebook', '$line', '$email', '$brand', '$farmer_group', '$link_youtube', $latitude , $longitude, '$PictureName', '$farmer_type_id', '$username');";
         $objQuery = mysqli_query($objCon,$strSQL2); 
 
         
