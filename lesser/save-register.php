@@ -92,10 +92,26 @@
         $strSQL1 = "INSERT INTO login ";
         $strSQL1 .="(username,password,status) VALUES ('".$_POST["username"]."','$pass','".$_POST["status"]."')";
         $objQuery = mysqli_query($objCon,$strSQL1);
+
+        $name = $_POST["name"];
+        $address = $_POST["address"];
+        $subdictrict = $_POST["subdictrict"];
+        $district_id = $_POST["district_id"];
+        $phone = $_POST["phone"];
+        $facebook = $_POST["facebook"];
+        $line = $_POST["line"];
+        $email = $_POST["email"];
+        $brand = $_POST["brand"];
+        $farmer_group = $_POST["farmer_group"];
+        $link_youtube = $_POST["link_youtube"];
+        $farmer_type_id = $_POST["farmer_type_id"];
+        $username = $_POST["username"];
+
+
+
         
-        $strSQL2 = "INSERT INTO profile ";
-        $strSQL2 .="(name_surname,address,subdictrict,district_id,phone,facebook,line,email,brand,farmer_group,link_youtube,picture,farmer_type_id,username) VALUES ('".$_POST["name"]."','".$_POST["address"]."','".$_POST["subdictrict"]."','".$_POST["district_id"]."','".$_POST["phone"]."','".$_POST["facebook"]."','".$_POST["line"]."','".$_POST["email"]."','".$_POST["brand"]."','".$_POST["farmer_group"]."','".$_POST["link_youtube"]."','".$_POST["farmer_type_id"]."','$PictureName','".$_POST["username"]"')";
-        $objQuery = mysqli_query($objCon,$strSQL2);  
+        $strSQL2 = "INSERT INTO profile (id, name_surname, address, subdictrict, district_id, phone, facebook, line, email, brand, farmer_group, link_youtube, latitude, longitude, picture, farmer_type_id, username) VALUES (NULL, 'sss', 'sss', 'sss', '1', 'sss', 'sss', 'ss', 's', 'ss', 'ss', 'sss', 'ss', 'ss', 'ss', '1', 'Nattakit_Ngan');";
+        $objQuery = mysqli_query($objCon,$strSQL2); 
 
         
            
@@ -105,21 +121,26 @@
         if($objResult["status"] != "ADMIN")
                 {
                     $strSQL = "SELECT * FROM login WHERE username = '".mysqli_real_escape_string($objCon,$_POST['username'])."' 
-                     and password = '$pass'";
-                     $ProfileSQL = "SELECT name ,surname ,career ,age ,picture ,username FROM profile WHERE username = '".mysqli_real_escape_string($objCon,$_POST['username'])."'";
-                    $objQuery = mysqli_query($objCon,$strSQL);
-                    $objResult = mysqli_fetch_array($objQuery,MYSQLI_ASSOC);
+    ";
+    $ProfileSQL = "SELECT * FROM profile WHERE username = '".mysqli_real_escape_string($objCon,$_POST['username'])."'";
+    $objQuery = mysqli_query($objCon,$strSQL);
+    $objResult = mysqli_fetch_array($objQuery,MYSQLI_ASSOC);
 
-                    $objQuery4 = mysqli_query($objCon,$ProfileSQL);
-                    $objResult4 = mysqli_fetch_array($objQuery4,MYSQLI_ASSOC);
-                    $_SESSION["status"] = $objResult["status"];
-                    $_SESSION["username"] = $objResult["username"];
-                    $_SESSION["password"] = $objResult["password"];
-                    $_SESSION["name"] = $objResult4["name"];
-                    $_SESSION["surname"] = $objResult4["surname"];
-                    $_SESSION["career"] = $objResult4["career"];
-                    $_SESSION["age"] = $objResult4["age"];
-                    $_SESSION["picture"] = $objResult4["picture"];
+    $objQuery2 = mysqli_query($objCon,$ProfileSQL);
+    $objResult2 = mysqli_fetch_array($objQuery2 ,MYSQLI_ASSOC);
+                   $_SESSION["status"] = $objResult["status"];
+            $_SESSION["username"] = $objResult["username"];
+            $_SESSION["password"] = $objResult["password"];
+            $_SESSION["name_surname"] = $objResult2["name_surname"];
+            $_SESSION["address"] = $objResult2["address"];
+            $_SESSION["picture"] = $objResult2["picture"];
+            $_SESSION["phone"] = $objResult2["phone"];
+            $_SESSION["facebook"] = $objResult2["facebook"];
+            $_SESSION["line"] = $objResult2["line"];
+            $_SESSION["email"] = $objResult2["email"];
+            $_SESSION["latitude"] = $objResult2["latitude"];
+            $_SESSION["longitude"] = $objResult2["longitude"];
+
                     session_write_close();
                     header("location:register2.php");
                 }

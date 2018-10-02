@@ -7,14 +7,15 @@
 	if($value=='ปัจจัย'){ ?>
 	<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control" placeholder="กลุ่มผู้ขายปัจจัย" type="text" name="farmer_type_id" value="3" disabled>
+									<input class="form-control" placeholder="กลุ่มผู้ขายปัจจัย" type="text"  disabled>
+									<input class="form-control" placeholder="กลุ่มผู้ขายปัจจัย"  name="farmer_type_id" value="3" type="hidden">
 								</div>
 							</div>
 
 	<?php 
 
 	}else if($value=='เกษตรกร'){
-		$sql = "SELECT farmer_type_id as id , farmer_type_name as name from farmer_type";
+		$sql = "SELECT farmer_type_id as id , farmer_type_name as name from farmer_type where farmer_type_name!='ปัจจัย'";
 		$query=mysqli_query($objCon,$sql);
 		?>
 
