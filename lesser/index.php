@@ -321,14 +321,14 @@ $count=0;
 				<?php
 					$buy = null;
 					if(empty($_SESSION["username"])){
-						$buy = "buy.php";
+						$buy = "marketList.php?type=1";
 						$sell = "#";
 					}else{
 						if($_SESSION["status"]=="เกษตรกร"){
 							$buy = "buy_farmmer_first.php";
 							
 						}else{
-							$buy = "buy.php";
+							$buy = "marketList.php?type=1";
 							
 						}
 					}
