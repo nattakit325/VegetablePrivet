@@ -286,10 +286,10 @@ function showHint(str,type) {
 			                   		<?php while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {?>
 										<div class="col-md-4 text-center">
 											<div class="work-inner">
-												<a href="buylist.html" class="work-grid" style="background-image: url(uploads_product/<?php echo $row["picture"]; ?>);">
+												<a href="ProductDetail.php?marketId=<?php echo $MarketId ?>&sellername=<?php echo $row["name_surname"]; ?>&productId=<?php echo $row["productId"]; ?>" class="work-grid" style="background-image: url(uploads_product/<?php echo $row["picture"]; ?>);">
 												</a>
 												<div class="desc">
-													<h3><a href="ProductDetail.php"><?php echo $row["productName"]; ?></a></h3>
+													<h3><a href="ProductDetail.php?marketId=<?php echo $MarketId ?>&sellername=<?php echo $row["name_surname"]; ?>&productId=<?php echo $row["productId"]; ?>"><?php echo $row["productName"]; ?></a></h3>
 													<span>ชื่อผู้ขาย:<?php echo $row["name_surname"]; ?></span><br>
 													<span>รายละเอียด:<?php echo $row["detail"]; ?></span><br>
 													<span>ราคา:<?php echo $row["price"]; ?></span><br>
