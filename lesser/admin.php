@@ -2,7 +2,7 @@
 	session_start();
 	
     include "connect.php";
-    if($_SESSION["status"] != "admin")
+    if($_SESSION["status"] != "admin"&&$_SESSION["status"]!='superAdmin')
 	{
 		header("location:index.php");
 	}
