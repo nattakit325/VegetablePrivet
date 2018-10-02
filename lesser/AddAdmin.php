@@ -7,7 +7,7 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Register</title>
+	<title>AddAdmin</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -128,14 +128,10 @@
 
 
 								<div class="form-group">
-									<input class="form-control" placeholder="ชื่อจริง" type="text" name="firstname">
+									<input class="form-control" placeholder="ชื่อ - นามสกุล" type="text" name="name">
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<input class="form-control" placeholder="นามสกุล" type="text" name="lastname">
-								</div>
-							</div>
+							
 							<div class="col-md-6">
 								<div class="form-group">
 									<input class="form-control" placeholder="ชื่อผู้ใช้งาน" type="text" name="username">
@@ -152,11 +148,7 @@
 								</div>
 							</div>
 							
-							<div class="col-md-6">
-								<div class="form-group">
-									<input class="form-control" placeholder="อายุ" type="number" name="age">
-								</div>
-							</div>
+							
 
 
 					</div>

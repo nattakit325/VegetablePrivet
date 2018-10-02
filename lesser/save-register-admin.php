@@ -92,9 +92,12 @@
         $strSQL1 = "INSERT INTO login ";
         $strSQL1 .="(username,password,status) VALUES ('".$_POST["username"]."','$pass','admin')";
         $objQuery = mysqli_query($objCon,$strSQL1);
+
+
+        $name = $_POST["name"];
+        $username = $_POST["username"];
         
-        $strSQL2 = "INSERT INTO profile ";
-        $strSQL2 .="(name,surname,career,age,picture,username) VALUES ('".$_POST["firstname"]."','".$_POST["lastname"]."','admin','".$_POST["age"]."','$PictureName','".$_POST["username"]."')";
+        $strSQL2 = "INSERT INTO profile (id, name_surname, address, subdictrict, district_id, phone, facebook, line, email, brand, farmer_group, link_youtube, latitude, longitude, picture, farmer_type_id, username) VALUES (NULL, '$name', null, null, 1, null, null, null, null, null, null, null, null , null, '$PictureName', null, '$username');";
         $objQuery = mysqli_query($objCon,$strSQL2);
 
 
