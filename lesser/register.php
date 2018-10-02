@@ -166,16 +166,7 @@ function checkLoginState() {
                 reader.readAsDataURL(input.files[0]);
             }
         }
-        function  ForSelectType(str) {
-            var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("result").innerHTML = this.responseText;
-            }
-        }
-        xmlhttp.open("GET", "getTypeForSelect.php?q="+str, true);
-        xmlhttp.send();
-        }
+        
     </script>
 
 	<body>
@@ -241,7 +232,7 @@ function checkLoginState() {
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<select class="form-control" name="status" onchange="ForSelectType(this.value)" required="">
+									<select class="form-control" name="status"  required="">
 										<option value="">เลือกประเภทผู้ใช้งาน</option>
 										<option value="เกษตรกร">เกษตรกร</option>
 										<option value="ปัจจัย">ผู้ขายปัจจัย</option>
@@ -320,7 +311,7 @@ function checkLoginState() {
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control" placeholder="Farmmer Group" type="text" name="farmmergroup">
+									<input class="form-control" placeholder="Farmmer Group" type="text" name="farmer_group">
 								</div>
 							</div>
 							<div class="col-md-6">

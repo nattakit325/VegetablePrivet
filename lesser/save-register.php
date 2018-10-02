@@ -104,13 +104,42 @@
         $brand = $_POST["brand"];
         $farmer_group = $_POST["farmer_group"];
         $link_youtube = $_POST["link_youtube"];
-        $farmer_type_id = $_POST["farmer_type_id"];
         $username = $_POST["username"];
+
+        $farmer_type_id = '2';
+
+        if($_POST["status"]=='ปัจจัย'){
+            $farmer_type_id = '3';
+        }
+
+        echo $name;
+        echo $address;
+        echo $subdictrict;
+        echo $district_id;
+        echo $facebook;
+        echo $line;
+        echo $email;
+        echo $brand;
+        echo $farmer_group;
+        echo $link_youtube;
+        echo $username;
+        echo $farmer_type_id;
+
+
+
+
+
+
 
 
 
         
-        $strSQL2 = "INSERT INTO profile (id, name_surname, address, subdictrict, district_id, phone, facebook, line, email, brand, farmer_group, link_youtube, latitude, longitude, picture, farmer_type_id, username) VALUES (NULL, 'sss', 'sss', 'sss', '1', 'sss', 'sss', 'ss', 's', 'ss', 'ss', 'sss', 'ss', 'ss', 'ss', '1', 'Nattakit_Ngan');";
+
+
+
+
+        
+        $strSQL2 = "INSERT INTO profile (id, name_surname, address, subdictrict, district_id, phone, facebook, line, email, brand, farmer_group, link_youtube, latitude, longitude, picture, farmer_type_id, username) VALUES (NULL, '$name', '$address', '$subdictrict', '$district_id', '$phone', '$facebook', '$line', '$email', '$brand', '$farmer_group', '$link_youtube', null, null, '$PictureName', '$farmer_type_id', '$username');";
         $objQuery = mysqli_query($objCon,$strSQL2); 
 
         
@@ -118,8 +147,7 @@
        
        
 
-        if($objResult["status"] != "ADMIN")
-                {
+        
                     $strSQL = "SELECT * FROM login WHERE username = '".mysqli_real_escape_string($objCon,$_POST['username'])."' 
     ";
     $ProfileSQL = "SELECT * FROM profile WHERE username = '".mysqli_real_escape_string($objCon,$_POST['username'])."'";
@@ -143,7 +171,7 @@
 
                     session_write_close();
                     header("location:register2.php");
-                }
+                
         }
 
     
