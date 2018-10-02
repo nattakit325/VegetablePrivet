@@ -66,25 +66,41 @@
     }else{
         $PictureName = $_POST["pictureold"];
     }
-    $username = $_SESSION["username"];
-    $firstname = $_POST["firstname"];
-    $lastname = $_POST["lastname"];
-    $age = $_POST["age"];
-    $address = $_POST["address"];
-    $tel = $_POST["tel"];
-    $line = $_POST["line"];
-    $facebook = $_POST["facebook"];
+     $name = $_POST["name"];
+        $address = $_POST["address"];
+        $subdictrict = $_POST["subdictrict"];
+        $district_id = $_POST["district_id"];
+        $phone = $_POST["phone"];
+        $facebook = $_POST["facebook"];
+        $line = $_POST["line"];
+        $email = $_POST["email"];
+        $brand = $_POST["brand"];
+        $farmer_group = $_POST["farmer_group"];
+        $link_youtube = $_POST["link_youtube"];
+        $username = $_POST["username"];
+        $latitude = $_POST["latitude"];
+        $longitude = $_POST["longitude"];
+        $username = $_SESSION["username"];
 
-    $UpdateProfileSQL = "UPDATE profile SET name = '$firstname',surname = '$lastname',age = '$age',picture = '$PictureName' where username ='$username'";
+        $farmer_type_id = '2';
+        if($_SESSION["status"]=='ปัจจัย'){
+            $farmer_type_id = '3';
+        }
+
+    $UpdateProfileSQL = "UPDATE profile SET  name_surname='$name', address='$address', subdictrict='$subdictrict', district_id='$district_id', phone='$phone', facebook='$facebook', line='$line', email='$email', brand='$brand', farmer_group='$farmer_group', link_youtube='$link_youtube', latitude='$latitude', longitude='$longitude', picture='$PictureName', farmer_type_id='$farmer_type_id'where username='$username'";
 	$objQuery = mysqli_query($objCon,$UpdateProfileSQL);
 
-    $UpdateContactSQL = "UPDATE contact SET address = '$address',phone = '$tel',facebook = '$facebook',line = '$line' where username ='$username'";
-    $objQuery2 = mysqli_query($objCon,$UpdateContactSQL);
+      
     
-    $_SESSION["name"] =  $firstname;
-	$_SESSION["surname"] =   $lastname;
-	$_SESSION["age"] =  $age;
-	$_SESSION["picture"] =  $PictureName;
+            $_SESSION["name_surname"] = $name;
+            $_SESSION["address"] = $address;
+            $_SESSION["picture"] = $PictureName;
+            $_SESSION["phone"] = $phone;
+            $_SESSION["facebook"] = $facebook;
+            $_SESSION["line"] = $line;
+            $_SESSION["email"] = $email;
+            $_SESSION["latitude"] = $latitude;
+            $_SESSION["longitude"] = $longitude;
     header("location:index.php");
 
 ?>

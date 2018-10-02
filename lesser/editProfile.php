@@ -400,7 +400,7 @@ function Addlatlong(){
 
 								<div class="form-group">
                                     <label>ชื่อ - นามสกุล</label>
-									<input class="form-control" placeholder="ชื่อจริง" type="text" name="firstname" value="<?php echo $objResult["name_surname"];?>">
+									<input class="form-control" placeholder="ชื่อจริง" type="text" name="name" value="<?php echo $objResult["name_surname"];?>">
 								</div>
 							</div>
 							<div class="col-md-6">
