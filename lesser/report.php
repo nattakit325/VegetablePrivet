@@ -7,15 +7,21 @@
     $type = $_GET['type'];
     $value = $_GET['value'];
     if($type=='admin'){
-    	 $sql = "SELECT l.username as id, p.name as name,p.surname as surname, p.career as career, p.age as age,p.picture as picture  from profile p inner join login l on p.username=l.username where l.status = '$type' and p.name like '%$value%'";
+    	 $sql = "SELECT l.username as id, p.name_surname as name,p.picture as picture  from profile p inner join login l on p.username=l.username where l.status = '$type' and p.name_surname like '%$value%'";
 
     }else{
-    	$sql = "SELECT p.id as id, p.name as name,p.surname as surname, p.career as career, p.age as age,p.picture as picture  from profile p inner join login l on p.username=l.username where l.status != '$type' and l.status != 'superAdmin' and p.name like '%$value%'";
+    	$sql = "SELECT p.id as id, p.name_surname as name,p.picture as picture  from profile p inner join login l on p.username=l.username where l.status != '$type' and l.status != 'superAdmin' and l.status != 'admin' and p.name_surname like '%$value%'";
     }
    
 
     $query=mysqli_query($objCon,$sql);
 	$queryDialog=mysqli_query($objCon,$sql);
+
+
+	$usermname = $_SESSION["username"];
+	 $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' and status = 1 ";
+    $queryForNotification=mysqli_query($objCon,$sqlForNotification);
+	$objResult = mysqli_fetch_array($queryForNotification, MYSQLI_ASSOC);
 	
 
 	
@@ -223,22 +229,20 @@ function showHint(str) {
       </div>
     </div>
   </div>
-  <div class="modal fade" id="login" role="dialog">
+ <div class="modal fade" id="login" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><h4 class="modal-title"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></h4></center>
+          <center><h4 class="modal-title"><?php echo $_SESSION["name_surname"];?> </h4></center>
         </div>
         <div class="modal-body">
           <center>
 						<img class="circlein" src="images/<?php echo $_SESSION["picture"]?>" width="100%" height="100%" />
 						<br>
 						<br>
-						<p>FirstName : <?php echo $_SESSION["name"];?></p>
-						<p>LastName   : <?php echo $_SESSION["surname"];?></p>
-						<p>career     : <?php echo $_SESSION["career"];?></p>
-						<p>age        : <?php echo $_SESSION["age"];?></p>
+						<p>FirstName : <?php echo $_SESSION["name_surname"];?></p>
+						<p>career     : <?php echo $_SESSION["status"];?></p>
   <br>
 
   <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
@@ -267,7 +271,7 @@ function showHint(str) {
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           
-          <h4 class="modal-title"> <?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row["surname"];?> </h4>
+          <h4 class="modal-title"> <?php echo $row["name"] ?> </h4>
           
         </div>
         <div class="modal-body">
@@ -295,7 +299,7 @@ $count=0;
 	
 	
 	<div id="fh5co-page">
-	<header id="fh5co-header" role="banner">
+<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
 				<h1><i class="sl-icon-energy"></i><a href="index.php">Lesserr</a></h1>
@@ -306,9 +310,16 @@ $count=0;
 								?>
 							<a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
 							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
-						<?php }else{?>
-							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name"];?> <?php echo $_SESSION["surname"];?></a></li>
-							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
+						<?php }else{
+							if ($objResult['chatAM']>0) {
+								$color = 'red';
+							}else{
+								$color = 'gray';
+
+							}
+							?>
+							<a href="TopChat.php" title="คุณมี <?php echo $objResult['chatAM'] ?> ข้อความ"><i class="fas fa-bell" style="color: <?php echo $color ?>">&nbsp;<?php echo $objResult['chatAM'] ?></i></a>
+							<a data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
 						<?php } ?>
 						
 					</ul>
@@ -360,9 +371,8 @@ $count=0;
 						<a class="work-grid" style="background-image: url(images/<?php echo $row['picture'];?>);">
 						</a>
 						<div class="desc">
-							<h3><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row["surname"];?></h3>
-							<p>อาชีพ <?php echo $row["career"];?></p></p>
-							<p>อายุ <?php echo $row["age"]?>&nbsp;ปี</p>
+							<h3><?php echo $row["name"];?>&nbsp;&nbsp;</h3><br><br>
+							
 							<button type="button" class="btn btn-danger" data-toggle="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ยกเลิกบัญชี</span></button>
 							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModalINFO<?php echo $row["id"] ?>">ดูรายละเอียด<i class="icon-arrow-right"></i></a>
 						</div>
@@ -378,8 +388,7 @@ $count=0;
 
 						</a>
 						<div class="desc">
-							<h3><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row["surname"];?> </h3>
-							<p>อายุ <?php echo $row["age"]?>&nbsp;ปี </p>
+							<h3><?php echo $row["name"];?>&nbsp;&nbsp;</h3><br>
 							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#forconfermdeleteeach" onclick="Delete('<?php echo $row['id'] ?>','<?php echo $row['name'] ?>','<?php echo $row['surname'] ?>','<?php echo $row['picture'] ?>')"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ยกเลิกบัญชีผู้ดูแลระบบ</span></button>
 							
 						</div>
