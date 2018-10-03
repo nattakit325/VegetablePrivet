@@ -93,7 +93,7 @@ $usermname = '';
 	<![endif]-->
 
 	</head>
-	<body>
+	<body onload="setMarket()">
 
 <script type="text/javascript" src="js/showUser.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
@@ -146,7 +146,7 @@ let p2;
 var market = [];
 var marketList = [];
 var toDay = ["อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัสบดี","ศุกร์","เสาร์"];
-$( document ).ready(function() {
+function setMarket(){
 	 <?php while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {?>
 		marketList.push([<?php echo $row["latitude"]; ?>,<?php echo $row["longitude"]; ?>,
 			"<?php echo $row["market"]; ?>","<?php echo $row["pictureMarket"]; ?>",
@@ -171,7 +171,7 @@ $( document ).ready(function() {
 			}
 	}
 	getLaLongMarket();
-});
+}
 function getLaLongMarket() {
 	 for(var i=0;i<market.length;i++){
 		 market[i][8] = new google.maps.LatLng(market[i][0], market[i][1]);
@@ -218,11 +218,11 @@ function CurrentPosition(position) {
 			
 			a1.href = "buy.php?&MarketId="+market[i][7];
 			a1.classList.add("work-grid");
-			a1.style.cssText = "background-image: url(uploads_product/"+market[i][1];
+			a1.style.cssText = "background-image: url(uploads_product/"+market[i][3];
 		}else{
 			a1.href = "buy-farmer.php?&MarketId="+market[i][7];
 			a1.classList.add("work-grid");
-			a1.style.cssText = "background-image: url(uploads_product/"+market[i][1];
+			a1.style.cssText = "background-image: url(uploads_product/"+market[i][3];
 		}
 		var div3 = document.createElement("div");
 		div3.classList.add("desc");

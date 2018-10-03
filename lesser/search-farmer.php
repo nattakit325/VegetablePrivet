@@ -335,21 +335,48 @@ function showPosition(){
 	 }
 	 ShowMarker();
 }
+var extend = [];
 function ShowMarker(){
+	var bounds = new google.maps.LatLngBounds();
 	for(k= 0;k<place.length;k++){
 		locations.push(["ชื่อเกษตรกร: "+ place[k][0]+"<br>ระยะทาง: "+place[k][14]+" กิโลเมตร"+"<br>ที่อยู่: "+place[k][1]+place[k][2]+place[k][3]+"<br>Link: <a href="+place[k][10]+">"+place[k][10]+"</a><br> เบอร์โทรศัพท์: "+place[k][4]+"<br> facebook:"+place[k][5]+"<br> Line:"+place[k][6]+"<br> สถานที่ขาย: "+place[k][9], place[k][11], place[k][12], 0 ]);
+		extend[k] = new google.maps.LatLng(place[k][0], place[k][1]);
+		bounds.extend(extend[k]);
 	}
-	//locations.push(['คุณอยู่ตรงนี้',p3,p4,2]);
+	var currentPosition = new google.maps.LatLng(p3,p4);
+	bounds.extend(currentPosition);
     var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 14,
+      zoom: 13,
       center: new google.maps.LatLng(p3,p4),
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      panControl: true,
+        mapTypeControl: false,
+        panControlOptions: {
+            position: google.maps.ControlPosition.RIGHT_CENTER
+        },
+        zoomControl: true,
+        zoomControlOptions: {
+            style: google.maps.ZoomControlStyle.LARGE,
+            position: google.maps.ControlPosition.RIGHT_CENTER
+        },
+        scaleControl: false,
+        streetViewControl: false,
+        streetViewControlOptions: {
+            position: google.maps.ControlPosition.RIGHT_CENTER
+        }
     });
+    map.fitBounds(bounds);
+    zoomChangeBoundsListener = 
+	    google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
+	        if ( this.getZoom() ){   // or set a minimum
+	            this.setZoom(11);  // set zoom here
+	        }
+	});
 
     var infowindow = new google.maps.InfoWindow();
     var marker, i;
 		var icon = {
-			url: "icon/market-512.png", // url
+			url: "icon/human.png", // url
 			scaledSize: new google.maps.Size(50, 50), // scaled size
 			origin: new google.maps.Point(0,0), // origin
 			anchor: new google.maps.Point(0, 0) // anchor

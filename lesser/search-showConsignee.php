@@ -447,7 +447,7 @@ function ShowMarker(){
     var infowindow = new google.maps.InfoWindow();
     var marker, i;
 		var icon = {
-			url: "icon/market-512.png", // url
+			url: "icon/1495574605-map-location-solid-style-22_84554.png", // url
 			scaledSize: new google.maps.Size(50, 50), // scaled size
 			origin: new google.maps.Point(0,0), // origin
 			anchor: new google.maps.Point(0, 0) // anchor

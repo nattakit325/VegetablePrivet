@@ -154,86 +154,6 @@ div#messagesDiv{
     background-color:#9F6;
 }
 </style>
-<script type="text/javascript">
-var p1 = 0;
-let p2;
-let p3;
-let p4;
-var place = [];
-var locations = [];
-function setMarket(){
-	// place.push([<?php echo $objResult["marketLatitude"]; ?>,<?php echo $objResult["marketLongitude"]; ?>,
-	// 	'<?php echo $objResult["market"]; ?>','<?php echo $objResult["openDate"]; ?>',
-	// 	'<?php echo $objResult["openingTime"]; ?>','<?php echo $objResult["closingTime"]; ?>']);
-	//getLaLongMarket();
-}
-function getLaLongMarket() {
-	 for(var i=0;i<place.length;i++){
-        place[i][6] = new google.maps.LatLng(place[i][0], place[i][1]);
-	 }
-	 getLocation();
-}
-function getLocation() {
-
-    if (navigator.geolocation) {
-        navigator.geolocation.watchPosition(CurrentPosition);
-    } else {
-	document.getElementById("demo").innerHTML = "Geolocation is not supported by this browser.";}
-    }
-function CurrentPosition(position) {
-	p2 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-	p3 = position.coords.latitude;
-	p4 = position.coords.longitude;
-	if(p1 == 0){
-		showPosition();
-	}
-}
-function showPosition(){
- 	p1 = 1;
-	for(var j=0;j<place.length;j++){
-		place[j][7] = (google.maps.geometry.spherical.computeDistanceBetween(place[j][6], p2) / 1000).toFixed(2);
-	 }
-	 ShowMarker();
-}
-function ShowMarker(){
-	for(k= 0;k<place.length;k++){
-		locations.push(["ตลาด: "+ place[k][2]+"<br>ระยะทาง: "+place[k][7]+" กิโลเมตร"+, place[k][0], place[k][1], 0 ]);
-	}
-	//locations.push(['คุณอยู่ตรงนี้',p3,p4,2]);
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 14,
-      center: new google.maps.LatLng(p3,p4),
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
-
-    var infowindow = new google.maps.InfoWindow();
-    var marker, i;
-		var icon = {
-			url: "icon/market-512.png", // url
-			scaledSize: new google.maps.Size(50, 50), // scaled size
-			origin: new google.maps.Point(0,0), // origin
-			anchor: new google.maps.Point(0, 0) // anchor
-		};
-		var marker2 = new google.maps.Marker({
-    	position: p2,
-    	map: map
-  	});
-    for (i = 0; i < place.length; i++) {
-      marker = new google.maps.Marker({
-        position: new google.maps.LatLng(place[i][0], place[i][1]),
-        map: map,
-				icon: icon
-      });
-
-      google.maps.event.addListener(marker, 'click', (function(marker, i) {
-        return function() {
-          infowindow.setContent(locations[i][0]);
-          infowindow.open(map, marker);
-        }
-      })(marker, i));
-    }
-}
-</script>
 
 	
 
@@ -273,7 +193,7 @@ function ShowMarker(){
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><h4 class="modal-title"><?php echo $objResult["name"]; ?>  &nbsp;&nbsp;<?php echo $objResult["surname"]; ?></h4></center>
+          <center><h4 class="modal-title"><?php echo $objResult["name_surname"]; ?></h4></center>
         </div>
         <div class="modal-body">
           <center>
@@ -524,6 +444,116 @@ function ShowMarker(){
 	<script type="text/javascript" src="js/showUser.js"></script>
 	</body>
 </html>
+<script type="text/javascript">
+var p1 = 0;
+let p2;
+let p3;
+let p4;
+var place = [];
+var locations = [];
+function setMarket(){
+	place.push([<?php echo $objResult["marketLatitude"]; ?>,<?php echo $objResult["marketLongitude"]; ?>,
+		'<?php echo $objResult["market"]; ?>','<?php echo $objResult["openDate"]; ?>',
+		'<?php echo $objResult["openingTime"]; ?>','<?php echo $objResult["closingTime"]; ?>']);
+	place.push([<?php echo $objResult["latitude"]; ?>,<?php echo $objResult["longitude"]; ?>,
+		'<?php echo $objResult["name_surname"]; ?>','<?php echo $objResult["address"]; ?>',
+		'<?php echo $objResult["subdictrict"]; ?>','<?php echo $objResult["district_name"]; ?>']);
+	console.log(place);
+	getLaLongMarket();
+}
+function getLaLongMarket() {
+	 for(var i=0;i<place.length;i++){
+        place[i][6] = new google.maps.LatLng(place[i][0], place[i][1]);
+	 }
+	 getLocation();
+}
+function getLocation() {
+
+    if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(CurrentPosition);
+    } else {
+	document.getElementById("demo").innerHTML = "Geolocation is not supported by this browser.";}
+    }
+function CurrentPosition(position) {
+	p2 = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	p3 = position.coords.latitude;
+	p4 = position.coords.longitude;
+	if(p1 == 0){
+		showPosition();
+	}
+}
+function showPosition(){
+ 	p1 = 1;
+	for(var j=0;j<place.length;j++){
+		place[j][7] = (google.maps.geometry.spherical.computeDistanceBetween(place[j][6], p2) / 1000).toFixed(2);
+	 }
+	 ShowMarker();
+}
+function ShowMarker(){
+	 var bounds = new google.maps.LatLngBounds();
+    
+	for(k= 0;k<place.length;k++){
+		locations.push(["ตลาด: "+ place[k][2]+"<br>ระยะทาง: "+place[k][7]+" กิโลเมตร", place[k][0], place[k][1], 0 ]);
+		var extend1 = new google.maps.LatLng(place[k][0], place[k][1]);
+		bounds.extend(extend1);
+	}
+	var currentPosition = new google.maps.LatLng(p3,p4);
+	bounds.extend(currentPosition);
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 13,
+      center: new google.maps.LatLng(p3,p4),
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      panControl: true,
+        mapTypeControl: false,
+        panControlOptions: {
+            position: google.maps.ControlPosition.RIGHT_CENTER
+        },
+        zoomControl: true,
+        zoomControlOptions: {
+            style: google.maps.ZoomControlStyle.LARGE,
+            position: google.maps.ControlPosition.RIGHT_CENTER
+        },
+        scaleControl: false,
+        streetViewControl: false,
+        streetViewControlOptions: {
+            position: google.maps.ControlPosition.RIGHT_CENTER
+        }
+    });
+    map.fitBounds(bounds);
+    zoomChangeBoundsListener = 
+	    google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
+	        if ( this.getZoom() ){   // or set a minimum
+	            this.setZoom(11);  // set zoom here
+	        }
+	});
+    var infowindow = new google.maps.InfoWindow();
+    var marker, i;
+		var icon = {
+			url: "icon/market-512.png", // url
+			scaledSize: new google.maps.Size(50, 50), // scaled size
+			origin: new google.maps.Point(0,0), // origin
+			anchor: new google.maps.Point(0, 0) // anchor
+		};
+		var marker2 = new google.maps.Marker({
+    	position: p2,
+    	map: map
+  	});
+    for (i = 0; i < place.length; i++) {
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(place[i][0], place[i][1]),
+        map: map,
+				icon: icon
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+}
+</script>
 
 
 
