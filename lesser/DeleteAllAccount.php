@@ -26,14 +26,14 @@ if($type=='admin'){
 	$query3=mysqli_query($objCon,$sql3);
 
 
-	$sql2="DELETE from profile where career = 'admin' and username like '%$value%'";
+	$sql2="DELETE p from profile p INNER join login l on p.username = l.username WHERE p.name_surname like '%$value%' and l.status = 'admin'";
 	$query2=mysqli_query($objCon,$sql2);
 
 	$sql1="DELETE from login where status = 'admin' and username like '%$value%'";
 	$query1=mysqli_query($objCon,$sql1);
 
 }else{
-	$sql="DELETE from profile where career != 'admin' and career != 'SuperAdmin' and username like '%$value%'";
+	$sql="DELETE from profile where farmer_type_id != null  and username like '%$value%'";
 
 	$query=mysqli_query($objCon,$sql);
 	$sql2="DELETE from login where status != 'admin' and status != 'superAdmin' and username like '%$value%'";
