@@ -6,7 +6,7 @@
     $picture =  $_POST['picture'];
     $type =  $_POST['type'];
 
-    
+
 
 
     
@@ -37,6 +37,6 @@ $sql2="DELETE from login where username= '$id'";
 $query2=mysqli_query($objCon,$sql2);
 
 
-//header("location:report.php?value=' '&type=".$type);
+header("location:report.php?value=' '&type=".$type);
 
 ?>

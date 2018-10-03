@@ -394,7 +394,7 @@ $count=0;
 						</a>
 						<div class="desc">
 							<h3><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row['id'] ?></h3><br>
-							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#forconfermdeleteeach" onclick="Delete('<?php echo $row['id'] ?>','<?php echo $row['name'] ?>','<?php echo $row['picture'] ?>'),'admin'"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ยกเลิกบัญชีผู้ดูแลระบบ</span></button>
+							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#forconfermdeleteeach" onclick="Delete('<?php echo $row['id'] ?>','<?php echo $row['name'] ?>','<?php echo $row['picture'] ?>','admin')"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ยกเลิกบัญชีผู้ดูแลระบบ</span></button>
 							
 						</div>
 					</div>
