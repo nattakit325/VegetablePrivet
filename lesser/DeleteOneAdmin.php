@@ -2,6 +2,7 @@
 $id = $_GET['id'];
 $name = $_GET['name'];
 $picture = $_GET['picture'];
+$type = $_GET['type'];
 ?>
 
 
@@ -19,6 +20,7 @@ $picture = $_GET['picture'];
 <form action="CondeleteAdmin.php" method="POST">
 	<input type="hidden" name="AdminID" value="<?php echo $id ?>">
   <input type="hidden" name="picture" value="<?php echo $picture ?>">
+  <input type="hidden" name="type" value="<?php echo $type ?>">
 	<button type="submit" class="btn btn-warning" ><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button>
 
   

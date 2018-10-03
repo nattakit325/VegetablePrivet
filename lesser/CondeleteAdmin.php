@@ -4,6 +4,9 @@
     include "connect.php";
     $id =  $_POST['AdminID'];
     $picture =  $_POST['picture'];
+    $type =  $_POST['type'];
+
+    
 
 
     
@@ -12,7 +15,7 @@
     if(empty($picture)){
 
     }else{
-	if($picture!='Admin.png'){
+	if($picture!='Admin.png'&&$picture!='profile.png'){
 			unlink("images/".$picture);
 	}
 }
@@ -34,6 +37,6 @@ $sql2="DELETE from login where username= '$id'";
 $query2=mysqli_query($objCon,$sql2);
 
 
-header("location:report.php?value=' '&type=admin");
+//header("location:report.php?value=' '&type=".$type);
 
 ?>
