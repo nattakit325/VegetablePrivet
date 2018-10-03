@@ -123,7 +123,7 @@
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><i class="sl-icon-energy"></i><a href="index.html">Lesserr</a></h1>
+				<h1><i class="sl-icon-energy"></i><a href="index.html">OrganicApp</a></h1>
 				<nav role="navigation">
 					<ul>
                         <?php if($_SESSION['username'] != "") { ?>
