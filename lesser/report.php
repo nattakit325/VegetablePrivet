@@ -10,7 +10,11 @@
     	 $sql = "SELECT l.username as id, p.name_surname as name,p.picture as picture  from profile p inner join login l on p.username=l.username where l.status = '$type' and p.name_surname like '%$value%'";
 
     }else{
-    	$sql = "SELECT p.id as id, p.name_surname as name,p.picture as picture  from profile p inner join login l on p.username=l.username where l.status != '$type' and l.status != 'superAdmin' and l.status != 'admin' and p.name_surname like '%$value%'";
+    	$sql = "SELECT p.id as id, p.name_surname as name,p.picture as picture,p.address as address,p.subdictrict as subdictrict,d.district_name as district_name  from profile p inner join login l on p.username=l.username  inner join districts d on p.district_id=d.district_id  where l.status != '$type' and l.status != 'superAdmin' and l.status != 'admin' and p.name_surname like '%$value%'";
+
+
+
+
     }
    
 
@@ -119,7 +123,8 @@ $(document).ready(function(){
 
 
 
-function Delete(id,name,surname,picture) {
+function Delete(id,name,picture) {
+
     
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
@@ -127,7 +132,7 @@ function Delete(id,name,surname,picture) {
                 document.getElementById("DeleteDialog").innerHTML = this.responseText;
             }
         }
-        xmlhttp.open("GET", "DeleteOneAdmin.php?id="+id+"&name="+name+"&surname="+surname+"&picture="+picture, true);
+        xmlhttp.open("GET", "DeleteOneAdmin.php?id="+id+"&name="+name+"&picture="+picture, true);
         xmlhttp.send();
     
 }
@@ -275,8 +280,8 @@ function showHint(str) {
           
         </div>
         <div class="modal-body">
-          <p>จำนวนสินค้าที่ขาย <?php echo $row["detail"];?></p>
-          <p>จำนวนข่าวที่เสนอ <?php echo $row["detail"];?></p>
+          <p>ที่อยู่ <?php echo $row["address"];?> <?php echo $row["subdictrict"];?> อำเภอ<?php echo $row["district_name"];?></p>
+          
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -389,7 +394,7 @@ $count=0;
 						</a>
 						<div class="desc">
 							<h3><?php echo $row["name"];?>&nbsp;&nbsp;</h3><br>
-							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#forconfermdeleteeach" onclick="Delete('<?php echo $row['id'] ?>','<?php echo $row['name'] ?>','<?php echo $row['surname'] ?>','<?php echo $row['picture'] ?>')"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ยกเลิกบัญชีผู้ดูแลระบบ</span></button>
+							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#forconfermdeleteeach" onclick="Delete('<?php echo $row['id'] ?>','<?php echo $row['name'] ?>','<?php echo $row['picture'] ?>')"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ยกเลิกบัญชีผู้ดูแลระบบ</span></button>
 							
 						</div>
 					</div>

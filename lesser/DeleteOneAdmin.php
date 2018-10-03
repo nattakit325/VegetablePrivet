@@ -1,7 +1,6 @@
 <?php
 $id = $_GET['id'];
 $name = $_GET['name'];
-$surname = $_GET['surname'];
 $picture = $_GET['picture'];
 ?>
 
@@ -10,7 +9,7 @@ $picture = $_GET['picture'];
 
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><p class="modal-title">ต้องการยกเลิกบัญชีของ <?php echo $name ?>&nbsp;&nbsp;<?php echo $surname ?><br> หรือไม่</p></center>
+          <center><p class="modal-title">ต้องการยกเลิกบัญชีของ <?php echo $name ?>&nbsp;&nbsp;<br> หรือไม่</p></center>
         </div>
         <div class="modal-body">
           <center>
