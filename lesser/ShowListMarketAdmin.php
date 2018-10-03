@@ -37,8 +37,8 @@
 		$strMonthThai=$strMonthCut[$strMonth];
 		return "$strDay $strMonthThai $strYear, เวลา $strHour:$strMinute";
 	}
-
-	
+	$sqlMarketList = "SELECT * FROM `market` WHERE  market_type_id = 1";
+	$queryMarketList=mysqli_query($objCon,$sqlMarketList);
 
 ?>
 <!DOCTYPE html>
@@ -256,22 +256,25 @@
 	<div id="fh5co-featured-section">
 		<div class="container">
 			<div class="row">
-				<table id="myTable" class="display">
+				<table border="1" class="display" cellspacing="0" width="100%">
 				    <thead>
 				        <tr>
-				            <th>Column 1</th>
-				            <th>Column 2</th>
+				            <th>ID</th>
+				            <th>Name</th>
+				            <th>Edit</th>
+				            <th>Delete</th>
 				        </tr>
 				    </thead>
 				    <tbody>
-				        <tr>
-				            <td>Row 1 Data 1</td>
-				            <td>Row 1 Data 2</td>
+				    	<?php while ($row = mysqli_fetch_array($queryMarketList, MYSQLI_ASSOC)) {?>
+							<tr>
+					            <td><?php echo $row["id"] ?></td>
+					            <td><?php echo $row["market"] ?></td>
+					            <td>แก้ไข</td>
+				            	<td>ลบ</td>
 				        </tr>
-				        <tr>
-				            <td>Row 2 Data 1</td>
-				            <td>Row 2 Data 2</td>
-				        </tr>
+						<?php }?>
+				        
 				    </tbody>
 				</table>
 			</div>

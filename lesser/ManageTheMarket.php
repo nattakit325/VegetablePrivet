@@ -38,10 +38,6 @@
 		return "$strDay $strMonthThai $strYear, เวลา $strHour:$strMinute";
 	}
 
-	$sqlMarketList = "SELECT * FROM `market`";
-	$queryMarketList=mysqli_query($objCon,$sqlMarketList);
-	
-
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
