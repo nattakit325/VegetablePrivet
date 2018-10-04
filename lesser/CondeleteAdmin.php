@@ -32,6 +32,12 @@ $query4=mysqli_query($objCon,$sql4);
 $sql="DELETE from profile where username= '$id'";
 
 $query=mysqli_query($objCon,$sql);
+
+
+$sql7="DELETE from gmarket where username= '$id'";
+    $query7=mysqli_query($objCon,$sql7);
+
+
 $sql2="DELETE from login where username= '$id'";
 
 $query2=mysqli_query($objCon,$sql2);
