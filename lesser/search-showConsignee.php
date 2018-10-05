@@ -51,7 +51,6 @@ if($place_type_id !=null && $district_id != null && $subdistrict == "ทั้�
 }else{
 	$queryB ='';
 }
-print_r($queryB);
 ?>
 
 <!DOCTYPE html>
@@ -398,6 +397,21 @@ $( "#place_type_id" ).change(function() {
   		$('#subdistrict').empty().append('<option value="ทั้งหมด">ทั้งหมด</option>');
   	}
 });
+$( "#district_id" ).change(function() {
+  	var district_id = document.getElementById("district_id");
+  	var place_type_id = document.getElementById("place_type_id");
+  	if(district_id.value == 1 && (place_type_id.value ==2 || place_type_id.value == 6)){
+  		$('#subdistrict').empty();
+  		var subdistrict = document.getElementById("subdistrict");
+  		for(var i=0;i<subdistrictName.length;i++){
+  			var option1 = document.createElement("option");
+		    option1.text = subdistrictName[i];
+		    subdistrict.add(option1);
+  		}
+  	}else{
+  		$('#subdistrict').empty().append('<option value="ทั้งหมด">ทั้งหมด</option>');
+  	}
+});
 function setMarket(){
 	<?php 
 	  if($queryB != null){
@@ -408,8 +422,7 @@ function setMarket(){
 			"<?php echo $row["place_link"]; ?>","<?php echo $row["place_tel"]; ?>"]);
 		
 	 <?php }?>
-	//getLaLongMarket();
-	alert(2);
+	getLaLongMarket();
 	<?php 
 		}
 	?>
