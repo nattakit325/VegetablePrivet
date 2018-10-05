@@ -242,17 +242,26 @@ $(document).ready(function(){
 									<input class="form-control" placeholder="หัวข้อข่าว" type="text" name="topic" required="">
 								</div>
 							</div>
+
 							<div class="col-md-6">
 							<div class="form-group">รายละเอียด (ไม่เกิน 500 ตัวอักษร)
 								<textarea name="detail" class="form-control" id="" cols="30" rows="7" placeholder="รายละเอียด"></textarea>
 							</div>
-							วันที่จัดกิจกรรม
+
+							วันเวลาที่สิ้นสุดการประชาสัมพันธ์
 							<?php $dayDF = date("Y-m-d");
 									$timeDF = date("H:i");
 									$dayDF = $dayDF."T".$timeDF 
 									?>
 							<input type="datetime-local"  class="form-control" min="<?php echo $dayDF ?>" name="dateDF" required="">
 						</div>
+
+						<div class="col-md-6">
+								<div class="form-group">	<br>ลิงค์วีดีโอจาก Youtube
+									<input class="form-control" placeholder="ใส่ลิงค์ที่นี่" type="text" name="link" >
+								</div>
+							</div>
+
 							
 						<div class="col-md-12">
               <div class="form-group">

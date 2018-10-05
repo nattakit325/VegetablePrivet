@@ -3,9 +3,14 @@
     include "connect.php";
     $topic = $_POST["topic"];
     $detail = $_POST["detail"];
+    $link = $_POST["link"];
     $dateDF = $_POST["dateDF"];
     $username = $_SESSION["username"];
     $status = $_SESSION["status"];
+
+    $link = str_replace("watch?v=","embed/",$link);
+    $cut= strstr($link, "&t="); 
+    $link = str_replace($cut,"",$link);
     $st = 0;
 
     if($status == 'admin'){
@@ -87,12 +92,12 @@
 
 
     $strSQL = "INSERT INTO news";
-    $strSQL .="(topic,detail,media,time,username,status) VALUES ('$topic','$detail','$PictureName','$dateDF','$username','$st')";
+    $strSQL .="(topic,detail,media,Youtube_Link,time,username,status) VALUES ('$topic','$detail','$PictureName','$link','$dateDF','$username','$st')";
     $objQuery = mysqli_query($objCon,$strSQL);
 
 
 
-    if($status == 'admin'){
+    if($status == 'admin'||$status == 'superAdmin'){
         header("location:admin.php");
     }else{
 

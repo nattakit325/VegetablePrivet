@@ -21,7 +21,7 @@
 
 	
 	$sql = "connect.php";
-    $sql = "SELECT  n.id as id, n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name_surname as name_surname FROM news n inner join profile p on n.username = p.username WHERE time>NOW() and n.status=0  order by time";
+    $sql = "SELECT  n.id as id, n.topic as topic, n.detail as detail,n.media as media,n.Youtube_Link as Youtube_Link,n.time as time,n.username as username,p.name_surname as name_surname FROM news n inner join profile p on n.username = p.username WHERE time>NOW() and n.status=0  order by time";
 
     $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' and status = 1 ";
 
@@ -264,6 +264,10 @@
         </div>
         <div class="modal-body">
           <p> <?php echo $row["detail"];?></p>
+          <?php if($row["Youtube_Link"]!=null){ ?>
+          <iframe width="420" height="345" src="<?php echo $row["Youtube_Link"];?>" frameborder="0" allow="autoplay";>
+			</iframe>
+          <?php } ?>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -416,8 +420,8 @@ $count=0;
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>กิจกรรมที่กำลังจะมาถึง</h2>
-					<p>Coming soon events</p>
+					<h2>ประชาสัมพันธ์</h2>
+					<p>Public relations</p>
 					<div class="form-group">
 									<form >
                         <div class="form-group">
@@ -457,7 +461,7 @@ $count=0;
 						</a>
 						<div class="desc">
 							<h3><?php echo $row["topic"];?></h3>
-							<p>เวลา <?php echo DateThai($row["time"]);?></p>
+							<!--<p>เวลา <?php echo DateThai($row["time"]);?></p>-->
 							<p>โดย <?php echo $row["name_surname"];?></p>
 							
 							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $row["id"]?>">ดูรายละเอียด<i class="icon-arrow-right"></i></a>

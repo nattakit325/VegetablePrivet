@@ -255,7 +255,7 @@ function showHint(str) {
         </div>
         <div class="modal-header">
         
-          <h3>วันเวลาจัดงาน</h3><h4 class="modal-title"><?php echo DateThai($row["time"]);?> </h4>
+          <h3>วันเวลาสิ้นสุดการประชาสัมพันธ์</h3><h4 class="modal-title"><?php echo DateThai($row["time"]);?> </h4>
         
         </div>
         <div class="modal-body">
