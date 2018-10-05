@@ -348,7 +348,9 @@ $count=0;
                         </div>
                         <div class="form-group">
 									<select class="form-control" name="type">
+										<?php if($_SESSION["status"]=='superAdmin'){ ?>
 										<option value="admin">ผู้ดูและระบบ</option>
+										<?php } ?>
 										<option value="user">ผู้ใช้งานทั่วไป</option>
 									</select>
 								</div>
@@ -358,7 +360,8 @@ $count=0;
                         </button>
                     </form> 
                     <br>
-									<a href="AddAdmin.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;เพิ่มผู้ดูและระบบ</button></span></a>
+									<?php if($_SESSION["status"]=='superAdmin'){ ?><a href="AddAdmin.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;เพิ่มผู้ดูและระบบ</button></span></a>
+									<?php } ?>
 										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ยกเลิกบัญชีทั้งหมด
 										
 									</div>

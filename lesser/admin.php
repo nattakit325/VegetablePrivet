@@ -188,29 +188,7 @@ function showHint(str) {
 
 
 	<body>
-<div class="modal fade" id="forSuperAdmin" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><p class="modal-title">สงวนไว้สำหรับแอดมินสูงสุดเท่านั้น</p></center>
-          <center><p class="modal-title">Reserved only for Superadmin</p></center>
-        </div>
-        <div class="modal-body">
-          <center>
-						
-  <br>
 
-  <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fas fa-check-circle"></i>&nbsp;&nbsp;ฉันเข้าใจแล้ว</button>
-        </center>
-          
-        </div>
-        
-          
-        
-      </div>
-    </div>
-  </div>
 
 <div class="modal fade" id="forconfermdelete" role="dialog">
     <div class="modal-dialog modal-sm">
@@ -425,7 +403,7 @@ $count=0;
 			<?php }else{ ?>
 
 				<div class="col-md-6">
-					<a href="#" data-toggle="modal" data-target="#forSuperAdmin" class="featured-grid featured-grid-2" style="background-image: url(images/report.jpg);">
+					<a href="report.php?value=' '&type=user"  class="featured-grid featured-grid-2" style="background-image: url(images/report.jpg);">
 						<div class="desc">
 							<h3>การจัดการบัญชี</h3>
 							<span>Account management</span>
