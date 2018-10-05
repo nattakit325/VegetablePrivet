@@ -92,8 +92,6 @@
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900' rel='stylesheet' type='text/css'>
 
 	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
-
-
 	
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
@@ -399,140 +397,63 @@ $count=0;
 		</div>
 	</header>
 	<br>
-	<br>
+    <br>
+    <?php
+        $sql12="SELECT * FROM profile,farmer_type WHERE profile.farmer_type_id=farmer_type.farmer_type_id 
+                AND profile.farmer_type_id='1' ORDER BY `id` ASC";
+        $query12=mysqli_query($objCon,$sql12);
+    ?>
 	<div id="fh5co-featured-section">
 		<div class="container">
-			<div class="row">
-				
-				<div class="col-md-6">
-					<a href="AddNews.php" class="featured-grid featured-grid-2" style="background-image: url(images/news.jpg);">
-						<div class="desc">
-							<h3>สร้างข่าว</h3>
-							<span>Create news</span>
-						</div>
-					</a>
-				</div>
-				<?php if($_SESSION["status"]=='superAdmin'){ ?>
-				<div class="col-md-6">
-					<a href="AccountMG.php" class="featured-grid featured-grid-2" style="background-image: url(images/report.jpg);">
-						<div class="desc">
-							<h3>การจัดการบัญชี</h3>
-							<span>Account management</span>
-						</div>
-					</a>
-					
-				</div>
-			<?php }else{ ?>
-
-				<div class="col-md-6">
-					<a href="#" data-toggle="modal" data-target="#forSuperAdmin" class="featured-grid featured-grid-2" style="background-image: url(images/report.jpg);">
-						<div class="desc">
-							<h3>การจัดการบัญชี</h3>
-							<span>Account management</span>
-						</div>
-					</a>
-					
-				</div>
-			<?php } ?>
-				<div class="col-md-6">
-					<a href="addMarket.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
-						<div class="desc">
-							<h3>เพิ่มสถานที่ขายพืชผักอินทรีย์</h3>
-							<span>Add location</span>
-						</div>
-					</a>	
-				</div>
-
-				<div class="col-md-6">
-					<a href="addSellLocation.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
-						<div class="desc">
-							<h3>เพิ่มสถานที่รับสินค้า</h3>
-							<span>Add location</span>
-						</div>
-					</a>	
-				</div>
-
-				<div class="col-md-6">
-					<a href="addFarmerLocation.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
-						<div class="desc">
-							<h3>เพิ่มข้อมูลเกษตรกร</h3>
-							<span>Add farmer</span>
-						</div>
-					</a>	
-				</div>
-
-				<div class="col-md-6">
-					<a href="farmer.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
-						<div class="desc">
-							<h3>ข้อมูลเกษตรกร</h3>
-							<span>Add farmer</span>
-						</div>
-					</a>	
-				</div>
-
-				<div class="col-md-6">
-					<a href="dataMG.php" class="featured-grid featured-grid-2" style="background-image: url(images/bin.jpg);">
-						<div class="desc">
-							<h3>การจัดการข้อมูล</h3>
-							<span>Data management</span>
-						</div>
-					</a>
-					
-				</div>
-				
-			</div>
+            <div class="row">
+                <h2>เกษตรกรทั่วไป</h2>         
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>ชื่อ</th>
+                        <th>ที่อยู่</th>
+                        <th>เบอร์โทร</th>
+                        <th>facebook</th>
+                        <th>line</th>
+                        <th>อีเมล์</th>
+                        <th>ตรา</th>
+                        <th>สถานที่ขาย</th>
+                        <th>ประเภทเกษตรกร</th>
+                        <th>username</th>
+                        <th>แก้ไข</th>
+                        <th>ลบ</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                        while($row = mysqli_fetch_array($query12, MYSQLI_ASSOC)){
+                    ?>
+                    <tr>
+                        <td><?php echo $row["id"]; ?></td>
+                        <td><?php echo $row["name_surname"]; ?></td>
+                        <td><?php echo $row["address"]; ?></td>
+                        <td><?php echo $row["phone"]; ?></td>
+                        <td><?php echo $row["facebook"]; ?></td>
+                        <td><?php echo $row["line"]; ?></td>
+                        <td><?php echo $row["email"]; ?></td>
+                        <td><?php echo $row["brand"]; ?></td>
+                        <td><?php echo $row["sellproduct"]; ?></td>
+                        <td><?php echo $row["farmer_type_name"]; ?></td>
+                        <td><?php echo $row["username"]; ?></td>
+                        <td><a class="btn btn-primary" href="save-farmerList.php?id=<?php echo $row["id"]; ?>&farmer_type_id=<?php echo $row["farmer_type_id"]; ?>">แก้ไข</a></td>
+                        <td><a class="btn btn-danger">ลบ</a></td>
+                    </tr>
+                    <?php
+                        }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
 		</div>
 	</div>
 
-	<div id="fh5co-blog-section" class="fh5co-grey-bg-section">
-		<div class="container">
-			<div class="row" >
-				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>ข่าวที่รอการอนุมัติ</h2>
-					<p>All News that waiting for approval</p>
-					<div class="form-group">
-									<form class="form-inline" name="searchform" id="searchform">
-                        
-                        
-                    </form> 
-                    <br>
-									<button type="button" class="btn btn-success" data-toggle="modal" data-target="#forconfermAP"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;อนุมัติทั้งหมด</button>
-										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ปฏิเสธทั้งหมด</button>
-										
-									</div>
-							
-				</div>
-			</div>
-			<div class="row">
-
-				 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ 
-				 	$count++
-				 	?>
-				<div class="col-md-4 text-center">
-					<div class="work-inner">
-						<a class="work-grid"  style="background-image: url(images/<?php echo $row['media'];?>); ">
-						</a>
-						<div class="desc">
-							<h3><?php echo $row["topic"];?></h3>
-							<p>ประกาศเมื่อ <?php echo DateThai($row["posttime"]);?></p>
-							<p>โดย <?php echo $row["name_surname"];?></p>
-							
-							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">ดูรายระเอียด<i class="icon-arrow-right"></i></a>
-							
-						</div>
-					</div>
-				</div>
-				<?php } ?>
-				
-				
-				
-
-
-				
-
-			</div>
-		</div>
-	</div>
+	
 	
 	
 	
