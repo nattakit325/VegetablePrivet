@@ -339,7 +339,7 @@ $count=0;
 				<div class="col-md-6">
 					<a href="<?php echo $buy?>" class="featured-grid featured-grid-2" style="background-image: url(images/buy.jpg);">
 						<div class="desc">
-							<h3>ชื้อสินค้า</h3>
+							<h3>ชื้อสินค้า(สินค้าทางการเกษตร)</h3>
 							<span>Buy</span>
 						</div>
 					</a>

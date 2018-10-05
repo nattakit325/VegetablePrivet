@@ -48,8 +48,10 @@ if($place_type_id !=null && $district_id != null && $subdistrict == "ทั้�
 
 	$sql="SELECT * FROM place WHERE place_type_id = $place_type_id AND district_id = $district_id AND subdictrict = '$subdistrict'";
 	$queryB=mysqli_query($objCon,$sql);
+}else{
+	$queryB ='';
 }
-
+print_r($queryB);
 ?>
 
 <!DOCTYPE html>
@@ -385,6 +387,7 @@ $( "#place_type_id" ).change(function() {
   	var district_id = document.getElementById("district_id");
   	var place_type_id = document.getElementById("place_type_id");
   	if(district_id.value == 1 && (place_type_id.value ==2 || place_type_id.value == 6)){
+  		$('#subdistrict').empty();
   		var subdistrict = document.getElementById("subdistrict");
   		for(var i=0;i<subdistrictName.length;i++){
   			var option1 = document.createElement("option");
@@ -392,17 +395,24 @@ $( "#place_type_id" ).change(function() {
 		    subdistrict.add(option1);
   		}
   	}else{
-  		$('#subdistrict').empty().append('<option value="ทั้งหมด">ทั้งหมด</option>')
-;
+  		$('#subdistrict').empty().append('<option value="ทั้งหมด">ทั้งหมด</option>');
   	}
 });
 function setMarket(){
+	<?php 
+	  if($queryB != null){
+	?>
 	<?php while ($row = mysqli_fetch_array($queryB, MYSQLI_ASSOC)) {?>
-		place.push(["<?php echo $row["place_name"]; ?>","<?php echo $row["place_la"]; ?>",
-			"<?php echo $row["place_long"]; ?>","<?php echo $row["place_address"]; ?>",
+		place.push(["<?php echo $row["place_name"]; ?>",<?php echo $row["place_la"]; ?>,
+			<?php echo $row["place_long"]; ?>,"<?php echo $row["place_address"]; ?>",
 			"<?php echo $row["place_link"]; ?>","<?php echo $row["place_tel"]; ?>"]);
+		
 	 <?php }?>
-	getLaLongMarket();
+	//getLaLongMarket();
+	alert(2);
+	<?php 
+		}
+	?>
 }
 function getLaLongMarket() {
 	 for(var i=0;i<place.length;i++){

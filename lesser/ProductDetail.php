@@ -359,6 +359,15 @@ div#messagesDiv{
 
 								</ul>
 							</div>
+							<div class="col-md-12 side">
+								<h3><i class="fas fa-info-circle"></i>&nbsp;&nbsp;ราคา</h3>
+								<ul>
+									<li>
+										<h4><?php echo $objResult["price"]; ?></h4>
+									</li>
+
+								</ul>
+							</div>
 
 							<div class="col-md-12 side">
 								<h3><img class="picture" src="images/<?php echo $objResult["Profilepicture"]; ?>" width="10%" height="12%" />&nbsp;&nbsp;ผู้จำหน่าย</h3>
