@@ -13,7 +13,7 @@
     $link = str_replace($cut,"",$link);
     $st = 0;
 
-    if($status == 'admin'){
+    if($status == 'admin' || $status == 'superAdmin'){
         $st = 0;
     }else{
         $st=1;
