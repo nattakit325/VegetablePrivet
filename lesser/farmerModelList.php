@@ -2,33 +2,47 @@
 	session_start();
 	
     include "connect.php";
-
-
-    $type = $_GET['type'];
-    $value = $_GET['value'];
-    if($type=='admin'){
-    	 $sql = "SELECT l.username as id, p.name_surname as name,p.picture as picture  from profile p inner join login l on p.username=l.username where l.status = '$type' and p.name_surname like '%$value%'";
-
-    }else{
-    	$sql = "SELECT p.id as id, p.name_surname as name,p.picture as picture,p.address as address,p.subdictrict as subdictrict,d.district_name as district_name ,l.username as username  from profile p inner join login l on p.username=l.username  inner join districts d on p.district_id=d.district_id  where l.status != '$type' and l.status != 'superAdmin' and l.status != 'admin' and p.name_surname like '%$value%'";
+    if($_SESSION["status"] != "admin"&&$_SESSION["status"]!='superAdmin')
+	{
+		header("location:index.php");
+	}
+    
 
 
 
 
-    }
-   
+    $sql = "SELECT n.id,n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name_surname as name_surname ,n.PostTime as posttime FROM news n inner join profile p on n.username = p.username where n.status = 1 order by n.PostTime";
+
+
+    
+
+	$usermname = $_SESSION["username"];
+		
+	
+
+    
+    $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' and status = 1 ";
+    $queryForNotification=mysqli_query($objCon,$sqlForNotification);
+	$objResult = mysqli_fetch_array($queryForNotification, MYSQLI_ASSOC);
+
+
 
     $query=mysqli_query($objCon,$sql);
 	$queryDialog=mysqli_query($objCon,$sql);
+	$count = 0;
 
-
-	$usermname = $_SESSION["username"];
-	 $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' and status = 1 ";
-    $queryForNotification=mysqli_query($objCon,$sqlForNotification);
-	$objResult = mysqli_fetch_array($queryForNotification, MYSQLI_ASSOC);
-	
-
-	
+	function DateThai($strDate)
+	{
+		$strYear = date("Y",strtotime($strDate))+543;
+		$strMonth= date("n",strtotime($strDate));
+		$strDay= date("j",strtotime($strDate));
+		$strHour= date("H",strtotime($strDate));
+		$strMinute= date("i",strtotime($strDate));
+		$strSeconds= date("s",strtotime($strDate));
+		$strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+		$strMonthThai=$strMonthCut[$strMonth];
+		return "$strDay $strMonthThai $strYear, เวลา $strHour:$strMinute";
+	}
 
     
 ?>
@@ -78,8 +92,6 @@
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900' rel='stylesheet' type='text/css'>
 
 	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
-
-
 	
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
@@ -123,8 +135,7 @@ $(document).ready(function(){
 
 
 
-function Delete(id,name,picture,type) {
-
+function Delete(id,name) {
     
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
@@ -132,7 +143,7 @@ function Delete(id,name,picture,type) {
                 document.getElementById("DeleteDialog").innerHTML = this.responseText;
             }
         }
-        xmlhttp.open("GET", "DeleteOneAdmin.php?id="+id+"&name="+name+"&picture="+picture+"&type="+type, true);
+        xmlhttp.open("GET", "DeleteOneProduct.php?id="+id+"&name="+name, true);
         xmlhttp.send();
     
 }
@@ -175,19 +186,43 @@ function showHint(str) {
 
 
 	<body>
-<div class="modal fade" id="forconfermdelete" role="dialog">
+<div class="modal fade" id="forSuperAdmin" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><p class="modal-title">ต้องการยกเลิกบัญชีทั้งหมดหรือไม่</p></center>
+          <center><p class="modal-title">สงวนไว้สำหรับแอดมินสูงสุดเท่านั้น</p></center>
+          <center><p class="modal-title">Reserved only for Superadmin</p></center>
         </div>
         <div class="modal-body">
           <center>
 						
   <br>
 
-  <a href="DeleteAllAccount.php?value=<?php echo $value; ?>&type=<?php echo $type; ?>"><button type="button" class="btn btn-warning" ><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button></a>
+  <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fas fa-check-circle"></i>&nbsp;&nbsp;ฉันเข้าใจแล้ว</button>
+        </center>
+          
+        </div>
+        
+          
+        
+      </div>
+    </div>
+  </div>
+
+<div class="modal fade" id="forconfermdelete" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <center><p class="modal-title">ต้องการปฏิเสธข่าวหมดหรือไม่</p></center>
+        </div>
+        <div class="modal-body">
+          <center>
+						
+  <br>
+
+  <a href="DeleteAllNews.php"><button type="button" class="btn btn-warning"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button></a>
   <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
         </center>
           
@@ -198,6 +233,68 @@ function showHint(str) {
       </div>
     </div>
   </div>
+
+
+  <div class="modal fade" id="forconfermAP" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <center><p class="modal-title">ต้องการอนุมัติข่าวหมดหรือไม่</p></center>
+        </div>
+        <div class="modal-body">
+          <center>
+						
+  <br>
+
+  <a href="apAllNews.php"><button type="button" class="btn btn-success"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button></a>
+  <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+        </center>
+          
+        </div>
+        
+          
+        
+      </div>
+    </div>
+  </div>
+
+
+<?php while($row=mysqli_fetch_array($queryDialog,MYSQLI_ASSOC)){ 
+	$count++;
+	?>
+
+  <div class="modal fade" id="myModal<?php echo $count?>" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          
+          <h3>หัวข้อข่าว</h3><h4 class="modal-title"><?php echo $row["topic"];?> </h4>
+          
+        </div>
+        <div class="modal-header">
+        
+          <h3>วันเวลาจัดงาน</h3><h4 class="modal-title"><?php echo DateThai($row["time"]);?> </h4>
+        
+        </div>
+        <div class="modal-body">
+          <h3>รายละเอียด</h3><p> <?php echo $row["detail"];?></p>
+        </div>
+        <div class="modal-footer">
+        	<a href="APnews.php?id=<?php echo $row["id"]; ?>" class="btn btn-primary btn-outline with-arrow">อนุมัติ<i class="icon-arrow-right"></i></a>
+							<a href="RFnews.php?id=<?php echo $row["id"]; ?>"><button type="button" class="btn btn-danger" >ปฏิเสธ</span></button></a>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<?php }
+$count=0;
+ ?>
+
+
+
 
 
 <div class="modal fade" id="myModal1" role="dialog">
@@ -234,7 +331,7 @@ function showHint(str) {
       </div>
     </div>
   </div>
- <div class="modal fade" id="login" role="dialog">
+  <div class="modal fade" id="login" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
@@ -263,51 +360,18 @@ function showHint(str) {
   </div>
 
 
+ 
 
 
 
-   <?php while($row=mysqli_fetch_array($queryDialog,MYSQLI_ASSOC)){ 
-	
-	?>
-
-  <div class="modal fade" id="myModalINFO<?php echo $row["id"]?>" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          
-          <h4 class="modal-title"> <?php echo $row["name"] ?> </h4>
-          
-        </div>
-        <div class="modal-body">
-          <p>ที่อยู่ <?php echo $row["address"];?> <?php echo $row["subdictrict"];?> อำเภอ<?php echo $row["district_name"];?></p>
-          
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-<?php }
-$count=0;
- ?>
-
-  <div class="modal fade" id="forconfermdeleteeach" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-<div id="DeleteDialog">
-</div>
-  </div>
-    </div>
-  </div>
+   
 	
 	
 	<div id="fh5co-page">
-<header id="fh5co-header" role="banner">
+	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><i class="sl-icon-energy"></i><a href="index.php">Lesserr</a></h1>
+				<h1><i class="sl-icon-energy"></i><a href="index.php">OrganicApp</a></h1>
 				<nav role="navigation">
 					<ul>
 						<li>
@@ -332,89 +396,64 @@ $count=0;
 			</div>
 		</div>
 	</header>
-	
-
-	<div id="fh5co-blog-section" class="fh5co-grey-bg-section">
+	<br>
+    <br>
+    <?php
+        $sql12="SELECT * FROM profile,farmer_type WHERE profile.farmer_type_id=farmer_type.farmer_type_id 
+                AND profile.farmer_type_id='1' ORDER BY `id` ASC";
+        $query12=mysqli_query($objCon,$sql12);
+    ?>
+	<div id="fh5co-featured-section">
 		<div class="container">
-			<div class="row" >
-				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>บัญชีที่มีทั้งหมด</h2>
-					<p>All account</p>
-					<div class="form-group">
-					<form class="form-inline" name="searchform" id="searchform" action="report.php" method="get">
-                        <div class="form-group">
-
-                            <input type="text"  class="form-control" placeholder="ชื่อบัญชี" name="value">
-                        </div>
-                        <div class="form-group">
-									<select class="form-control" name="type">
-										<?php if($_SESSION["status"]=='superAdmin'){ ?>
-										<option value="admin">ผู้ดูและระบบ</option>
-										<?php } ?>
-										<option value="user">ผู้ใช้งานทั่วไป</option>
-									</select>
-								</div>
-                        <button type="submit" class="btn btn-primary" id="btnSearch">
-                            <span class="glyphicon glyphicon-search"></span>
-                            ค้นหา
-                        </button>
-                    </form> 
-                    <br>
-									<?php if($_SESSION["status"]=='superAdmin'){ ?><a href="AddAdmin.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;เพิ่มผู้ดูและระบบ</button></span></a>
-									<?php } ?>
-										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ยกเลิกบัญชีทั้งหมด
-										
-									</div>
-							
-				</div>
-			</div>
-			<div class="row">
-				<?php if($type=='user'){ ?>
-
-				 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ 
-				 	
-				 	?>
-				<div class="col-md-4 text-center">
-					<div class="work-inner">
-						<a class="work-grid" style="background-image: url(images/<?php echo $row['picture'];?>);">
-						</a>
-						<div class="desc">
-							<h3><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row["username"];?></h3><br><br>
-							
-							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#forconfermdeleteeach" onclick="Delete('<?php echo $row['username'] ?>','<?php echo $row['name'] ?>','<?php echo $row['picture'] ?>','user')"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ยกเลิกบัญชี</span></button>
-							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModalINFO<?php echo $row["id"] ?>">ดูรายละเอียด<i class="icon-arrow-right"></i></a>
-						</div>
-					</div>
-				</div>
-				<?php } }else{?>
-					<?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ 
-				 	
-				 	?>
-				<div class="col-md-4 text-center">
-					<div class="work-inner">
-						<a class="work-grid" style="background-image: url(images/<?php echo $row['picture'];?>);">
-
-						</a>
-						<div class="desc">
-							<h3><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row['id'] ?></h3><br>
-							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#forconfermdeleteeach" onclick="Delete('<?php echo $row['id'] ?>','<?php echo $row['name'] ?>','<?php echo $row['picture'] ?>','admin')"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ยกเลิกบัญชีผู้ดูแลระบบ</span></button>
-							
-						</div>
-					</div>
-				</div>
-
-
-				<?php } } ?>
-				
-				
-				
-
-
-				
-
-			</div>
+            <div class="row">
+                <h2>เกษตรกรต้นแบบ</h2>         
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>ชื่อ</th>
+                        <th>ที่อยู่</th>
+                        <th>เบอร์โทร</th>
+                        <th>facebook</th>
+                        <th>line</th>
+                        <th>อีเมล์</th>
+                        <th>ตรา</th>
+                        <th>สถานที่ขาย</th>
+                        <th>ประเภทเกษตรกร</th>
+                        <th>username</th>
+                        <th>แก้ไข</th>
+                        <th>ลบ</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                        while($row = mysqli_fetch_array($query12, MYSQLI_ASSOC)){
+                    ?>
+                    <tr>
+                        <td><?php echo $row["id"]; ?></td>
+                        <td><?php echo $row["name_surname"]; ?></td>
+                        <td><?php echo $row["address"]; ?></td>
+                        <td><?php echo $row["phone"]; ?></td>
+                        <td><?php echo $row["facebook"]; ?></td>
+                        <td><?php echo $row["line"]; ?></td>
+                        <td><?php echo $row["email"]; ?></td>
+                        <td><?php echo $row["brand"]; ?></td>
+                        <td><?php echo $row["sellproduct"]; ?></td>
+                        <td><?php echo $row["farmer_type_name"]; ?></td>
+                        <td><?php echo $row["username"]; ?></td>
+                        <td><a class="btn btn-primary" href="save-farmerList.php?id=<?php echo $row["id"]; ?>&farmer_type_id=<?php echo $row["farmer_type_id"]; ?>">แก้ไข</a></td>
+                        <td><a class="btn btn-danger">ลบ</a></td>
+                    </tr>
+                    <?php
+                        }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
 		</div>
 	</div>
+
+	
 	
 	
 	
