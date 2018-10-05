@@ -1,9 +1,15 @@
-<?php 
-session_start();
-include "connect.php";
+<?php
+    session_start();
+	include "connect.php";
 
-
-
+	$sql="SELECT * FROM `districts`";
+	$query=mysqli_query($objCon,$sql);
+	$sql1="SELECT * FROM `place_type`";
+	$query1=mysqli_query($objCon,$sql1);
+	if($_SESSION["status"] == null)
+	{
+		header("location:index.php");
+	}
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -65,23 +71,11 @@ include "connect.php";
 	<link rel="stylesheet" href="css/style.css">
 
 
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-    $("#dd1").click(function(){
-          $("#d1").remove();
-    });
-    $("#dd2").click(function(){
-          $("#d2").remove();
-    });
-    
-   
-});
-</script>
-
-
-		<style>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO9xE9smgXJIDFDpyPaDGZcjQu-ybwOKc&callback=setupMap">
+	</script>
+	<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<style>
 .circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
     height: 40px;  /* ความสูงปรับให้เป็นออโต้ */
     width: 40px;  /* ความสูงปรับให้เป็นออโต้ */
@@ -96,23 +90,52 @@ $(document).ready(function(){
     border-radius: 50%; /* ปรับเป็น 50% คือความโค้งของเส้นขอบ*/
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
 }
-
-
 </style>
+<script>
+function ShowMarker(){
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 14,
+      center: new google.maps.LatLng(10,10),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
 
-<script type="text/javascript">
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
+    var infowindow = new google.maps.InfoWindow();
+    if (navigator.geolocation) {
+	navigator.geolocation.getCurrentPosition(function (position) {
+		var pos = {
+			lat: position.coords.latitude,
+			lng: position.coords.longitude
+		};
+		infowindow.setPosition(pos);
+		infowindow.setContent('คุณอยู่ตรงนี้');
+		infowindow.open(map);
+		map.setCenter(pos);
+	});
 
-                reader.onload = function (e) {
-                    $('#blah').attr('style', 'background-image: url('+e.target.result+');');
-                }
+	}
+	google.maps.event.addListener(map, 'click', function (event) {
 
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-    </script>
+	var html = '';
+	html += 'lat : <input type="text" id="lat" value="' + event.latLng.lat() + '" readonly/><br/>';
+	html += 'lng : <input type="text" id="lng" value="' + event.latLng.lng() + '" readonly/><br/>';
+	html += '<input type="button" value="ตกลง" onclick="Addlatlong()" />';
+	infowindow.open(map);
+	infowindow.setContent(html);
+	infowindow.setPosition(event.latLng);
+	//marker.setPosition(event.latLng);
+
+});
+}
+function Addlatlong(){
+	var lat = $("#lat").val();
+	var lng = $("#lng").val();
+	document.getElementById("lati").value = lat;
+	document.getElementById("longi").value = lng;
+	$('#myModal2').modal('hide');
+}
+</script>
+
+
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
 	<!-- FOR IE9 below -->
@@ -121,8 +144,21 @@ $(document).ready(function(){
 	<![endif]-->
 
 	</head>
-	<body>
-	<div class="modal fade" id="myModal1" role="dialog">
+	<body onload="ShowMarker()">
+<div class="modal fade" id="myModal2" role="dialog">
+      <div class="modal-content">
+
+        <div class="modal-body">
+				<div id="map"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">ออก</button>
+        </div>
+      </div>
+
+ </div>
+
+	<div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
@@ -161,7 +197,7 @@ $(document).ready(function(){
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-		  <center><h4 class="modal-title"><?php echo $_SESSION["name_surname"];?> </h4></center>
+          <center><h4 class="modal-title"><?php echo $_SESSION["name_surname"];?> </h4></center>
         </div>
         <div class="modal-body">
           <center>
@@ -183,6 +219,14 @@ $(document).ready(function(){
       </div>
     </div>
   </div>
+
+
+ 
+
+
+
+   
+	
 	
 	<div id="fh5co-page">
 	<header id="fh5co-header" role="banner">
@@ -199,7 +243,6 @@ $(document).ready(function(){
 						<?php }else{?>
 							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name_surname"];?></a></li>
 							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
-							
 						<?php } ?>
 						
 					</ul>
@@ -207,128 +250,106 @@ $(document).ready(function(){
 			</div>
 		</div>
 	</header>
-
-
-
+	<br>
+	<br>
 	<div id="fh5co-contact-section">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
 					<h2>เพิ่มสถานที่</h2>
-					<p><span>Insert shop</span></p>
+					<p><span>Add new place</span></p>
 				</div>
 			</div>
-
 			<div class="row">
-				
+
 				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 					<div class="row">
-				
-				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-					<div class="row">
-						<form action="save-markets.php" method="post" enctype="multipart/form-data" runat="server">
-							<div class="col-md-4 text-center">
-				</div>
+						<form action="save-markets.php" method="post" enctype="multipart/form-data">
+			
+
 							<div class="col-md-6">
-								<div class="form-group">ชื่อสถานที่
+								<div class="form-group">
+									<label>ชื่อสถานที่</label>
 									<input class="form-control" placeholder="ชื่อสถานที่" type="text" name="nameShop" required="">
 								</div>
 							</div>
 							<div class="col-md-6">
-								<div class="form-group">รายละเอียดที่อยู่
-									<textarea name="detailShop" class="form-control" id="" cols="30" rows="7" placeholder="รายละเอียด"></textarea>
+								<div class="form-group">
+									<label>ที่อยู่</label>
+									<input class="form-control" placeholder="ที่อยู่" type="text" name="detailShop" required="">
 								</div>
 							</div>
 							<div class="col-md-6">
-								<div class="form-group">ลิ๊งค์เว็บไซต์
-									<input class="form-control" placeholder="ลิ๊งค์เว็บไซต์" type="text" name="linkShop" required="">
+								<div class="form-group">
+									<label>ลิ๊งค์เว็บไซด์</label>
+									<input class="form-control" placeholder="www.example.com" type="text" name="linkShop" required="">
 								</div>
 							</div>
 							<div class="col-md-6">
-								<div class="form-group">เบอร์โทรติดต่อ
-									<input class="form-control" placeholder="เบอร์โทรติดต่อ" type="text" name="telShop" required="">
+								<div class="form-group">
+									<label>เบอร์โทร</label>
+									<input class="form-control" placeholder="เบอร์โทร" type="text" name="telShop" required="">
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>latitude</label>
+										<input class="form-control" placeholder="" id="lati" type="text" name="laShop" readonly="" required="">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>longitude</label>
+										<input class="form-control" placeholder="" id="longi" type="text" name="loShop" readonly="" required="">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal2"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ระบุสถานที่</button>
 								</div>
 							</div>
 							<div class="col-md-6">
-								<div class="form-group">ตั้งอยู่ใน
-									<select class="form-control" name="districtShop">
-										<option value="1">อำเภอเมืองเชียงใหม่</option>
-										<option value="2">สารภี</option>
-										<option value="3">หางดง</option>
-										<option value="4">ฮอด</option>
-										<option value="5">กัลยาณิวัฒนา</option>
-										<option value="6">แม่แจ่ม</option>
-										<option value="7">เชียงดาว</option>
-										<option value="8">สันทราย</option>
-										<option value="9">สันกำแพง</option>
-										<option value="10">จอมทอง</option>
-										<option value="11">ดอยสะเก็ด</option>
-										<option value="12">เวียงแหง</option>
-										<option value="13">แม่วาง</option>
-										<option value="14">สะเมิง</option>
-										<option value="15">ฝาง</option>
-										<option value="16">แม่ริม</option>
-										<option value="17">แม่ออน</option>
-										<option value="18">สันป่าตอง</option>
-										<option value="19">แม่แตง</option>
-										<option value="20">แม่อาย</option>
-										<option value="21">พร้าว</option>
-										<option value="22">อมก๋อย</option>
-										<option value="23">ดอยเต่า</option>
-										<option value="24">ไชยปราการ</option>
-										<option value="25">ดอยหล่อ</option>
-									</select>
-								</div>
-							</div>
-
-							<div class="col-md-6">
-								<div class="form-group">ประเภทสถานที่
+								<div class="form-group">
+									<label>ประเภทสถานที่</label>
 									<select class="form-control" name="typeShop">
-										<option value="1">โรงพยาบาล</option>
-										<option value="2">โรงแรม/ที่พัก</option>
-										<option value="3">แหล่งท่องเที่ยว</option>
-										<option value="4">สถานศึกษา</option>
-										<option value="5">สถานที่ราชการ</option>
-										<option value="6">ร้านอาหาร</option>
-										<option value="7">ตลาด</option>
-										<option value="8">ชุมชน</option>
+										<?php while ($row = mysqli_fetch_array($query1, MYSQLI_ASSOC)) {?>
+											<option value="<?php echo $row["place_type_id"] ?>"><?php echo $row["place_type_name"] ?></option>
+										<?php }?>
 									</select>
 								</div>
 							</div>
-
-							<div class="col-md-6">
-								<div class="form-group">ที่ตั้ง:ละติจูด (latitude) 
-									<input class="form-control" placeholder="latitude" type="text" name="laShop" required="">
+								<div class="col-md-6">
+										<div class="form-group">
+											<label>เลือกอำเภอ</label>
+											<select class="form-control" name="districtShop">
+												<?php while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {?>
+													<option value="<?php echo $row["district_id"] ?>"><?php echo $row["district_name"] ?></option>
+												<?php }?>
+											</select>
+										</div>
 								</div>
-							</div>
-
-							<div class="col-md-6">
-								<div class="form-group">ที่ตั้ง:ลองติจูด (longitude)
-									<input class="form-control" placeholder="longitude" type="text" name="loShop" required="">
-								</div>
-							</div>
+							<br>
 							
-						<div class="col-md-12">
-              <div class="form-group">
-                <br>
-                <center>
-                <input value="เพิ่มสถานที่" class="btn btn-primary" type="submit">
-                </center>
-              </div>
-            </div>
-						
+
 					</div>
-				</div>
-						
-			</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
+</div>
 	
-
-	</form>
+	
+  			<div class="col-md-12">
+              <div class="form-group">
+                <br>
+                <center>
+            		<input value="ยืนยัน" class="btn btn-primary" type="submit">
+                </center>
+              </div>
+			</div>
+		</form>	
+            
+	
 	
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
@@ -339,10 +360,21 @@ $(document).ready(function(){
 	<!-- Waypoints -->
 	<script src="js/jquery.waypoints.min.js"></script>
 	<!-- Google Map -->
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
-	<script src="js/google_map.js"></script>
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
+	<script type="text/javascript">
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah').attr('style', 'background-image: url('+e.target.result+');');
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 
 	</body>
 </html>
