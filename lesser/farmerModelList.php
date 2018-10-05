@@ -406,7 +406,7 @@ $count=0;
 	<div id="fh5co-featured-section">
 		<div class="container">
             <div class="row">
-                <h2>เกษตรกรทั่วไป</h2>         
+                <h2>เกษตรกรต้นแบบ</h2>         
                 <table class="table table-hover">
                     <thead>
                     <tr>
