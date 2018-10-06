@@ -18,7 +18,7 @@
 		$strSeconds= date("s",strtotime($strDate));
 		$strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
 		$strMonthThai=$strMonthCut[$strMonth];
-		return "$strDay $strMonthThai $strYear, เวลา $strHour:$strMinute";
+		return "$strDay $strMonthThai $strYear,<br> เวลา $strHour:$strMinute";
 	}
 
     
@@ -375,14 +375,16 @@ function Delete(id,name) {
 						</a>
 						<div class="desc">
 							<h3><?php echo $row["topic"];?></h3>
-							<p>ประกาศเมื่อ <?php echo DateThai($row["posttime"]);?></p>
+							<?php if(date('Y/m/d',strtotime($row["time"]))<date("Y/m/d")){?>
+								<p style="color: red">แบ่งปันถึงวันที่ <?php echo DateThai($row["time"]);?></p>
+							<?php }else{ ?>
+								<p style="color: green">แบ่งปันถึงวันที่ <?php echo DateThai($row["time"]);?></p>
+							<?php  } ?>
+							ประกาศเมื่อ <?php echo DateThai($row["posttime"]);?>
 
-							<p>วัน <?php echo DateThai($row["time"]);?></p>
-							<p>ถึงวัน <?php echo DateThai(date("Y/m/d"));?></p>
-							<?php if(date('Y-m-d',strtotime($row["time"]))<date("Y/m/d")) {?>
-								dsfsdfsdf
-							<?php } ?>
-							<p>โดย <?php echo $row["name_surname"];?></p>
+							
+							
+							โดย <?php echo $row["name_surname"];?><br>
 							<button type="button" class="btn btn-danger" data-toggle="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ลบ</span></button>
 							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">แก้ไขข่าว<i class="icon-arrow-right"></i></a>
 						</div>
