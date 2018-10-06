@@ -7,6 +7,10 @@
     $dateDF = $_POST["dateDF"];
     $username = $_SESSION["username"];
     $status = $_SESSION["status"];
+    $link_other = $_POST["link_other"];
+
+
+    
 
     $link = str_replace("watch?v=","embed/",$link);
     $cut= strstr($link, "&t="); 
@@ -92,7 +96,7 @@
 
 
     $strSQL = "INSERT INTO news";
-    $strSQL .="(topic,detail,media,Youtube_Link,time,username,status) VALUES ('$topic','$detail','$PictureName','$link','$dateDF','$username','$st')";
+    $strSQL .="(topic,detail,media,Youtube_Link,Link,time,username,status) VALUES ('$topic','$detail','$PictureName','$link','$link_other','$dateDF','$username','$st')";
     $objQuery = mysqli_query($objCon,$strSQL);
 
 

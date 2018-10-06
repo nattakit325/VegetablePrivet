@@ -262,6 +262,12 @@ $(document).ready(function(){
 								</div>
 							</div>
 
+							<div class="col-md-10">
+								<div class="form-group">ลิงค์เว็ปไซต์อื่นๆ
+									<input class="form-control" placeholder="ใส่ลิงค์เว็ปไซต์อื่นๆ" type="text" name="link_other" >
+								</div>
+							</div>
+
 							
 						<div class="col-md-12">
               <div class="form-group">

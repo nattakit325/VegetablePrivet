@@ -21,7 +21,7 @@
 
 	
 	$sql = "connect.php";
-    $sql = "SELECT  n.id as id, n.topic as topic, n.detail as detail,n.media as media,n.Youtube_Link as Youtube_Link,n.time as time,n.username as username,p.name_surname as name_surname FROM news n inner join profile p on n.username = p.username WHERE time>NOW() and n.status=0  order by time";
+    $sql = "SELECT  n.id as id, n.topic as topic, n.detail as detail,n.media as media,n.Youtube_Link as Youtube_Link,n.Link as Link,n.time as time,n.username as username,p.name_surname as name_surname FROM news n inner join profile p on n.username = p.username WHERE time>NOW() and n.status=0  order by time";
 
     $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' and status = 1 ";
 
@@ -264,7 +264,12 @@
         </div>
         <div class="modal-body">
           <p> <?php echo $row["detail"];?></p>
+          <?php if($row["Link"]!=null){ ?>
+          เว็ปไซต์ประชาสัมพันธ์"
+          <a href="<?php echo $row["Link"];?>" target="_blank"><?php echo $row["Link"];?></a>
+          <?php } ?><br><br>
           <?php if($row["Youtube_Link"]!=null){ ?>
+          สื่อประชาสัมพันธ์<br>
           <iframe width="420" height="345" src="<?php echo $row["Youtube_Link"];?>" frameborder="0" allow="autoplay";>
 			</iframe>
           <?php } ?>
