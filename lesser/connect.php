@@ -9,7 +9,7 @@
     if($objCon){
         
     }
-    mysqli_set_charset($objCon,"utf8");
+    mysqli_set_charset($objCon,"utf8mb4");
 
 
 
