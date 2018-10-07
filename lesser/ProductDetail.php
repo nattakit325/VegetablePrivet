@@ -155,10 +155,12 @@ div#messagesDiv{
 }
 </style>
 
-	
+
 
 	</head>
 	<body  onload="setMarket()">
+
+
 
 
 

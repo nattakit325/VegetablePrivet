@@ -265,11 +265,11 @@
         <div class="modal-body">
           <p> <?php echo $row["detail"];?></p>
           <?php if($row["Link"]!=null){ ?>
-          เว็ปไซต์ประชาสัมพันธ์"
+          <u>เว็ปไซต์ประชาสัมพันธ์</u><br>
           <a href="<?php echo $row["Link"];?>" target="_blank"><?php echo $row["Link"];?></a>
           <?php } ?><br><br>
           <?php if($row["Youtube_Link"]!=null){ ?>
-          สื่อประชาสัมพันธ์<br>
+          <u>สื่อประชาสัมพันธ์</u><br>
           <iframe width="420" height="345" src="<?php echo $row["Youtube_Link"];?>" frameborder="0" allow="autoplay";>
 			</iframe>
           <?php } ?>
