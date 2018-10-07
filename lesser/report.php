@@ -11,10 +11,6 @@
 
     }else{
     	$sql = "SELECT p.id as id, p.name_surname as name,p.picture as picture,p.address as address,p.subdictrict as subdictrict,d.district_name as district_name ,l.username as username  from profile p inner join login l on p.username=l.username  inner join districts d on p.district_id=d.district_id  where l.status != '$type' and l.status != 'superAdmin' and l.status != 'admin' and p.name_surname like '%$value%'";
-
-
-
-
     }
    
 
@@ -107,6 +103,17 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+	<!-- data table -->
+	 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" />
+	  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/dataTables.bootstrap.min.css" />
+	  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.1.0/css/responsive.bootstrap.min.css" type="text/css" />
+	  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.1/css/buttons.bootstrap.min.css" type="text/css" />
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900' rel='stylesheet' type='text/css'>
+
+	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
+	<!-- data table -->
 	</head>
 
 
@@ -371,40 +378,56 @@ $count=0;
 			<div class="row">
 				<?php if($type=='user'){ ?>
 
-				 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ 
-				 	
-				 	?>
-				<div class="col-md-4 text-center">
-					<div class="work-inner">
-						<a class="work-grid" style="background-image: url(images/<?php echo $row['picture'];?>);">
-						</a>
-						<div class="desc">
-							<h3><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row["username"];?></h3><br><br>
-							
-							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#forconfermdeleteeach" onclick="Delete('<?php echo $row['username'] ?>','<?php echo $row['name'] ?>','<?php echo $row['picture'] ?>','user')"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ยกเลิกบัญชี</span></button>
-							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModalINFO<?php echo $row["id"] ?>">ดูรายละเอียด<i class="icon-arrow-right"></i></a>
-						</div>
+			<div class="row">
+				<table border="1" class="datatable table table-hover table-bordered" cellspacing="0" width="100%" id='datatable'>
+				    <thead>
+				        <tr>
+				            <th>ID</th>
+				            <th>Name</th>
+				            <th>Address</th>
+				            <th>Delete</th>
+				        </tr>
+				    </thead>
+				    <tbody>
+				    	<?php while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {?>
+							<tr>
+					    
+					            <td><?php echo $row["username"];?></td>
+					    		<td><?php echo $row["name"];?></td>
+				            	<td>ที่อยู่ <?php echo $row["address"];?> <?php echo $row["subdictrict"];?> อำเภอ<?php echo $row["district_name"];?></td>
+				            	<td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#forconfermdeleteeach" onclick="Delete('<?php echo $row['username'] ?>','<?php echo $row['name'] ?>','<?php echo $row['picture'] ?>','user')"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ยกเลิกบัญชี</span></button></td>
+				        </tr>
+						<?php }?>
+				        
+				    </tbody>
+				</table>
+			</div>
+				<?php }else{?>
+					<div class="row">
+						<table border="1" class="datatable table table-hover table-bordered" cellspacing="0" width="100%" id='datatable'>
+						    <thead>
+						        <tr>
+						            <th>ID</th>
+						            <th>Name</th>
+						            <th>Delete</th>
+						        </tr>
+						    </thead>
+						    <tbody>
+						    	<?php while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {?>
+									<tr>
+							    
+							            <td><?php echo $row["id"];?></h3></td>
+							    		<td><?php echo $row["name"];?></td>
+						            	<td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#forconfermdeleteeach" onclick="Delete('<?php echo $row['id'] ?>','<?php echo $row['name'] ?>','<?php echo $row['picture'] ?>','admin')"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ยกเลิกบัญชีผู้ดูแลระบบ</span></button></td>
+						        	</tr>
+								<?php }?>
+						        
+						    </tbody>
+						</table>
 					</div>
-				</div>
-				<?php } }else{?>
-					<?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ 
-				 	
-				 	?>
-				<div class="col-md-4 text-center">
-					<div class="work-inner">
-						<a class="work-grid" style="background-image: url(images/<?php echo $row['picture'];?>);">
+					
 
-						</a>
-						<div class="desc">
-							<h3><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row['id'] ?></h3><br>
-							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#forconfermdeleteeach" onclick="Delete('<?php echo $row['id'] ?>','<?php echo $row['name'] ?>','<?php echo $row['picture'] ?>','admin')"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ยกเลิกบัญชีผู้ดูแลระบบ</span></button>
-							
-						</div>
-					</div>
-				</div>
-
-
-				<?php } } ?>
+				<?php } ?>
 				
 				
 				
@@ -432,6 +455,22 @@ $count=0;
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
 
+	<!-- data Table State -->
+	  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	  <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+	  <script src="//cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+	  <!-- Responsive extension -->
+	  <script src="https://cdn.datatables.net/responsive/2.1.0/js/responsive.bootstrap.min.js"></script>
+	  <!-- Buttons extension -->
+	  <script src="//cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
+	  <script src="//cdn.datatables.net/buttons/1.2.1/js/buttons.bootstrap.min.js"></script>
+	  <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+	  <script src="//cdn.datatables.net/buttons/1.2.1/js/buttons.html5.min.js"></script>
+	  
+	  <script>
+	    var dataTable = $('#datatable').DataTable();
+	  </script>
+	<!-- END Data Table -->
 	</body>
 </html>
 

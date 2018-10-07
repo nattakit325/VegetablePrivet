@@ -302,6 +302,10 @@
 	<script src="js/jquery.waypoints.min.js"></script>
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
+
+
+	<!-- data Table State -->
+
 	  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 	  <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 	  <script src="//cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
@@ -316,6 +320,8 @@
 	  <script>
 	    var dataTable = $('#datatable').DataTable();
 	  </script>
+
+
 	</body>
 </html>
 
