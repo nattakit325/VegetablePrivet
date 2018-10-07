@@ -22,6 +22,7 @@ $query=mysqli_query($objCon,$sql);
 
 $sql="SELECT * FROM `districts`";
 $queryA=mysqli_query($objCon,$sql);
+$queryE=mysqli_query($objCon,$sql);
 
 $place_type_id = filter_input(INPUT_POST, 'place_type_id', FILTER_SANITIZE_STRING);
 $district_id = filter_input(INPUT_POST, 'district_id', FILTER_SANITIZE_STRING);
@@ -381,7 +382,10 @@ let p3;
 let p4;
 var place = [];
 var locations = [];
+var latitudeDis = 0;
+var longitudeDis = 0;
 var subdistrictName = ['ศรีภูมิ','พระสิงห์','หายยา','ช้างม่อย','ช้างคลาน','วัดเกต','ช้างเผือก','สุเทพ','แม่เหียะ','ป่าแดด','หนองหอย','ท่าศาลา','หนองป่าครั่ง','ฟ้าฮ่าม','ป่าตัน','สันผีเสื้อ'];
+var districts = [];
 $( "#place_type_id" ).change(function() {
   	var district_id = document.getElementById("district_id");
   	var place_type_id = document.getElementById("place_type_id");
@@ -460,10 +464,11 @@ function ShowMarker(){
 		locations.push([ place[k][0]+"<br>ระยะทาง "+place[k][7]+" กิโลเมตร"+"<br> "+place[k][3]+"<br>Link: "
 			+place[k][4]+"<br> เบอร์โทรศัพท์ "+place[k][5], place[k][1], place[k][2], 0 ]);
 	}
+	setLocation();
 	//locations.push(['คุณอยู่ตรงนี้',p3,p4,2]);
     var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 14,
-      center: new google.maps.LatLng(p3,p4),
+      zoom: 11,
+      center: new google.maps.LatLng(latitudeDis,longitudeDis),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
@@ -493,6 +498,69 @@ function ShowMarker(){
         }
       })(marker, i));
     }
+}
+function setLocation(){
+	<?php while ($row = mysqli_fetch_array($queryE, MYSQLI_ASSOC)) {?>
+		districts.push(["<?php echo $row["district_name"] ?>"]);
+	<?php }?>
+	var districtName = "<?php echo $objResultdistrict['district_name']  ?>";
+	districts[0][1] = 18.784101;
+	districts[0][2]	= 98.984107;
+	districts[1][1] = 18.709776;
+	districts[1][2] = 99.042566;
+	districts[2][1] = 18.732064;
+	districts[2][2] = 98.864661;
+	districts[3][1] = 18.119511;
+	districts[3][2] = 98.462303;
+	districts[4][1] = 19.01293;
+	districts[4][2] = 98.298501;
+	districts[5][1] = 18.573046;
+	districts[5][2] = 98.330605;
+	districts[6][1] = 19.518482;
+	districts[6][2] = 98.952494;
+	districts[7][1] = 18.953236;
+	districts[7][2] = 99.030692;
+	districts[8][1] = 18.741143;
+	districts[8][2] = 99.148409;
+	districts[9][1] = 18.386825;
+	districts[9][2] = 98.587514;
+	districts[10][1] = 18.918385;
+	districts[10][2] = 99.204238;
+	districts[11][1] = 19.600083;
+	districts[11][2] = 98.65759;
+	districts[12][1] = 18.669981;
+	districts[12][2] = 98.651447;
+	districts[13][1] = 18.902797;
+	districts[13][2] = 98.638519;
+	districts[14][1] = 19.894004;
+	districts[14][2] = 99.145998;
+	districts[15][1] = 18.938431;
+	districts[15][2] = 98.885433;
+	districts[16][1] = 18.735851;
+	districts[16][2] = 99.301081;
+	districts[17][1] = 18.603465;
+	districts[17][2] = 98.87956;
+	districts[18][1] = 19.181916;
+	districts[18][2] = 98.827772;
+	districts[19][1] = 20.001828;
+	districts[19][2] = 99.346431;
+	districts[20][1] = 19.286554;
+	districts[20][2] = 99.222962;
+	districts[21][1] = 17.777383;
+	districts[21][2] = 98.305231;
+	districts[22][1] = 17.910388;
+	districts[22][2] = 98.689073;
+	districts[23][1] = 19.682347;
+	districts[23][2] = 99.16342;
+	districts[24][1] = 18.523956;
+	districts[24][2] = 98.759286;
+	for(var i=0;i<=districts.length;i++){
+		if(districts[i][0]==districtName){
+			latitudeDis = districts[i][1];
+			longitudeDis = districts[i][2];
+			break;
+		}
+	}
 }
 </script>
 

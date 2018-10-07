@@ -254,7 +254,23 @@
 	<div id="fh5co-featured-section">
 		<div class="container">
 			<div class="row">
-				
+				<div class="col-md-6">
+					<a href="ShowListMarketAdmin.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
+						<div class="desc">
+							<h3>จัดการตลาด</h3>
+							<span>Manage Market</span>
+						</div>
+					</a>	
+				</div>
+
+				<div class="col-md-6">
+					<a href="addMarket.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
+						<div class="desc">
+							<h3>เพิ่มตลาด</h3>
+							<span>Add Market</span>
+						</div>
+					</a>	
+				</div>
 
 
 			</div>
