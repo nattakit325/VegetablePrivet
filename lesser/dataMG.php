@@ -98,6 +98,17 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+	<!-- data table -->
+	 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" />
+	  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/dataTables.bootstrap.min.css" />
+	  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.1.0/css/responsive.bootstrap.min.css" type="text/css" />
+	  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.1/css/buttons.bootstrap.min.css" type="text/css" />
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900' rel='stylesheet' type='text/css'>
+
+	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
+	<!-- data table -->
 	</head>
 
 
@@ -365,39 +376,36 @@ function Delete(id,name) {
 			</div>
 			<div id="search_result">
 			<div class="row">
-
-				 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ 
-				 	
-				 	?>
-				<div class="col-md-4 text-center">
-					<div class="work-inner">
-						<a class="work-grid" style="background-image: url(images/<?php echo $row['media'];?>);">
-						</a>
-						<div class="desc">
-							<h3><?php echo $row["topic"];?></h3>
-							<?php if(date('Y/m/d',strtotime($row["time"]))<date("Y/m/d")){?>
-								<p style="color: red">แสดงถึงวันที่ <?php echo DateThai($row["time"]);?></p>
-							<?php }else{ ?>
-								<p style="color: green">แสดงถึงวันที่ <?php echo DateThai($row["time"]);?></p>
-							<?php  } ?>
-							ประกาศเมื่อ <?php echo DateThai($row["posttime"]);?>
-
-							
-							
-							โดย <?php echo $row["name_surname"];?><br>
-							<button type="button" class="btn btn-danger" data-toggle="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ลบ</span></button>
-							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">แก้ไขข่าว<i class="icon-arrow-right"></i></a>
-						</div>
-					</div>
-				</div>
-				<?php } ?>
-				
-				
-				
-
-
-				
-
+				<table border="1" class="datatable table table-hover table-bordered" cellspacing="0" width="100%" id='datatable'>
+				    <thead>
+				        <tr>
+				            <th>Topic</th>
+				            <th>Time</th>
+				            <th>PostTime</th>
+				            <th>PostName</th>
+				            <th>Edit</th>
+				            <th>Delete</th>
+				        </tr>
+				    </thead>
+				    <tbody>
+				    	<?php while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {?>
+							<tr>
+					    
+					            <td><?php echo $row["topic"];?></td>
+					            <?php if(date('Y/m/d',strtotime($row["time"]))<date("Y/m/d")){?>
+									<td><p style="color: red">แสดงถึงวันที่ <?php echo DateThai($row["time"]);?></p></td>
+								<?php }else{ ?>
+									<td><p style="color: green">แสดงถึงวันที่ <?php echo DateThai($row["time"]);?></p></td>
+								<?php  } ?>
+				            	<td><?php echo DateThai($row["posttime"]);?></td>
+				            	<td><?php echo $row["name_surname"];?></td>
+				            	<td><a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">แก้ไขข่าว<i class="icon-arrow-right"></i></a></td>
+				            	<td><button type="button" class="btn btn-danger" data-toggle="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ลบ</span></button></td>
+				        </tr>
+						<?php }?>
+				        
+				    </tbody>
+				</table>
 			</div>
 		</div>
 		</div>
@@ -419,6 +427,22 @@ function Delete(id,name) {
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
 
+	<!-- data Table State -->
+	  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	  <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+	  <script src="//cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+	  <!-- Responsive extension -->
+	  <script src="https://cdn.datatables.net/responsive/2.1.0/js/responsive.bootstrap.min.js"></script>
+	  <!-- Buttons extension -->
+	  <script src="//cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
+	  <script src="//cdn.datatables.net/buttons/1.2.1/js/buttons.bootstrap.min.js"></script>
+	  <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+	  <script src="//cdn.datatables.net/buttons/1.2.1/js/buttons.html5.min.js"></script>
+	  
+	  <script>
+	    var dataTable = $('#datatable').DataTable();
+	  </script>
+	<!-- END Data Table -->
 	</body>
 </html>
 
