@@ -457,6 +457,15 @@ $count=0;
 					</a>
 					
 				</div>
+				<div class="col-md-6">
+					<a href="dataMG.php" class="featured-grid featured-grid-2" style="background-image: url(images/mg.jpg);">
+						<div class="desc">
+							<h3>การจัดการเมนู</h3>
+							<span>Menu management</span>
+						</div>
+					</a>
+					
+				</div>
 				
 			</div>
 		</div>

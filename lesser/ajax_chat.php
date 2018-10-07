@@ -12,16 +12,38 @@ if(empty($_SESSION['username'])){
 if(isset($_POST['user2']) && $_POST['user2']!="" 
 && isset($_POST['msg']) && $_POST['msg']!="" ){
 
-	$sql="
-	INSERT INTO tbl_chat SET 
-	chat_msg='".$_POST['msg']."',
-	chat_user1='".$user."',  
-	chat_user2='".$_POST['user2']."',
-	chat_datetime='".date("Y-m-d H:i:s")."'	,
-	status=1		
-	";
-	$mysqli->query($sql);
+	if($_POST['user2']=='admin'){
+		$sqlAdmin = "SELECT username FROM `login` where status ='admin' or status ='superAdmin'";
+		$queryAdmin=mysqli_query($objCon,$sqlAdmin);
+		while($row=mysqli_fetch_array($queryAdmin,MYSQLI_ASSOC)){ 
+			$sql="
+			INSERT INTO tbl_chat SET 
+			chat_msg='".$_POST['msg']."',
+			chat_user1='".$user."',  
+			chat_user2='".$row["username"]."',
+			chat_datetime='".date("Y-m-d H:i:s")."'	,
+			status=1		
+			";
+			$mysqli->query($sql);
+
+		}
+
+	}else{
+
+		$sql="
+		INSERT INTO tbl_chat SET 
+		chat_msg='".$_POST['msg']."',
+		chat_user1='".$user."',  
+		chat_user2='".$_POST['user2']."',
+		chat_datetime='".date("Y-m-d H:i:s")."'	,
+		status=1		
+		";
+		$mysqli->query($sql);
+
+	}
+	
 	exit;
+
 }
 // ส่งค่ามาเพื่อรับข้อมูลไปแสดง
 if(isset($_POST['viewData']) && $_POST['viewData']!=""){

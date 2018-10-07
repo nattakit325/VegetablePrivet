@@ -282,6 +282,7 @@ div#messagesDiv{
 			</div>
 			<div class="row">
 				<div class="col-md-4">
+					<?php if($_SESSION["status"]!='admin'&& $_SESSION["status"]!='superAdmin'){ ?>
 					<div class="row">
 						<div class="col-md-12 services-inner">
 							<span><img class="circle" src="images/Admin.png"></span>
@@ -291,6 +292,7 @@ div#messagesDiv{
 							</div>
 						
 					</div>
+					<?php } ?>
 					<?php while($row=mysqli_fetch_array($queryForChatUser,MYSQLI_ASSOC)){ 
 				 	
 				 	?>
@@ -299,7 +301,7 @@ div#messagesDiv{
 							<span><img class="circle" src="images/<?php echo $row['picture'];?>"></span>
 							<div class="desc">
 								<?php if($row['status']==1){ ?>
-								<br><u><a href="chatlist.php?name=<?php echo $row['name'];?>&surname=<?php echo $row['surname'];?>&chatname=<?php echo $row['chatname'];?>"><h3 style="color: red"><?php echo $row["name"];?>&nbsp;&nbsp;<?php echo $row["surname"];?></h3></a></u>
+								<br><a href="chatlist.php?name=<?php echo $row['name_surname'];?>&chatname=<?php echo $row['chatname'];?>"><u><h3><?php echo $row["name_surname"];?></h3></u></a>
 							<?php }else{ ?>
 								<a href="chatlist.php?name=<?php echo $row['name_surname'];?>&chatname=<?php echo $row['chatname'];?>"><h3><?php echo $row["name_surname"];?></h3></a>
 

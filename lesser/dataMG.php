@@ -368,7 +368,7 @@ function Delete(id,name) {
                     </form> 
                     <br>
 									<a href="AddNews.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;สร้างข่าวใหม่</button></span></a>
-										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ลบทั้งหมด
+										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ลบข่าวที่หมดเวลาทั้งหมด
 										
 									</div>
 							
@@ -380,6 +380,7 @@ function Delete(id,name) {
 				    <thead>
 				        <tr>
 				            <th>Topic</th>
+				            <th>Status</th>
 				            <th>Time</th>
 				            <th>PostTime</th>
 				            <th>PostName</th>
@@ -392,6 +393,11 @@ function Delete(id,name) {
 							<tr>
 					    
 					            <td><?php echo $row["topic"];?></td>
+					            <?php if(date('Y/m/d',strtotime($row["time"]))<date("Y/m/d")){?>
+									<td><center><p style="color: red">หมดเวลา</p></center></td>
+								<?php }else{ ?>
+									<td><center><p style="color: green">ปกติ</p></center></td>
+								<?php  } ?>
 					            <?php if(date('Y/m/d',strtotime($row["time"]))<date("Y/m/d")){?>
 									<td><p style="color: red">แสดงถึงวันที่ <?php echo DateThai($row["time"]);?></p></td>
 								<?php }else{ ?>
