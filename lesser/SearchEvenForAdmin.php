@@ -31,8 +31,13 @@
 						</a>
 						<div class="desc">
 							<h3><?php echo $row["topic"];?></h3>
-							<p>ประกาศเมื่อ <?php echo $row["posttime"];?></p>
-							<p>โดย <?php echo $row["name"];?></p>
+							<?php if(date('Y/m/d',strtotime($row["time"]))<date("Y/m/d")){?>
+								<p style="color: red">แสดงถึงวันที่ <?php echo ($row["time"]);?></p>
+							<?php }else{ ?>
+								<p style="color: green">แสดงถึงวันที่ <?php echo ($row["time"]);?></p>
+							<?php  } ?>
+							ประกาศเมื่อ <?php echo ($row["posttime"]);?><br>
+							โดย <?php echo $row["name"];?><br>
 							<button type="button" class="btn btn-danger" data-toggle="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ลบ</span></button>
 							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">แก้ไขข่าว<i class="icon-arrow-right"></i></a>
 						</div>

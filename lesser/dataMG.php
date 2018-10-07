@@ -376,9 +376,9 @@ function Delete(id,name) {
 						<div class="desc">
 							<h3><?php echo $row["topic"];?></h3>
 							<?php if(date('Y/m/d',strtotime($row["time"]))<date("Y/m/d")){?>
-								<p style="color: red">แบ่งปันถึงวันที่ <?php echo DateThai($row["time"]);?></p>
+								<p style="color: red">แสดงถึงวันที่ <?php echo DateThai($row["time"]);?></p>
 							<?php }else{ ?>
-								<p style="color: green">แบ่งปันถึงวันที่ <?php echo DateThai($row["time"]);?></p>
+								<p style="color: green">แสดงถึงวันที่ <?php echo DateThai($row["time"]);?></p>
 							<?php  } ?>
 							ประกาศเมื่อ <?php echo DateThai($row["posttime"]);?>
 
