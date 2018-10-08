@@ -233,7 +233,7 @@ $(document).ready(function(){
 				
 				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 					<div class="row">
-						<form action="InsertNews.php" method="post" enctype="multipart/form-data" runat="server">
+						<form action="Update-News.php" method="post" enctype="multipart/form-data" runat="server">
 							<div class="col-md-4 text-center">
 
 					<div class="work-inner">
@@ -244,6 +244,9 @@ $(document).ready(function(){
 						</div>
 					</div>
 				</div>
+				<input type="hidden" name="pictureold" value="<?php echo $objResult["media"]  ?>">
+				<input type="hidden" name="id" value="<?php echo $objResult["id"]  ?>">
+
 							<div class="col-md-6">
 								<div class="form-group">หัวข้อข่าว (ไม่เกิน 100 ตัวอักษร)
 									<input class="form-control" placeholder="<?php echo $objResult["topic"]  ?>" type="text" name="topic" required="" value="<?php echo $objResult["topic"]  ?>">
@@ -260,7 +263,9 @@ $(document).ready(function(){
 									$timeDF = date("H:i");
 									$dayDF = $dayDF."T".$timeDF 
 									?>
-							<input type="datetime-local"  class="form-control" min="<?php echo $dayDF ?>" name="dateDF" required="">
+							
+
+							<input type="datetime-local"  class="form-control" min="<?php echo $dayDF ?>" name="dateDF" value="<?php echo $dayDF ?>">
 						</div>
 
 						<div class="col-md-6">

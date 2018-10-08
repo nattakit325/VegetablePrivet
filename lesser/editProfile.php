@@ -397,6 +397,7 @@ function Addlatlong(){
 
 							<div class="col-md-6">
                                 <input type="hidden" name="pictureold" value="<?php echo $_SESSION["picture"]?>">
+                                
 
 								<div class="form-group">
                                     <label>ชื่อ - นามสกุล</label>
