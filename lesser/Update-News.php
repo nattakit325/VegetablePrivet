@@ -84,6 +84,6 @@
       
     
             
-   // header("location:index.php");
+    header("location:dataMG.php");
 
 ?>

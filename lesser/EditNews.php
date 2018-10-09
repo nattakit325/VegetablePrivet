@@ -119,6 +119,8 @@ $(document).ready(function(){
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
+        }
     </script>
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
@@ -261,15 +263,23 @@ $(document).ready(function(){
 							วันเวลาที่สิ้นสุดการประชาสัมพันธ์
 							<?php $dayDF = date("Y-m-d");
 									$timeDF = date("H:i");
-									$dayDF = $dayDF."T".$timeDF 
+									$dayDF = $dayDF."T".$timeDF;
+
+							function ToTimeEvent($time){
+        							$strDate= date("Y-m-d",strtotime($time));
+        							$strTime= date("H:i",strtotime($time));
+        							return  $strDate."T".$strTime; 
+
+        						}
 									?>
+
 							
 
-							<input type="datetime-local"  class="form-control" min="<?php echo $dayDF ?>" name="dateDF" value="<?php echo $dayDF ?>">
+							<input type="datetime-local"  class="form-control"  name="dateDF" value="<?php echo ToTimeEvent($objResult["time"]);?>">
 						</div>
 
 						<div class="col-md-6">
-								<div class="form-group">	<br>ลิงค์วีดีโอจาก Youtube
+								<div class="form-group">	<br>ลิงค์วีดีโอจาก Youtube  
 									<input class="form-control" placeholder="<?php echo $objResult["Youtube_Link"]  ?>" type="text" name="link" value="<?php echo $objResult["Youtube_Link"]  ?>">
 								</div>
 							</div>
