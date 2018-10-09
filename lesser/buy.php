@@ -243,7 +243,7 @@
 						</a>
 						<div class="desc">
 							<h3><a href="buylist.php?value=<?php echo $value1;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">ผักพื้นบ้าน(เชียงดา,ตำลึง)</a></h3>
-							<span>Root</span>
+							<span>Indigenous crop</span>
 						</div>
 					</div>
 				</div>
@@ -253,7 +253,7 @@
 						</a>
 						<div class="desc">
 							<h3><a href="buylist.php?value=<?php echo $value2;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">ผักทั่วไป(ผักกาด,คะน้า,กวางตุ้ง)</a></h3>
-							<span>trunk</span>
+							<span>General vegetables</span>
 						</div>
 					</div>
 				</div>
@@ -263,7 +263,7 @@
 						</a>
 						<div class="desc">
 							<h3><a href="buylist.php?value=<?php echo $value3;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">ผักสลัด</a></h3>
-							<span>Leaves</span>
+							<span>Salad</span>
 						</div>
 					</div>
 				</div>
@@ -275,7 +275,7 @@
 						</a>
 						<div class="desc">
 							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">ผลไม้</a></h3>
-							<span>blossom</span>
+							<span>Fruit</span>
 						</div>
 					</div>
 				</div>
@@ -285,7 +285,7 @@
 						</a>
 						<div class="desc">
 							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">ธัญพืช</a></h3>
-							<span>blossom</span>
+							<span>Cereal</span>
 						</div>
 					</div>
 				</div>
@@ -295,7 +295,7 @@
 						</a>
 						<div class="desc">
 							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">แปรรูป (อาหาร)</a></h3>
-							<span>blossom</span>
+							<span>Processed foods</span>
 						</div>
 					</div>
 				</div>
@@ -307,7 +307,7 @@
 						</a>
 						<div class="desc">
 							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">แปรรูป (อุปโภค)</a></h3>
-							<span>blossom</span>
+							<span>Processed goods</span>
 						</div>
 					</div>
 				</div>
@@ -317,7 +317,7 @@
 						</a>
 						<div class="desc">
 							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">ข้าว</a></h3>
-							<span>blossom</span>
+							<span>Rice</span>
 						</div>
 					</div>
 				</div>
@@ -327,7 +327,7 @@
 						</a>
 						<div class="desc">
 							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">สมุนไพร</a></h3>
-							<span>blossom</span>
+							<span>Herb</span>
 						</div>
 					</div>
 				</div>
@@ -339,7 +339,7 @@
 						</a>
 						<div class="desc">
 							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">ไข่</a></h3>
-							<span>blossom</span>
+							<span>Egg</span>
 						</div>
 					</div>
 				</div>
@@ -349,7 +349,7 @@
 						</a>
 						<div class="desc">
 							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">เสื้อผ้า เครื่องนุ่งห่ม (ธรรมชาติ)</a></h3>
-							<span>blossom</span>
+							<span>Clothes</span>
 						</div>
 					</div>
 				</div>
@@ -359,7 +359,7 @@
 						</a>
 						<div class="desc">
 							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">อื่นๆ</a></h3>
-							<span>blossom</span>
+							<span>Others</span>
 						</div>
 					</div>
 				</div>

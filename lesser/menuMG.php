@@ -2,30 +2,7 @@
 	session_start();
 	
     include "connect.php";
-    if($_SESSION["status"] != "admin"&&$_SESSION["status"]!='superAdmin')
-	{
-		header("location:index.php");
-	}
-    
-
-
-
-
-    $sql = "SELECT n.id,n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name_surname as name_surname ,n.PostTime as posttime FROM news n inner join profile p on n.username = p.username where n.status = 1 order by n.PostTime";
-
-
-    
-
-	$usermname = $_SESSION["username"];
-		
-	
-
-    
-    $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' and status = 1 ";
-    $queryForNotification=mysqli_query($objCon,$sqlForNotification);
-	$objResult = mysqli_fetch_array($queryForNotification, MYSQLI_ASSOC);
-
-
+    $sql = "SELECT n.id as id, n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name_surname as name_surname ,n.PostTime as posttime FROM news n inner join profile p on n.username = p.username where n.status = 0 order by n.PostTime";
 
     $query=mysqli_query($objCon,$sql);
 	$queryDialog=mysqli_query($objCon,$sql);
@@ -41,7 +18,7 @@
 		$strSeconds= date("s",strtotime($strDate));
 		$strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
 		$strMonthThai=$strMonthCut[$strMonth];
-		return "$strDay $strMonthThai $strYear, เวลา $strHour:$strMinute";
+		return "$strDay $strMonthThai $strYear,<br> เวลา $strHour:$strMinute";
 	}
 
     
@@ -55,7 +32,7 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Admin</title>
+	<title>MenuMG</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -121,6 +98,17 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+	<!-- data table -->
+	 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" />
+	  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/dataTables.bootstrap.min.css" />
+	  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.1.0/css/responsive.bootstrap.min.css" type="text/css" />
+	  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.1/css/buttons.bootstrap.min.css" type="text/css" />
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900' rel='stylesheet' type='text/css'>
+
+	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
+	<!-- data table -->
 	</head>
 
 
@@ -137,32 +125,37 @@ $(document).ready(function(){
 
 
 
-function Delete(id,name) {
-    
-        var xmlhttp = new XMLHttpRequest();
+function DeleteOneNews(id,picture) {
+
+var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("DeleteDialog").innerHTML = this.responseText;
             }
         }
-        xmlhttp.open("GET", "DeleteOneProduct.php?id="+id+"&name="+name, true);
+        xmlhttp.open("GET", "DeleteOneNews.php?id="+id+"&picture="+picture, true);
         xmlhttp.send();
     
 }
 
 
-function showHint(str) {
-    
+
+
+
+	function showHint(str) {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("search_result").innerHTML = this.responseText;
             }
         }
-        xmlhttp.open("GET", "getNews.php?q="+str, true);
+        xmlhttp.open("GET", "getEventForAdmin.php?q="+str, true);
         xmlhttp.send();
     
 }
+
+
+
 
 
 
@@ -190,19 +183,35 @@ function showHint(str) {
 	<body>
 
 
+
+ <div class="modal fade" id="forconfermdeleteeach" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+<div id="DeleteDialog">
+</div>
+  </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
 <div class="modal fade" id="forconfermdelete" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><p class="modal-title">ต้องการปฏิเสธข่าวหมดหรือไม่</p></center>
+          <center><p class="modal-title">ต้องการลบข่าวที่หมดเวลาทั้งหมดหรือไม่</p></center>
         </div>
         <div class="modal-body">
           <center>
 						
   <br>
 
-  <a href="DeleteAllNews.php"><button type="button" class="btn btn-warning"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button></a>
+  <a href="DeleteAllNewOverTime.php"><button type="button" class="btn btn-warning" id="delete"  ><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button></a>
   <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
         </center>
           
@@ -214,68 +223,7 @@ function showHint(str) {
     </div>
   </div>
 
-
-  <div class="modal fade" id="forconfermAP" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><p class="modal-title">ต้องการอนุมัติข่าวหมดหรือไม่</p></center>
-        </div>
-        <div class="modal-body">
-          <center>
-						
-  <br>
-
-  <a href="apAllNews.php"><button type="button" class="btn btn-success"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button></a>
-  <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
-        </center>
-          
-        </div>
-        
-          
-        
-      </div>
-    </div>
-  </div>
-
-
-<?php while($row=mysqli_fetch_array($queryDialog,MYSQLI_ASSOC)){ 
-	$count++;
-	?>
-
-  <div class="modal fade" id="myModal<?php echo $count?>" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          
-          <h3>หัวข้อข่าว</h3><h4 class="modal-title"><?php echo $row["topic"];?> </h4>
-          
-        </div>
-        <div class="modal-header">
-        
-          <h3>วันเวลาสิ้นสุดการประชาสัมพันธ์</h3><h4 class="modal-title"><?php echo DateThai($row["time"]);?> </h4>
-        
-        </div>
-        <div class="modal-body">
-          <h3>รายละเอียด</h3><p> <?php echo $row["detail"];?></p>
-        </div>
-        <div class="modal-footer">
-        	<a href="APnews.php?id=<?php echo $row["id"]; ?>" class="btn btn-primary btn-outline with-arrow">อนุมัติ<i class="icon-arrow-right"></i></a>
-							<a href="RFnews.php?id=<?php echo $row["id"]; ?>"><button type="button" class="btn btn-danger" >ปฏิเสธ</span></button></a>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-<?php }
-$count=0;
- ?>
-
-
-
-
+  
 
 <div class="modal fade" id="myModal1" role="dialog">
     <div class="modal-dialog modal-sm">
@@ -316,7 +264,7 @@ $count=0;
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><h4 class="modal-title"><?php echo $_SESSION["name_surname"];?> </h4></center>
+					<center><h4 class="modal-title"><?php echo $_SESSION["name_surname"];?> </h4></center>
         </div>
         <div class="modal-body">
           <center>
@@ -340,18 +288,66 @@ $count=0;
   </div>
 
 
- 
+  <div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">
+          <div class="form-group">
+          	หัวข้อ
+								<textarea name="" class="form-control" id="" cols="30" rows="1" > ตลาดสดหนองหอย โซนเกษตรอินทรีย์
+								</textarea>
+							</div></h4>
+        </div>
+        <div class="modal-body">
+        	<div class="form-group">
+        		รายละเอียด
+								<textarea name="" class="form-control" id="" cols="30" rows="7" >
+									ตลาด เป็นการชุมนุมกันทางสังคม แลกเปลี่ยนสินค้ากัน ในภาษาทั่วไป ตลาดหมายความรวมถึงสถานที่ที่มนุษย์มาชุมนุมกันเพื่อค้าขาย ในทางเศรษฐศาสตร์ ตลาดหมายถึงการแลกเปลี่ยนซื้อขาย โดยไม่มีความหมายของสถานที่ทางกายภาพ
+
+การค้าขายของไทยสมัยก่อนนั้น เน้นทางน้ำเป็นหลัก เพราะการคมนาคมทางน้ำเป็นการคมนาคมหลักของคนไทย ซึ่งอาจจะเห็นได้จากการมีตลาดน้ำต่าง ๆ ในสมัยรัตนโกสินทร์
+
+เป็นการเปิดโอกาสให้คนในชุมชนได้ดำเนินกิจกรรมการแลกเปลี่ยน ซื้อขายสินค้าและบริการตามความถนัดของแต่ละครอบครัว เป็นแหล่งรายได้ที่สุจริตของแต่ละครอบครัว เกิดการหมุนเวียนเศรษฐกิจภายในชุมชนรวมถึงจากภายนอกเข้าสู่ชุมชนด้วย และยังก่อให้เกิดความสัมพันธ์อันดีในระดับชุมชน รวมถึงการช่วยธำรงรักษาวัฒนธรรมประเพณีในชุมชน ในกรณีของชุมชนที่มีวัฒนธรรมความเป็นมา จากการที่กลุ่มคนในชุมชนมีการสร้างปฏิสัมพันธ์อันดีด้วยกัน
+
+คำว่า "ตลาด" สันนิษฐานว่ามาจากคำว่า "ยี่สาร" ซึ่งเพี้ยนมาจากคำว่า "บาซาร์" ในภาษาเปอร์เซีย ซึ่งแปลว่า "ตลาด" ตามชาวเปอร์เซียเริ่มเข้ามาในประเทศไทยสมัยพระเจ้าปราสาททอง
+								</textarea>
+							</div>
+         
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">บันทึก</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">ออก</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
-   
+   <div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"> ตลาดสดหนองหอย โซนเกษตรอินทรีย์</h4>
+        </div>
+        <div class="modal-body">
+          <img class="img-responsive" src="images/sell2.jpg" alt="Blog"></a>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 	
 	
 	<div id="fh5co-page">
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><i class="sl-icon-energy"></i><a href="index.php">OrganicApp</a></h1>
+				<h1><i class="sl-icon-energy"></i><a href="index.php">Lesserr</a></h1>
 				<nav role="navigation">
 					<ul>
 						<li>
@@ -359,16 +355,9 @@ $count=0;
 								?>
 							<a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
 							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
-						<?php }else{
-							if ($objResult['chatAM']>0) {
-								$color = 'red';
-							}else{
-								$color = 'gray';
-
-							}
-							?>
-							<a href="TopChat.php" title="คุณมี <?php echo $objResult['chatAM'] ?> ข้อความ"><i class="fas fa-bell" style="color: <?php echo $color ?>">&nbsp;<?php echo $objResult['chatAM'] ?></i></a>
-							<a data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
+						<?php }else{?>
+							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name_surname"];?></a></li>
+							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
 						<?php } ?>
 						
 					</ul>
@@ -376,148 +365,59 @@ $count=0;
 			</div>
 		</div>
 	</header>
-	<br>
-	<br>
-	<div id="fh5co-featured-section">
-		<div class="container">
-			<div class="row">
-				
-				<div class="col-md-6">
-					<a href="AddNews.php" class="featured-grid featured-grid-2" style="background-image: url(images/news.jpg);">
-						<div class="desc">
-							<h3>สร้างข่าว</h3>
-							<span>Create news</span>
-						</div>
-					</a>
-				</div>
-				<?php if($_SESSION["status"]=='superAdmin'){ ?>
-				<div class="col-md-6">
-					<a href="AccountMG.php" class="featured-grid featured-grid-2" style="background-image: url(images/report.jpg);">
-						<div class="desc">
-							<h3>การจัดการบัญชี</h3>
-							<span>Account management</span>
-						</div>
-					</a>
-					
-				</div>
-			<?php }else{ ?>
-
-				<div class="col-md-6">
-					<a href="report.php?value=' '&type=user"  class="featured-grid featured-grid-2" style="background-image: url(images/report.jpg);">
-						<div class="desc">
-							<h3>การจัดการบัญชี</h3>
-							<span>Account management</span>
-						</div>
-					</a>
-					
-				</div>
-			<?php } ?>
-				<div class="col-md-6">
-					<a href="ManageTheMarket.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
-						<div class="desc">
-							<h3>เพิ่มสถานที่ขายพืชผักอินทรีย์</h3>
-							<span>Add location</span>
-						</div>
-					</a>	
-				</div>
-
-				<div class="col-md-6">
-					<a href="addSellLocation.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
-						<div class="desc">
-							<h3>เพิ่มสถานที่รับสินค้า</h3>
-							<span>Add location</span>
-						</div>
-					</a>	
-				</div>
-
-				<div class="col-md-6">
-					<a href="addFarmerLocation.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
-						<div class="desc">
-							<h3>เพิ่มข้อมูลเกษตรกร</h3>
-							<span>Add farmer</span>
-						</div>
-					</a>	
-				</div>
-
-				<div class="col-md-6">
-					<a href="farmer.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
-						<div class="desc">
-							<h3>ข้อมูลเกษตรกร</h3>
-							<span>Add farmer</span>
-						</div>
-					</a>	
-				</div>
-
-				<div class="col-md-6">
-					<a href="dataMG.php" class="featured-grid featured-grid-2" style="background-image: url(images/bin.jpg);">
-						<div class="desc">
-							<h3>การจัดการข้อมูล</h3>
-							<span>Data management</span>
-						</div>
-					</a>
-					
-				</div>
-				<div class="col-md-6">
-					<a href="menuMG.php" class="featured-grid featured-grid-2" style="background-image: url(images/mg.jpg);">
-						<div class="desc">
-							<h3>การจัดการเมนู</h3>
-							<span>Menu management</span>
-						</div>
-					</a>
-					
-				</div>
-				
-			</div>
-		</div>
-	</div>
+	
 
 	<div id="fh5co-blog-section" class="fh5co-grey-bg-section">
 		<div class="container">
 			<div class="row" >
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>ข่าวที่รอการอนุมัติ</h2>
-					<p>All News that waiting for approval</p>
-					<div class="form-group">
-									<form class="form-inline" name="searchform" id="searchform">
-                        
-                        
-                    </form> 
-                    <br>
-									<button type="button" class="btn btn-success" data-toggle="modal" data-target="#forconfermAP"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;อนุมัติทั้งหมด</button>
-										<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ปฏิเสธทั้งหมด</button>
-										
-									</div>
+					<h2>การจัดการเมนู</h2>
+					<p>Menu management</p>
+					
 							
 				</div>
 			</div>
+			<div id="search_result">
 			<div class="row">
+				<table border="1" class="datatable table table-hover table-bordered" cellspacing="0" width="100%" id='datatable'>
+				    <thead>
+				        <tr>
+				            <th>Topic</th>
+				            <th>Status</th>
+				            <th>Time</th>
+				            <th>PostTime</th>
+				            <th>PostName</th>
+				            <th>Edit</th>
+				            <th>Delete</th>
+				        </tr>
+				    </thead>
+				    <tbody>
+				    	<?php while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {?>
+							<tr>
+					    
+					            <td><?php echo $row["topic"];?></td>
+					            <?php if(date('Y/m/d',strtotime($row["time"]))<date("Y/m/d")){?>
+									<td><center><p style="color: red">หมดเวลา</p></center></td>
+								<?php }else{ ?>
+									<td><center><p style="color: green">ปกติ</p></center></td>
+								<?php  } ?>
+					            <?php if(date('Y/m/d',strtotime($row["time"]))<date("Y/m/d")){?>
+									<td><p style="color: red">แสดงถึงวันที่ <?php echo DateThai($row["time"]);?></p></td>
+								<?php }else{ ?>
+									<td><p style="color: green">แสดงถึงวันที่ <?php echo DateThai($row["time"]);?></p></td>
+								<?php  } ?>
+				            	<td><?php echo DateThai($row["posttime"]);?></td>
+				            	<td><?php echo $row["name_surname"];?></td>
 
-				 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ 
-				 	$count++
-				 	?>
-				<div class="col-md-4 text-center">
-					<div class="work-inner">
-						<a class="work-grid"  style="background-image: url(images/<?php echo $row['media'];?>); ">
-						</a>
-						<div class="desc">
-							<h3><?php echo $row["topic"];?></h3>
-							<p>ประกาศเมื่อ <?php echo DateThai($row["posttime"]);?></p>
-							<p>โดย <?php echo $row["name_surname"];?></p>
-							
-							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">ดูรายระเอียด<i class="icon-arrow-right"></i></a>
-							
-						</div>
-					</div>
-				</div>
-				<?php } ?>
-				
-				
-				
-
-
-				
-
+				            	<td><a href="EditNews.php?id=<?php echo $row["id"];?>" class="btn btn-primary btn-outline with-arrow" target="blank"> แก้ไขข่าว<i class="icon-arrow-right"></i></a></td>
+				            	<td><button type="button" class="btn btn-danger"  data-toggle="modal" data-target="#forconfermdeleteeach"  onclick="DeleteOneNews(<?php echo $row["id"];?>,'<?php echo $row["media"];?>')"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ลบ</span></button></td>
+				        </tr>
+						<?php }?>
+				        
+				    </tbody>
+				</table>
 			</div>
+		</div>
 		</div>
 	</div>
 	
@@ -537,6 +437,22 @@ $count=0;
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
 
+	<!-- data Table State -->
+	  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	  <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+	  <script src="//cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+	  <!-- Responsive extension -->
+	  <script src="https://cdn.datatables.net/responsive/2.1.0/js/responsive.bootstrap.min.js"></script>
+	  <!-- Buttons extension -->
+	  <script src="//cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
+	  <script src="//cdn.datatables.net/buttons/1.2.1/js/buttons.bootstrap.min.js"></script>
+	  <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+	  <script src="//cdn.datatables.net/buttons/1.2.1/js/buttons.html5.min.js"></script>
+	  
+	  <script>
+	    var dataTable = $('#datatable').DataTable();
+	  </script>
+	<!-- END Data Table -->
 	</body>
 </html>
 
