@@ -125,18 +125,19 @@ $(document).ready(function(){
 
 
 
-function Delete(id,name) {
-    
-        var xmlhttp = new XMLHttpRequest();
+function DeleteOneNews(id,picture) {
+
+var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("DeleteDialog").innerHTML = this.responseText;
             }
         }
-        xmlhttp.open("GET", "DeleteOneProduct.php?id="+id+"&name="+name, true);
+        xmlhttp.open("GET", "DeleteOneNews.php?id="+id+"&picture="+picture, true);
         xmlhttp.send();
     
 }
+
 
 
 
@@ -180,12 +181,30 @@ function Delete(id,name) {
 
 
 	<body>
+
+
+
+ <div class="modal fade" id="forconfermdeleteeach" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+<div id="DeleteDialog">
+</div>
+  </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
 <div class="modal fade" id="forconfermdelete" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><p class="modal-title">ต้องการลบสินค้าทั้งหมดหรือไม่</p></center>
+          <center><p class="modal-title">ต้องการลบข่าวที่หมดเวลาทั้งหมดหรือไม่</p></center>
         </div>
         <div class="modal-body">
           <center>
@@ -204,6 +223,7 @@ function Delete(id,name) {
     </div>
   </div>
 
+  
 
 <div class="modal fade" id="myModal1" role="dialog">
     <div class="modal-dialog modal-sm">
@@ -405,8 +425,9 @@ function Delete(id,name) {
 								<?php  } ?>
 				            	<td><?php echo DateThai($row["posttime"]);?></td>
 				            	<td><?php echo $row["name_surname"];?></td>
+
 				            	<td><a href="EditNews.php?id=<?php echo $row["id"];?>" class="btn btn-primary btn-outline with-arrow" target="blank"> แก้ไขข่าว<i class="icon-arrow-right"></i></a></td>
-				            	<td><button type="button" class="btn btn-danger" data-toggle="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ลบ</span></button></td>
+				            	<td><button type="button" class="btn btn-danger"  data-toggle="modal" data-target="#forconfermdeleteeach"  onclick="DeleteOneNews(<?php echo $row["id"];?>,'<?php echo $row["media"];?>')"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ลบ</span></button></td>
 				        </tr>
 						<?php }?>
 				        
