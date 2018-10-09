@@ -211,7 +211,7 @@ var xmlhttp = new XMLHttpRequest();
 						
   <br>
 
-  <button type="button" class="btn btn-warning" id="delete" data-dismiss="modal"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button>
+  <a href="DeleteAllNewOverTime.php"><button type="button" class="btn btn-warning" id="delete"  ><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button></a>
   <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
         </center>
           
