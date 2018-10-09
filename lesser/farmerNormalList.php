@@ -442,7 +442,7 @@ $count=0;
                         <td><?php echo $row["farmer_type_name"]; ?></td>
                         <td><?php echo $row["username"]; ?></td>
                         <td><a class="btn btn-primary" href="save-farmerList.php?id=<?php echo $row["id"]; ?>&farmer_type_id=<?php echo $row["farmer_type_id"]; ?>">แก้ไข</a></td>
-                        <td><a class="btn btn-danger">ลบ</a></td>
+                        <td><a class="btn btn-danger" href="delete-farmer.php?id=<?php echo $row["id"]; ?>&farmer_type_id=<?php echo $row["farmer_type_id"]; ?>">ลบ</a></td>
                     </tr>
                     <?php
                         }
