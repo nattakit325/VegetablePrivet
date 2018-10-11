@@ -108,11 +108,9 @@
         $latitude = $_POST["latitude"];
         $longitude = $_POST["longitude"];
 
-        $farmer_type_id = '2';
+        $farmer_type_id = '3';
 
-        if($_POST["status"]=='ปัจจัย'){
-            $farmer_type_id = '3';
-        }
+        
 
         echo $name;
         echo $address;
