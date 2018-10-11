@@ -38,6 +38,9 @@ if($place_type_id !=null && $district_id != null && $subdistrict == "ทั้�
 
 	$sql="SELECT * FROM place WHERE place_type_id = $place_type_id AND district_id = $district_id";
 	$queryB=mysqli_query($objCon,$sql);
+
+	$sql="SELECT * FROM `profile` WHERE district_id = $district_id";
+	$queryProfile=mysqli_query($objCon,$sql);
 }else if($place_type_id !=null && $district_id != null && $subdistrict != null){
 	$sql="SELECT * FROM `districts` WHERE district_id = $district_id";
 	$querydistrict = mysqli_query($objCon,$sql);
@@ -49,6 +52,9 @@ if($place_type_id !=null && $district_id != null && $subdistrict == "ทั้�
 
 	$sql="SELECT * FROM place WHERE place_type_id = $place_type_id AND district_id = $district_id AND subdictrict = '$subdistrict'";
 	$queryB=mysqli_query($objCon,$sql);
+
+	$sql="SELECT * FROM `profile` WHERE district_id = $district_id";
+	$queryProfile=mysqli_query($objCon,$sql);
 }else{
 	$queryB ='';
 }
@@ -364,12 +370,14 @@ function showHint(str,username) {
 							<div class="form-group col-md-12 row">
 								<p>ตำบลที่คุณเลือก: <?php echo $subdistrict ?></p>
 							</div>
+
+							<div class="form-group  col-md-6 col-md-offset-3 row center">
+								<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal2"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูแผนที่</button>
+							</div>
 						<?php } ?>
 						
 						
-					<div class="form-group  col-md-6 col-md-offset-3 row center">
-						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal2"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูแผนที่</button>
-					</div>
+					
 					
 				</div>
 			</div>
@@ -386,6 +394,7 @@ var latitudeDis = 0;
 var longitudeDis = 0;
 var subdistrictName = ['ศรีภูมิ','พระสิงห์','หายยา','ช้างม่อย','ช้างคลาน','วัดเกต','ช้างเผือก','สุเทพ','แม่เหียะ','ป่าแดด','หนองหอย','ท่าศาลา','หนองป่าครั่ง','ฟ้าฮ่าม','ป่าตัน','สันผีเสื้อ'];
 var districts = [];
+var map;
 $( "#place_type_id" ).change(function() {
   	var district_id = document.getElementById("district_id");
   	var place_type_id = document.getElementById("place_type_id");
@@ -462,11 +471,11 @@ function showPosition(){
 function ShowMarker(){
 	for(k= 0;k<place.length;k++){
 		locations.push([ place[k][0]+"<br>ระยะทาง "+place[k][7]+" กิโลเมตร"+"<br> "+place[k][3]+"<br>Link: "
-			+place[k][4]+"<br> เบอร์โทรศัพท์ "+place[k][5], place[k][1], place[k][2], 0 ]);
+			+place[k][4]+"<br> เบอร์โทรศัพท์ "+place[k][5]+"<br>", place[k][1], place[k][2], 0 ]);
 	}
 	setLocation();
 	//locations.push(['คุณอยู่ตรงนี้',p3,p4,2]);
-    var map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
       zoom: 11,
       center: new google.maps.LatLng(latitudeDis,longitudeDis),
       mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -488,16 +497,102 @@ function ShowMarker(){
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(place[i][1], place[i][2]),
         map: map,
-				icon: icon
+		icon: icon
       });
 
       google.maps.event.addListener(marker, 'click', (function(marker, i) {
         return function() {
           infowindow.setContent(locations[i][0]);
           infowindow.open(map, marker);
+          setMarketFarmer(i);
         }
       })(marker, i));
     }
+}
+
+var latitudeMarketId;
+var longitudeMarketId;
+var locationsFarmer = [];
+var showLocationsFamer = [];
+function setMarketFarmer(MarketId){
+	locationsFarmer = [];
+	latitudeMarketId = locations[MarketId][1];
+	longitudeMarketId = locations[MarketId][2];
+	 if(MarketId != null){
+		<?php while ($row = mysqli_fetch_array($queryProfile, MYSQLI_ASSOC)) {?>
+		   <?php if( $row["latitude"] != null && $row["longitude"] != null){ ?>
+			locationsFarmer.push(["<?php echo $row["name_surname"]; ?>",<?php echo $row["latitude"]; ?>,
+				<?php echo $row["longitude"]; ?>,"<?php echo $row["address"]; ?>",
+				"<?php echo $row["subdictrict"]; ?>","<?php echo $row["phone"]; ?>",
+				"<?php echo $row["facebook"]; ?>","<?php echo $row["line"]; ?>",
+				"<?php echo $row["email"]; ?>"]);
+			<?php } ?>
+		 <?php }?>
+	getLaLongMarketFarmer();
+	}
+}
+function getLaLongMarketFarmer() {
+	 for(var i=0;i<locationsFarmer.length;i++){
+        locationsFarmer[i][9] = new google.maps.LatLng(locationsFarmer[i][1], locationsFarmer[i][2]);
+	 }
+	 p2 = new google.maps.LatLng(latitudeMarketId, longitudeMarketId);
+	 showPositionFarmer();
+}
+function showPositionFarmer(){
+	for(var j=0;j<locationsFarmer.length;j++){
+		locationsFarmer[j][10] = (google.maps.geometry.spherical.computeDistanceBetween(locationsFarmer[j][9], p2) / 1000).toFixed(2);
+	 }
+
+	 locationsFarmer.sort(function(a,b){
+    	return a[10] - b[10];
+	 });
+	 for(var i=0;i<locationsFarmer.length;i++){
+	 	if(locationsFarmer[i][10]>10){
+	 		locationsFarmer.splice(i, 1);
+	 		i--;
+	 	}
+	 }
+	 ShowMarkerFamer();
+}
+var MarkerArray = [];
+function ShowMarkerFamer(){
+	deleteMarkers();
+	showLocationsFamer = [];
+	for(k= 0;k<locationsFarmer.length;k++){
+		showLocationsFamer.push([  locationsFarmer[k][0]+"<br>ระยะทาง "+locationsFarmer[k][10]+" กิโลเมตร"+
+			"<br> ที่อยู่ "+locationsFarmer[k][3]+' ตำบล '+locationsFarmer[k][4]+"<br> เบอร์โทรศัพท์ "
+			+locationsFarmer[k][5]+"<br>"+"Facebook: "+locationsFarmer[k][6]+"<br> Line:"+locationsFarmer[k][7] , locationsFarmer[k][1], locationsFarmer[k][2], 0 ]);
+	}
+    var infowindow = new google.maps.InfoWindow();
+    var marker1, i;
+		var icon = {
+			url: "icon/human.png", // url
+			scaledSize: new google.maps.Size(50, 50), // scaled size
+			origin: new google.maps.Point(0,0), // origin
+			anchor: new google.maps.Point(0, 0) // anchor
+		};
+    for (i = 0; i < locationsFarmer.length; i++) {
+      marker1 = new google.maps.Marker({
+        position: new google.maps.LatLng(locationsFarmer[i][1], locationsFarmer[i][2]),
+        map: map,
+        icon:icon
+      });
+      MarkerArray.push(marker1);
+      google.maps.event.addListener(marker1, 'click', (function(marker1, i) {
+        return function() {
+          infowindow.setContent(showLocationsFamer[i][0]);
+          infowindow.open(map, marker1);
+        }
+      })(marker1, i));
+    }
+}
+function deleteMarkers(){
+	if(MarkerArray){
+		for (var i=0;i<MarkerArray.length;i++) {
+		   MarkerArray[i].setMap(null);
+		}
+		MarkerArray.length = 0;
+	}
 }
 function setLocation(){
 	<?php while ($row = mysqli_fetch_array($queryE, MYSQLI_ASSOC)) {?>

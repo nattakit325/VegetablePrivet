@@ -7,6 +7,7 @@ $sql="SELECT * FROM `districts`";
 $queryA=mysqli_query($objCon,$sql);
 $queryE=mysqli_query($objCon,$sql);
 $district_id = filter_input(INPUT_POST, 'district_id', FILTER_SANITIZE_STRING);
+$farmerType = filter_input(INPUT_POST, 'farmerType', FILTER_SANITIZE_STRING);
 	if(empty($_SESSION["username"])){
 
 	}else{
@@ -26,7 +27,11 @@ $queryB=mysqli_query($objCon,$sql);
 		$querydistrict = mysqli_query($objCon,$sql);
 		$objResultdistrict = mysqli_fetch_array($querydistrict, MYSQLI_ASSOC);
 
-		$sql="SELECT * FROM `profile` INNER JOIN districts ON profile.district_id = districts.district_id  WHERE farmer_type_id = 1 AND districts.district_id = $district_id";
+		$sql = "SELECT * FROM `farmer_type` WHERE farmer_type_id = $farmerType";
+		$queryFarmerType = mysqli_query($objCon,$sql);
+		$objResultFarmer = mysqli_fetch_array($queryFarmerType, MYSQLI_ASSOC);
+
+		$sql="SELECT * FROM `profile` INNER JOIN districts ON profile.district_id = districts.district_id  WHERE  districts.district_id = $district_id AND farmer_type_id = $farmerType";
 		$queryProfile = mysqli_query($objCon,$sql);
 	}else{
 		$queryProfile = '';
@@ -164,7 +169,7 @@ function showHint(str,username) {
 
 
 </style>
-<div class="modal fade" id="myModal" role="dialog">
+<div class="modal fade" id="myModal2" role="dialog">
       <div class="modal-content">
 
         <div class="modal-body">
@@ -293,7 +298,7 @@ function showHint(str,username) {
 
 					<div class="form-group col-md-12">
                     <form action="search-farmer.php" method="POST"  class="form-inline" name="searchform" id="searchform">
-                        <div class="form-group col-md-6 col-md-offset-2">
+                        <div class="form-group col-md-4">
                             <label for="textsearch" >เลือกอำเภอ</label>
                             <select class="form-control" name="district_id" id="district_id">
                             	<?php while ($row = mysqli_fetch_array($queryA, MYSQLI_ASSOC)) {?>
@@ -302,6 +307,14 @@ function showHint(str,username) {
                             </select>
                             
                             
+                            
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="textsearch" >เลือกประเภท</label>
+                            <select class="form-control" name="farmerType">
+                            	<option value="1">เกษตรกรต้นแบบ</option>
+                            	<option value="2">เกษตรกรทั่วไป</option>
+                            </select>    
                         </div>
                         <div class="form-group  col-md-2">
                         <button type="subm" class="btn btn-primary" id="btnSearch">
@@ -311,13 +324,20 @@ function showHint(str,username) {
                     	</div>
                     	</form>
 						<br>
+
+					</div>
+					<div class="row col-md-12" align="left">
+						<a href="register.php?id=2">สมัครเกษตรกร</a>
 					</div>
 						<?php if($district_id != null){ ?>
 							<div class="form-group col-md-12 row">
 								<p>อำเภอที่คุณเลือก: <?php echo $objResultdistrict['district_name']  ?></p>
 							</div>
+							<div class="form-group col-md-12 row">
+								<p>ประเภทที่คุณเลือก: <?php echo $objResultFarmer['farmer_type_name']  ?></p>
+							</div>
 							<div class="form-group  col-md-6 col-md-offset-3 row center">
-								<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูแผนที่</button>
+								<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal2"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูแผนที่</button>
 							</div>
 						<?php } ?>
 						

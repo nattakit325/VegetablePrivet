@@ -7,6 +7,7 @@ session_start();
 
 	$query=mysqli_query($objCon,$sql);
 
+	$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING);
  ?>
 
 <!DOCTYPE html>
@@ -304,6 +305,19 @@ function Addlatlong(){
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="row">
+		 <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+		 	 <div class="row">
+		 	 	 <div class="col-md-6">
+
+			 	 </div>
+			 	  <div class="col-md-6">
+			 	 	
+			 	 </div>
+		 	 </div>
+		 	
+		 </div>
 	</div>
 <div class="row">
         <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
