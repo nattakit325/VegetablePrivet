@@ -19,13 +19,23 @@
 	
 
 
-	
-	$sql = "connect.php";
     $sql = "SELECT  n.id as id, n.topic as topic, n.detail as detail,n.media as media,n.Youtube_Link as Youtube_Link,n.Link as Link,n.time as time,n.username as username,p.name_surname as name_surname FROM news n inner join profile p on n.username = p.username WHERE time>NOW() and n.status=0  order by time";
 
     $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' and status = 1 ";
 
+    $sqlForImage= "SELECT name FROM menu  where page = 'หน้าหลัก'";
 
+    $querylForImage=mysqli_query($objCon,$sqlForImage);
+    $i = 1;
+
+    while($row=mysqli_fetch_array($querylForImage,MYSQLI_ASSOC)){ 
+    	$img[$i] = $row["name"];
+    	$i++;
+    }
+
+
+
+	
 
 	
 	$query=mysqli_query($objCon,$sql);
@@ -346,7 +356,7 @@ $count=0;
 
 
 				<div class="col-md-6">
-					<a href="<?php echo $buy?>" class="featured-grid featured-grid-2" style="background-image: url(images/buy.jpg);">
+					<a href="<?php echo $buy?>" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[1]; ?>);">
 						<div class="desc">
 							<h3>ชื้อสินค้า(สินค้าทางการเกษตร)</h3>
 							<span>Buy</span>
@@ -357,7 +367,7 @@ $count=0;
 
 <?php if(empty($_SESSION["username"])){ ?>
 				<div class="col-md-6">
-					<a href="#" data-toggle="modal" data-target="#myModal" class="featured-grid featured-grid-2" style="background-image: url(images/sell3.jpg);">
+					<a href="#" data-toggle="modal" data-target="#myModal" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[2]; ?>);">
 						<div class="desc">
 							<h3>ขายสินค้า</h3>
 							<span>Sell</span>
@@ -368,7 +378,7 @@ $count=0;
 <?php }else{ ?>
 
 				<div class="col-md-6">
-					<a href="selllist.php?value=' '"  class="featured-grid featured-grid-2" style="background-image: url(images/sell3.jpg);">
+					<a href="selllist.php?value=' '"  class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[2]; ?>);">
 						<div class="desc">
 							<h3>ขายสินค้า</h3>
 							<span>Sell</span>
@@ -379,7 +389,7 @@ $count=0;
 <?php } ?>
 
 				<div class="col-md-6">
-					<a href="search-showConsignee.php" class="featured-grid featured-grid-2" style="background-image: url(images/hotel.jpg);">
+					<a href="search-showConsignee.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[3]; ?>);">
 						<div class="desc">
 							<h3>ค้นหาพื้นที่การแลกเปลี่ยนสินค้า</h3>
 							<span>Search For The Exchange Area</span>
@@ -387,7 +397,7 @@ $count=0;
 					</a>
 				</div>
 				<div class="col-md-6">
-					<a href="search-farmer.php" class="featured-grid featured-grid-2" style="background-image: url(images/seller.jpg);">
+					<a href="search-farmer.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[4]; ?>);">
 						<div class="desc">
 							<h3>ค้นหาเกษตรกรต้นแบบ</h3>
 							<span>Good Example Farmer</span>

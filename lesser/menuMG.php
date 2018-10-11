@@ -112,54 +112,7 @@
 	</head>
 
 
-<script>
-$(document).ready(function(){
-    $("#delete").click(function(){
-    	$('#fordelete').hide();
-    	
-          //$('.row').hide();
-    });
 
-});
-
-
-
-
-function DeleteOneNews(id,picture) {
-
-var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("DeleteDialog").innerHTML = this.responseText;
-            }
-        }
-        xmlhttp.open("GET", "DeleteOneNews.php?id="+id+"&picture="+picture, true);
-        xmlhttp.send();
-    
-}
-
-
-
-
-
-	function showHint(str) {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("search_result").innerHTML = this.responseText;
-            }
-        }
-        xmlhttp.open("GET", "getEventForAdmin.php?q="+str, true);
-        xmlhttp.send();
-    
-}
-
-
-
-
-
-
-</script>
 
 	<style>
 .circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
@@ -288,59 +241,10 @@ var xmlhttp = new XMLHttpRequest();
   </div>
 
 
-  <div class="modal fade" id="myModal1" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">
-          <div class="form-group">
-          	หัวข้อ
-								<textarea name="" class="form-control" id="" cols="30" rows="1" > ตลาดสดหนองหอย โซนเกษตรอินทรีย์
-								</textarea>
-							</div></h4>
-        </div>
-        <div class="modal-body">
-        	<div class="form-group">
-        		รายละเอียด
-								<textarea name="" class="form-control" id="" cols="30" rows="7" >
-									ตลาด เป็นการชุมนุมกันทางสังคม แลกเปลี่ยนสินค้ากัน ในภาษาทั่วไป ตลาดหมายความรวมถึงสถานที่ที่มนุษย์มาชุมนุมกันเพื่อค้าขาย ในทางเศรษฐศาสตร์ ตลาดหมายถึงการแลกเปลี่ยนซื้อขาย โดยไม่มีความหมายของสถานที่ทางกายภาพ
-
-การค้าขายของไทยสมัยก่อนนั้น เน้นทางน้ำเป็นหลัก เพราะการคมนาคมทางน้ำเป็นการคมนาคมหลักของคนไทย ซึ่งอาจจะเห็นได้จากการมีตลาดน้ำต่าง ๆ ในสมัยรัตนโกสินทร์
-
-เป็นการเปิดโอกาสให้คนในชุมชนได้ดำเนินกิจกรรมการแลกเปลี่ยน ซื้อขายสินค้าและบริการตามความถนัดของแต่ละครอบครัว เป็นแหล่งรายได้ที่สุจริตของแต่ละครอบครัว เกิดการหมุนเวียนเศรษฐกิจภายในชุมชนรวมถึงจากภายนอกเข้าสู่ชุมชนด้วย และยังก่อให้เกิดความสัมพันธ์อันดีในระดับชุมชน รวมถึงการช่วยธำรงรักษาวัฒนธรรมประเพณีในชุมชน ในกรณีของชุมชนที่มีวัฒนธรรมความเป็นมา จากการที่กลุ่มคนในชุมชนมีการสร้างปฏิสัมพันธ์อันดีด้วยกัน
-
-คำว่า "ตลาด" สันนิษฐานว่ามาจากคำว่า "ยี่สาร" ซึ่งเพี้ยนมาจากคำว่า "บาซาร์" ในภาษาเปอร์เซีย ซึ่งแปลว่า "ตลาด" ตามชาวเปอร์เซียเริ่มเข้ามาในประเทศไทยสมัยพระเจ้าปราสาททอง
-								</textarea>
-							</div>
-         
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">บันทึก</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">ออก</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 
 
 
-   <div class="modal fade" id="myModal2" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title"> ตลาดสดหนองหอย โซนเกษตรอินทรีย์</h4>
-        </div>
-        <div class="modal-body">
-          <img class="img-responsive" src="images/sell2.jpg" alt="Blog"></a>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
 	
 	
 	<div id="fh5co-page">
@@ -377,47 +281,24 @@ var xmlhttp = new XMLHttpRequest();
 							
 				</div>
 			</div>
-			<div id="search_result">
-			<div class="row">
-				<table border="1" class="datatable table table-hover table-bordered" cellspacing="0" width="100%" id='datatable'>
-				    <thead>
-				        <tr>
-				            <th>Topic</th>
-				            <th>Status</th>
-				            <th>Time</th>
-				            <th>PostTime</th>
-				            <th>PostName</th>
-				            <th>Edit</th>
-				            <th>Delete</th>
-				        </tr>
-				    </thead>
-				    <tbody>
-				    	<?php while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {?>
-							<tr>
-					    
-					            <td><?php echo $row["topic"];?></td>
-					            <?php if(date('Y/m/d',strtotime($row["time"]))<date("Y/m/d")){?>
-									<td><center><p style="color: red">หมดเวลา</p></center></td>
-								<?php }else{ ?>
-									<td><center><p style="color: green">ปกติ</p></center></td>
-								<?php  } ?>
-					            <?php if(date('Y/m/d',strtotime($row["time"]))<date("Y/m/d")){?>
-									<td><p style="color: red">แสดงถึงวันที่ <?php echo DateThai($row["time"]);?></p></td>
-								<?php }else{ ?>
-									<td><p style="color: green">แสดงถึงวันที่ <?php echo DateThai($row["time"]);?></p></td>
-								<?php  } ?>
-				            	<td><?php echo DateThai($row["posttime"]);?></td>
-				            	<td><?php echo $row["name_surname"];?></td>
+			<div class="col-md-6">
+					<a href="ManageTheMarket.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
+						<div class="desc">
+							<h3>เพิ่มสถานที่ขายพืชผักอินทรีย์</h3>
+							<span>Add location</span>
+						</div>
+					</a>	
+				</div>
 
-				            	<td><a href="EditNews.php?id=<?php echo $row["id"];?>" class="btn btn-primary btn-outline with-arrow" target="blank"> แก้ไขข่าว<i class="icon-arrow-right"></i></a></td>
-				            	<td><button type="button" class="btn btn-danger"  data-toggle="modal" data-target="#forconfermdeleteeach"  onclick="DeleteOneNews(<?php echo $row["id"];?>,'<?php echo $row["media"];?>')"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ลบ</span></button></td>
-				        </tr>
-						<?php }?>
-				        
-				    </tbody>
-				</table>
-			</div>
-		</div>
+				<div class="col-md-6">
+					<a href="addSellLocation.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
+						<div class="desc">
+							<h3>เพิ่มสถานที่รับสินค้า</h3>
+							<span>Add location</span>
+						</div>
+					</a>	
+				</div>
+				
 		</div>
 	</div>
 	
