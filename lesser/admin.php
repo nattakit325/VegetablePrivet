@@ -44,6 +44,16 @@
 		return "$strDay $strMonthThai $strYear, เวลา $strHour:$strMinute";
 	}
 
+	$sqlForImage= "SELECT name FROM menu  where page = 'แอดมิน'";
+
+    $querylForImage=mysqli_query($objCon,$sqlForImage);
+    $i = 1;
+
+    while($row=mysqli_fetch_array($querylForImage,MYSQLI_ASSOC)){ 
+    	$img[$i] = $row["name"];
+    	$i++;
+    }
+
     
 ?>
 
@@ -383,7 +393,7 @@ $count=0;
 			<div class="row">
 				
 				<div class="col-md-6">
-					<a href="AddNews.php" class="featured-grid featured-grid-2" style="background-image: url(images/news.jpg);">
+					<a href="AddNews.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[1]; ?>);">
 						<div class="desc">
 							<h3>สร้างข่าว</h3>
 							<span>Create news</span>
@@ -392,7 +402,7 @@ $count=0;
 				</div>
 				<?php if($_SESSION["status"]=='superAdmin'){ ?>
 				<div class="col-md-6">
-					<a href="AccountMG.php" class="featured-grid featured-grid-2" style="background-image: url(images/report.jpg);">
+					<a href="AccountMG.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[2]; ?>);">
 						<div class="desc">
 							<h3>การจัดการบัญชี</h3>
 							<span>Account management</span>
@@ -403,7 +413,7 @@ $count=0;
 			<?php }else{ ?>
 
 				<div class="col-md-6">
-					<a href="report.php?value=' '&type=user"  class="featured-grid featured-grid-2" style="background-image: url(images/report.jpg);">
+					<a href="report.php?value=' '&type=user"  class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[2]; ?>);">
 						<div class="desc">
 							<h3>การจัดการบัญชี</h3>
 							<span>Account management</span>
@@ -413,7 +423,7 @@ $count=0;
 				</div>
 			<?php } ?>
 				<div class="col-md-6">
-					<a href="ManageTheMarket.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
+					<a href="ManageTheMarket.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[3]; ?>);">
 						<div class="desc">
 							<h3>เพิ่มสถานที่ขายพืชผักอินทรีย์</h3>
 							<span>Add location</span>
@@ -422,7 +432,7 @@ $count=0;
 				</div>
 
 				<div class="col-md-6">
-					<a href="addSellLocation.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
+					<a href="addSellLocation.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[4]; ?>);">
 						<div class="desc">
 							<h3>เพิ่มสถานที่รับสินค้า</h3>
 							<span>Add location</span>
@@ -431,7 +441,7 @@ $count=0;
 				</div>
 
 				<div class="col-md-6">
-					<a href="addFarmerLocation.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
+					<a href="addFarmerLocation.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[5]; ?>);">
 						<div class="desc">
 							<h3>เพิ่มข้อมูลเกษตรกร</h3>
 							<span>Add farmer</span>
@@ -440,7 +450,7 @@ $count=0;
 				</div>
 
 				<div class="col-md-6">
-					<a href="farmer.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
+					<a href="farmer.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[6]; ?>);">
 						<div class="desc">
 							<h3>ข้อมูลเกษตรกร</h3>
 							<span>Add farmer</span>
@@ -449,7 +459,7 @@ $count=0;
 				</div>
 
 				<div class="col-md-6">
-					<a href="dataMG.php" class="featured-grid featured-grid-2" style="background-image: url(images/bin.jpg);">
+					<a href="dataMG.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[7]; ?>);">
 						<div class="desc">
 							<h3>การจัดการข้อมูล</h3>
 							<span>Data management</span>
@@ -458,7 +468,7 @@ $count=0;
 					
 				</div>
 				<div class="col-md-6">
-					<a href="menuMG.php" class="featured-grid featured-grid-2" style="background-image: url(images/mg.jpg);">
+					<a href="menuMG.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[8]; ?>);">
 						<div class="desc">
 							<h3>การจัดการเมนู</h3>
 							<span>Menu management</span>

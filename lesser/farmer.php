@@ -44,6 +44,16 @@
 		return "$strDay $strMonthThai $strYear, เวลา $strHour:$strMinute";
 	}
 
+	$sqlForImage= "SELECT name FROM menu  where page = 'การจัดการเกษตรกร'";
+
+    $querylForImage=mysqli_query($objCon,$sqlForImage);
+    $i = 1;
+
+    while($row=mysqli_fetch_array($querylForImage,MYSQLI_ASSOC)){ 
+    	$img[$i] = $row["name"];
+    	$i++;
+    }
+
     
 ?>
 
@@ -406,7 +416,7 @@ $count=0;
 				
 				
 				<div class="col-md-6">
-					<a href="farmerNormalList.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
+					<a href="farmerNormalList.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[1]; ?>);">
 						<div class="desc">
 							<h3>เกษตรกรทั่วไป</h3>
 							<span>Farmers</span>
@@ -415,7 +425,7 @@ $count=0;
 				</div>
 
 				<div class="col-md-6">
-					<a href="farmerModelList.php" class="featured-grid featured-grid-2" style="background-image: url(images/map.jpg);">
+					<a href="farmerModelList.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[2]; ?>);">
 						<div class="desc">
 							<h3>เกษตรกรต้นแบบ</h3>
 							<span>Model Farmers</span>
