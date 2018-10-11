@@ -381,8 +381,8 @@ $count=0;
 				<div class="col-md-6">
 					<a href="search-showConsignee.php" class="featured-grid featured-grid-2" style="background-image: url(images/hotel.jpg);">
 						<div class="desc">
-							<h3>ค้นหาผู้รับสินค้า</h3>
-							<span>Search The Customer</span>
+							<h3>ค้นหาพื้นที่การแลกเปลี่ยนสินค้า</h3>
+							<span>Search For The Exchange Area</span>
 						</div>
 					</a>
 				</div>
