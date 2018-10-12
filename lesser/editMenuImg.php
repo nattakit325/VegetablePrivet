@@ -2,25 +2,20 @@
 	session_start();
 	
     include "connect.php";
-    $sql = "SELECT n.id as id, n.topic as topic, n.detail as detail,n.media as media,n.time as time,n.username as username,p.name_surname as name_surname ,n.PostTime as posttime FROM news n inner join profile p on n.username = p.username where n.status = 0 order by n.PostTime";
+    
+    $id = $_GET['id'];
 
-    $query=mysqli_query($objCon,$sql);
-	$queryDialog=mysqli_query($objCon,$sql);
-	$count = 0;
+    $sqlForImage= "SELECT name FROM menu  where page = '$id'";
 
-	function DateThai($strDate)
-	{
-		$strYear = date("Y",strtotime($strDate))+543;
-		$strMonth= date("n",strtotime($strDate));
-		$strDay= date("j",strtotime($strDate));
-		$strHour= date("H",strtotime($strDate));
-		$strMinute= date("i",strtotime($strDate));
-		$strSeconds= date("s",strtotime($strDate));
-		$strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
-		$strMonthThai=$strMonthCut[$strMonth];
-		return "$strDay $strMonthThai $strYear,<br> เวลา $strHour:$strMinute";
-	}
+    $querylForImage=mysqli_query($objCon,$sqlForImage);
+    $i = 1;
 
+    while($row=mysqli_fetch_array($querylForImage,MYSQLI_ASSOC)){ 
+        
+        $img[$i] = $row["name"];
+        
+    	$i++;
+    }
     
 ?>
 
@@ -130,7 +125,19 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
 }
 </style>
+    <script type="text/javascript">
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
+                reader.onload = function (e) {
+                    $('#blah').attr('style', 'background-image: url('+e.target.result+');');
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 
 
 	<body>
@@ -272,26 +279,42 @@
 	
 
 	<div id="fh5co-blog-section" class="fh5co-grey-bg-section">
-			<div class="container">
-				<div class="row" >
-					<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-						<h2>การจัดการเมนู</h2>
-						<p>Menu management</p>
-						<br>
-
-						<a href="editMenuImg.php?id=หน้าหลัก" class="btn btn-primary btn-outline with-arrow" >หน้าหลัก<i class="icon-arrow-right"></i></a>
-						<a href="editMenuImg.php?id=เลือกประเภทสินค้า" class="btn btn-primary btn-outline with-arrow" >หน้าเลือกประเภทสินค้า<i class="icon-arrow-right"></i></a>
-						<a href="editMenuImg.php?id=ตัวเลือกสินค้าของเกษตรกร" class="btn btn-primary btn-outline with-arrow" >หน้าตัวเลือกสินค้าของเกษตรกร<i class="icon-arrow-right"></i></a>
-						<br><br>
-						<a href="editMenuImg.php?id=แอดมิน" class="btn btn-primary btn-outline with-arrow" >หน้าแอดมิน<i class="icon-arrow-right"></i></a>
-						
-						<a href="editMenuImg.php?id=การจัดการบัญชี" class="btn btn-primary btn-outline with-arrow" >หน้าการจัดการบัญชี<i class="icon-arrow-right"></i></a>
-						<a href="editMenuImg.php?id=การจัดการตลาด" class="btn btn-primary btn-outline with-arrow" >หน้าการจัดการตลาด<i class="icon-arrow-right"></i></a>
-						<br><br>
-						<a href="editMenuImg.php?id=การจัดการเกษตรกร" class="btn btn-primary btn-outline with-arrow" >หน้าการจัดการเกษตรกร<i class="icon-arrow-right"></i></a>		
-					</div>
+		<div class="container">
+			<div class="row" >
+				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+					<h2>เมนูของ <?php echo $id ?></h2>
+					
+							
 				</div>
-				
+			</div>
+                <!-- <form action="update-img-Menu.php" method="POST">-->
+                <?php while($row=mysqli_fetch_array($querylForImage,MYSQLI_ASSOC)){ 
+				 	$count++
+				 	?>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <a href="#" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[1]; ?>);">
+                                <div class="desc">
+                                    <h3>ชื้อสินค้า(สินค้าทางการเกษตร)</h3>
+                                    <span>Buy</span>
+                                </div>
+                            </a>
+                            เปลี่ยนรูปภาพ
+                            <input type="file" name="img1" class="form-control">
+
+                        </div>
+                    </div>
+                    <?php } ?>
+                    
+               <!-- </form> -->
+
+		</div>
+	</div>
+	
+	
+	
+	</div>
+	
 	
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
