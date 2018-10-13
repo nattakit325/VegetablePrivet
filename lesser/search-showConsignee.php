@@ -476,7 +476,7 @@ function ShowMarker(){
 	setLocation();
 	//locations.push(['คุณอยู่ตรงนี้',p3,p4,2]);
     map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 11,
+      zoom: 16,
       center: new google.maps.LatLng(latitudeDis,longitudeDis),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });

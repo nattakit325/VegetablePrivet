@@ -367,7 +367,7 @@ function setMarket(){
 			"<?php echo $row["subdictrict"];?>","<?php echo $row["district_name"];?>",
 			"<?php echo $row["phone"];?>","<?php echo $row["facebook"];?>",
 			"<?php echo $row["line"];?>","<?php echo $row["email"];?>",
-			"<?php echo $row["brand"];?>","<?php echo $row["sellproduct"];?>",
+			"<?php echo $row["username"];?>","<?php echo $row["sellproduct"];?>",
 			"<?php echo $row["link_youtube"];?>",<?php echo $row["latitude"];?>,
 			<?php echo $row["longitude"];?>]);
 	 <?php }?>
@@ -408,11 +408,12 @@ function showPosition(){
 var extend = [];
 function ShowMarker(){
 	for(k= 0;k<place.length;k++){
-		locations.push(["ชื่อเกษตรกร: "+ place[k][0]+"<br>ระยะทาง: "+place[k][14]+" กิโลเมตร"+"<br>ที่อยู่: "+place[k][1]+place[k][2]+place[k][3]+"<br>Link: <a href="+place[k][10]+">"+place[k][10]+"</a><br> เบอร์โทรศัพท์: "+place[k][4]+"<br> facebook:"+place[k][5]+"<br> Line:"+place[k][6]+"<br> สถานที่ขาย: "+place[k][9], place[k][11], place[k][12], 0 ]);
+		locations.push(["ชื่อเกษตรกร: "+ place[k][0]+"<br>ระยะทาง: "+place[k][14]+" กิโลเมตร"+"<br>ที่อยู่: "+place[k][1]+place[k][2]+place[k][3]+"<br>Link: <a href="+place[k][10]+">"+place[k][10]+"</a><br> เบอร์โทรศัพท์: "+place[k][4]+"<br> facebook:"+place[k][5]+"<br> Line:"+place[k][6]+"<br> สถานที่ขาย: "+place[k][9]+
+			"<br><a href='ShowfarmerDetail.php?id="+place[k][8]+"'>เพิ่มเติม</a>", place[k][11], place[k][12], 0 ]);
 	}
 	setLocation();
     var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 11,
+      zoom: 13,
       center: new google.maps.LatLng(latitudeDis,longitudeDis),
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       panControl: true,
