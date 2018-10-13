@@ -8,6 +8,8 @@
     $sqlForImage= "SELECT name FROM menu  where page = '$id'";
 
     $querylForImage=mysqli_query($objCon,$sqlForImage);
+    $queryDialog=mysqli_query($objCon,$sqlForImage);
+
     $i = 1;
 
     while($row=mysqli_fetch_array($querylForImage,MYSQLI_ASSOC)){ 
@@ -288,14 +290,15 @@
 				</div>
 			</div>
                 <!-- <form action="update-img-Menu.php" method="POST">-->
-                <?php while($row=mysqli_fetch_array($querylForImage,MYSQLI_ASSOC)){ 
-				 	$count++
-				 	?>
+                <?php 
+                $c = 1;
+                while($row=mysqli_fetch_array($queryDialog,MYSQLI_ASSOC)){ 
+                	?>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <a href="#" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[1]; ?>);">
+                            <a href="#" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo$row["name"]; ?>);">
                                 <div class="desc">
-                                    <h3>ชื้อสินค้า(สินค้าทางการเกษตร)</h3>
+                                    <h3>echo$row["name"];</h3>
                                     <span>Buy</span>
                                 </div>
                             </a>
@@ -304,7 +307,7 @@
 
                         </div>
                     </div>
-                    <?php } ?>
+                    <?php  } ?>
                     
                <!-- </form> -->
 
