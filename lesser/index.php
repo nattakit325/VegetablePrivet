@@ -19,9 +19,12 @@
 	
 
 
-    $sql = "SELECT  n.id as id, n.topic as topic, n.detail as detail,n.media as media,n.Youtube_Link as Youtube_Link,n.Link as Link,n.time as time,n.username as username,p.name_surname as name_surname FROM news n inner join profile p on n.username = p.username WHERE time>NOW() and n.status=0  order by time";
+    $sql = "SELECT  n.id as id, n.topic as topic, n.detail as detail,n.media as media,n.Youtube_Link as Youtube_Link,n.Link as Link,n.time 
+			as time,n.username as username,p.name_surname as name_surname FROM news n 
+			inner join profile p on n.username = p.username WHERE time>NOW() and n.status=0  order by time";
 
-    $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' and status = 1 ";
+    $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' 
+							and status = 1 ";
 
     $sqlForImage= "SELECT name FROM menu  where page = 'หน้าหลัก'";
 
