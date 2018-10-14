@@ -5,7 +5,7 @@
     
     $id = $_GET['id'];
 
-    $sqlForImage= "SELECT name,position FROM menu  where page = '$id'";
+    $sqlForImage= "SELECT name,position,id FROM menu  where page = '$id'";
 
     $querylForImage=mysqli_query($objCon,$sqlForImage);
     $queryDialog=mysqli_query($objCon,$sqlForImage);
@@ -289,7 +289,7 @@
 							
 				</div>
 			</div>
-                <form action="update-img-Menu.php" method="POST">
+                <form action="update-img-Menu.php" method="POST"  enctype="multipart/form-data" runat="server"> 
                 <?php 
                 $c = 1;
                 while($row=mysqli_fetch_array($queryDialog,MYSQLI_ASSOC)){ 
@@ -304,9 +304,10 @@
                                 </div>
                             </a>
                             เปลี่ยนรูปภาพ
+                            <input type="hidden" name="pictureold<?php echo $c ?>" value="<?php echo$row["name"]; ?>">
                             <input type="hidden" name="amount" value="<?php echo $c ?>">
-                            <input type="hidden" name="name<?php echo $c ?>" value="<?php echo$row["name"]; ?>">
-                            <input type="file" name="img<?php echo $c ?>" class="form-control" onchange="readURL(this,<?php echo $c ?>);"> 
+                            <input type="hidden" name="id<?php echo $c ?>" value="<?php echo$row["id"]; ?>">
+                            <input type="file"  name="fileToUpload<?php echo $c ?>" id="fileToUpload<?php echo $c ?>" class="form-control" onchange="readURL(this,<?php echo $c ?>);"> 
 
                         </div>
                     </div>
