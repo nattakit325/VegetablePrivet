@@ -357,7 +357,7 @@ $usermname = '';
               <div class="form-group">
                 <br>
                 <center>
-                <input  class="btn btn-primary" type="submit" value="Upload Image" name="submit"> 
+                <input  class="btn btn-primary" type="submit" value="สร้างสินค้า" name="submit"> 
                 </center>
               </div>
             </div>

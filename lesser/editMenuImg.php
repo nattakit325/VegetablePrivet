@@ -5,7 +5,7 @@
     
     $id = $_GET['id'];
 
-    $sqlForImage= "SELECT name FROM menu  where page = '$id'";
+    $sqlForImage= "SELECT name,position FROM menu  where page = '$id'";
 
     $querylForImage=mysqli_query($objCon,$sqlForImage);
     $queryDialog=mysqli_query($objCon,$sqlForImage);
@@ -128,12 +128,12 @@
 }
 </style>
     <script type="text/javascript">
-        function readURL(input) {
+        function readURL(input,number) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
-                    $('#blah').attr('style', 'background-image: url('+e.target.result+');');
+                    $('#blah'+number).attr('style', 'background-image: url('+e.target.result+');');
                 }
 
                 reader.readAsDataURL(input.files[0]);
@@ -289,27 +289,36 @@
 							
 				</div>
 			</div>
-                <!-- <form action="update-img-Menu.php" method="POST">-->
+                <form action="update-img-Menu.php" method="POST">
                 <?php 
                 $c = 1;
                 while($row=mysqli_fetch_array($queryDialog,MYSQLI_ASSOC)){ 
+
                 	?>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <a href="#" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo$row["name"]; ?>);">
+                            <a href="#" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo$row["name"]; ?>);" id="blah<?php echo $c ?>">
                                 <div class="desc">
-                                    <h3>echo$row["name"];</h3>
+                                    <h3><?php echo $row["position"]; ?></h3>
                                     <span>Buy</span>
                                 </div>
                             </a>
                             เปลี่ยนรูปภาพ
-                            <input type="file" name="img1" class="form-control">
+                            <input type="hidden" name="amount" value="<?php echo $c ?>">
+                            <input type="file" name="img<?php echo $c ?>" class="form-control" onchange="readURL(this,<?php echo $c ?>);"> 
 
                         </div>
                     </div>
-                    <?php  } ?>
+                    <?php  
+                    $c++;
+                } ?>
+                <br><br>
+                <center>
+
+                <input  class="btn btn-primary" type="submit" value="บันทึกรูปแบบ" name="submit"> 
+                </center>
                     
-               <!-- </form> -->
+               </form>
 
 		</div>
 	</div>
