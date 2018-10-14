@@ -305,6 +305,7 @@
                             </a>
                             เปลี่ยนรูปภาพ
                             <input type="hidden" name="amount" value="<?php echo $c ?>">
+                            <input type="hidden" name="name<?php echo $c ?>" value="<?php echo$row["name"]; ?>">
                             <input type="file" name="img<?php echo $c ?>" class="form-control" onchange="readURL(this,<?php echo $c ?>);"> 
 
                         </div>
