@@ -532,7 +532,7 @@ $count=0;
 				 	?>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a class="work-grid" style="background-image: url(images/<?php echo $row['picture'];?>);">
+						<a class="work-grid" style="background-image: url(uploads_product/<?php echo $row['picture'];?>);">
 						</a>
 						<div class="desc">
 							<h3><?php echo $row["product_name"];?></h3>
