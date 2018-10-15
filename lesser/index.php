@@ -29,11 +29,12 @@
     $sqlForImage= "SELECT name FROM menu  where page = 'หน้าหลัก'";
 
 
-    $sqlForProduct = "SELECT p.name as product_name,p.detail as detail,f.name_surname as name,p.price as price,p.picture as picture FROM selllist s 
+    $sqlForProduct = "SELECT s.id as id, p.name as product_name,p.detail as detail,f.name_surname as name,p.price as price,p.picture as picture FROM selllist s 
 		INNER join product p on s.id = p.id 
 		INNER JOIN profile f on s.username = f.username
 		ORDER BY s.id DESC LIMIT 12";
 	$querylForProduct=mysqli_query($objCon,$sqlForProduct);
+	$querylForProductDailog=mysqli_query($objCon,$sqlForProduct);
 
 
 
@@ -309,6 +310,35 @@ $count=0;
  ?>
 
   
+  <?php while($row=mysqli_fetch_array($querylForProductDailog,MYSQLI_ASSOC)){ 
+	
+	?>
+
+  <div class="modal fade" id="myProductModal<?php echo $row["id"]?>" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          
+          <h4 class="modal-title"> <?php echo $row["product_name"];?> </h4>
+          
+        </div>
+        <div class="modal-body">
+        	<u>รายละเอียด</u><br>
+          <p> <?php echo $row["detail"];?></p>
+          
+          <u>ราคา</u><br>
+          <p> <?php echo $row["price"];?></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<?php }
+$count=0;
+ ?>
   
 
   
@@ -515,7 +545,7 @@ $count=0;
 					<h2>สินค้าที่ลงขายล่าสุด</h2>
 					<p>Latest Products</p>
 					
-                    <a href="#news"><button type="button" class="btn btn-warning" ><i class="fab fa-product-hunt"></i>&nbsp;&nbsp;ดูข่าวประชาสัมพันธ์</button></span></a>
+                    <a href="#news"><button type="button" class="btn btn-warning" ><i class="fas fa-newspaper"></i>&nbsp;&nbsp;ดูข่าวประชาสัมพันธ์</button></span></a>
                     <br>
 									
 										
@@ -538,7 +568,7 @@ $count=0;
 							<h3><?php echo $row["product_name"];?></h3>
 							<p>โดย <?php echo $row["name"];?></p>
 							
-							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $row["id"]?>">ดูรายละเอียด<i class="icon-arrow-right"></i></a>
+							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myProductModal<?php echo $row["id"]?>">ดูรายละเอียด<i class="icon-arrow-right"></i></a>
 						</div>
 					</div>
 				</div>
