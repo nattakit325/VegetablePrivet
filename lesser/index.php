@@ -28,6 +28,16 @@
 
     $sqlForImage= "SELECT name FROM menu  where page = 'หน้าหลัก'";
 
+
+    $sqlForProduct = "SELECT p.name as product_name,p.detail as detail,f.name_surname as name,p.price as price,p.picture as picture FROM selllist s 
+		INNER join product p on s.id = p.id 
+		INNER JOIN profile f on s.username = f.username
+		ORDER BY s.id DESC LIMIT 12";
+	$querylForProduct=mysqli_query($objCon,$sqlForProduct);
+
+
+
+
     $querylForImage=mysqli_query($objCon,$sqlForImage);
     $i = 1;
 
@@ -435,9 +445,11 @@ $count=0;
 		</div>
 	</div>
 
+	
 	<div id="fh5co-blog-section" class="fh5co-grey-bg-section">
 		<div class="container">
 			<div class="row">
+				<div id="news">
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
 					<h2>ประชาสัมพันธ์</h2>
 					<p>Public relations</p>
@@ -461,7 +473,10 @@ $count=0;
                     <?php }else{ ?>
                         <a href="AddNews.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;เสนอข่าวใหม่</button></span></a>
                     <?php } ?>
+                    <a href="#product"><button type="button" class="btn btn-warning" ><i class="fab fa-product-hunt"></i>&nbsp;&nbsp;ดูสินค้ามาใหม่</button></span></a>
+
                     </form> 
+
                     <br>
 									
 										
@@ -490,6 +505,45 @@ $count=0;
 					</div>
 				</div>
 				<?php } ?>
+			</div>
+			</div>
+
+
+
+			<div id="product">
+			<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+					<h2>สินค้าที่ลงขายล่าสุด</h2>
+					<p>Latest Products</p>
+					
+                    <a href="#news"><button type="button" class="btn btn-warning" ><i class="fab fa-product-hunt"></i>&nbsp;&nbsp;ดูข่าวประชาสัมพันธ์</button></span></a>
+                    <br>
+									
+										
+										
+									</div>
+				</div>
+			</div>
+
+			<div id="search_result">
+			<div class="row">
+
+				 <?php while($row=mysqli_fetch_array($querylForProduct,MYSQLI_ASSOC)){ 
+				 	$count++
+				 	?>
+				<div class="col-md-4 text-center">
+					<div class="work-inner">
+						<a class="work-grid" style="background-image: url(images/<?php echo $row['picture'];?>);">
+						</a>
+						<div class="desc">
+							<h3><?php echo $row["product_name"];?></h3>
+							<p>โดย <?php echo $row["name"];?></p>
+							
+							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $row["id"]?>">ดูรายละเอียด<i class="icon-arrow-right"></i></a>
+						</div>
+					</div>
+				</div>
+				<?php } ?>
+			</div>
 			</div>
 				
 				
@@ -505,72 +559,7 @@ $count=0;
 
 
 
-	<div id="fh5co-blog-section" class="fh5co-grey-bg-section">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>สินค้าล่าสุด</h2>
-					<p>Latest Products</p>
-					<div class="form-group">
-									<form >
-                        <div class="form-group">
-                            <label for="textsearch" >วันเดือนปีที่จัดกิจกรรม</label>
 
-                            <input type="date"  class="form-control" name="dateToserch" id="dateToserch" data-date-format="mm-dd-yyyy">
-                            
-                        </div>
-                        
-
-                        <button type="button" class="btn btn-primary" id="btnSearch" onclick="showHint(document.getElementById('dateToserch').value)">
-                            <span class="glyphicon glyphicon-search"></span>
-                            ค้นหา
-                        </button>
-                        <?php if(empty($_SESSION["username"])){ ?>
-                        <a href="#" data-toggle="modal" data-target="#myModal"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;เสนอข่าวใหม่</button></span></a>
-
-                    <?php }else{ ?>
-                        <a href="AddNews.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;เสนอข่าวใหม่</button></span></a>
-                    <?php } ?>
-                    </form> 
-                    <br>
-									
-										
-										
-									</div>
-				</div>
-			</div>
-
-			<div id="search_result">
-			<div class="row">
-
-				 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ 
-				 	$count++
-				 	?>
-				<div class="col-md-4 text-center">
-					<div class="work-inner">
-						<a class="work-grid" style="background-image: url(images/<?php echo $row['media'];?>);">
-						</a>
-						<div class="desc">
-							<h3><?php echo $row["topic"];?></h3>
-							<!--<p>เวลา <?php echo DateThai($row["time"]);?></p>-->
-							<p>โดย <?php echo $row["name_surname"];?></p>
-							
-							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $row["id"]?>">ดูรายละเอียด<i class="icon-arrow-right"></i></a>
-						</div>
-					</div>
-				</div>
-				<?php } ?>
-			</div>
-				
-				
-				
-
-
-				
-
-			</div>
-		</div>
-	</div>
 	
 	
 	</div>
