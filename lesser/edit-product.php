@@ -292,7 +292,18 @@ $usermname = '';
 							</div>
 							<div class="col-md-6">
 							<div class="form-group">
-								รายละเอียดสินค้า<textarea name="detail" class="form-control" id="" cols="30" rows="7" placeholder="<?php echo $objResult["detail"] ?>"><?php echo $objResult["detail"] ?></textarea>
+								<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+								<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.1/emojionearea.min.css" />
+								<script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.1/emojionearea.min.js"></script>
+								รายละเอียดสินค้า<textarea name="detail" class="form-control" id="myText" cols="30" rows="7" placeholder="<?php echo $objResult["detail"] ?>"><?php echo $objResult["detail"] ?></textarea>
+								<script >
+									$("#myText").emojioneArea({
+										pickerPosition:"right"
+
+									});
+	
+								</script>
+								
 							</div>
 						</div>
 						<div class="col-md-6">
