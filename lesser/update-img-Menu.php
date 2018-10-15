@@ -8,6 +8,9 @@
 
 
     $amount = $_POST['amount'];
+    
+
+    
     $i=1;
 
     while ($i <= $amount ) {
@@ -85,8 +88,9 @@
 
     	
     }
+    $id = $_POST['id'];
 
-    header("location:menuMG.php");
+    header("location:editMenuImg.php?id=$id");
 
     
 

@@ -276,6 +276,7 @@
           
         </div>
         <div class="modal-body">
+        	<u>เนื้อหา</u><br>
           <p> <?php echo $row["detail"];?></p>
           <?php if($row["Link"]!=null){ ?>
           <u>เว็ปไซต์ประชาสัมพันธ์</u><br>
@@ -446,7 +447,9 @@ $count=0;
                             <label for="textsearch" >วันเดือนปีที่จัดกิจกรรม</label>
 
                             <input type="date"  class="form-control" name="dateToserch" id="dateToserch" data-date-format="mm-dd-yyyy">
+
                         </div>
+                        
 
                         <button type="button" class="btn btn-primary" id="btnSearch" onclick="showHint(document.getElementById('dateToserch').value)">
                             <span class="glyphicon glyphicon-search"></span>
@@ -499,6 +502,75 @@ $count=0;
 		</div>
 	</div>
 	
+
+
+
+	<div id="fh5co-blog-section" class="fh5co-grey-bg-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+					<h2>สินค้าล่าสุด</h2>
+					<p>Latest Products</p>
+					<div class="form-group">
+									<form >
+                        <div class="form-group">
+                            <label for="textsearch" >วันเดือนปีที่จัดกิจกรรม</label>
+
+                            <input type="date"  class="form-control" name="dateToserch" id="dateToserch" data-date-format="mm-dd-yyyy">
+                            
+                        </div>
+                        
+
+                        <button type="button" class="btn btn-primary" id="btnSearch" onclick="showHint(document.getElementById('dateToserch').value)">
+                            <span class="glyphicon glyphicon-search"></span>
+                            ค้นหา
+                        </button>
+                        <?php if(empty($_SESSION["username"])){ ?>
+                        <a href="#" data-toggle="modal" data-target="#myModal"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;เสนอข่าวใหม่</button></span></a>
+
+                    <?php }else{ ?>
+                        <a href="AddNews.php"><button type="button" class="btn btn-success" ><i class="fas fa-plus-square"></i>&nbsp;&nbsp;เสนอข่าวใหม่</button></span></a>
+                    <?php } ?>
+                    </form> 
+                    <br>
+									
+										
+										
+									</div>
+				</div>
+			</div>
+
+			<div id="search_result">
+			<div class="row">
+
+				 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ 
+				 	$count++
+				 	?>
+				<div class="col-md-4 text-center">
+					<div class="work-inner">
+						<a class="work-grid" style="background-image: url(images/<?php echo $row['media'];?>);">
+						</a>
+						<div class="desc">
+							<h3><?php echo $row["topic"];?></h3>
+							<!--<p>เวลา <?php echo DateThai($row["time"]);?></p>-->
+							<p>โดย <?php echo $row["name_surname"];?></p>
+							
+							<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $row["id"]?>">ดูรายละเอียด<i class="icon-arrow-right"></i></a>
+						</div>
+					</div>
+				</div>
+				<?php } ?>
+			</div>
+				
+				
+				
+
+
+				
+
+			</div>
+		</div>
+	</div>
 	
 	
 	</div>

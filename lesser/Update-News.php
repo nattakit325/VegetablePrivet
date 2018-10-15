@@ -9,6 +9,14 @@
     $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 
     $PictureName =  basename($_FILES["fileToUpload"]["name"]);
+
+    if($_POST["pictureold"] != "news.png"){
+                
+                    unlink("images/".$_POST["pictureold"]);
+                
+
+    }
+
     $pieces = explode(".", $PictureName);
 
 

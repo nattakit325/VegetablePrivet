@@ -300,11 +300,12 @@
                             <a href="#" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo$row["name"]; ?>);" id="blah<?php echo $c ?>">
                                 <div class="desc">
                                     <h3><?php echo $row["position"]; ?></h3>
-                                    <span>Buy</span>
+                                    
                                 </div>
                             </a>
                             เปลี่ยนรูปภาพ
                             <input type="hidden" name="pictureold<?php echo $c ?>" value="<?php echo$row["name"]; ?>">
+                            <input type="hidden" name="id" value="<?php echo $id ?>">
                             <input type="hidden" name="amount" value="<?php echo $c ?>">
                             <input type="hidden" name="id<?php echo $c ?>" value="<?php echo$row["id"]; ?>">
                             <input type="file"  name="fileToUpload<?php echo $c ?>" id="fileToUpload<?php echo $c ?>" class="form-control" onchange="readURL(this,<?php echo $c ?>);"> 
