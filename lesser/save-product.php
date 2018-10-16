@@ -18,77 +18,80 @@
     $target_dir = "uploads_product/";
     //$target_dir = "/home/nattakit/domains/nattakitmju.com/public_html/uploads_product/";
 
-    if($_FILES["fileToUpload"]["name"]){
-    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+    $i=1;
 
-	$PictureName =  basename($_FILES["fileToUpload"]["name"]);
-	$pieces = explode(".", $PictureName);
+    while($i<=3){
+    	 if($_FILES["fileToUpload".$i]["name"]){
+    		$target_file = $target_dir . basename($_FILES["fileToUpload".$i]["name"]);
+    		$PictureName[$i] =  basename($_FILES["fileToUpload".$i]["name"]);
+    		$pieces = explode(".", $PictureName[$i]);
 
+    		$path = getcwd();
 
-	$path = getcwd();
+    		$t = microtime(true);
+			$micro = sprintf("%06d",($t - floor($t)) * 1000000);
+			$PictureName[$i] = $pieces[0].date("Y-m-d H:i:s").".$micro$t.";
+			$PictureName[$i] = str_replace(".","","$PictureName[$i]");
+			$PictureName[$i] = str_replace("-","","$PictureName[$i]");
+			$PictureName[$i] = str_replace(":","","$PictureName[$i]");
+			$PictureName[$i] = str_replace(" ","","$PictureName[$i]");
 
-	
-
-
-	
-
-	$t = microtime(true);
-	$micro = sprintf("%06d",($t - floor($t)) * 1000000);
-	$PictureName = $pieces[0].date("Y-m-d H:i:s").".$micro$t.";
-	$PictureName = str_replace(".","","$PictureName");
-	$PictureName = str_replace("-","","$PictureName");
-	$PictureName = str_replace(":","","$PictureName");
-	$PictureName = str_replace(" ","","$PictureName");
-	
-
-	$PictureName = $PictureName.$pieces[1];
+			$PictureName[$i]  = $PictureName[$i].$pieces[1];
 
 
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-    if(isset($_POST["submit"])) {
-    	$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-    	if($check !== false) {
+			$uploadOk = 1;
+    		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    		if(isset($_POST["submit"])) {
+    			$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+    		if($check !== false) {
         	
-        	$uploadOk = 1;
-    	} else {
+        		$uploadOk = 1;
+    		} else {
         	
-        	$uploadOk = 0;
-    	}
-	}
+        			$uploadOk = 0;
+    			}
+			}
 
-	// Check if file already exists
-	
-	
-	if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+			if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "	gif" ) {
     	
-    	$uploadOk = 0;
-	}
-	if ($uploadOk == 0) {
-    	
+    		$uploadOk = 0;
+		}
+			if ($uploadOk == 0) {
+    		
 		// if everything is ok, try to upload file
-	} else {
-    	if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-    		rename("$target_file","$target_dir"."$PictureName");
+			} else {
+    		if (move_uploaded_file($_FILES["fileToUpload".$i]["tmp_name"], $target_file)) {
+    			rename("$target_file","$target_dir"."$PictureName[$i]");
         	
-    	} else {
+    		} else {
 
         
-    	}
+    		}
 	}
-}else{
-	$PictureName = "product.png";
-}
 
 
+
+
+    	}else{
+    		$PictureName[$i] = "product.png";
+
+    	}
+    	$i++;
+
+    }
+
+
+
+
+   
 
 
     //---------------------------------------//
 
 
 	$strSQL = "INSERT INTO product";
-	$strSQL .="(name,detail,price,type,category,picture) 
-				VALUES ('$name','$detail','$price','$type','$category','$PictureName')";
+	$strSQL .="(name,detail,price,type,category,picture,picture1,picture2) 
+				VALUES ('$name','$detail','$price','$type','$category','$PictureName[1]','$PictureName[2]','$PictureName[3]')";
 	$objQuery = mysqli_query($objCon,$strSQL);
 
 
