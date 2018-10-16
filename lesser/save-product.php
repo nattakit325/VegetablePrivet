@@ -41,8 +41,10 @@
 
 			$uploadOk = 1;
     		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-    		if(isset($_POST["submit"])) {
-    			$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+    		if(isset($_POST["submit"]) ) {
+
+    			$check = getimagesize($_FILES["fileToUpload".$i]["tmp_name"]);
+    			
     		if($check !== false) {
         	
         		$uploadOk = 1;
@@ -78,6 +80,7 @@
     	}
     	$i++;
 
+
     }
 
 
@@ -89,8 +92,10 @@
     //---------------------------------------//
 
 
+    
+
 	$strSQL = "INSERT INTO product";
-	$strSQL .="(name,detail,price,type,category,picture,picture1,picture2) 
+	$strSQL .="(name,detail,price,type,category,picture,picture2,picture3) 
 				VALUES ('$name','$detail','$price','$type','$category','$PictureName[1]','$PictureName[2]','$PictureName[3]')";
 	$objQuery = mysqli_query($objCon,$strSQL);
 
@@ -368,7 +373,7 @@
 							</div>
 
 							<div class="col-md-12 side">
-								<h3><img class="picture" src="images/<?php echo $objResult["img"]; ?>" width="10%" height="12%" />&nbsp;&nbsp;ผู้จำหน่าย</h3>
+								<h3><img class="picture" src="images/<?php echo $objResult["img"]; ?>" width="10%" height="12%" />&nbsp;&nbsp;ผู้จำหน่าย </h3>
 								<ul>
 									<li>
 										<li><?php echo $_SESSION["name_surname"];?></li>
