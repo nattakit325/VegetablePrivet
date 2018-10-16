@@ -274,10 +274,14 @@ $usermname = '';
 						</a>
 						<div class="desc">
 							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" id="fileToUpload" onchange="readURL(this);">
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload1" id="fileToUpload" onchange="readURL(this);">
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload2" id="fileToUpload" onchange="readURL(this);">
 
 							
 						</div>
+
 					</div>
+
 				</div>
 			
 							<div class="col-md-6">
