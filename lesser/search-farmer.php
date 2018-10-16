@@ -432,7 +432,12 @@ function ShowMarker(){
             position: google.maps.ControlPosition.RIGHT_CENTER
         }
     });
-
+    var src = '/kml/dd.kmz';
+    var kmlLayer = new google.maps.KmlLayer(src, {
+          suppressInfoWindows: true,
+          preserveViewport: false,
+          map: map
+        });
     var infowindow = new google.maps.InfoWindow();
     var marker, i;
 		var icon = {
@@ -459,6 +464,7 @@ function ShowMarker(){
         }
       })(marker, i));
     }
+
 }
 function setLocation(){
 	<?php while ($row = mysqli_fetch_array($queryE, MYSQLI_ASSOC)) {?>

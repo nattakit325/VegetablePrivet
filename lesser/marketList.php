@@ -100,6 +100,17 @@ $usermname = '';
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+	<!-- data table -->
+	 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" />
+	  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/dataTables.bootstrap.min.css" />
+	  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.1.0/css/responsive.bootstrap.min.css" type="text/css" />
+	  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.1/css/buttons.bootstrap.min.css" type="text/css" />
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900' rel='stylesheet' type='text/css'>
+
+	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
+	<!-- data table -->
 		<style>
 .circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
     height: 50px;  /* ความสูงปรับให้เป็นออโต้ */
@@ -151,7 +162,9 @@ function setMarket(){
 		marketList.push([<?php echo $row["latitude"]; ?>,<?php echo $row["longitude"]; ?>,
 			"<?php echo $row["market"]; ?>","<?php echo $row["pictureMarket"]; ?>",
 			"<?php echo $row["openDate"]; ?>","<?php echo $row["openingTime"]; ?>",
-			"<?php echo $row["closingTime"]; ?>",<?php echo $row["id"]; ?>]);
+			"<?php echo $row["closingTime"]; ?>",<?php echo $row["id"]; ?>,
+			"<?php echo $row["market_address"]; ?>","<?php echo $row["market_tel"]; ?>",
+			"<?php echo $row["market_Categoryfactor"]; ?>"]);
 	 <?php }?>
 	
 	var d1 = new Date();
@@ -174,7 +187,7 @@ function setMarket(){
 }
 function getLaLongMarket() {
 	 for(var i=0;i<market.length;i++){
-		 market[i][8] = new google.maps.LatLng(market[i][0], market[i][1]);
+		 market[i][11] = new google.maps.LatLng(market[i][0], market[i][1]);
 	 }
 	 getLocation();
 }
@@ -194,19 +207,21 @@ function CurrentPosition(position) {
  function showPosition(){
  	p1 = 1;
 	for(var j=0;j<market.length;j++){
-		 market[j][9] = (google.maps.geometry.spherical.computeDistanceBetween(market[j][8], p2) / 1000).toFixed(2);
+		 market[j][12] = (google.maps.geometry.spherical.computeDistanceBetween(market[j][11], p2) / 1000).toFixed(2);
 	 }
 	 market.sort(function(a,b){
-    	return a[9] - b[9];
+    	return a[12] - b[12];
 	});
 	//alert(market.length);
-	showOnWeb()
+	if(<?php echo $type; ?>==1){
+		showOnWeb()
+	}else if(<?php echo $type; ?>==2){
+		setOnWebFactor();
 
-	
+	}
 }
 	function showOnWeb(){
 		
-	
 		for(var i=0;i<market.length;i++){
 		var showV  = document.getElementById('showV');
 		var div1 = document.createElement("div");
@@ -231,7 +246,7 @@ function CurrentPosition(position) {
 		a2.href = "buy.php?&MarketId="+market[i][7];
 		var TnameVeget = document.createTextNode(market[i][2]);
 		var pDisten = document.createElement("p");
-		var TextDistan = document.createTextNode("ห่างจากคุณ "+market[i][9]+" กิโลเมตร");
+		var TextDistan = document.createTextNode("ห่างจากคุณ "+market[i][12]+" กิโลเมตร");
 		var pMarketName = document.createElement("p");
 		var TextNameMket = document.createTextNode("วันที่เปิด "+market[i][4]);
 		var pOpenAndClose = document.createElement("p");
@@ -268,6 +283,71 @@ function CurrentPosition(position) {
 		a3.appendChild(icon);
 		}
 	}
+	function setOnWebFactor(){
+		var showV  = document.getElementById('showV');
+		var table1 = document.createElement("table");
+		var thead1 = document.createElement("thead");
+		var tr1 = document.createElement("tr");
+		var td1 = document.createElement("td");
+		var td2 = document.createElement("td");
+		var td3 = document.createElement("td");
+		var td4 = document.createElement("td");
+		var td5 = document.createElement("td");
+		var tbody1 = document.createElement("tbody");
+		var TextThead1 = document.createTextNode("ชื่อตลาด");
+		var TextThead2 = document.createTextNode("ที่อยู่");
+		var TextThead3 = document.createTextNode("โทร");
+		var TextThead4 = document.createTextNode("ประเภทปัจจัยการผลิต");
+		var TextThead5 = document.createTextNode("เลือก");
+		table1.classList.add("datatable","table","table-hover","table-bordered");
+		table1.border = "1";
+		table1.id = "datatable";
+		table1.width = "100%";
+		showV.appendChild(table1);
+		table1.appendChild(thead1);	
+		thead1.appendChild(tr1);
+		tr1.appendChild(td1);
+		tr1.appendChild(td2);
+		tr1.appendChild(td3);
+		tr1.appendChild(td4);
+		tr1.appendChild(td5);
+		td1.appendChild(TextThead1);	
+		td2.appendChild(TextThead2);
+		td3.appendChild(TextThead3);
+		td4.appendChild(TextThead4);
+		td5.appendChild(TextThead5);
+		table1.appendChild(tbody1);
+		for(var i=0;i<market.length;i++){
+		var Marketname1 = document.createTextNode(market[i][2]);
+		var Marketname2 = document.createTextNode(market[i][8]);
+		var Marketname3 = document.createTextNode(market[i][9]);
+		var Marketname4 = document.createTextNode(market[i][10]);
+		var Marketname5 = document.createTextNode("เลือก");
+		var tr2 = document.createElement("tr");
+		var td6 = document.createElement("td");
+		var td7 = document.createElement("td");
+		var td8 = document.createElement("td");
+		var td9 = document.createElement("td");
+		var td10 = document.createElement("td");
+		var a1 = document.createElement("a");
+		a1.href = "buy-farmer.php?&MarketId="+market[i][7];
+		tbody1.appendChild(tr2);
+		tr2.appendChild(td6);
+		tr2.appendChild(td7);
+		tr2.appendChild(td8);
+		tr2.appendChild(td9);
+		tr2.appendChild(td10);
+		td6.appendChild(Marketname1);
+		td7.appendChild(Marketname2);
+		td8.appendChild(Marketname3);
+		td9.appendChild(Marketname4);
+		td10.appendChild(a1);
+		a1.appendChild(Marketname5);
+		}
+
+
+		var dataTable = $('#datatable').DataTable();
+		}
 </script>
 
 
@@ -403,9 +483,11 @@ function CurrentPosition(position) {
             </div>
 			<div class="row" >
 				<div class="col-md-12">
+		
                     <div class="row" id="showV">
            
 			        </div>
+			    
 				</div>
 			</div>
 	</div>
@@ -433,6 +515,21 @@ function CurrentPosition(position) {
     <script src="js/main.js"></script>
     <!-- Search -->
     <script type="text/javascript" src="jquery-1.11.2.min.js"></script>
+
+    <!-- data Table State -->
+	  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	  <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+	  <script src="//cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+	  <!-- Responsive extension -->
+	  <script src="https://cdn.datatables.net/responsive/2.1.0/js/responsive.bootstrap.min.js"></script>
+	  <!-- Buttons extension -->
+	  <script src="//cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
+	  <script src="//cdn.datatables.net/buttons/1.2.1/js/buttons.bootstrap.min.js"></script>
+	  <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+	  <script src="//cdn.datatables.net/buttons/1.2.1/js/buttons.html5.min.js"></script>
+	  
+	 
+	<!-- END Data Table -->
 
 	</body>
 </html>
