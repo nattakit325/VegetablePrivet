@@ -376,9 +376,9 @@ function CurrentPosition(position) {
 
 						</form>
   <br>
-  <a href="register.html">ยังไม่ได้สมัครบัญชีในระบบ</a>
+  <a href="register.php">ยังไม่ได้สมัครบัญชีในระบบ</a>
         </center>
-
+          
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
@@ -402,10 +402,10 @@ function CurrentPosition(position) {
 						<p>career     : <?php echo $_SESSION["status"];?></p>
   <br>
 
-  <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
+  <a href="editProfile.php"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
   <a href="ClearSession.php"><button type="button" class="btn btn-warning" >ออกจากระบบ</button></a>
         </center>
-
+          
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>

@@ -4,11 +4,9 @@
     $password="";
     $db="smartfarmer";
 
+ 
+   	$objCon = new mysqli($server,$user,$password,$db);
 
-    $objCon = mysqli_connect($server,$user,$password,$db);
-    if($objCon){
-        
-    }
     mysqli_set_charset($objCon,"utf8mb4");
 
 

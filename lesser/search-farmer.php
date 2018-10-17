@@ -205,7 +205,7 @@ function showHint(str,username) {
 
 						</form>
   <br>
-  <a href="register.html">ยังไม่ได้สมัครบัญชีในระบบ</a>
+  <a href="register.php">ยังไม่ได้สมัครบัญชีในระบบ</a>
         </center>
           
         </div>
@@ -231,7 +231,7 @@ function showHint(str,username) {
 						<p>career     : <?php echo $_SESSION["status"];?></p>
   <br>
 
-  <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
+  <a href="editProfile.php"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
   <a href="ClearSession.php"><button type="button" class="btn btn-warning" >ออกจากระบบ</button></a>
         </center>
           
@@ -412,10 +412,11 @@ function ShowMarker(){
 			"<br><a href='ShowfarmerDetail.php?id="+place[k][8]+"'>เพิ่มเติม</a>", place[k][11], place[k][12], 0 ]);
 	}
 	setLocation();
+	
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 16,
       center: new google.maps.LatLng(latitudeDis,longitudeDis),
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      
       panControl: true,
         mapTypeControl: false,
         panControlOptions: {
