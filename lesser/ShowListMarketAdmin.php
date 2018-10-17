@@ -263,7 +263,6 @@
 				<table border="1" class="datatable table table-hover table-bordered" cellspacing="0" width="100%" id='datatable'>
 				    <thead>
 				        <tr>
-				            <th>ID</th>
 				            <th>Name</th>
 				            <th>Edit</th>
 				            <th>Delete</th>
@@ -272,10 +271,9 @@
 				    <tbody>
 				    	<?php while ($row = mysqli_fetch_array($queryMarketList, MYSQLI_ASSOC)) {?>
 							<tr>
-					            <td><?php echo $row["id"] ?></td>
 					            <td><?php echo $row["market"] ?></td>
-					            <td>แก้ไข</td>
-				            	<td>ลบ</td>
+					            <td><a href="EditMarket.php?id=<?php echo $row["id"] ?>">แก้ไข</a></td>
+				            	<td><a href="#">ลบ</a></td>
 				        </tr>
 						<?php }?>
 				        

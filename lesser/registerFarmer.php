@@ -243,7 +243,7 @@ function Addlatlong(){
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>ลงทะเบียนสมาชิกใหม่</h2>
+					<h2></h2>
 					<p><span>New Member Registration</span></p>
 				</div>
 			</div>
@@ -418,43 +418,5 @@ function Addlatlong(){
 	<!-- Google Map -->
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
-
-	<script language="javascript">
-		function fncSubmit()
-		{
-			if(document.frmMain.firstname.value == "")
-			{
-				alert('กรุณากรอกชื่อจริง');
-				document.frmMain.firstname.focus();
-				return false;
-			}   
-			if(document.frmMain.lastname.value == "")
-			{
-				alert('กรุณากรอกนามสกุล');
-				document.frmMain.lastname.focus();      
-				return false;
-			}
-			if(document.frmMain.username.value == "")
-			{
-				alert('กรุณากรอกชื่อผู้ใช้');
-				document.frmMain.username.focus();      
-				return false;
-			}  
-			if(document.frmMain.password.value == "")
-			{
-				alert('กรุณากรอกรหัสผ่าน');
-				document.frmMain.password.focus();      
-				return false;
-			}
-			if(document.frmMain.age.value == "")
-			{
-				alert('กรุณากรอกวันเกิด');
-				document.frmMain.age.focus();      
-				return false;
-			}       
-			document.frmMain.submit();
-		}
-	</script>
-
 	</body>
 </html>

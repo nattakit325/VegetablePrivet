@@ -468,6 +468,7 @@ function showPosition(){
 	 }
 	 ShowMarker();
 }
+var src = null;
 function ShowMarker(){
 	for(k= 0;k<place.length;k++){
 		locations.push([ place[k][0]+"<br>ระยะทาง "+place[k][7]+" กิโลเมตร"+"<br> "+place[k][3]+"<br>Link: "
@@ -480,8 +481,9 @@ function ShowMarker(){
       center: new google.maps.LatLng(latitudeDis,longitudeDis),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
-
     var infowindow = new google.maps.InfoWindow();
+    var myParser = new geoXML3.parser({map: map, zoom: false});
+    myParser.parse(src);
     var marker, i;
 		var icon = {
 			url: "icon/1495574605-map-location-solid-style-22_84554.png", // url
@@ -599,60 +601,87 @@ function setLocation(){
 		districts.push(["<?php echo $row["district_name"] ?>"]);
 	<?php }?>
 	var districtName = "<?php echo $objResultdistrict['district_name']  ?>";
+
+	districts[0][3] = '/kmlFile/MueangChiangMai.kml';
 	districts[0][1] = 18.784101;
 	districts[0][2]	= 98.984107;
+	districts[1][3] = '/kmlFile/Saraphi.kml';
 	districts[1][1] = 18.709776;
 	districts[1][2] = 99.042566;
+	districts[2][3] = '/kmlFile/HangDong.kml';
 	districts[2][1] = 18.732064;
 	districts[2][2] = 98.864661;
+	districts[3][3] = '/kmlFile/Hot.kml';
 	districts[3][1] = 18.119511;
 	districts[3][2] = 98.462303;
+	districts[4][3] = '';
 	districts[4][1] = 19.01293;
 	districts[4][2] = 98.298501;
+	districts[5][3] = '/kmlFile/MaeChaem.kml';
 	districts[5][1] = 18.573046;
 	districts[5][2] = 98.330605;
+	districts[6][3] = '/kmlFile/ChiangDao.kml';
 	districts[6][1] = 19.518482;
 	districts[6][2] = 98.952494;
+	districts[7][3] = '/kmlFile/SanSai.kml';
 	districts[7][1] = 18.953236;
 	districts[7][2] = 99.030692;
+	districts[8][3] = '/kmlFile/SanKamphaeng.kml';
 	districts[8][1] = 18.741143;
 	districts[8][2] = 99.148409;
+	districts[9][3] = '/kmlFile/ChomThong.kml';
 	districts[9][1] = 18.386825;
 	districts[9][2] = 98.587514;
+	districts[10][3] = '/kmlFile/DoiSaket.kml';
 	districts[10][1] = 18.918385;
 	districts[10][2] = 99.204238;
+	districts[11][3] = '/kmlFile/WiangHaeng2.kml';
 	districts[11][1] = 19.600083;
 	districts[11][2] = 98.65759;
+	districts[12][3] = '/kmlFile/MaeWang.kml';
 	districts[12][1] = 18.669981;
 	districts[12][2] = 98.651447;
+	districts[13][3] = '/kmlFile/Samoeng.kml';
 	districts[13][1] = 18.902797;
 	districts[13][2] = 98.638519;
+	districts[14][3] = '/kmlFile/Fang.kml';
 	districts[14][1] = 19.894004;
 	districts[14][2] = 99.145998;
+	districts[15][3] = '/kmlFile/MaeRim.kml';
 	districts[15][1] = 18.938431;
 	districts[15][2] = 98.885433;
+	districts[16][3] = '/kmlFile/MaeOn.kml';
 	districts[16][1] = 18.735851;
 	districts[16][2] = 99.301081;
+	districts[17][3] = '/kmlFile/SanPaTong.kml';
 	districts[17][1] = 18.603465;
 	districts[17][2] = 98.87956;
+	districts[18][3] = '/kmlFile/MaeTaeng.kml';
 	districts[18][1] = 19.181916;
 	districts[18][2] = 98.827772;
+	districts[19][3] = '/kmlFile/MaeAi.kml';
 	districts[19][1] = 20.001828;
 	districts[19][2] = 99.346431;
+	districts[20][3] = '/kmlFile/Phrao.kml';
 	districts[20][1] = 19.286554;
 	districts[20][2] = 99.222962;
+	districts[21][3] = '/kmlFile/Omkoi.kml';
 	districts[21][1] = 17.777383;
 	districts[21][2] = 98.305231;
+	districts[22][3] = '/kmlFile/DoiTao.kml';
 	districts[22][1] = 17.910388;
 	districts[22][2] = 98.689073;
+	districts[23][3] = '/kmlFile/ChaiPrakan.kml';
 	districts[23][1] = 19.682347;
 	districts[23][2] = 99.16342;
+	districts[24][3] = '/kmlFile/DoiLo.kml';
 	districts[24][1] = 18.523956;
 	districts[24][2] = 98.759286;
 	for(var i=0;i<=districts.length;i++){
 		if(districts[i][0]==districtName){
 			latitudeDis = districts[i][1];
 			longitudeDis = districts[i][2];
+			src = districts[i][3];
 			break;
 		}
 	}
@@ -671,6 +700,7 @@ function setLocation(){
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
 	
+	<script src="geoxml3-master/kmz/geoxml3.js"></script>
 	</body>
 </html>
 

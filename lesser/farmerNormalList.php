@@ -119,6 +119,18 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+
+
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/dataTables.bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.1.0/css/responsive.bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.1/css/buttons.bootstrap.min.css" type="text/css" />
+  <link rel="shortcut icon" href="favicon.ico">
+
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900' rel='stylesheet' type='text/css'>
+
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
 	</head>
 
 
@@ -407,10 +419,10 @@ $count=0;
 		<div class="container">
             <div class="row">
                 <h2>เกษตรกรทั่วไป</h2>         
-                <table class="table table-hover">
+               <table border="1" class="datatable table table-hover table-bordered" cellspacing="0" width="100%" id='datatable'>
                     <thead>
                     <tr>
-                        <th>id</th>
+                       
                         <th>ชื่อ</th>
                         <th>ที่อยู่</th>
                         <th>เบอร์โทร</th>
@@ -430,7 +442,7 @@ $count=0;
                         while($row = mysqli_fetch_array($query12, MYSQLI_ASSOC)){
                     ?>
                     <tr>
-                        <td><?php echo $row["id"]; ?></td>
+              
                         <td><?php echo $row["name_surname"]; ?></td>
                         <td><?php echo $row["address"]; ?></td>
                         <td><?php echo $row["phone"]; ?></td>
@@ -470,6 +482,25 @@ $count=0;
 	<script src="js/jquery.waypoints.min.js"></script>
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
+
+
+  <!-- data Table State -->
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+    <!-- Responsive extension -->
+    <script src="https://cdn.datatables.net/responsive/2.1.0/js/responsive.bootstrap.min.js"></script>
+    <!-- Buttons extension -->
+    <script src="//cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.2.1/js/buttons.bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.2.1/js/buttons.html5.min.js"></script>
+    
+    <script>
+      var dataTable = $('#datatable').DataTable();
+    </script>
+
 
 	</body>
 </html>
