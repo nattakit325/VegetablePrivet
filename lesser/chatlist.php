@@ -14,8 +14,7 @@
 
 
 
-	$macthsql = "DELETE c FROM tbl_chat c inner join login l on c.chat_user2 = l.username where c.chat_user2 !='SuperAdmin' and (l.status = 'admin' or l.status = 'superAdmin' )";
-	$objQuery = mysqli_query($objCon,$macthsql);
+	
 
 
 	$strSQL = "UPDATE tbl_chat SET status = 0  where chat_user1 ='$chat' and chat_user2 = '$usermname'";
@@ -336,7 +335,11 @@ div#messagesDiv{
   <div class="col-xs-12">
 <!--  input hidden สำหรับ เก็บ chat_id ล่าสุดที่แสดง-->
 
+<?php if($_SESSION["status"]=='admin'|| $_SESSION["status"]=='superAdmin'){ ?>
+<input name="userID1" type="hidden" id="userID1" value="admin">
+<?php }else{ ?>
 <input name="userID1" type="hidden" id="userID1" value="<?php echo $_SESSION['username']; ?>">
+<?php } ?>
 
   <input name="userID2" type="hidden" id="userID2" value="<?php echo $_GET['chatname']; ?>">
   <!--  input hidden สำหรับ เก็บ chat_id ล่าสุดที่แสดง-->
