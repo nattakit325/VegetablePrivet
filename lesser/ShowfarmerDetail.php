@@ -4,19 +4,21 @@ session_start();
 	include "connect.php";
 	$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING);
 
-	$sql = "SELECT * FROM farmer_infomation WHERE profileID = '$id'";
-	$queryInfo=mysqli_query($objCon,$sql);
-	$objResultInfo = mysqli_fetch_array($queryInfo, MYSQLI_ASSOC);
-
-	$sql = "SELECT * FROM farmer_infomation INNER JOIN product_log_for_farmer 
-			ON farmer_infomation.id = product_log_for_farmer.farmer_information_id INNER JOIN product 
-			ON product_log_for_farmer.product_id = product.id 
-			WHERE profileID = '$id'";
-	$queryProduct=mysqli_query($objCon,$sql);
-
 	$sql = "SELECT * FROM `profile`INNER JOIN districts ON profile.district_id = districts.district_id WHERE username = '$id'";
 	$queryProfile=mysqli_query($objCon,$sql);
 	$objResultProfile = mysqli_fetch_array($queryProfile, MYSQLI_ASSOC);
+
+	$sql = "SELECT * FROM farmer_infomation WHERE profileID = '$id'";
+	$queryInfo=mysqli_query($objCon,$sql);
+	$objResultInfo = mysqli_fetch_array($queryInfo, MYSQLI_ASSOC);
+	if($objResultInfo){
+		$sql = "SELECT * FROM farmer_infomation INNER JOIN product_log_for_farmer 
+			ON farmer_infomation.id = product_log_for_farmer.farmer_information_id INNER JOIN product 
+			ON product_log_for_farmer.product_id = product.id 
+			WHERE profileID = '$id'";
+		$queryProduct=mysqli_query($objCon,$sql);
+	}
+	
  ?>
 
 <!DOCTYPE html>
@@ -336,108 +338,155 @@ function checkLoginState() {
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<p>line</p>
+									<p>Line</p>
 									<input class="form-control" value="<?php echo $objResultProfile['line']; ?>" readonly="">
 								</div>
 							</div>
-							
-
-
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>Email</p>
+									<input class="form-control" value="<?php echo $objResultProfile['email']; ?>" readonly="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>Brand</p>
+									<input class="form-control" value="<?php echo $objResultProfile['brand']; ?>" readonly="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>สถานที่ขาย</p>
+									<input class="form-control" value="<?php echo $objResultProfile['sellproduct']; ?>" readonly="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>กลุ่ม</p>
+									<input class="form-control" value="<?php echo $objResultProfile['farmer_group']; ?>" readonly="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>LinkYoutube</p>
+									<a href="<?php echo $objResultProfile['link_youtube']; ?>"><?php echo $objResultProfile['link_youtube']; ?></a>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>Transport</p>
+									<input class="form-control" value="<?php echo $objResultProfile['transport']; ?>" readonly="">
+								</div>
+							</div>
+							<?php if($objResultInfo){ ?>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>ปีที่เริ่มปลูก</p>
+									<input class="form-control" value="<?php echo $objResultInfo['year_begin']; ?>" readonly="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>rice_field</p>
+									<input class="form-control" value="<?php echo $objResultInfo['rice_field']; ?>" readonly="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>farm</p>
+									<input class="form-control" value="<?php echo $objResultInfo['farm']; ?>" readonly="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>orchard</p>
+									<input class="form-control" value="<?php echo $objResultInfo['orchard']; ?>" readonly="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>farm_area</p>
+									<input class="form-control" value="<?php echo $objResultInfo['farm_area']; ?>" readonly="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>cow_or_ox</p>
+									<input class="form-control" value="<?php echo $objResultInfo['cow_or_ox']; ?>" readonly="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>buffalo</p>
+									<input class="form-control" value="<?php echo $objResultInfo['buffalo']; ?>" readonly="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>chicken</p>
+									<input class="form-control" value="<?php echo $objResultInfo['chicken']; ?>" readonly="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>duck</p>
+									<input class="form-control" value="<?php echo $objResultInfo['duck']; ?>" readonly="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>pig</p>
+									<input class="form-control" value="<?php echo $objResultInfo['pig']; ?>" readonly="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>water source</p>
+									<input class="form-control" value="<?php echo $objResultInfo['water source']; ?>" readonly="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>organic_fertilizer</p>
+									<input class="form-control" value="<?php echo $objResultInfo['organic_fertilizer']; ?>" readonly="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>amount_to_use</p>
+									<input class="form-control" value="<?php echo $objResultInfo['amount_to_use']; ?>" readonly="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>1_factor</p>
+									<input class="form-control" value="<?php echo $objResultInfo['1_factor']; ?>" readonly="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>2_factor</p>
+									<input class="form-control" value="<?php echo $objResultInfo['2_factor']; ?>" readonly="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>3_factor</p>
+									<input class="form-control" value="<?php echo $objResultInfo['3_factor']; ?>" readonly="">
+								</div>
+							</div>
+								<div class="col-md-6">
+								<div class="form-group">
+									<p>inspiration</p>
+									<input class="form-control" value="<?php echo $objResultInfo['inspiration']; ?>" readonly="">
+								</div>
+							</div>
+						<?php } ?>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<?php if($id == 2) { ?>
-	<div class="row">
-		 <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-		 	 <h2>ข้อมูลเพิ่มเติม</h2>
-          		<p ip="pp"><span>Your Other</span></p>
-		 	 <div class="row">
-		 	 	 <div class="col-md-6">
-		 	 	 	<label>ปีที่เริ่มทำเกษตรอินทรีย์</label>
-		 	 	 	<input type="text" name="" class="form-control">
-			 	 </div>
-			 	  <div class="col-md-6">
-			 	 	<label>ปีที่เริ่มทำเกษตรอินทรีย์</label>
-		 	 	 	<input type="text" name="" class="form-control">
-			 	 </div>
-		 	 </div>
-		 	
-		 </div>
-	</div>
-	<?php } ?>
-	<div class="row">
-        <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-          <h2>ช่องทางการติดต่อของคุณ</h2>
-          <p ip="pp"><span>Your contact</span></p>
-
-
-          <div class="col-md-6">
-
-
-								<div class="form-group">
-									<input class="form-control" placeholder="ที่อยู่" type="text" name="address">
-								</div>
-							</div>
-							<div class="col-md-6">
-
-
-								<div class="form-group">
-
-									<input class="form-control" placeholder="ตำบล" type="text" name="subdictrict">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<select class="form-control" name="district_id">
-										<option value="">เลือกอำเภอ</option>
-										 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ ?>
-										<option value="<?php echo $row["id"];?>"><?php echo $row["name"];?></option>
-										<?php } ?>
-									</select>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<input class="form-control" placeholder="เบอร์โทรศัพท์" type="text" name="phone">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<input class="form-control" placeholder="Facebook" type="text" name="facebook">
-								</div>
-							</div>
-							
-							
-							<div class="col-md-6">
-								<div class="form-group">
-									<input class="form-control" placeholder="Line" type="text" name="line">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<input class="form-control" placeholder="Email" type="email" name="email">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<input class="form-control" placeholder="Brand" type="text" name="brand">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<input class="form-control" placeholder="Farmmer Group" type="text" name="farmer_group">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<input class="form-control" placeholder="Youtube Link" type="text" name="link_youtube">
-								</div>
-							</div>
-        </div>
-      </div>
-
 
 </body>
 <!-- jQuery -->

@@ -65,27 +65,33 @@
         }
     }
 }else{
-    $PictureName = "profile.png";
+    $PictureName = filter_input(INPUT_POST, 'pictureMarket', FILTER_SANITIZE_STRING);
 }
-
+     $id= filter_input(INPUT_POST, 'id', FILTER_SANITIZE_STRING);
      $market_name= filter_input(INPUT_POST, 'market_name', FILTER_SANITIZE_STRING);
      $latitude= filter_input(INPUT_POST, 'latitude', FILTER_SANITIZE_STRING);
      $longitude= filter_input(INPUT_POST, 'longitude', FILTER_SANITIZE_STRING);
+     $address= filter_input(INPUT_POST, 'address', FILTER_SANITIZE_STRING);
+     $tel= filter_input(INPUT_POST, 'tel', FILTER_SANITIZE_STRING);
+     $Categoryfactor= filter_input(INPUT_POST, 'Categoryfactor', FILTER_SANITIZE_STRING);
      $market_type= filter_input(INPUT_POST, 'market_type', FILTER_SANITIZE_STRING);
      $openingTime= filter_input(INPUT_POST, 'openingTime', FILTER_SANITIZE_STRING);
      $closingTime= filter_input(INPUT_POST, 'closingTime', FILTER_SANITIZE_STRING);
      $openDate= filter_input(INPUT_POST, 'openDate', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
      $openDateMarket = "";
-     foreach ($openDate as $key => $value) {
-         if($openDate[0] == "ทุกวัน"){
-            $openDateMarket = $openDate[0];
-            break;  
-         }else{
-           $openDateMarket = $openDateMarket.$value.",";
-         }
+     if($openDate){
+        foreach ($openDate as $key => $value) {
+             if($openDate[0] == "ทุกวัน"){
+                $openDateMarket = $openDate[0];
+                break;  
+             }else{
+               $openDateMarket = $openDateMarket.$value.",";
+             }
+        }
+     }else{
+        $openDateMarket = filter_input(INPUT_POST, 'opendateO', FILTER_SANITIZE_STRING);
      }
-     
-     $strSQL1 = "INSERT INTO `market`(`market`, `latitude`, `longitude`, `pictureMarket`, `market_type_id`, `openDate`, `openingTime`, `closingTime`) VALUES ('$market_name','$latitude','$longitude','$PictureName','$market_type','$openDateMarket','$openingTime','$closingTime')";
+     $strSQL1 = "UPDATE `market` SET market='$market_name',latitude='$latitude',longitude='$longitude',market_address='$address',market_tel='$tel',market_Categoryfactor='$Categoryfactor',pictureMarket='$PictureName',market_type_id='$market_type',openDate='$openDateMarket',openingTime='$openingTime',closingTime='$closingTime' WHERE id=$id";
     $objQuery1 = mysqli_query($objCon,$strSQL1);
        
     if($objQuery1){

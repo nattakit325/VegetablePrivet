@@ -6,8 +6,6 @@ session_start();
 	$sql = "SELECT district_id as id,district_name as name from districts";
 
 	$query=mysqli_query($objCon,$sql);
-
-	$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING);
  ?>
 
 <!DOCTYPE html>
@@ -306,25 +304,6 @@ function Addlatlong(){
 			</div>
 		</div>
 	</div>
-	<?php if($id == 2) { ?>
-	<div class="row">
-		 <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-		 	 <h2>ข้อมูลเพิ่มเติม</h2>
-          		<p ip="pp"><span>Your Other</span></p>
-		 	 <div class="row">
-		 	 	 <div class="col-md-6">
-		 	 	 	<label>ปีที่เริ่มทำเกษตรอินทรีย์</label>
-		 	 	 	<input type="text" name="" class="form-control">
-			 	 </div>
-			 	  <div class="col-md-6">
-			 	 	<label>ปีที่เริ่มทำเกษตรอินทรีย์</label>
-		 	 	 	<input type="text" name="" class="form-control">
-			 	 </div>
-		 	 </div>
-		 	
-		 </div>
-	</div>
-	<?php } ?>
 	<div class="row">
         <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
           <h2>ช่องทางการติดต่อของคุณ</h2>

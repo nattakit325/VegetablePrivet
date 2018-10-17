@@ -166,7 +166,7 @@
 
 						</form>
   <br>
-  <a href="register.html">ยังไม่ได้สมัครบัญชีในระบบ</a>
+   <a href="register.php">ยังไม่ได้สมัครบัญชีในระบบ</a>
         </center>
           
         </div>
@@ -176,13 +176,12 @@
       </div>
     </div>
   </div>
-
   <div class="modal fade" id="login" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-         <center><h4 class="modal-title"><?php echo $_SESSION["name_surname"];?> </h4></center>
+          <center><h4 class="modal-title"><?php echo $_SESSION["name_surname"];?> </h4></center>
         </div>
         <div class="modal-body">
           <center>
@@ -193,7 +192,7 @@
 						<p>career     : <?php echo $_SESSION["status"];?></p>
   <br>
 
-  <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
+  <a href="editProfile.php"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
   <a href="ClearSession.php"><button type="button" class="btn btn-warning" >ออกจากระบบ</button></a>
         </center>
           

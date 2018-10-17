@@ -443,7 +443,7 @@ $count=0;
 				<div class="col-md-6">
 					<a href="search-farmer.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[4]; ?>);">
 						<div class="desc">
-							<h3>ค้นหาเกษตรกรต้นแบบ</h3>
+							<h3>ค้นหาเกษตรกร</h3>
 							<span>Good Example Farmer</span>
 						</div>
 					</a>
