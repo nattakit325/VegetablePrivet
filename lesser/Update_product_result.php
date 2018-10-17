@@ -21,6 +21,28 @@
     $query=mysqli_query($objCon,$sql);
     $objResult = mysqli_fetch_array($query,MYSQLI_ASSOC);
 
+
+    $usermname = '';
+
+	if(empty($_SESSION["username"])){
+
+	}else{
+		if($_SESSION["status"]=='admin'||$_SESSION["status"]=='superAdmin'){
+			header("location:admin.php");
+		}else{
+			$usermname = $_SESSION["username"];
+		}
+		
+	}
+
+
+
+     $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' 
+							and status = 1 ";
+
+	$queryForNotification=mysqli_query($objCon,$sqlForNotification);
+	$objResultNor = mysqli_fetch_array($queryForNotification, MYSQLI_ASSOC);
+
 ?>
 
 
@@ -205,17 +227,25 @@
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><i class="sl-icon-energy"></i><a href="index.php">Lesserr</a></h1>
+				<h1><i class="sl-icon-energy"></i><a href="index.php">OrganicApp</a></h1>
 				<nav role="navigation">
 					<ul>
 						<li>
 							<?php if(empty($_SESSION["username"])){
 								?>
-							<a href="" data-toggle="modal" data-target="#myModal1">เข้าสู่ระบบ</a></li>
-							<a href="" data-toggle="modal" data-target="#myModal1"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
-						<?php }else{?>
-							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name_surname"];?></a></li>
-							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
+							<a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
+							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
+						<?php }else{
+							if ($objResultNor['chatAM']>0) {
+								$color = 'red';
+							}else{
+								$color = 'gray';
+
+							}
+							?>
+							<a href="TopChat.php" title="คุณมี <?php echo $objResultNor['chatAM'] ?> ข้อความ"><i class="fas fa-bell" style="color: <?php echo $color ?>">&nbsp;<?php echo $objResultNor['chatAM'] ?></i></a>
+							<a data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
+							
 						<?php } ?>
 						
 					</ul>
