@@ -12,8 +12,16 @@
 	$chat = $_GET['chatname'];
 
 
-	$strSQL = "UPDATE tbl_chat SET status = 0  where chat_user1 ='$chat'";
+
+
+	$macthsql = "DELETE c FROM tbl_chat c inner join login l on c.chat_user2 = l.username where c.chat_user2 !='SuperAdmin' and (l.status = 'admin' or l.status = 'superAdmin' )";
+	$objQuery = mysqli_query($objCon,$macthsql);
+
+
+	$strSQL = "UPDATE tbl_chat SET status = 0  where chat_user1 ='$chat' and chat_user2 = '$usermname'";
 	$objQuery = mysqli_query($objCon,$strSQL);
+
+
 
 
 

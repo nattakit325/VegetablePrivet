@@ -14,9 +14,9 @@ if(isset($_POST['user2']) && $_POST['user2']!=""
 
 	if($_POST['user2']=='admin'){
 		$sqlAdmin = "SELECT username FROM `login` where status ='admin' or status ='superAdmin'";
-		$queryAdmin=mysqli_query($objCon,$sqlAdmin);
-		while($row=mysqli_fetch_array($queryAdmin,MYSQLI_ASSOC)){ 
-			$sql="
+		$adminsql = $mysqli->query($sqlAdmin);
+		while($row=$adminsql->fetch_array()){ 
+			$sql1="
 			INSERT INTO tbl_chat SET 
 			chat_msg='".$_POST['msg']."',
 			chat_user1='".$user."',  
@@ -24,7 +24,7 @@ if(isset($_POST['user2']) && $_POST['user2']!=""
 			chat_datetime='".date("Y-m-d H:i:s")."'	,
 			status=1		
 			";
-			$mysqli->query($sql);
+			$mysqli->query($sql1);
 
 		}
 
