@@ -14,7 +14,7 @@ if(empty($_GET["search"])){
 
 }
 
-$sql = "SELECT product.picture as picture,product.price as price,product.name as productName,name_surname, product.detail as detail,product.id as productId FROM `product` INNER JOIN selllist ON product.id = selllist.productid INNER JOIN profile ON selllist.username = profile.username INNER JOIN login ON profile.username = login.username INNER JOIN gmarket ON login.username = gmarket.username INNER JOIN market ON gmarket.marketid = market.id WHERE market.market_type_id = 1 AND market.id = $MarketId AND product.type = '$type' AND product.category = '$value'";
+$sql = "SELECT product.picture as picture,product.price as price,product.name as productName,name_surname, product.detail as detail,product.id as productId FROM `product` INNER JOIN selllist ON product.id = selllist.productid INNER JOIN profile ON selllist.username = profile.username INNER JOIN login ON profile.username = login.username INNER JOIN gmarket ON login.username = gmarket.username INNER JOIN market ON gmarket.marketid = market.id WHERE market.market_type_id = 1 AND market.id = $MarketId AND product.type = '$type' AND product.category = '$value' and product.name like '%$search%'";
 $query = mysqli_query($objCon, $sql);
 $queryC = mysqli_query($objCon, $sql);
 $queryB = mysqli_query($objCon, $sql);
@@ -261,6 +261,8 @@ function showHint(str,type) {
                     <form class="form-inline" name="searchform" id="searchform" action="buylist.php" method="get">
                         <div class="form-group">
                             <label for="textsearch" >ชื่อสินค้า</label>
+                            
+                            <input type="hidden" name="MarketId" value="<?php echo $MarketId ?>">
                             <input type="hidden" name="type" value="<?php echo $type ?>">
                             <input type="hidden" name="value" value="<?php echo $value ?>">
                             <input type="text"  class="form-control" placeholder="ข้อความ คำค้นหา!" name="search">
