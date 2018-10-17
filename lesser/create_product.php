@@ -270,12 +270,12 @@ $usermname = '';
 							<div class="col-md-5 text-center">
 
 					<div class="work-inner">
-						<a  class="work-grid" style="background-image: url(images/product.png);" id="blah" >
+						<a  class="work-grid" style="background-image: url(uploads_product/product.png);" id="blah" >
 						</a>
 						<div class="desc">
-							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" id="fileToUpload" onchange="readURL(this);">
 							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload1" id="fileToUpload" onchange="readURL(this);">
 							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload2" id="fileToUpload" onchange="readURL(this);">
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload3" id="fileToUpload" onchange="readURL(this);">
 
 							
 						</div>

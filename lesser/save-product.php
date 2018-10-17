@@ -18,77 +18,85 @@
     $target_dir = "uploads_product/";
     //$target_dir = "/home/nattakit/domains/nattakitmju.com/public_html/uploads_product/";
 
-    if($_FILES["fileToUpload"]["name"]){
-    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+    $i=1;
 
-	$PictureName =  basename($_FILES["fileToUpload"]["name"]);
-	$pieces = explode(".", $PictureName);
+    while($i<=3){
+    	 if($_FILES["fileToUpload".$i]["name"]){
+    		$target_file = $target_dir . basename($_FILES["fileToUpload".$i]["name"]);
+    		$PictureName[$i] =  basename($_FILES["fileToUpload".$i]["name"]);
+    		$pieces = explode(".", $PictureName[$i]);
 
+    		$path = getcwd();
 
-	$path = getcwd();
+    		$t = microtime(true);
+			$micro = sprintf("%06d",($t - floor($t)) * 1000000);
+			$PictureName[$i] = $pieces[0].date("Y-m-d H:i:s").".$micro$t.";
+			$PictureName[$i] = str_replace(".","","$PictureName[$i]");
+			$PictureName[$i] = str_replace("-","","$PictureName[$i]");
+			$PictureName[$i] = str_replace(":","","$PictureName[$i]");
+			$PictureName[$i] = str_replace(" ","","$PictureName[$i]");
 
-	
-
-
-	
-
-	$t = microtime(true);
-	$micro = sprintf("%06d",($t - floor($t)) * 1000000);
-	$PictureName = $pieces[0].date("Y-m-d H:i:s").".$micro$t.";
-	$PictureName = str_replace(".","","$PictureName");
-	$PictureName = str_replace("-","","$PictureName");
-	$PictureName = str_replace(":","","$PictureName");
-	$PictureName = str_replace(" ","","$PictureName");
-	
-
-	$PictureName = $PictureName.$pieces[1];
+			$PictureName[$i]  = $PictureName[$i].$pieces[1];
 
 
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-    if(isset($_POST["submit"])) {
-    	$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-    	if($check !== false) {
+			$uploadOk = 1;
+    		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    		if(isset($_POST["submit"]) ) {
+
+    			$check = getimagesize($_FILES["fileToUpload".$i]["tmp_name"]);
+
+    		if($check !== false) {
         	
-        	$uploadOk = 1;
-    	} else {
+        		$uploadOk = 1;
+    		} else {
         	
-        	$uploadOk = 0;
-    	}
-	}
+        			$uploadOk = 0;
+    			}
+			}
 
-	// Check if file already exists
-	
-	
-	if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+			if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "	gif" ) {
     	
-    	$uploadOk = 0;
-	}
-	if ($uploadOk == 0) {
-    	
+    		$uploadOk = 0;
+		}
+			if ($uploadOk == 0) {
+    		
 		// if everything is ok, try to upload file
-	} else {
-    	if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-    		rename("$target_file","$target_dir"."$PictureName");
+			} else {
+    		if (move_uploaded_file($_FILES["fileToUpload".$i]["tmp_name"], $target_file)) {
+    			rename("$target_file","$target_dir"."$PictureName[$i]");
         	
-    	} else {
+    		} else {
 
         
-    	}
+    		}
 	}
-}else{
-	$PictureName = "product.png";
-}
 
 
+
+
+    	}else{
+    		$PictureName[$i] = "product.png";
+
+    	}
+    	$i++;
+
+
+    }
+
+
+
+
+   
 
 
     //---------------------------------------//
 
 
+    
+
 	$strSQL = "INSERT INTO product";
-	$strSQL .="(name,detail,price,type,category,picture) 
-				VALUES ('$name','$detail','$price','$type','$category','$PictureName')";
+	$strSQL .="(name,detail,price,type,category,picture,picture2,picture3) 
+				VALUES ('$name','$detail','$price','$type','$category','$PictureName[1]','$PictureName[2]','$PictureName[3]')";
 	$objQuery = mysqli_query($objCon,$strSQL);
 
 
@@ -118,7 +126,7 @@
 	$Productid=$id;
 
 	$sql="SELECT d.name as ProductName, d.picture as picture, d.detail as detail, p.name_surname as name_surname,p.address as address,
-		  p.phone as phone,p.facebook as facebook, p.line as line,p.picture as img  
+		  p.phone as phone,p.facebook as facebook, p.line as line,p.picture as img,d.picture2 as img2,d.picture3 as img3  
 		  FROM selllist s INNER join product d 
 		  on s.productid = d.id
 		  INNER JOIN profile p 
@@ -127,6 +135,26 @@
 		  and s.productid = '$Productid' ";
     $query=mysqli_query($objCon,$sql);
     $objResult = mysqli_fetch_array($query,MYSQLI_ASSOC);
+
+
+    $usermname = '';
+
+	if(empty($_SESSION["username"])){
+
+	}else{
+		if($_SESSION["status"]=='admin'||$_SESSION["status"]=='superAdmin'){
+			header("location:admin.php");
+		}else{
+			$usermname = $_SESSION["username"];
+		}
+		
+	}
+
+    $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' 
+							and status = 1 ";
+
+	$queryForNotification=mysqli_query($objCon,$sqlForNotification);
+	$objResultNor = mysqli_fetch_array($queryForNotification, MYSQLI_ASSOC);
 
 ?>
 
@@ -278,24 +306,23 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="login" role="dialog">
+   <div class="modal fade" id="login" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <center><h4 class="modal-title"><?php echo $_SESSION["name_surname"];?></h4></center>
+          <center><h4 class="modal-title"><?php echo $_SESSION["name_surname"];?> </h4></center>
         </div>
         <div class="modal-body">
           <center>
 						<img class="circlein" src="images/<?php echo $_SESSION["picture"]?>" width="100%" height="100%" />
 						<br>
 						<br>
-						<p>Name : <?php echo $_SESSION["name_surname"];?></p>
-						<p>career     : <?php echo $_SESSION["career"];?></p>
-						<p>age        : <?php echo $_SESSION["age"];?></p>
+						<p>FirstName : <?php echo $_SESSION["name_surname"];?></p>
+						<p>career     : <?php echo $_SESSION["status"];?></p>
   <br>
 
-  <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
+  <a href="editProfile.php"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
   <a href="ClearSession.php"><button type="button" class="btn btn-warning" >ออกจากระบบ</button></a>
         </center>
           
@@ -312,19 +339,25 @@
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><i class="sl-icon-energy"></i><a href="index.php">Lesserr</a></h1>
+				<h1><i class="sl-icon-energy"></i><a href="index.php">OrganicApp</a></h1>
 				<nav role="navigation">
 					<ul>
 						<li>
 							<?php if(empty($_SESSION["username"])){
 								?>
-							<a href="" data-toggle="modal" data-target="#myModal1">เข้าสู่ระบบ</a></li>
-							<a href="" data-toggle="modal" data-target="#myModal1"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
-						<?php }else{?>
-							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name_surname"];?></a></li>
-							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
-							<br>
-							&nbsp;&nbsp;<a href="#" class="btn btn-primary btn-outline with-arrow" data-toggle="modal" data-target="#myModal<?php echo $count?>">คุณมี 14 ข้อความใหม่<i class="icon-arrow-right"></i></a>
+							<a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
+							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
+						<?php }else{
+							if ($objResultNor['chatAM']>0) {
+								$color = 'red';
+							}else{
+								$color = 'gray';
+
+							}
+							?>
+							<a href="TopChat.php" title="คุณมี <?php echo $objResultNor['chatAM'] ?> ข้อความ"><i class="fas fa-bell" style="color: <?php echo $color ?>">&nbsp;<?php echo $objResultNor['chatAM'] ?></i></a>
+							<a data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
+							
 						<?php } ?>
 						
 					</ul>
@@ -342,12 +375,40 @@
 			<div class="row">
 				<div class="col-md-8">
 					<div class="row">
-						<div class="col-md-12">
-							<div class="about-inner">
-								<img class="img-responsive" src="uploads_product/<?php echo $objResult["picture"]; ?>" alt="About" height="100%" width="100%">
-								
-							</div>
-						</div>
+							<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+      <div class="item active">
+        <img src="uploads_product/<?php echo $objResult["picture"]; ?>" alt="Los Angeles" style="width:1000px;height: 500px">
+      </div>
+
+      <div class="item">
+        <img src="uploads_product/<?php echo $objResult["img2"]; ?>" alt="Chicago" style="width:1000px;height: 500px">
+      </div>
+    
+      <div class="item">
+        <img src="uploads_product/<?php echo $objResult["img3"]; ?>" alt="New york" style="width:1000px;height: 500px">
+      </div>
+    </div>
+
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
 					</div>
 				</div>
 				
@@ -359,13 +420,14 @@
 								<ul>
 									<li>
 										<?php echo $objResult["detail"]; ?>
+
 									</li>
 									
 								</ul>
 							</div>
 
 							<div class="col-md-12 side">
-								<h3><img class="picture" src="images/<?php echo $objResult["img"]; ?>" width="10%" height="12%" />&nbsp;&nbsp;ผู้จำหน่าย</h3>
+								<h3><img class="picture" src="images/<?php echo $objResult["img"]; ?>" width="10%" height="12%" />&nbsp;&nbsp;ผู้จำหน่าย </h3>
 								<ul>
 									<li>
 										<li><?php echo $_SESSION["name_surname"];?></li>

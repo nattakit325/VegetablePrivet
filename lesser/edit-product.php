@@ -8,7 +8,10 @@ $sql="SELECT p.picture as picture,
 			p.name as name,
 			p.detail as detail,
 			p.category as category,
-			p.price as price
+			p.price as price,
+			p.picture2 as picture2,
+			p.picture3 as picture3
+
 		FROM selllist s
 		INNER JOIN product p
   		ON s.productid=p.id
@@ -42,7 +45,7 @@ $usermname = '';
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Add Profile</title>
+	<title>Edit Product</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -222,7 +225,7 @@ $usermname = '';
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><i class="sl-icon-energy"></i><a href="index.php">Lesserr</a></h1>
+				<h1><i class="sl-icon-energy"></i><a href="index.php">OrganicApp</a></h1>
 				<nav role="navigation">
 					<ul>
 						<li>
@@ -273,7 +276,9 @@ $usermname = '';
 						<a  class="work-grid" style="background-image: url(uploads_product/<?php echo $objResult["picture"] ?>);" id="blah">
 						</a>
 						<div class="desc">
-							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" id="fileToUpload" onchange="readURL(this);">
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload1" id="fileToUpload" onchange="readURL(this);">
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload2" id="fileToUpload" onchange="readURL(this);">
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload3" id="fileToUpload" onchange="readURL(this);">
 							
 						</div>
 					</div>
@@ -281,7 +286,9 @@ $usermname = '';
 			
 							<div class="col-md-6">
 								<div class="form-group">
-									<input type="hidden" name="picture" value="<?php echo $objResult["picture"] ?>">
+									<input type="hidden" name="picture1" value="<?php echo $objResult["picture"] ?>">
+									<input type="hidden" name="picture2" value="<?php echo $objResult["picture2"] ?>">
+									<input type="hidden" name="picture3" value="<?php echo $objResult["picture3"] ?>">
 									<input type="hidden" name="id" value="<?php echo $id ?>">
 
 									

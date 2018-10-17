@@ -19,7 +19,7 @@ $productId = filter_input(INPUT_GET, 'productId', FILTER_SANITIZE_STRING);
 $sellername = filter_input(INPUT_GET, 'sellername', FILTER_SANITIZE_STRING);
 $MarketId = filter_input(INPUT_GET, 'marketId', FILTER_SANITIZE_NUMBER_INT);
 
-$sql = "SELECT profile.name_surname as name_surname,profile.address as address,profile.subdictrict as subdictrict ,districts.district_name as  district_name,profile.phone as phone, profile.facebook as facebook ,profile.line as LineId , profile.email as EmailName , profile.brand as brand , profile.farmer_group as farmer_group , profile.link_youtube as linkYoutube ,profile.latitude as latitude , profile.longitude as  longitude, profile.picture as Profilepicture,product.id as productId ,product.name as ProductName, product.detail as ProductDetail, product.price as price ,product.picture as ProductPicture, market.id as marketId,market.market as market ,market.latitude as marketLatitude,market.longitude as marketLongitude,market.openDate as openDate,market.openingTime as openingTime,market.closingTime as closingTime FROM `product` INNER JOIN selllist ON product.id = selllist.productid INNER JOIN profile ON selllist.username = profile.username INNER JOIN login ON profile.username = login.username INNER JOIN gmarket ON login.username = gmarket.username INNER JOIN market ON gmarket.marketid = market.id INNER JOIN districts ON profile.district_id = districts.district_id WHERE profile.name_surname = '$sellername' and product.id = $productId AND market.id= $MarketId";
+$sql = "SELECT profile.name_surname as name_surname,profile.address as address,profile.subdictrict as subdictrict ,districts.district_name as  district_name,profile.phone as phone, profile.facebook as facebook ,profile.line as LineId , profile.email as EmailName , profile.brand as brand , profile.farmer_group as farmer_group , profile.link_youtube as linkYoutube ,profile.latitude as latitude , profile.longitude as  longitude, profile.picture as Profilepicture,product.id as productId ,product.name as ProductName, product.detail as ProductDetail, product.price as price ,product.picture as picture,product.picture2 as img2,product.picture3 as img3, market.id as marketId,market.market as market ,market.latitude as marketLatitude,market.longitude as marketLongitude,market.openDate as openDate,market.openingTime as openingTime,market.closingTime as closingTime, login.username as Ownusername  FROM `product` INNER JOIN selllist ON product.id = selllist.productid INNER JOIN profile ON selllist.username = profile.username INNER JOIN login ON profile.username = login.username INNER JOIN gmarket ON login.username = gmarket.username INNER JOIN market ON gmarket.marketid = market.id INNER JOIN districts ON profile.district_id = districts.district_id WHERE profile.name_surname = '$sellername' and product.id = $productId AND market.id= $MarketId";
 $queryA = mysqli_query($objCon, $sql);
 $objResult = mysqli_fetch_array($queryA, MYSQLI_ASSOC);
 
@@ -305,7 +305,7 @@ div#messagesDiv{
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><i class="sl-icon-energy"></i><a href="index.php">Lesserr</a></h1>
+				<h1><i class="sl-icon-energy"></i><a href="index.php">OrganicApp</a></h1>
 				<nav role="navigation">
 					<ul>
 						<li>
@@ -352,17 +352,18 @@ div#messagesDiv{
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
       <div class="item active">
-        <img src="uploads_product/P1010103.jpg" alt="Los Angeles" style="width:1000px;height: 500px">
+        <img src="uploads_product/<?php echo $objResult["picture"]; ?>" alt="Los Angeles" style="width:1000px;height: 500px">
       </div>
 
       <div class="item">
-        <img src="uploads_product/product.png" alt="Chicago" style="width:1000px;height: 500px">
+        <img src="uploads_product/<?php echo $objResult["img2"]; ?>" alt="Chicago" style="width:1000px;height: 500px">
       </div>
     
       <div class="item">
-        <img src="uploads_product/กาดโจ้2477LingFern_4.jpg" alt="New york" style="width:1000px;height: 500px">
+        <img src="uploads_product/<?php echo $objResult["img3"]; ?>" alt="New york" style="width:1000px;height: 500px">
       </div>
     </div>
+
 
     <!-- Left and right controls -->
     <a class="left carousel-control" href="#myCarousel" data-slide="prev">
@@ -450,7 +451,7 @@ div#messagesDiv{
 								</ul>
 								<br><br><br>
 								<center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูสถานที่ขายสินค้า</button>
-									<?php if(empty($_SESSION['username'])){ ?>
+									<?php if(empty($_SESSION['username'])or $_SESSION['username']==$objResult["Ownusername"]){ ?>
 									
 									<?php }else{ ?>
 										<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myChat"><i class="fas fa-comments"></i></i>&nbsp;&nbsp;พูดคุยกับผู้ขาย</button>

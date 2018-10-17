@@ -49,7 +49,7 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>VegetableGether</title>
+	<title>ShowListMarketAdmin</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -229,7 +229,7 @@
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><i class="sl-icon-energy"></i><a href="index.php">Lesserr</a></h1>
+				<h1><i class="sl-icon-energy"></i><a href="index.php">OrganicApp</a></h1>
 				<nav role="navigation">
 					<ul>
 						<li>
