@@ -606,6 +606,7 @@ $count=0;
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
 
+	<script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
 	</body>
 </html>
 
