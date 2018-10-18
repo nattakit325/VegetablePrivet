@@ -83,7 +83,10 @@ session_start();
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
 
+
+
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO9xE9smgXJIDFDpyPaDGZcjQu-ybwOKc&callback=setupMap">
+
 	</script>
 	<!-- FOR IE9 below -->
 	<!--[if lt IE 9]>
@@ -91,7 +94,7 @@ session_start();
 	<![endif]-->
 
 	</head>
- 
+ 	<script type="text/javascript" src="js/showUser.js"></script>
 
 
 <script>
@@ -387,97 +390,103 @@ function checkLoginState() {
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<p>rice_field</p>
+									<p>ทุ่งนา</p>
 									<input class="form-control" value="<?php echo $objResultInfo['rice_field']; ?>" readonly="">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<p>farm</p>
+									<p>ทำไร่</p>
 									<input class="form-control" value="<?php echo $objResultInfo['farm']; ?>" readonly="">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<p>orchard</p>
+									<p>ทำสวน</p>
 									<input class="form-control" value="<?php echo $objResultInfo['orchard']; ?>" readonly="">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<p>farm_area</p>
+									<p>พื้นที่เพาะปลูก(ไร่)</p>
 									<input class="form-control" value="<?php echo $objResultInfo['farm_area']; ?>" readonly="">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<p>cow_or_ox</p>
+									<p>พื้นที่เพาะปลูก(งาน)</p>
+									<input class="form-control" value="<?php echo $objResultInfo['farm_area_ngan']; ?>" readonly="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<p>วัว(ตัว)</p>
 									<input class="form-control" value="<?php echo $objResultInfo['cow_or_ox']; ?>" readonly="">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<p>buffalo</p>
+									<p>ควาย(ตัว)</p>
 									<input class="form-control" value="<?php echo $objResultInfo['buffalo']; ?>" readonly="">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<p>chicken</p>
+									<p>ไก่(ตัว)</p>
 									<input class="form-control" value="<?php echo $objResultInfo['chicken']; ?>" readonly="">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<p>duck</p>
+									<p>เป็ด(ตัว)</p>
 									<input class="form-control" value="<?php echo $objResultInfo['duck']; ?>" readonly="">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<p>pig</p>
+									<p>หมู(ตัว)</p>
 									<input class="form-control" value="<?php echo $objResultInfo['pig']; ?>" readonly="">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<p>water source</p>
+									<p>แหล่งน้ำที่ใช้</p>
 									<input class="form-control" value="<?php echo $objResultInfo['water source']; ?>" readonly="">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<p>organic_fertilizer</p>
+									<p>ปุ๋ยอินทรีย์สำเร็จรูปยี่ห้อที่ใช้</p>
 									<input class="form-control" value="<?php echo $objResultInfo['organic_fertilizer']; ?>" readonly="">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<p>amount_to_use</p>
+									<p>ปริมาณที่ใช้ (กก./ไร่)</p>
 									<input class="form-control" value="<?php echo $objResultInfo['amount_to_use']; ?>" readonly="">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<p>1_factor</p>
+									<p>ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่1)</p>
 									<input class="form-control" value="<?php echo $objResultInfo['1_factor']; ?>" readonly="">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<p>2_factor</p>
+									<p>ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่2)</p>
 									<input class="form-control" value="<?php echo $objResultInfo['2_factor']; ?>" readonly="">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<p>3_factor</p>
+									<p>ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่3)</p>
 									<input class="form-control" value="<?php echo $objResultInfo['3_factor']; ?>" readonly="">
 								</div>
 							</div>
 								<div class="col-md-6">
 								<div class="form-group">
-									<p>inspiration</p>
+									<p>แรงบันดาลใจในการเปลี่ยนมาทำเกษตรอินทรีย์</p>
 									<input class="form-control" value="<?php echo $objResultInfo['inspiration']; ?>" readonly="">
 								</div>
 							</div>

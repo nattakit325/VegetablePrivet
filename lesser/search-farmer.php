@@ -114,6 +114,7 @@ $queryB=mysqli_query($objCon,$sql);
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO9xE9smgXJIDFDpyPaDGZcjQu-ybwOKc&libraries=geometry"></script>
 
 
+	<script type="text/javascript" src="js/showUser.js"></script>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -329,7 +330,7 @@ function showHint(str,username) {
 
 					</div>
 					<div class="row col-md-12" align="left">
-						<a href="register.php?id=2">สมัครเกษตรกร</a>
+						<a href="registerFarmer.php">สมัครเกษตรกร</a>
 					</div>
 						<?php if($district_id != null){ ?>
 							<div class="form-group col-md-12 row">

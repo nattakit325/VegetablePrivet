@@ -503,24 +503,44 @@ function Addlatlong(){
 									<input class="form-control" placeholder="Youtube Link" type="text" name="link_youtube" value="<?php echo $objResult["link_youtube"];?>">
 								</div>
 							</div>
-							<div class="col-md-3">
-								
+							<div class="col-md-4">
+								<label>latitude</label>
 								<div class="form-group">
-									<label>latitude</label>
 									<input class="form-control" placeholder="" id="lati" type="text" name="latitude" readonly=""  value="<?php echo $objResult["latitude"];?>">
 								</div>
 							</div>
-							<div class="col-md-3">
-
+							<div class="col-md-4">
+								<label>longitude</label>
 								<div class="form-group">
-									<label>longitude</label>
 									<input class="form-control" placeholder="" id="longi" type="text" name="longitude" readonly=""  value="<?php echo $objResult["longitude"];?>">
 								</div>
 							</div>
-							<div class="col-md-3">
+							<div class="col-md-4">
 								<br>
 								<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal2"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;เพิ่มพิกัด</button>
 							</div>
+
+							<div class="col-md-6">
+								<div class="form-group">
+									<br>
+									<select class="form-control" name="status" id="place">
+										<?php while($row=mysqli_fetch_array($queryA,MYSQLI_ASSOC)){ ?>
+											<option value="<?php echo $row["id"] ?>"><?php echo $row["market"] ?></option>
+										<?php } ?>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<button type="button" class="btn btn-danger" id="delete" data-toggle="modal" data-target="#forconfermdelete"><i class="fas fa-trash-alt"></i></i>&nbsp;&nbsp;ลบที่คุณเลิอก</button>
+								</div>
+	                        </div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<a href="register2.php"><button type="button" class="btn btn-success" >เพิ่มตลาดที่คุณขาย</button></a>
+								</div>
+							</div>
+						
 
 
         </div>

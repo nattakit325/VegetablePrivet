@@ -234,7 +234,7 @@ function Addlatlong(){
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><i class="sl-icon-energy"></i><a href="index.php">Lesser</a></h1>
+				<h1><i class="sl-icon-energy"></i><a href="index.php">OrganicApp</a></h1>
 
 			</div>
 		</div>
