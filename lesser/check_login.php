@@ -35,6 +35,7 @@
 			$_SESSION["email"] = $objResult2["email"];
 			$_SESSION["latitude"] = $objResult2["latitude"];
 			$_SESSION["longitude"] = $objResult2["longitude"];
+			$_SESSION["farmer_type"] = $objResult2["farmer_type_id"];
 
 			session_write_close();
 			
