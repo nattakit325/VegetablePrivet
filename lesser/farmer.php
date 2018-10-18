@@ -433,7 +433,7 @@ $count=0;
 					</a>	
 				</div>
 				<div class="col-md-6">
-					<a href="CertifiedList.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[2]; ?>);">
+					<a href="CertifiedList.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[3]; ?>);">
 						<div class="desc">
 							<h3>เกษตรกรที่ผ่านการรับรอง</h3>
 							<span>Certified Farmers</span>
@@ -441,7 +441,7 @@ $count=0;
 					</a>	
 				</div>
 				<div class="col-md-6">
-					<a href="WaitinglList.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[2]; ?>);">
+					<a href="WaitinglList.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[4]; ?>);">
 						<div class="desc">
 							<h3>เกษตรกรที่รอการรับรอง</h3>
 							<span>Waiting for certification</span>
