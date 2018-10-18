@@ -114,8 +114,6 @@ $queryB=mysqli_query($objCon,$sql);
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO9xE9smgXJIDFDpyPaDGZcjQu-ybwOKc&libraries=geometry"></script>
 
 
-	<script type="text/javascript" src="js/showUser.js"></script>
-
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 	<script type="text/javascript" src="js/showUser.js"></script>

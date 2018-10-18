@@ -390,19 +390,19 @@ function checkLoginState() {
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<p>ทุ่งนา</p>
+									<p>ทุ่งนา(ทำ/ไม่ทำ)</p>
 									<input class="form-control" value="<?php echo $objResultInfo['rice_field']; ?>" readonly="">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<p>ทำไร่</p>
+									<p>ทำไร่(ทำ/ไม่ทำ)</p>
 									<input class="form-control" value="<?php echo $objResultInfo['farm']; ?>" readonly="">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<p>ทำสวน</p>
+									<p>ทำสวน(ทำ/ไม่ทำ)</p>
 									<input class="form-control" value="<?php echo $objResultInfo['orchard']; ?>" readonly="">
 								</div>
 							</div>
@@ -484,12 +484,30 @@ function checkLoginState() {
 									<input class="form-control" value="<?php echo $objResultInfo['3_factor']; ?>" readonly="">
 								</div>
 							</div>
-								<div class="col-md-6">
+							<div class="col-md-6">
 								<div class="form-group">
 									<p>แรงบันดาลใจในการเปลี่ยนมาทำเกษตรอินทรีย์</p>
 									<input class="form-control" value="<?php echo $objResultInfo['inspiration']; ?>" readonly="">
 								</div>
 							</div>
+							<div class="row">
+								<br>
+								<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+									<h2>พืชที่ปลูก</h2>
+								</div>
+							</div>
+							<?php while ($row = mysqli_fetch_array($queryProduct, MYSQLI_ASSOC)) {?>
+							<div class="col-md-6">
+								<div class="form-group" align="center">
+									<div class="work-inner">
+										<a  class="work-grid" style="background-image: url(images/<?php echo $row['picture']; ?>);" id="blah" ></a>
+									</div>
+									<a  class="work-grid" style="background-image: url(images/<?php echo $row['picture']; ?>);" id="blah" ></a>
+									<label><?php echo $row['name']; ?></label>
+								</div>
+							</div>
+							<?php }?>
+							
 						<?php } ?>
 					</div>
 				</div>

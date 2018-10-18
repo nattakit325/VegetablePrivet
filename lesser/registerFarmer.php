@@ -7,7 +7,10 @@ session_start();
 
 	$query=mysqli_query($objCon,$sql);
 	if($_SESSION["username"]==null){
-		header("location:index.php");
+		 echo "<script language=\"JavaScript\">";
+         echo "alert('กรุณาล็อกอินก่อน');";
+         echo "window.location = 'index.php'; ";
+         echo "</script>";
 	}
 	$usermname = $_SESSION["username"];
 	$sql = "SELECT  n.id as id, n.topic as topic, n.detail as detail,n.media as media,n.Youtube_Link as Youtube_Link,n.Link as Link,n.time 
@@ -261,20 +264,124 @@ session_start();
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>g</h2>
-					<p><span>New Member Registration</span></p>
+					<h2>เพิ่มเกษตรกรผู้ที่ผลิตสินค้าอินทรีย์</h2>
+					<p><span>Add New Farmer</span></p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 					 <div class="col-md-6">
 						<div class="form-group">
-							<input class="form-control" placeholder="ที่อยู่" type="text" name="address">
+							<p>ปีที่เริ่มปลูก</p>
+							<input class="form-control" placeholder="ปีที่เริ่มปลูก" type="text" name="yearBegin">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
-							<input class="form-control" placeholder="ตำบล" type="text" name="subdictrict">
+							<p>ทุ่งนา(ทำ/ไม่ทำ)</p>
+							<input class="form-control" placeholder="ทุ่งนา(ทำ/ไม่ทำ)" type="text" name="riceField">
+						</div>
+					</div>
+					 <div class="col-md-6">
+						<div class="form-group">
+							<p>ทำไร่(ทำ/ไม่ทำ)</p>
+							<input class="form-control" placeholder="ทำไร่(ทำ/ไม่ทำ)" type="text" name="Farm">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<p>ทำสวน(ทำ/ไม่ทำ)</p>
+							<input class="form-control" placeholder="ทำสวน(ทำ/ไม่ทำ)" type="text" name="Orchard">
+						</div>
+					</div>
+					 <div class="col-md-6">
+						<div class="form-group">
+							<p>พื้นที่เพาะปลูก(ไร่)</p>
+							<input class="form-control" placeholder="พื้นที่เพาะปลูก(ไร่)" type="text" name="FarmArea">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<p>พื้นที่เพาะปลูก(งาน)</p>
+							<input class="form-control" placeholder="พื้นที่เพาะปลูก(งาน)" type="text" name="farmAreaNgan">
+						</div>
+					</div>
+					 <div class="col-md-6">
+						<div class="form-group">
+							<p>วัว(ตัว)</p>
+							<input class="form-control" placeholder="วัว(ตัว)" type="text" name="cowOrox">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<p>ควาย(ตัว)</p>
+							<input class="form-control" placeholder="ควาย(ตัว)" type="text" name="buffalo">
+						</div>
+					</div>
+					 <div class="col-md-6">
+						<div class="form-group">
+							<p>ไก่(ตัว)</p>
+							<input class="form-control" placeholder="ไก่(ตัว)" type="text" name="chicken">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<p>เป็ด(ตัว)</p>
+							<input class="form-control" placeholder="เป็ด(ตัว)" type="text" name="duck">
+						</div>
+					</div>
+					 <div class="col-md-6">
+						<div class="form-group">
+							<p>หมู(ตัว)</p>
+							<input class="form-control" placeholder="หมู(ตัว)" type="text" name="pig">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<p>สัตว์อื่นๆ</p>
+							<input class="form-control" placeholder="สัตว์อื่นๆ" type="text" name="otherAnimal">
+						</div>
+					</div>
+					 <div class="col-md-6">
+						<div class="form-group">
+							<p>แหล่งน้ำที่ใช้</p>
+							<input class="form-control" placeholder="แหล่งน้ำที่ใช้" type="text" name="	waterSource">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<p>ปุ๋ยอินทรีย์สำเร็จรูปยี่ห้อที่ใช้</p>
+							<input class="form-control" placeholder="ปุ๋ยอินทรีย์สำเร็จรูปยี่ห้อที่ใช้" type="text" name="organicFertilizer">
+						</div>
+					</div>
+					 <div class="col-md-6">
+						<div class="form-group">
+							<p>ปริมาณที่ใช้ (กก./ไร่)</p>
+							<input class="form-control" placeholder="ปริมาณที่ใช้ (กก./ไร่)" type="text" name="	amountToUse">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<p>ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่1)</p>
+							<input class="form-control" placeholder="ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่1)" type="text" name="1Factor">
+						</div>
+					</div>
+					 <div class="col-md-6">
+						<div class="form-group">
+							<p>ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่2)</p>
+							<input class="form-control" placeholder="ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่2)" type="text" name="	2Factor">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<p>ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่3)</p>
+							<input class="form-control" placeholder="ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่3)" type="text" name="3Factor">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<p>แรงบันดาลใจในการเปลี่ยนมาทำเกษตรอินทรีย์</p>
+							<input class="form-control" placeholder="แรงบันดาลใจในการเปลี่ยนมาทำเกษตรอินทรีย์" type="text" name="Inspiration">
 						</div>
 					</div>
 				</div>
