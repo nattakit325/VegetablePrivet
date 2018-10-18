@@ -540,6 +540,13 @@ function Addlatlong(){
 									<a href="register2.php"><button type="button" class="btn btn-success" >เพิ่มตลาดที่คุณขาย</button></a>
 								</div>
 							</div>
+							<?php if($_SESSION["farmer_type"]=='2'){ ?>
+							<div class="col-md-6">
+								<div class="form-group">
+									<a href="EditFarmerInfo.php"><button type="button" class="btn btn-success" >แก้ไขเกษตรกรผู้ที่ผลิตสินค้าอินทรีย์</button></a>
+								</div>
+							</div>
+							<?php } ?>
 						
 
 

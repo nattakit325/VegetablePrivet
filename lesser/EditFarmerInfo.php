@@ -23,14 +23,9 @@ session_start();
     $sqlForImage= "SELECT name FROM menu  where page = 'หน้าหลัก'";
 
 
-    $sqlForProduct = "SELECT s.id as id, p.name as product_name,p.detail as detail,f.name_surname as name,p.price as price,p.picture as picture FROM selllist s 
-		INNER join product p on s.id = p.id 
-		INNER JOIN profile f on s.username = f.username
-		ORDER BY s.id DESC LIMIT 12";
-	$querylForProduct=mysqli_query($objCon,$sqlForProduct);
-	$querylForProductDailog=mysqli_query($objCon,$sqlForProduct);
-
-
+   	$sql = "SELECT * FROM farmer_infomation WHERE profileID = '$usermname'";
+	$queryInfo=mysqli_query($objCon,$sql);
+	$objResultInfo = mysqli_fetch_array($queryInfo, MYSQLI_ASSOC);
 
 
     $querylForImage=mysqli_query($objCon,$sqlForImage);
@@ -82,7 +77,7 @@ session_start();
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>เพิ่มเกษตรกร</title>
+	<title>แก้ไขเกษตรกร</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -259,13 +254,13 @@ session_start();
 	</header>
 	<br>
 	<br>
-	<form action="save-farmerInfo.php" method="post" enctype="multipart/form-data" name="frmMain" runat="server">
+	<form action="update-farmerInfo.php" method="post" enctype="multipart/form-data" name="frmMain" runat="server">
 	<div id="fh5co-contact-section">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>เพิ่มเกษตรกรผู้ที่ผลิตสินค้าอินทรีย์</h2>
-					<p><span>Add New Farmer</span></p>
+					<h2>เแก้ไขเกษตรกรผู้ที่ผลิตสินค้าอินทรีย์</h2>
+					<p><span>Edit Farmer</span></p>
 				</div>
 			</div>
 			<div class="row">
@@ -273,115 +268,115 @@ session_start();
 					 <div class="col-md-6">
 						<div class="form-group">
 							<p>ปีที่เริ่มปลูก</p>
-							<input class="form-control" placeholder="ปีที่เริ่มปลูก" type="text" name="yearBegin">
+							<input class="form-control" placeholder="ปีที่เริ่มปลูก" value="<?php echo $objResultInfo['year_begin'] ?>" type="text" name="yearBegin" maxlength="4">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>ทุ่งนา(ทำ/ไม่ทำ)</p>
-							<input class="form-control" placeholder="ทุ่งนา(ทำ/ไม่ทำ)" type="text" name="riceField">
+							<input class="form-control" placeholder="ทุ่งนา(ทำ/ไม่ทำ)" value="<?php echo $objResultInfo['rice_field'] ?>" type="text" name="riceField" maxlength="5">
 						</div>
 					</div>
 					 <div class="col-md-6">
 						<div class="form-group">
 							<p>ทำไร่(ทำ/ไม่ทำ)</p>
-							<input class="form-control" placeholder="ทำไร่(ทำ/ไม่ทำ)" type="text" name="Farm">
+							<input class="form-control" placeholder="ทำไร่(ทำ/ไม่ทำ)" value="<?php echo $objResultInfo['farm'] ?>" type="text" name="Farm" maxlength="5">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>ทำสวน(ทำ/ไม่ทำ)</p>
-							<input class="form-control" placeholder="ทำสวน(ทำ/ไม่ทำ)" type="text" name="Orchard">
+							<input class="form-control" placeholder="ทำสวน(ทำ/ไม่ทำ)" value="<?php echo $objResultInfo['orchard'] ?>" type="text" name="Orchard" maxlength="5">
 						</div>
 					</div>
 					 <div class="col-md-6">
 						<div class="form-group">
 							<p>พื้นที่เพาะปลูก(ไร่)</p>
-							<input class="form-control" placeholder="พื้นที่เพาะปลูก(ไร่)" type="text" name="FarmArea">
+							<input class="form-control" placeholder="พื้นที่เพาะปลูก(ไร่)" value="<?php echo $objResultInfo['farm_area'] ?>" type="text" name="FarmArea" maxlength="5">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>พื้นที่เพาะปลูก(งาน)</p>
-							<input class="form-control" placeholder="พื้นที่เพาะปลูก(งาน)" type="text" name="farmAreaNgan">
+							<input class="form-control" placeholder="พื้นที่เพาะปลูก(งาน)" value="<?php echo $objResultInfo['farm_area_ngan'] ?>" type="text" name="farmAreaNgan" maxlength="5">
 						</div>
 					</div>
 					 <div class="col-md-6">
 						<div class="form-group">
 							<p>วัว(ตัว)</p>
-							<input class="form-control" placeholder="วัว(ตัว)" type="text" name="cowOrox">
+							<input class="form-control" placeholder="วัว(ตัว)" type="text" value="<?php echo $objResultInfo['cow_or_ox'] ?>" name="cowOrox" maxlength="5">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>ควาย(ตัว)</p>
-							<input class="form-control" placeholder="ควาย(ตัว)" type="text" name="buffalo">
+							<input class="form-control" placeholder="ควาย(ตัว)" type="text" value="<?php echo $objResultInfo['buffalo'] ?>" name="buffalo" maxlength="5">
 						</div>
 					</div>
 					 <div class="col-md-6">
 						<div class="form-group">
 							<p>ไก่(ตัว)</p>
-							<input class="form-control" placeholder="ไก่(ตัว)" type="text" name="chicken">
+							<input class="form-control" placeholder="ไก่(ตัว)" type="text" value="<?php echo $objResultInfo['chicken'] ?>" name="chicken" maxlength="5">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>เป็ด(ตัว)</p>
-							<input class="form-control" placeholder="เป็ด(ตัว)" type="text" name="duck">
+							<input class="form-control" placeholder="เป็ด(ตัว)" type="text" value="<?php echo $objResultInfo['duck'] ?>" name="duck" maxlength="5">
 						</div>
 					</div>
 					 <div class="col-md-6">
 						<div class="form-group">
 							<p>หมู(ตัว)</p>
-							<input class="form-control" placeholder="หมู(ตัว)" type="text" name="pig">
+							<input class="form-control" placeholder="หมู(ตัว)" type="text" value="<?php echo $objResultInfo['pig'] ?>" name="pig" maxlength="5">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>สัตว์อื่นๆ</p>
-							<input class="form-control" placeholder="สัตว์อื่นๆ" type="text" name="otherAnimal">
+							<input class="form-control" placeholder="สัตว์อื่นๆ" type="text" value="<?php echo $objResultInfo['other_anumal'] ?>" name="otherAnimal" maxlength="200">
 						</div>
 					</div>
 					 <div class="col-md-6">
 						<div class="form-group">
 							<p>แหล่งน้ำที่ใช้</p>
-							<input class="form-control" placeholder="แหล่งน้ำที่ใช้" type="text" name="	waterSource">
+							<input class="form-control" placeholder="แหล่งน้ำที่ใช้" value="<?php echo $objResultInfo['water source'] ?>" type="text" name="	waterSource" maxlength="100">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>ปุ๋ยอินทรีย์สำเร็จรูปยี่ห้อที่ใช้</p>
-							<input class="form-control" placeholder="ปุ๋ยอินทรีย์สำเร็จรูปยี่ห้อที่ใช้" type="text" name="organicFertilizer">
+							<input class="form-control" placeholder="ปุ๋ยอินทรีย์สำเร็จรูปยี่ห้อที่ใช้" value="<?php echo $objResultInfo['organic_fertilizer'] ?>" type="text" name="organicFertilizer" maxlength="5">
 						</div>
 					</div>
 					 <div class="col-md-6">
 						<div class="form-group">
 							<p>ปริมาณที่ใช้ (กก./ไร่)</p>
-							<input class="form-control" placeholder="ปริมาณที่ใช้ (กก./ไร่)" type="text" name="	amountToUse">
+							<input class="form-control" placeholder="ปริมาณที่ใช้ (กก./ไร่)" value="<?php echo $objResultInfo['amount_to_use'] ?>" type="text" name="	amountToUse" maxlength="5">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่1)</p>
-							<input class="form-control" placeholder="ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่1)" type="text" name="Factor1">
+							<input class="form-control" placeholder="ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่1)" value="<?php echo $objResultInfo['1_factor'] ?>" type="text" name="Factor1" maxlength="100">
 						</div>
 					</div>
 					 <div class="col-md-6">
 						<div class="form-group">
 							<p>ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่2)</p>
-							<input class="form-control" placeholder="ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่2)" type="text" name="	Factor2">
+							<input class="form-control" placeholder="ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่2)" value="<?php echo $objResultInfo['2_factor'] ?>" type="text" name="Factor2" maxlength="100">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่3)</p>
-							<input class="form-control" placeholder="ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่3)" type="text" name="Factor3">
+							<input class="form-control" placeholder="ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่3)" value="<?php echo $objResultInfo['3_factor'] ?>" type="text" name="Factor3" maxlength="100">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>แรงบันดาลใจในการเปลี่ยนมาทำเกษตรอินทรีย์</p>
-							<input class="form-control" placeholder="แรงบันดาลใจในการเปลี่ยนมาทำเกษตรอินทรีย์" type="text" name="Inspiration">
+							<input class="form-control" placeholder="แรงบันดาลใจในการเปลี่ยนมาทำเกษตรอินทรีย์" value="<?php echo $objResultInfo['inspiration'] ?>" type="text" name="Inspiration" maxlength="100">
 						</div>
 					</div>
 				</div>
