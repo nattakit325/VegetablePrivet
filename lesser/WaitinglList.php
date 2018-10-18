@@ -44,16 +44,6 @@
 		return "$strDay $strMonthThai $strYear, เวลา $strHour:$strMinute";
 	}
 
-	$sqlForImage= "SELECT name FROM menu  where page = 'การจัดการเกษตรกร'";
-
-    $querylForImage=mysqli_query($objCon,$sqlForImage);
-    $i = 1;
-
-    while($row=mysqli_fetch_array($querylForImage,MYSQLI_ASSOC)){ 
-    	$img[$i] = $row["name"];
-    	$i++;
-    }
-
     
 ?>
 
@@ -102,8 +92,6 @@
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900' rel='stylesheet' type='text/css'>
 
 	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
-
-
 	
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
@@ -131,6 +119,18 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+
+
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/dataTables.bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.1.0/css/responsive.bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.1/css/buttons.bootstrap.min.css" type="text/css" />
+  <link rel="shortcut icon" href="favicon.ico">
+
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900' rel='stylesheet' type='text/css'>
+
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
 	</head>
 
 
@@ -409,47 +409,59 @@ $count=0;
 		</div>
 	</header>
 	<br>
-	<br>
+    <br>
+    <?php
+        $sql12="SELECT * FROM profile,farmer_type WHERE profile.farmer_type_id=farmer_type.farmer_type_id 
+                AND profile.farmer_type_id='4'   ORDER BY `id` ASC";
+        $query12=mysqli_query($objCon,$sql12);
+    ?>
 	<div id="fh5co-featured-section">
 		<div class="container">
-			<div class="row">
-				
-				
-				<div class="col-md-6">
-					<a href="farmerNormalList.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[1]; ?>);">
-						<div class="desc">
-							<h3>เกษตรกรทั่วไป</h3>
-							<span>Farmers</span>
-						</div>
-					</a>	
-				</div>
-
-				<div class="col-md-6">
-					<a href="farmerModelList.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[2]; ?>);">
-						<div class="desc">
-							<h3>เกษตรกรต้นแบบ</h3>
-							<span>Model Farmers</span>
-						</div>
-					</a>	
-				</div>
-				<div class="col-md-6">
-					<a href="CertifiedList.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[2]; ?>);">
-						<div class="desc">
-							<h3>เกษตรกรที่ผ่านการรับรอง</h3>
-							<span>Certified Farmers</span>
-						</div>
-					</a>	
-				</div>
-				<div class="col-md-6">
-					<a href="WaitinglList.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[2]; ?>);">
-						<div class="desc">
-							<h3>เกษตรกรที่รอการรับรอง</h3>
-							<span>Waiting for certification</span>
-						</div>
-					</a>	
-				</div>
-				
-			</div>
+            <div class="row">
+                <h2>เกษตรกรที่รอการรับรอง</h2>         
+               <table border="1" class="datatable table table-hover table-bordered" cellspacing="0" width="100%" id='datatable'>
+                    <thead>
+                    <tr>
+                       
+                        <th>ชื่อ</th>
+                        <th>ที่อยู่</th>
+                        <th>เบอร์โทร</th>
+                        <th>facebook</th>
+                        <th>line</th>
+                        <th>อีเมล์</th>
+                        <th>ตรา</th>
+                        <th>สถานที่ขาย</th>
+                        <th>ประเภทเกษตรกร</th>
+                        <th>username</th>
+                        <th>อนุมัติ</th>
+                        <th>ไม่อนุมัติ</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                        while($row = mysqli_fetch_array($query12, MYSQLI_ASSOC)){
+                    ?>
+                    <tr>
+              
+                        <td><?php echo $row["name_surname"]; ?></td>
+                        <td><?php echo $row["address"]; ?></td>
+                        <td><?php echo $row["phone"]; ?></td>
+                        <td><?php echo $row["facebook"]; ?></td>
+                        <td><?php echo $row["line"]; ?></td>
+                        <td><?php echo $row["email"]; ?></td>
+                        <td><?php echo $row["brand"]; ?></td>
+                        <td><?php echo $row["sellproduct"]; ?></td>
+                        <td><?php echo $row["farmer_type_name"]; ?></td>
+                        <td><?php echo $row["username"]; ?></td>
+                        <td><a class="btn btn-primary" href="save-farmerList.php?id=<?php echo $row["id"]; ?>&farmer_type_id=2">อนุมัติ</a></td>
+                        <td><a class="btn btn-danger" href="save-farmerList.php?id=<?php echo $row["id"]; ?>&farmer_type_id=3&name=<?php echo $row["username"]; ?>">ไม่อนุมัติ</a></td>
+                    </tr>
+                    <?php
+                        }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
 		</div>
 	</div>
 
@@ -470,6 +482,25 @@ $count=0;
 	<script src="js/jquery.waypoints.min.js"></script>
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
+
+
+  <!-- data Table State -->
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+    <!-- Responsive extension -->
+    <script src="https://cdn.datatables.net/responsive/2.1.0/js/responsive.bootstrap.min.js"></script>
+    <!-- Buttons extension -->
+    <script src="//cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.2.1/js/buttons.bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.2.1/js/buttons.html5.min.js"></script>
+    
+    <script>
+      var dataTable = $('#datatable').DataTable();
+    </script>
+
 
 	</body>
 </html>

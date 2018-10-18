@@ -412,7 +412,7 @@ $count=0;
     <br>
     <?php
         $sql12="SELECT * FROM profile,farmer_type WHERE profile.farmer_type_id=farmer_type.farmer_type_id 
-                AND profile.farmer_type_id='2' ORDER BY `id` ASC";
+                AND profile.farmer_type_id='3'   ORDER BY `id` ASC";
         $query12=mysqli_query($objCon,$sql12);
     ?>
 	<div id="fh5co-featured-section">
@@ -433,8 +433,7 @@ $count=0;
                         <th>สถานที่ขาย</th>
                         <th>ประเภทเกษตรกร</th>
                         <th>username</th>
-                        <th>แก้ไข</th>
-                        <th>ลบ</th>
+                        <th>เกษตกรต้นแบบ</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -453,8 +452,8 @@ $count=0;
                         <td><?php echo $row["sellproduct"]; ?></td>
                         <td><?php echo $row["farmer_type_name"]; ?></td>
                         <td><?php echo $row["username"]; ?></td>
-                        <td><a class="btn btn-primary" href="save-farmerList.php?id=<?php echo $row["id"]; ?>&farmer_type_id=<?php echo $row["farmer_type_id"]; ?>">แก้ไข</a></td>
-                        <td><a class="btn btn-danger" href="delete-farmer.php?id=<?php echo $row["id"]; ?>&farmer_type_id=<?php echo $row["farmer_type_id"]; ?>">ลบ</a></td>
+                        <td><a class="btn btn-primary" href="save-farmerList.php?id=<?php echo $row["id"]; ?>&farmer_type_id=1">อนุมัติ</a></td>
+                        
                     </tr>
                     <?php
                         }
