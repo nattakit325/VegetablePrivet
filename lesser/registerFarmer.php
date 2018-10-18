@@ -259,7 +259,7 @@ session_start();
 	</header>
 	<br>
 	<br>
-	<form action="save-register.php" method="post" enctype="multipart/form-data" name="frmMain" runat="server">
+	<form action="save-farmerInfo.php" method="post" enctype="multipart/form-data" name="frmMain" runat="server">
 	<div id="fh5co-contact-section">
 		<div class="container">
 			<div class="row">
@@ -363,19 +363,19 @@ session_start();
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่1)</p>
-							<input class="form-control" placeholder="ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่1)" type="text" name="1Factor">
+							<input class="form-control" placeholder="ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่1)" type="text" name="Factor1">
 						</div>
 					</div>
 					 <div class="col-md-6">
 						<div class="form-group">
 							<p>ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่2)</p>
-							<input class="form-control" placeholder="ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่2)" type="text" name="	2Factor">
+							<input class="form-control" placeholder="ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่2)" type="text" name="	Factor2">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่3)</p>
-							<input class="form-control" placeholder="ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่3)" type="text" name="3Factor">
+							<input class="form-control" placeholder="ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่3)" type="text" name="Factor3">
 						</div>
 					</div>
 					<div class="col-md-6">
