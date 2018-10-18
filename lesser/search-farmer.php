@@ -327,9 +327,15 @@ function showHint(str,username) {
 						<br>
 
 					</div>
+					<?php if(empty($_SESSION["farmer_type"])){ 
+					}else{
+						if($_SESSION["farmer_type"]=='1'||$_SESSION["farmer_type"]=='3'){?>
+
 					<div class="row col-md-12" align="left">
 						<a href="registerFarmer.php">สมัครเกษตรกร</a>
 					</div>
+
+					<?php }} ?>
 						<?php if($district_id != null){ ?>
 							<div class="form-group col-md-12 row">
 								<p>อำเภอที่คุณเลือก: <?php echo $objResultdistrict['district_name']  ?></p>

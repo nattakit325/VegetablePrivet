@@ -10,7 +10,7 @@ mysqli_select_db($objCon,"ajax_demo");
 $sqlUser = "SELECT * FROM login WHERE username = '".$q."'";
 $sql="SELECT * FROM login WHERE username = '".$q."' 
 	and password = '".$password."'";
-$ProfileSQL = "SELECT name_surname ,picture ,username FROM profile WHERE username = '".$q."'";
+$ProfileSQL = "SELECT name_surname ,picture ,username,farmer_type_id FROM profile WHERE username = '".$q."'";
 
 
 
@@ -38,6 +38,7 @@ if(!$objResult1){
 			$_SESSION["password"] = $objResult["password"];
 			$_SESSION["name_surname"] = $objResult2["name_surname"];
 			$_SESSION["picture"] = $objResult2["picture"];
+			$_SESSION["farmer_type"] = $objResult2["farmer_type_id"];
 
 
 			if($_SESSION["status"] == "admin"){
