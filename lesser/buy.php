@@ -290,17 +290,17 @@
 				</div>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/<?php echo $img[5]; ?>);">
+						<a href="buylist.php?value=<?php echo $value5;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/<?php echo $img[5]; ?>);">
 						</a>
 						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">ธัญพืช</a></h3>
+							<h3><a href="buylist.php?value=<?php echo $value5;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">ธัญพืช</a></h3>
 							<span>Cereal</span>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/<?php echo $img[6]; ?>);">
+						<a href="buylist.php?value=<?php echo $value6;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/<?php echo $img[6]; ?>);">
 						</a>
 						<div class="desc">
 							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">แปรรูป (อาหาร)</a></h3>
@@ -312,7 +312,7 @@
 			<div class="row">
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/<?php echo $img[7]; ?>);">
+						<a href="buylist.php?value=<?php echo $value7;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/<?php echo $img[7]; ?>);">
 						</a>
 						<div class="desc">
 							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">แปรรูป (อุปโภค)</a></h3>
@@ -322,7 +322,7 @@
 				</div>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/<?php echo $img[8]; ?>);">
+						<a href="buylist.php?value=<?php echo $value8;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/<?php echo $img[8]; ?>);">
 						</a>
 						<div class="desc">
 							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">ข้าว</a></h3>
@@ -332,7 +332,7 @@
 				</div>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/<?php echo $img[9]; ?>);">
+						<a href="buylist.php?value=<?php echo $value9;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/<?php echo $img[9]; ?>);">
 						</a>
 						<div class="desc">
 							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">สมุนไพร</a></h3>
@@ -344,7 +344,7 @@
 			<div class="row">
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/<?php echo $img[10]; ?>);">
+						<a href="buylist.php?value=<?php echo $value10;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/<?php echo $img[10]; ?>);">
 						</a>
 						<div class="desc">
 							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">ไข่</a></h3>
@@ -354,7 +354,7 @@
 				</div>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/<?php echo $img[11]; ?>);">
+						<a href="buylist.php?value=<?php echo $value11;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/<?php echo $img[11]; ?>);">
 						</a>
 						<div class="desc">
 							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">เสื้อผ้า เครื่องนุ่งห่ม (ธรรมชาติ)</a></h3>
@@ -364,7 +364,7 @@
 				</div>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/<?php echo $img[12]; ?>);">
+						<a href="buylist.php?value=<?php echo $value12;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/<?php echo $img[12]; ?>);">
 						</a>
 						<div class="desc">
 							<h3><a href="buylist.php?value=<?php echo $value4;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">อื่นๆ</a></h3>
