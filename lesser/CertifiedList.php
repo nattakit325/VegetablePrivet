@@ -433,8 +433,8 @@ $count=0;
                         <th>สถานที่ขาย</th>
                         <th>ประเภทเกษตรกร</th>
                         <th>username</th>
-                        <th>แก้ไข</th>
-                        <th>ลบ</th>
+                        <th>เกษตรกรต้นแบบ</th>
+                        <th>ถอนการรับรอง</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -453,8 +453,8 @@ $count=0;
                         <td><?php echo $row["sellproduct"]; ?></td>
                         <td><?php echo $row["farmer_type_name"]; ?></td>
                         <td><?php echo $row["username"]; ?></td>
-                        <td><a class="btn btn-primary" href="save-farmerList.php?id=<?php echo $row["id"]; ?>&farmer_type_id=<?php echo $row["farmer_type_id"]; ?>">แก้ไข</a></td>
-                        <td><a class="btn btn-danger" href="delete-farmer.php?id=<?php echo $row["id"]; ?>&farmer_type_id=<?php echo $row["farmer_type_id"]; ?>">ลบ</a></td>
+                        <td><a class="btn btn-primary" href="save-farmerList.php?id=<?php echo $row["id"]; ?>&farmer_type_id=1">อนุมัติ</a></td>
+                        <td><a class="btn btn-danger" href="save-farmerList.php?id=<?php echo $row["id"]; ?>&farmer_type_id=3&name=<?php echo $row["username"]; ?>">ถอน</a></td>
                     </tr>
                     <?php
                         }
