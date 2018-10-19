@@ -6,6 +6,9 @@
 
     //$target_dir = "/home/nattakit/domains/nattakitmju.com/public_html/uploads_product/";
 
+
+     
+
     if($_FILES["fileToUpload"]["name"]){
     $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 

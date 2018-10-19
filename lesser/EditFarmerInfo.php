@@ -35,7 +35,13 @@ session_start();
     	$img[$i] = $row["name"];
     	$i++;
     }
-
+    if($objResultInfo){
+		$sql = "SELECT * FROM farmer_infomation INNER JOIN product_log_for_farmer 
+			ON farmer_infomation.id = product_log_for_farmer.farmer_information_id INNER JOIN product 
+			ON product_log_for_farmer.product_id = product.id 
+			WHERE profileID = '$usermname'";
+		$queryProduct=mysqli_query($objCon,$sql);
+	}
 
 
 	
@@ -379,6 +385,23 @@ session_start();
 							<input class="form-control" placeholder="แรงบันดาลใจในการเปลี่ยนมาทำเกษตรอินทรีย์" value="<?php echo $objResultInfo['inspiration'] ?>" type="text" name="Inspiration" maxlength="100">
 						</div>
 					</div>
+					<div class="row">
+						<br>
+						<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+							<h2>พืชที่ปลูก</h2>
+						</div>
+					</div>
+					<?php while ($row = mysqli_fetch_array($queryProduct, MYSQLI_ASSOC)) {?>
+						<div class="col-md-6">
+							<div class="form-group" align="center">
+								<div class="work-inner">
+									<a  class="work-grid" style="background-image: url(images/<?php echo $row['picture']; ?>);" id="blah" ></a>
+								</div>
+								<a  class="work-grid" style="background-image: url(images/<?php echo $row['picture']; ?>);" id="blah" ></a>
+								<label><?php echo $row['name']; ?></label>
+							</div>
+						</div>
+					<?php }?>
 				</div>
 			</div>
 		</div>
