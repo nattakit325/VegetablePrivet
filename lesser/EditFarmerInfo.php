@@ -410,7 +410,7 @@ session_start();
         <div class="form-group">
             <br>
             <center>
-            	<input value="ยืนยันการสมัครสมาชิก" class="btn btn-primary" type="submit" name="submit">
+            	<input value="ยืนยันการแก้ไข" class="btn btn-primary" type="submit" name="submit">
             </center>
         </div>
 	</div>

@@ -314,7 +314,7 @@ function showHint(str,username) {
                             <label for="textsearch" >เลือกประเภท</label>
                             <select class="form-control" name="farmerType">
                             	<option value="1">เกษตรกรต้นแบบ</option>
-                            	<option value="2">เกษตรกรผู้ผลิตสินค้าอินทรีย์</option>
+                            	<option value="2">เกษตรกรผู้ผลิตอินทรีย์</option>
                             </select>    
                         </div>
                         <div class="form-group  col-md-2">

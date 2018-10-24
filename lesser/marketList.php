@@ -288,11 +288,11 @@ function CurrentPosition(position) {
 		var table1 = document.createElement("table");
 		var thead1 = document.createElement("thead");
 		var tr1 = document.createElement("tr");
-		var td1 = document.createElement("td");
-		var td2 = document.createElement("td");
-		var td3 = document.createElement("td");
-		var td4 = document.createElement("td");
-		var td5 = document.createElement("td");
+		var td1 = document.createElement("th");
+		var td2 = document.createElement("th");
+		var td3 = document.createElement("th");
+		var td4 = document.createElement("th");
+		var td5 = document.createElement("th");
 		var tbody1 = document.createElement("tbody");
 		var TextThead1 = document.createTextNode("ชื่อตลาด");
 		var TextThead2 = document.createTextNode("ที่อยู่");
@@ -305,6 +305,7 @@ function CurrentPosition(position) {
 		table1.width = "100%";
 		showV.appendChild(table1);
 		table1.appendChild(thead1);	
+		thead1.classList.add("thead-dark");
 		thead1.appendChild(tr1);
 		tr1.appendChild(td1);
 		tr1.appendChild(td2);
