@@ -109,6 +109,7 @@
 
 
 
+
 	$strSQL = "INSERT INTO selllist";
     $strSQL .="(productid,username) VALUES ('$id','$username')";
 	$objQuery = mysqli_query($objCon,$strSQL);
@@ -451,7 +452,7 @@
 									
 								</ul>
 								<br><br><br>
-								<center><a href="create product.php"><button type="button" class="btn btn-success" >เพิ่มสินค้าใหม่</button></a> <a href="selllist.php?value=' '"><button type="button" class="btn btn-primary" >กลับสู่หน้าหลัก</button></a></center>
+								<center><a href="create_product.php"><button type="button" class="btn btn-success" >เพิ่มสินค้าใหม่</button></a> <a href="selllist.php?value=' '"><button type="button" class="btn btn-primary" >กลับสู่หน้าหลัก</button></a></center>
 							</div>
 							
 						</div>

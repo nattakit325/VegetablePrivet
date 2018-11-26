@@ -30,7 +30,7 @@
 
 
     $sqlForProduct = "SELECT s.id as id, p.name as product_name,p.detail as detail,f.name_surname as name,p.price as price,p.picture as picture FROM selllist s 
-		INNER join product p on s.id = p.id 
+		INNER join product p on s.productid = p.id 
 		INNER JOIN profile f on s.username = f.username
 		ORDER BY s.id DESC LIMIT 12";
 	$querylForProduct=mysqli_query($objCon,$sqlForProduct);
