@@ -97,7 +97,7 @@ $objResult = mysqli_fetch_array($queryA, MYSQLI_ASSOC);
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNyDumm4Nkun0UNrkqJdXjzUL_NXPl0V4&libraries=geometry"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO9xE9smgXJIDFDpyPaDGZcjQu-ybwOKc&libraries=geometry"></script>
 		<style>
 .circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
     height: 40px;  /* ความสูงปรับให้เป็นออโต้ */
@@ -532,18 +532,15 @@ function showPosition(){
 	 ShowMarker();
 }
 function ShowMarker(){
-	 var bounds = new google.maps.LatLngBounds();
-     var lat_lng = new Array();
+  var lat_lng = new Array();
 	for(k= 0;k<place.length;k++){
 		locations.push(["ตลาด: "+ place[k][2]+"<br>ระยะทาง: "+place[k][7]+" กิโลเมตร", place[k][0], place[k][1], 0 ]);
 		var extend1 = new google.maps.LatLng(place[k][0], place[k][1]);
-		bounds.extend(extend1);
 	}
 	var marketLalong = new google.maps.LatLng(place[0][0],place[0][1]);
 	var currentPosition = new google.maps.LatLng(p3,p4);
 	lat_lng.push(currentPosition);
 	lat_lng.push(marketLalong);
-	bounds.extend(currentPosition);
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 13,
       center: new google.maps.LatLng(p3,p4),
@@ -564,14 +561,6 @@ function ShowMarker(){
             position: google.maps.ControlPosition.RIGHT_CENTER
         }
     });
-
-    map.fitBounds(bounds);
- //    zoomChangeBoundsListener = 
-	//     google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
-	//         if ( this.getZoom() ){   // or set a minimum
-	//             this.setZoom(11);  // set zoom here
-	//         }
-	// });
 
     var infowindow = new google.maps.InfoWindow();
     var marker, i;
