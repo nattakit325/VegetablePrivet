@@ -253,7 +253,7 @@ div#messagesDiv{
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><i class="sl-icon-energy"></i><a href="index.php">Lesserr</a></h1>
+				<h1><i class="sl-icon-energy"></i><a href="index.php">OrganicApp</a></h1>
 				<nav role="navigation">
 					<ul>
 						<li>
@@ -292,7 +292,7 @@ div#messagesDiv{
 					<?php if($_SESSION["status"]!='admin'&& $_SESSION["status"]!='superAdmin'){ ?>
 					<div class="row">
 						<div class="col-md-12 services-inner">
-							<span><img class="circle" src="images/Admin.png"></span>
+							<span><img class="circle" src="images/profile.png"></span>
 							<div class="desc">
 								<a href="chatlist.php?name=admin&surname=&chatname=admin"><h3>พูดคุยกับ Admin</h3></a>
 							</div>

@@ -454,9 +454,9 @@ function CurrentPosition(position) {
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>สินค้านำเสนอสำหรับคุณ</h2>
+					<h2>ตลาดแนะนำสำหรับคุณ</h2>
 
-                    <p><span>Product for you</a></span></p>
+                    <p><span>Markets for you</a></span></p>
                     <form class="form-inline" name="searchform" id="searchform" action="buylist.php" method="get">
                         <div class="form-group">
                             <label for="textsearch" >ชื่อสินค้า</label>

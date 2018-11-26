@@ -328,6 +328,7 @@ function showHint(str,username) {
 
 					</div>
 					<?php if(empty($_SESSION["farmer_type"])){ 
+						echo $_SESSION["farmer_type"];
 					}else{
 						if($_SESSION["farmer_type"]=='1'||$_SESSION["farmer_type"]=='3'){?>
 
