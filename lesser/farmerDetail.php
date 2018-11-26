@@ -89,7 +89,7 @@
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
 
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO9xE9smgXJIDFDpyPaDGZcjQu-ybwOKc&callback=setupMap">
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNyDumm4Nkun0UNrkqJdXjzUL_NXPl0V4&callback=setupMap">
 	</script>
 	<!-- FOR IE9 below -->
 	<!--[if lt IE 9]>

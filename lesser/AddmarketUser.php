@@ -280,7 +280,7 @@ function Addlatlong(){
 
 				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 					<div class="row">
-						<form action="save-market-admin.php" method="post" enctype="multipart/form-data">
+						<form action="save-market-user.php" method="post" enctype="multipart/form-data">
 						
 			<div class="col-md-4 text-center">
 

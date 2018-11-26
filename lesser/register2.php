@@ -70,7 +70,7 @@
 	<link rel="stylesheet" href="css/style.css">
 
 
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO9xE9smgXJIDFDpyPaDGZcjQu-ybwOKc&callback=setupMap">
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNyDumm4Nkun0UNrkqJdXjzUL_NXPl0V4&callback=setupMap">
 	</script>
 	<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -95,7 +95,6 @@
 
 var marketarr = [];
 $(document).ready(function(){
-
     $("#place").change(function(){
 	var place1 = document.getElementById("place");
     var show = document.getElementById("show");
@@ -283,7 +282,7 @@ function saveMarket() {
 					</div>
 		            <div class="col-md-6">
 						<div class="form-group">
-							<a href="addMarket.php"><button type="button" class="btn btn-info">เพิ่มตลาดอื่นๆ</button></a>
+							<a href="AddmarketUser.php"><button type="button" class="btn btn-info">เพิ่มตลาดอื่นๆ</button></a>
 						</div>
 					</div>
 		        </div>

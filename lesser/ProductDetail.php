@@ -97,7 +97,7 @@ $objResult = mysqli_fetch_array($queryA, MYSQLI_ASSOC);
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEz_mT_qAClwNBVA53F2zBzE1nQpD19Lk&libraries=geometry"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNyDumm4Nkun0UNrkqJdXjzUL_NXPl0V4&libraries=geometry"></script>
 		<style>
 .circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
     height: 40px;  /* ความสูงปรับให้เป็นออโต้ */
