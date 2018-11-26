@@ -3,8 +3,8 @@ session_start();
 include("dbconnect.php");
 // ถ้ามี session ของคนที่กำลังใช้งานอยู่ และมีค่า id ของคนที่เป็นจะส่งไปหา และข้อความไม่ว่าง ส่งมาเพิ่มข้อมูล
 
-if(empty($_SESSION['username'])){
-	$user = 'Nomember';
+if($_SESSION["status"]=='admin'|| $_SESSION["status"]=='superAdmin'){
+	$user = 'admin';
 }else{
 	$user = $_SESSION['username'];
 }

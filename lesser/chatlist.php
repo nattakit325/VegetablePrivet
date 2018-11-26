@@ -294,7 +294,7 @@ div#messagesDiv{
 						<div class="col-md-12 services-inner">
 							<span><img class="circle" src="images/Admin.png"></span>
 							<div class="desc">
-								<a href="chatlist.php?name=admin&surname=&chatname=admin"><h3>Admin</h3></a>
+								<a href="chatlist.php?name=admin&surname=&chatname=admin"><h3>พูดคุยกับ Admin</h3></a>
 							</div>
 							</div>
 						
