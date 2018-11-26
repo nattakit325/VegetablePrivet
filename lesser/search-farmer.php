@@ -416,7 +416,7 @@ function showPosition(){
 function ShowMarker(){
 	for(k= 0;k<place.length;k++){
 		locations.push(["ชื่อเกษตรกร: "+ place[k][0]+"<br>ระยะทาง: "+place[k][14]+" กิโลเมตร"+"<br>ที่อยู่: "+place[k][1]+place[k][2]+place[k][3]+"<br>Link: <a href="+place[k][10]+">"+place[k][10]+"</a><br> เบอร์โทรศัพท์: "+place[k][4]+"<br> facebook:"+place[k][5]+"<br> Line:"+place[k][6]+"<br> สถานที่ขาย: "+place[k][9]+
-			"<br><a href='ShowfarmerDetail.php?id="+place[k][8]+"'>เพิ่มเติม</a>", place[k][11], place[k][12], 0 ]);
+			"<br><a href='ShowfarmerDetail.php?id="+place[k][8]+"'>เพิ่มเติม</a><br>"+"<a onclick='mapsSelector("+place[k][11]+","+place[k][12]+")'>เปิดGoogleMap</a>", place[k][11], place[k][12], 0 ]);
 	}
 	setLocation();
 	
@@ -469,6 +469,15 @@ function ShowMarker(){
       })(marker, i));
     }
 
+}
+function mapsSelector(lat,long) {
+  if /* if we're on iOS, open in Apple Maps */
+    ((navigator.platform.indexOf("iPhone") != -1) || 
+     (navigator.platform.indexOf("iPad") != -1) || 
+     (navigator.platform.indexOf("iPod") != -1))
+    window.open("maps://maps.google.com/maps?daddr="+lat+","+long+"&amp;ll=");
+else /* else use Google */
+    window.open("https://maps.google.com/maps?daddr="+lat+","+long+"&amp;ll=");
 }
 function setLocation(){
 	<?php while ($row = mysqli_fetch_array($queryE, MYSQLI_ASSOC)) {?>

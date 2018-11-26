@@ -20,9 +20,7 @@
 			if($row["picture"]!='product.png'){
 			unlink("uploads_product/".$row["picture"]);
 		}
-	
-
-}
+	}
 
 
 $sql="DELETE s,p

@@ -450,7 +450,7 @@ div#messagesDiv{
 
 								</ul>
 								<br><br><br>
-								<center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูสถานที่ขายสินค้า</button>
+								<center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" ><i class="fas fa-map-marked"></i>&nbsp;&nbsp;ดูสถานที่ขายสินค้า</button>
 									<?php if(empty($_SESSION['username'])or $_SESSION['username']==$objResult["Ownusername"]){ ?>
 									
 									<?php }else{ ?>
@@ -534,7 +534,7 @@ function showPosition(){
 function ShowMarker(){
   var lat_lng = new Array();
 	for(k= 0;k<place.length;k++){
-		locations.push(["ตลาด: "+ place[k][2]+"<br>ระยะทาง: "+place[k][7]+" กิโลเมตร", place[k][0], place[k][1], 0 ]);
+		locations.push(["ตลาด: "+ place[k][2]+"<br>ระยะทาง: "+place[k][7]+" กิโลเมตร<br>"+"<a onclick='mapsSelector("+place[k][0]+","+place[k][1]+")'>เปิดGoogleMap</a>", place[k][0], place[k][1], 0 ]);
 		var extend1 = new google.maps.LatLng(place[k][0], place[k][1]);
 	}
 	var marketLalong = new google.maps.LatLng(place[0][0],place[0][1]);
@@ -620,6 +620,15 @@ function ShowMarker(){
 	 }
 	 }
 }
+function mapsSelector(lat,long) {
+  if /* if we're on iOS, open in Apple Maps */
+    ((navigator.platform.indexOf("iPhone") != -1) || 
+     (navigator.platform.indexOf("iPad") != -1) || 
+     (navigator.platform.indexOf("iPod") != -1))
+    window.open("maps://maps.google.com/maps?daddr="+lat+","+long+"&amp;ll=");
+else /* else use Google */
+    window.open("https://maps.google.com/maps?daddr="+lat+","+long+"&amp;ll=");
+}
 </script>
 
 
@@ -704,3 +713,4 @@ $(function(){
 });
 
 </script>
+

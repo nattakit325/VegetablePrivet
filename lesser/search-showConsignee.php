@@ -473,7 +473,7 @@ var src = null;
 function ShowMarker(){
 	for(k= 0;k<place.length;k++){
 		locations.push([ place[k][0]+"<br>ระยะทาง "+place[k][7]+" กิโลเมตร"+"<br> "+place[k][3]+"<br>Link: "
-			+place[k][4]+"<br> เบอร์โทรศัพท์ "+place[k][5]+"<br>", place[k][1], place[k][2], 0 ]);
+			+place[k][4]+"<br> เบอร์โทรศัพท์ "+place[k][5]+"<br>"+"<a onclick='mapsSelector("+place[k][1]+","+place[k][2]+")'>เปิดGoogleMap</a>", place[k][1], place[k][2], 0 ]);
 	}
 	setLocation();
 	//locations.push(['คุณอยู่ตรงนี้',p3,p4,2]);
@@ -564,7 +564,8 @@ function ShowMarkerFamer(){
 	for(k= 0;k<locationsFarmer.length;k++){
 		showLocationsFamer.push([  locationsFarmer[k][0]+"<br>ระยะทาง "+locationsFarmer[k][10]+" กิโลเมตร"+
 			"<br> ที่อยู่ "+locationsFarmer[k][3]+' ตำบล '+locationsFarmer[k][4]+"<br> เบอร์โทรศัพท์ "
-			+locationsFarmer[k][5]+"<br>"+"Facebook: "+locationsFarmer[k][6]+"<br> Line:"+locationsFarmer[k][7] , locationsFarmer[k][1], locationsFarmer[k][2], 0 ]);
+			+locationsFarmer[k][5]+"<br>"+"Facebook: "+locationsFarmer[k][6]+
+			"<br> Line:"+locationsFarmer[k][7]+"<br>"+"<a onclick='mapsSelector("+locationsFarmer[k][1]+","+locationsFarmer[k][2]+")'>เปิดGoogleMap</a>" , locationsFarmer[k][1], locationsFarmer[k][2], 0 ]);
 	}
     var infowindow = new google.maps.InfoWindow();
     var marker1, i;
@@ -588,6 +589,15 @@ function ShowMarkerFamer(){
         }
       })(marker1, i));
     }
+}
+function mapsSelector(lat,long) {
+  if /* if we're on iOS, open in Apple Maps */
+    ((navigator.platform.indexOf("iPhone") != -1) || 
+     (navigator.platform.indexOf("iPad") != -1) || 
+     (navigator.platform.indexOf("iPod") != -1))
+    window.open("maps://maps.google.com/maps?daddr="+lat+","+long+"&amp;ll=");
+else /* else use Google */
+    window.open("https://maps.google.com/maps?daddr="+lat+","+long+"&amp;ll=");
 }
 function deleteMarkers(){
 	if(MarkerArray){
