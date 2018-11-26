@@ -562,12 +562,12 @@ function ShowMarker(){
         }
     });
     map.fitBounds(bounds);
-    zoomChangeBoundsListener = 
-	    google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
-	        if ( this.getZoom() ){   // or set a minimum
-	            this.setZoom(11);  // set zoom here
-	        }
-	});
+ //    zoomChangeBoundsListener = 
+	//     google.maps.event.addListenerOnce(map, 'bounds_changed', function(event) {
+	//         if ( this.getZoom() ){   // or set a minimum
+	//             this.setZoom(11);  // set zoom here
+	//         }
+	// });
     var infowindow = new google.maps.InfoWindow();
     var marker, i;
 		var icon = {
