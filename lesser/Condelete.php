@@ -25,13 +25,15 @@
 }
 
 
-$sql="DELETE s,p
+$sql="DELETE s
 		FROM selllist s
-		INNER JOIN product p
-  		ON s.productid=p.id
-		WHERE s.username = '$username'and s.productid = '$id'";
+        INNER join product p
+        on s.productid = p.id
+		WHERE  s.username = '$username'and s.productid = '$id'";
+$sql2=" DELETE from product WHERE id = '$id'";
 
 $query=mysqli_query($objCon,$sql);
+$query=mysqli_query($objCon,$sql2);
 
 header("location:selllist.php?value=' '");
 
