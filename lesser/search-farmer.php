@@ -111,7 +111,7 @@ $queryB=mysqli_query($objCon,$sql);
 	<![endif]-->
 	
 	</head>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO9xE9smgXJIDFDpyPaDGZcjQu-ybwOKc&libraries=geometry"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNyDumm4Nkun0UNrkqJdXjzUL_NXPl0V4&libraries=geometry"></script>
 
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -314,7 +314,7 @@ function showHint(str,username) {
                             <label for="textsearch" >เลือกประเภท</label>
                             <select class="form-control" name="farmerType">
                             	<option value="1">เกษตรกรต้นแบบ</option>
-                            	<option value="2">เกษตรกรผู้ผลิตสินค้าอินทรีย์</option>
+                            	<option value="2">เกษตรกรผู้ผลิตอินทรีย์</option>
                             </select>    
                         </div>
                         <div class="form-group  col-md-2">
@@ -446,7 +446,7 @@ function ShowMarker(){
     var marker, i;
 		var icon = {
 			url: "icon/human.png", // url
-			scaledSize: new google.maps.Size(50, 50), // scaled size
+			scaledSize: new google.maps.Size(35, 35), // scaled size
 			origin: new google.maps.Point(0,0), // origin
 			anchor: new google.maps.Point(0, 0) // anchor
 		};

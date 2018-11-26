@@ -11,7 +11,9 @@ $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat
 	$queryForNotification=mysqli_query($objCon,$sqlForNotification);
 	$objResultNor = mysqli_fetch_array($queryForNotification, MYSQLI_ASSOC);
 
+	$sql = "SELECT district_id as id,district_name as name from districts";
 
+	$query=mysqli_query($objCon,$sql);
 
 ?>
 <!DOCTYPE html>
@@ -124,12 +126,71 @@ $(document).ready(function(){
     </script>
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNyDumm4Nkun0UNrkqJdXjzUL_NXPl0V4&callback=ShowMarker"></script>
 	<!-- FOR IE9 below -->
 	<!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
 
 	</head>
+
+	 <script>
+function ShowMarker(){
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 14,
+      center: new google.maps.LatLng(10,10),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+    if (navigator.geolocation) {
+	navigator.geolocation.getCurrentPosition(function (position) {
+		var pos = {
+			lat: position.coords.latitude,
+			lng: position.coords.longitude
+		};
+		infowindow.setPosition(pos);
+		infowindow.setContent('คุณอยู่ตรงนี้');
+		infowindow.open(map);
+		map.setCenter(pos);
+	});
+
+	}
+	google.maps.event.addListener(map, 'click', function (event) {
+
+	var html = '';
+	html += 'lat : <input type="text" id="lat" value="' + event.latLng.lat() + '" readonly/><br/>';
+	html += 'lng : <input type="text" id="lng" value="' + event.latLng.lng() + '" readonly/><br/>';
+	html += '<input type="button" value="ตกลง" onclick="Addlatlong()" />';
+	infowindow.open(map);
+	infowindow.setContent(html);
+	infowindow.setPosition(event.latLng);
+	//marker.setPosition(event.latLng);
+
+});
+}
+function Addlatlong(){
+	var lat = $("#lat").val();
+	var lng = $("#lng").val();
+	document.getElementById("lati").value = lat;
+	document.getElementById("longi").value = lng;
+	$('#myModal2').modal('hide');
+}
+</script>
+
+	<body onload="ShowMarker()">
+		<div class="modal fade" id="myModal2" role="dialog">
+      <div class="modal-content">
+
+        <div class="modal-body">
+				<div id="map"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">ออก</button>
+        </div>
+      </div>
+
+ </div>
 	<body>
 	<div class="modal fade" id="myModal1" role="dialog">
     <div class="modal-dialog modal-sm">
@@ -231,90 +292,166 @@ $(document).ready(function(){
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
 					<h2>เพิ่มข้อมูลเกษตรกร</h2>
-					<p><span>Insert farmer</span></p>
+					<p><span>New Farmer</span></p>
 				</div>
 			</div>
-
 			<div class="row">
-				
+
 				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
 					<div class="row">
-				
-				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-					<div class="row">
-						<form action="save-farmer.php" method="post" enctype="multipart/form-data" runat="server">
-							<div class="col-md-4 text-center">
+						<form action="save-register-farmerAdmin.php" method="post" enctype="multipart/form-data"  name="frmMain" id="frmMain" runat="server" onSubmit="JavaScript:return fncSubmit();">
+						
+			<div class="col-md-4 text-center">
+
+					<div class="work-inner">
+						<a  class="work-grid" style="background-image: url(images/profile.png);" id="blah" >
+						</a>
+						<div class="desc">
+							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" Oonchange="readURL(this);" onchange="readURL(this);">
+						</div>
+					</div>
 				</div>
-							<div class="col-md-6">
-								<div class="form-group">ชื่อ
-									<input class="form-control" placeholder="ชื่อ" type="text" name="nameFarmer" required="">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">รายละเอียดที่อยู่
-									<textarea name="detailFarmer" class="form-control" id="" cols="30" rows="7" placeholder="รายละเอียด"></textarea>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">สินค้า
-									<input class="form-control" placeholder="สินค้า" type="text" name="productFarmer" required="">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">แบรนด์
-									<input class="form-control" placeholder="แบรนด์" type="text" name="brandFarmer" required="">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">สถานที่ขาย
-									<input class="form-control" placeholder="สถานที่ขาย" type="text" name="adrFarmer" required="">
-								</div>
-							</div>
 
 							<div class="col-md-6">
-								<div class="form-group">ติดต่อ
-									<input class="form-control" placeholder="ติดต่อ" type="text" name="conFarmer" required="">
-								</div>
-							</div>
 
-							<div class="col-md-6">
-								<div class="form-group">ลิ๊งค์ 
-									<input class="form-control" placeholder="ลิ๊งค์" type="text" name="linkFarmer" required="">
-								</div>
-							</div>
-                            <div class="col-md-6">
-								<div class="form-group">ที่ตั้ง:ละติจูด (laitude)
-									<input class="form-control" placeholder="laitude" type="text" name="laFarmer" required="">
-								</div>
-							</div>    
-							<div class="col-md-6">
-								<div class="form-group">ที่ตั้ง:ลองติจูด (longitude)
-									<input class="form-control" placeholder="longitude" type="text" name="loFarmer" required="">
+
+								<div class="form-group">
+									<input class="form-control" placeholder="ชื่อ-นามสกุล" type="text" name="name" required="">
 								</div>
 							</div>
 							
-						<div class="col-md-12">
-              <div class="form-group">
-                <br>
-                <center>
-                <input value="เพิ่มข้อมูล" class="btn btn-primary" type="submit">
-                </center>
-              </div>
-            </div>
-						
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="form-control" placeholder="ชื่อผู้ใช้งาน" type="text" name="username" required="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="form-control" placeholder="รหัสผ่าน" type="password" name="password" id="p1" required="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="form-control" placeholder="ยืนยันรหัสผ่านอีกครั้ง" type="password"name="confirm-password" id="p2" required=""> 
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<select class="form-control" name="status"  required="">
+										<option value="">เลือกประเภทผู้ใช้งาน</option>
+										<option value="เกษตรกร">เกษตรกร</option>
+										<option value="ปัจจัย">ผู้ขายปัจจัย</option>
+									</select>
+								</div>
+							</div>
+							
+
+
 					</div>
-				</div>
-						
-			</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<div class="row">
+        <div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+          <h2>ช่องทางการติดต่อของคุณ</h2>
+          <p ip="pp"><span>Your contact</span></p>
 
-	
 
-	</form>
-	
+          <div class="col-md-6">
+
+
+								<div class="form-group">
+									<input class="form-control" placeholder="ที่อยู่" type="text" name="address">
+								</div>
+							</div>
+							<div class="col-md-6">
+
+
+								<div class="form-group">
+
+									<input class="form-control" placeholder="ตำบล" type="text" name="subdictrict">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<select class="form-control" name="district_id">
+										<option value="">เลือกอำเภอ</option>
+										 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ ?>
+										<option value="<?php echo $row["id"];?>"><?php echo $row["name"];?></option>
+										<?php } ?>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="form-control" placeholder="เบอร์โทรศัพท์" type="text" name="phone">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="form-control" placeholder="Facebook" type="text" name="facebook">
+								</div>
+							</div>
+							
+							
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="form-control" placeholder="Line" type="text" name="line">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="form-control" placeholder="Email" type="email" name="email">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="form-control" placeholder="Brand" type="text" name="brand">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="form-control" placeholder="Farmmer Group" type="text" name="farmer_group">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<input class="form-control" placeholder="Youtube Link" type="text" name="link_youtube">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>latitude</label>
+									<input class="form-control" placeholder="" id="lati" type="text" name="latitude" readonly="" required="">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>longitude</label>
+									<input class="form-control" placeholder="" id="longi" type="text" name="longitude" readonly="" required="">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<br>
+								<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal2"><i class="fas fa-map-marked"></i>&nbsp;&nbsp;เพิ่มพิกัด</button>
+							</div>
+
+							
+
+        </div>
+      </div>
+
+
+  			<div class="col-md-12">
+              <div class="form-group">
+                <br>
+                <center>
+                <input value="ยืนยันการสมัครสมาชิก" class="btn btn-primary" type="submit" name="submit">
+                </center>
+              </div>
+			</div>
+		</form>
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
@@ -324,7 +461,6 @@ $(document).ready(function(){
 	<!-- Waypoints -->
 	<script src="js/jquery.waypoints.min.js"></script>
 	<!-- Google Map -->
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
 	<script src="js/google_map.js"></script>
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>

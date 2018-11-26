@@ -133,7 +133,7 @@ if($place_type_id !=null && $district_id != null && $subdistrict == "ทั้�
 	<![endif]-->
 	
 	</head>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEz_mT_qAClwNBVA53F2zBzE1nQpD19Lk&libraries=geometry"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNyDumm4Nkun0UNrkqJdXjzUL_NXPl0V4&libraries=geometry"></script>
 
 	<script type="text/javascript" src="js/showUser.js"></script>
 
@@ -570,7 +570,7 @@ function ShowMarkerFamer(){
     var marker1, i;
 		var icon = {
 			url: "icon/human.png", // url
-			scaledSize: new google.maps.Size(50, 50), // scaled size
+			scaledSize: new google.maps.Size(35, 35), // scaled size
 			origin: new google.maps.Point(0,0), // origin
 			anchor: new google.maps.Point(0, 0) // anchor
 		};
