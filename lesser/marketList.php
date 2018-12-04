@@ -32,7 +32,6 @@ $usermname = '';
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Buy</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
 	<meta name="author" content="FreeHTML5.co" />
@@ -264,6 +263,11 @@ function CurrentPosition(position) {
 		var TextLink = document.createTextNode("ดูรายละเอียด");
 		var icon = document.createElement("i");
 		icon.classList.add("icon-arrow-right");
+		if(i%3==0){
+			var divrow = document.createElement("div");
+			divrow.classList.add("row");
+			showV.appendChild(divrow);
+		}
 		showV.appendChild(div1);
 		div1.appendChild(div2);
 		div2.appendChild(a1);

@@ -506,13 +506,13 @@ function Addlatlong(){
 							<div class="col-md-4">
 								<label>latitude</label>
 								<div class="form-group">
-									<input class="form-control" placeholder="" id="lati" type="text" name="latitude" readonly=""  value="<?php echo $objResult["latitude"];?>">
+									<input class="form-control" placeholder="" id="lati" type="text" name="latitude"   value="<?php echo $objResult["latitude"];?>">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<label>longitude</label>
 								<div class="form-group">
-									<input class="form-control" placeholder="" id="longi" type="text" name="longitude" readonly=""  value="<?php echo $objResult["longitude"];?>">
+									<input class="form-control" placeholder="" id="longi" type="text" name="longitude"   value="<?php echo $objResult["longitude"];?>">
 								</div>
 							</div>
 							<div class="col-md-4">

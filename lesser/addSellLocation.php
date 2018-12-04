@@ -311,13 +311,13 @@ function Addlatlong(){
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>latitude</label>
-										<input class="form-control" placeholder="" id="lati" type="text" name="laShop" readonly="" required="">
+										<input class="form-control" placeholder="" id="lati" type="text" name="laShop" required="">
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>longitude</label>
-										<input class="form-control" placeholder="" id="longi" type="text" name="loShop" readonly="" required="">
+										<input class="form-control" placeholder="" id="longi" type="text" name="loShop" required="">
 									</div>
 								</div>
 								<div class="col-md-6">

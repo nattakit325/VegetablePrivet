@@ -15,8 +15,15 @@
 		}
 		
 	}
+	$sqlgetcount = "SELECT * FROM `visitors_count` WHERE visitors_count_id = 1";
+	$querycountid=mysqli_query($objCon,$sqlgetcount);
+	$objResultCount = mysqli_fetch_array($querycountid, MYSQLI_ASSOC);
+	$countuser = $objResultCount['visitors_count_number'];
+	$id = $objResultCount['visitors_count_id'];
+	$countuser++;
+	$sqlupdatecount = "UPDATE `visitors_count` SET `visitors_count_number`= $countuser  WHERE visitors_count_id = $id";
+	$query=mysqli_query($objCon,$sqlupdatecount);
 
-	
 
 
     $sql = "SELECT  n.id as id, n.topic as topic, n.detail as detail,n.media as media,n.Youtube_Link as Youtube_Link,n.Link as Link,n.time 
@@ -124,10 +131,20 @@
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900' rel='stylesheet' type='text/css'>
 
 	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
-
-
-
-
+	<link rel="stylesheet" href="/themes/odometer-theme-car.css" />
+	<style>
+	.odometer {
+		font-size: 40px;
+	}
+	</style>
+	<script>
+		window.odometerOptions = {
+			format: '(ddd)'
+		};
+	</script>
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+	<script src="/js/odometer.js"></script>
+	
 	
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
@@ -195,7 +212,6 @@
     
 }
 
-</script>
 </script>
 
 
@@ -474,8 +490,10 @@ $count=0;
 			</div>
 		</div>
 	</div>
-
-	
+	<div class="row text-center">
+		<h1>จำนวนผู้เข้าชม</h1>
+		<div class="odometer" id="odometer"><?php echo $countuser ?></div>
+	</div>
 	<div id="fh5co-blog-section" class="fh5co-grey-bg-section">
 		<div class="container">
 			<div class="row">

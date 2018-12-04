@@ -272,7 +272,7 @@
 							<tr>
 					            <td><?php echo $row["market"] ?></td>
 					            <td><a href="EditMarket.php?id=<?php echo $row["id"] ?>">แก้ไข</a></td>
-				            	<td><a href="#">ลบ</a></td>
+				            	<td><a onclick="deleteMarket(<?php echo $row['id']; ?>)">ลบ</a></td>
 				        </tr>
 						<?php }?>
 				        
@@ -317,7 +317,23 @@
 	  <script>
 	    var dataTable = $('#datatable').DataTable();
 	  </script>
-
+	  <script type="text/javascript">
+		function deleteMarket(id) {
+		$.ajax({
+				method: "POST",
+				url: "delete-marketAdmin.php",
+				cache: false,
+				data: { id:id },
+				success: function(data){
+							alert(data);
+							//the controller function count_votes returns an integer.
+							//echo that with the fade in here.
+					}
+				});
+			
+			location.reload();
+		}
+		</script>
 
 	</body>
 </html>
