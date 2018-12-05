@@ -92,67 +92,30 @@
             echo "window.location = 'register.php'; ";
             echo "</script>";
         }else{
+        $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+        $status = filter_input(INPUT_POST, 'status', FILTER_SANITIZE_STRING);
         $strSQL1 = "INSERT INTO login ";
-        $strSQL1 .="(username,password,status) VALUES ('".$_POST["username"]."','$pass','".$_POST["status"]."')";
+        $strSQL1 .="(username,password,status) VALUES ('$username','$pass','$status')";
         $objQuery = mysqli_query($objCon,$strSQL1);
 
-        $name = $_POST["name"];
-        $address = $_POST["address"];
-        $subdictrict = $_POST["subdictrict"];
-        $district_id = $_POST["district_id"];
-        $phone = $_POST["phone"];
-        $facebook = $_POST["facebook"];
-        $line = $_POST["line"];
-        $email = $_POST["email"];
-        $brand = $_POST["brand"];
-        $farmer_group = $_POST["farmer_group"];
-        $link_youtube = $_POST["link_youtube"];
-        $username = $_POST["username"];
-        $latitude = $_POST["latitude"];
-        $longitude = $_POST["longitude"];
-
+        $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+        $address = filter_input(INPUT_POST, 'address', FILTER_SANITIZE_STRING);
+        $subdictrict = filter_input(INPUT_POST, 'subdictrict', FILTER_SANITIZE_STRING);
+        $district_id = filter_input(INPUT_POST, 'district_id', FILTER_SANITIZE_STRING);
+        $phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING);
+        $facebook = filter_input(INPUT_POST, 'facebook', FILTER_SANITIZE_STRING);
+        $line = filter_input(INPUT_POST, 'line', FILTER_SANITIZE_STRING);
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
+        $brand = filter_input(INPUT_POST, 'brand', FILTER_SANITIZE_STRING);
+        $farmer_group = filter_input(INPUT_POST, 'farmer_group', FILTER_SANITIZE_STRING);
+        $link_youtube = filter_input(INPUT_POST, 'link_youtube', FILTER_SANITIZE_STRING);
+        $latitude = filter_input(INPUT_POST, 'latitude', FILTER_SANITIZE_STRING);
+        $longitude = filter_input(INPUT_POST, 'longitude', FILTER_SANITIZE_STRING);
         $farmer_type_id = '3';
 
-        
-
-        echo $name;
-        echo $address;
-        echo $subdictrict;
-        echo $district_id;
-        echo $facebook;
-        echo $line;
-        echo $email;
-        echo $brand;
-        echo $farmer_group;
-        echo $link_youtube;
-        echo $username;
-        echo $farmer_type_id;
-
-
-
-
-
-
-
-
-
-        
-
-
-
-
-        
-        $strSQL2 = "INSERT INTO profile (id, name_surname, address, subdictrict, district_id, phone, facebook, line, email, brand, farmer_group, link_youtube, latitude, longitude, picture, farmer_type_id, username) VALUES (NULL, '$name', '$address', '$subdictrict', '$district_id', '$phone', '$facebook', '$line', '$email', '$brand', '$farmer_group', '$link_youtube', $latitude , $longitude, '$PictureName', '$farmer_type_id', '$username');";
+        $strSQL2 = "INSERT INTO profile (id, name_surname, address, subdictrict, district_id, phone, facebook, line, email, brand, farmer_group, link_youtube, latitude, longitude, picture, farmer_type_id, username) VALUES (NULL, '$name', '$address', '$subdictrict', '$district_id', '$phone', '$facebook', '$line', '$email', '$brand', '$farmer_group', '$link_youtube', '$latitude' , '$longitude' , '$PictureName', '$farmer_type_id', '$username');";
         $objQuery = mysqli_query($objCon,$strSQL2); 
-
-        
-           
-       
-       
-
-        
-                    $strSQL = "SELECT * FROM login WHERE username = '".mysqli_real_escape_string($objCon,$_POST['username'])."' 
-    ";
+        $strSQL = "SELECT * FROM login WHERE username = '".mysqli_real_escape_string($objCon,$_POST['username'])."'";
     $ProfileSQL = "SELECT * FROM profile WHERE username = '".mysqli_real_escape_string($objCon,$_POST['username'])."'";
     $objQuery = mysqli_query($objCon,$strSQL);
     $objResult = mysqli_fetch_array($objQuery,MYSQLI_ASSOC);

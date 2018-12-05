@@ -290,7 +290,7 @@ function Addlatlong(){
 							<div class="col-md-6">
 								<div class="form-group">
 									<select class="form-control" name="status"  required="">
-										<option value="">เลือกประเภทผู้ใช้งาน</option>
+										<option value="" disabled="">เลือกประเภทผู้ใช้งาน</option>
 										<option value="เกษตรกร">ผู้ขายสินค้า</option>
 										<option value="เกษตรกร">เกษตรกร</option>
 										<option value="ปัจจัย">ผู้ขายปัจจัย</option>
@@ -328,8 +328,8 @@ function Addlatlong(){
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<select class="form-control" name="district_id">
-										<option value="">เลือกอำเภอ</option>
+									<select class="form-control" name="district_id" required="required">
+										<option value="" selected=""  disabled="">เลือกอำเภอ</option>
 										 <?php while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){ ?>
 										<option value="<?php echo $row["id"];?>"><?php echo $row["name"];?></option>
 										<?php } ?>
@@ -376,13 +376,13 @@ function Addlatlong(){
 							<div class="col-md-3">
 								<div class="form-group">
 									<label>latitude</label>
-									<input class="form-control" placeholder="" id="lati" type="text" name="latitude"  required="">
+									<input class="form-control" placeholder="" id="lati" type="text" name="latitude">
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
 									<label>longitude</label>
-									<input class="form-control" placeholder="" id="longi" type="text" name="longitude" required="">
+									<input class="form-control" placeholder="" id="longi" type="text" name="longitude">
 								</div>
 							</div>
 							<div class="col-md-3">

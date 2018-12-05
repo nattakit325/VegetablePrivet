@@ -203,7 +203,7 @@ function saveMarket() {
 						<p>career     : <?php echo $_SESSION["status"];?></p>
   <br>
 
-  <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
+  <a href="editProfile.php"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
   <a href="ClearSession.php"><button type="button" class="btn btn-warning" >ออกจากระบบ</button></a>
         </center>
           
