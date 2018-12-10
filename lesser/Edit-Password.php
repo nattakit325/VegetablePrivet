@@ -1,16 +1,23 @@
-<?php 
-session_start();
-include "connect.php";
+<?php
+	session_start();
+    include "connect.php";
+    $username =  $_SESSION["username"];
+    $sql = "SELECT m.id as id,m.market as market FROM market m INNER JOIN gmarket g on m.id = g.marketid where g.username = '$username'";
+    $queryA = mysqli_query($objCon, $sql);
 
-$usermname =  $_SESSION["username"];;
+    $Profilesql = "SELECT p.name_surname as name_surname,p.address as address,p.subdictrict as subdictrict,d.district_name as district_name,d.district_id as district_id,p.phone as phone,p.facebook as facebook,p.line as line,p.email as email, p.brand as brand,p.farmer_group as farmer_group, p.link_youtube as link_youtube,p.username as username,p.latitude as latitude,p.longitude as longitude FROM profile p INNER join districts d on p.district_id = d.district_id  WHERE p.username = '$username'";
+    $queryPro = mysqli_query($objCon, $Profilesql);
+    $objResult = mysqli_fetch_array($queryPro,MYSQLI_ASSOC);
+
+    $sql = "SELECT district_id as id,district_name as name from districts";
+
+	$query=mysqli_query($objCon,$sql);
 
 	
 
-    $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' 
-							and status = 1 ";
+ 
 
-	$queryForNotification=mysqli_query($objCon,$sqlForNotification);
-	$objResultNor = mysqli_fetch_array($queryForNotification, MYSQLI_ASSOC);
+
 
 ?>
 <!DOCTYPE html>
@@ -21,18 +28,18 @@ $usermname =  $_SESSION["username"];;
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Create News</title>
+	<title>Edit Profile</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
 	<meta name="author" content="FreeHTML5.co" />
 
-  <!-- 
+  <!--
 	//////////////////////////////////////////////////////
 
-	FREE HTML5 TEMPLATE 
+	FREE HTML5 TEMPLATE
 	DESIGNED & DEVELOPED by FreeHTML5.co
-		
+
 	Website: 		http://freehtml5.co/
 	Email: 			info@freehtml5.co
 	Twitter: 		http://twitter.com/fh5co
@@ -60,7 +67,7 @@ $usermname =  $_SESSION["username"];;
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700,900' rel='stylesheet' type='text/css'>
 
 	<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
-	
+
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
 	<!-- Icomoon Icon Fonts-->
@@ -71,25 +78,17 @@ $usermname =  $_SESSION["username"];;
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<!-- Theme style  -->
 	<link rel="stylesheet" href="css/style.css">
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
 
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
 
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-    $("#dd1").click(function(){
-          $("#d1").remove();
-    });
-    $("#dd2").click(function(){
-          $("#d2").remove();
-    });
-    
-   
-});
-</script>
-
-
-		<style>
+	</head>
+<style>
 .circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
     height: 40px;  /* ความสูงปรับให้เป็นออโต้ */
     width: 40px;  /* ความสูงปรับให้เป็นออโต้ */
@@ -104,33 +103,50 @@ $(document).ready(function(){
     border-radius: 50%; /* ปรับเป็น 50% คือความโค้งของเส้นขอบ*/
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
 }
-
-
 </style>
-
-<script type="text/javascript">
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#blah').attr('style', 'background-image: url('+e.target.result+');');
-                }
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-    </script>
-	<!-- Modernizr JS -->
-	<script src="js/modernizr-2.6.2.min.js"></script>
-	<!-- FOR IE9 below -->
-	<!--[if lt IE 9]>
-	<script src="js/respond.min.js"></script>
-	<![endif]-->
-
-	</head>
 	<body>
-	<div class="modal fade" id="myModal1" role="dialog">
+		<div class="modal fade" id="myModal2" role="dialog">
+      <div class="modal-content">
+
+        <div class="modal-body">
+				<div id="map"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">ออก</button>
+        </div>
+      </div>
+
+ </div>
+    
+<div class="modal fade" id="forconfermdelete" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <center><p class="modal-title">ต้องลบตลาดที่คุณเลือกหรือไม่</p></center>
+        </div>
+        <div class="modal-body">
+          <center>
+						
+  <br>
+
+ 	<button type="button" class="btn btn-warning" onclick="deleteMarket()"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ต้องการ</button>
+  <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+        </center>
+          
+        </div>
+        
+          
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+    <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
@@ -191,12 +207,14 @@ $(document).ready(function(){
       </div>
     </div>
   </div>
-	
+
+
+
 	<div id="fh5co-page">
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><i class="sl-icon-energy"></i><a href="index.php">OrganicApp</a></h1>
+				<h1><i class="sl-icon-energy"></i><a href="index.php">Lesserr</a></h1>
 				<nav role="navigation">
 					<ul>
 						<li>
@@ -204,16 +222,10 @@ $(document).ready(function(){
 								?>
 							<a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
 							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
-						<?php }else{
-							if ($objResultNor['chatAM']>0) {
-								$color = 'red';
-							}else{
-								$color = 'gray';
-
-							}
-							?>
-							<a href="TopChat.php" title="คุณมี <?php echo $objResultNor['chatAM'] ?> ข้อความ"><i class="fas fa-bell" style="color: <?php echo $color ?>">&nbsp;<?php echo $objResultNor['chatAM'] ?></i></a>
-							<a data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
+						<?php }else{?>
+							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name_surname"];?> </a></li>
+							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
+							<br>
 							
 						<?php } ?>
 						
@@ -222,101 +234,71 @@ $(document).ready(function(){
 			</div>
 		</div>
 	</header>
-
-
-
+	<br>
+	<br>
 	<div id="fh5co-contact-section">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>สร้างข่าว</h2>
-					<p><span>Creat your News</span></p>
-				</div>
-			</div>
-
-			<div class="row">
-				
-				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-					<div class="row">
-				
-				<div class="col-md-10 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-					<div class="row">
-						<form action="InsertNews.php" method="post" enctype="multipart/form-data" runat="server">
-							<div class="col-md-4 text-center">
-
-					<div class="work-inner">
-						<a  class="work-grid" style="background-image: url(images/news.png);" id="blah" >
-						</a>
-						<div class="desc">
-							<input class="form-control" placeholder="Picture" type="file" name="fileToUpload" onchange="readURL(this);">
-						</div>
+			<form action="Update-Password.php" method="POST" onsubmit="return CheckPass()">
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
+						<h2>แก้รหัสผ่าน</h2>
+						<p><span>Edit Password</span></p>
 					</div>
 				</div>
-							<div class="col-md-6">
-								<div class="form-group">หัวข้อข่าว (ไม่เกิน 100 ตัวอักษร)
-									<input class="form-control" placeholder="หัวข้อข่าว" type="text" name="topic" required="" maxlength="100">
-								</div>
-							</div>
-
-							<div class="col-md-6">
-							<div class="form-group">รายละเอียด (ไม่เกิน 500 ตัวอักษร)
-								
-								<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-								<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.1/emojionearea.min.css" />
-								<script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.1/emojionearea.min.js"></script>
-								<textarea name="detail" class="form-control" id="myText" cols="30" rows="7" placeholder="รายละเอียด" maxlength="500"></textarea>
-								<script >
-									$("#myText").emojioneArea({
-										pickerPosition:"right"
-
-									});
-	
-								</script>
-							</div>
-
-							วันเวลาที่สิ้นสุดการประชาสัมพันธ์
-							<?php $dayDF = date("Y-m-d");
-									$timeDF = date("H:i");
-									$dayDF = $dayDF."T".$timeDF 
-									?>
-							<input type="datetime-local"  class="form-control" min="<?php echo $dayDF ?>" name="dateDF" required="">
+				<div class="row" align="center">
+					<div class="col-md-4 col-md-offset-4">
+						<div class="form-group">
+	                        <label>รหัสผ่านเก่า</label>
+							<input class="form-control" placeholder="รหัสผ่านเก่า" type="password" name="oldPass" required="" id="oldPass" maxlength="50">
 						</div>
-
-						<div class="col-md-6">
-								<div class="form-group">	<br>ลิงค์วีดีโอจาก Youtube
-									<input class="form-control" placeholder="ใส่ลิงค์ที่นี่" type="text" name="link" maxlength="500">
-								</div>
-							</div>
-
-							<div class="col-md-10">
-								<div class="form-group">ลิงค์เว็ปไซต์อื่นๆ
-									<input class="form-control" placeholder="ใส่ลิงค์เว็ปไซต์อื่นๆ" type="text" name="link_other" maxlength="500" >
-								</div>
-							</div>
-
-							
-						<div class="col-md-12">
-              <div class="form-group">
-                <br>
-                <center>
-                <input value="สร้างข่าว" class="btn btn-primary" type="submit">
-                </center>
-              </div>
-            </div>
-						
-					</div>
+	              </div>
 				</div>
-						
-			</div>
+				<div class="row" align="center">
+					<div class="col-md-4 col-md-offset-4">
+						<div class="form-group">
+	                        <label>รหัสผ่านใหม่</label>
+							<input class="form-control" placeholder="รหัสผ่านใหม่" type="password" name="NewPass" maxlength="50" required="" id="NewPass" maxlength="50"><br>
+							<input class="form-control" placeholder="ยืนยันรหัสผ่าน" type="password" name="CheckPass1" required="" id="CheckPass1" maxlength="50">
+						</div>
+	              </div>
 				</div>
-			</div>
+				<div class="row" align="center">
+					<input value="ยืนยันการแก้ไข" class="btn btn-primary" type="submit" name="submit">
+				</div>
+			</form>
 		</div>
-	</div>
 
-	
-
-	</form>
-	
+<script type="text/javascript">
+	function CheckPass(){
+		var NewPass = document.getElementById("NewPass").value;
+		var oldPass = document.getElementById("oldPass").value;
+		var CheckPass1 = document.getElementById("CheckPass1").value;
+		var value = null;
+		$.ajax({
+	        method: "POST",
+	        url: "CheckPass.php",
+	        async: false,
+	        data: { oldPass:oldPass },
+	        success: function(data){
+	            	value = data;
+	            	
+	            }
+	    }); 
+	    if(value==1){
+	    	if(CheckPass1!=NewPass){
+				alert("รหัสผ่านไม่ตรงกัน");
+				document.getElementById("NewPass").focus();
+				return false;
+			}else{
+				return true;
+			}    
+	    }else{
+	    	document.getElementById("oldPass").focus();
+	    	alert("รหัาผ่านเก่าไม่ถูกต้อง");
+			return false;
+		}
+	}
+</script>
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
 	<!-- jQuery Easing -->
@@ -326,11 +308,7 @@ $(document).ready(function(){
 	<!-- Waypoints -->
 	<script src="js/jquery.waypoints.min.js"></script>
 	<!-- Google Map -->
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
-	<script src="js/google_map.js"></script>
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
-
 	</body>
 </html>
-

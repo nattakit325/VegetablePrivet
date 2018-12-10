@@ -273,115 +273,115 @@ session_start();
 					 <div class="col-md-6">
 						<div class="form-group">
 							<p>ปีที่เริ่มปลูก</p>
-							<input class="form-control" placeholder="ปีที่เริ่มปลูก" type="text" name="yearBegin">
+							<input class="form-control" placeholder="ปีที่เริ่มปลูก" maxlength="100" type="text" name="yearBegin">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>ทุ่งนา(ทำ/ไม่ทำ)</p>
-							<input class="form-control" placeholder="ทุ่งนา(ทำ/ไม่ทำ)" type="text" name="riceField">
+							<input class="form-control" placeholder="ทุ่งนา(ทำ/ไม่ทำ)" maxlength="100" type="text" name="riceField">
 						</div>
 					</div>
 					 <div class="col-md-6">
 						<div class="form-group">
 							<p>ทำไร่(ทำ/ไม่ทำ)</p>
-							<input class="form-control" placeholder="ทำไร่(ทำ/ไม่ทำ)" type="text" name="Farm">
+							<input class="form-control" placeholder="ทำไร่(ทำ/ไม่ทำ)" maxlength="100" type="text" name="Farm">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>ทำสวน(ทำ/ไม่ทำ)</p>
-							<input class="form-control" placeholder="ทำสวน(ทำ/ไม่ทำ)" type="text" name="Orchard">
+							<input class="form-control" placeholder="ทำสวน(ทำ/ไม่ทำ)" maxlength="100" type="text" name="Orchard">
 						</div>
 					</div>
 					 <div class="col-md-6">
 						<div class="form-group">
 							<p>พื้นที่เพาะปลูก(ไร่)</p>
-							<input class="form-control" placeholder="พื้นที่เพาะปลูก(ไร่)" type="text" name="FarmArea">
+							<input class="form-control" placeholder="พื้นที่เพาะปลูก(ไร่)" maxlength="100" type="text" name="FarmArea">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>พื้นที่เพาะปลูก(งาน)</p>
-							<input class="form-control" placeholder="พื้นที่เพาะปลูก(งาน)" type="text" name="farmAreaNgan">
+							<input class="form-control" placeholder="พื้นที่เพาะปลูก(งาน)" maxlength="100" type="text" name="farmAreaNgan">
 						</div>
 					</div>
 					 <div class="col-md-6">
 						<div class="form-group">
 							<p>วัว(ตัว)</p>
-							<input class="form-control" placeholder="วัว(ตัว)" type="text" name="cowOrox">
+							<input class="form-control" placeholder="วัว(ตัว)" type="text" maxlength="100" name="cowOrox">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>ควาย(ตัว)</p>
-							<input class="form-control" placeholder="ควาย(ตัว)" type="text" name="buffalo">
+							<input class="form-control" placeholder="ควาย(ตัว)" type="text" maxlength="100" name="buffalo">
 						</div>
 					</div>
 					 <div class="col-md-6">
 						<div class="form-group">
 							<p>ไก่(ตัว)</p>
-							<input class="form-control" placeholder="ไก่(ตัว)" type="text" name="chicken">
+							<input class="form-control" placeholder="ไก่(ตัว)" type="text" maxlength="100" name="chicken">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>เป็ด(ตัว)</p>
-							<input class="form-control" placeholder="เป็ด(ตัว)" type="text" name="duck">
+							<input class="form-control" placeholder="เป็ด(ตัว)" type="text" maxlength="100" name="duck">
 						</div>
 					</div>
 					 <div class="col-md-6">
 						<div class="form-group">
 							<p>หมู(ตัว)</p>
-							<input class="form-control" placeholder="หมู(ตัว)" type="text" name="pig">
+							<input class="form-control" placeholder="หมู(ตัว)" type="text" maxlength="100" name="pig">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>สัตว์อื่นๆ</p>
-							<input class="form-control" placeholder="สัตว์อื่นๆ" type="text" name="otherAnimal">
+							<input class="form-control" placeholder="สัตว์อื่นๆ" type="text" maxlength="100" name="otherAnimal">
 						</div>
 					</div>
 					 <div class="col-md-6">
 						<div class="form-group">
 							<p>แหล่งน้ำที่ใช้</p>
-							<input class="form-control" placeholder="แหล่งน้ำที่ใช้" type="text" name="	waterSource">
+							<input class="form-control" placeholder="แหล่งน้ำที่ใช้" type="text" maxlength="100" name="	waterSource">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>ปุ๋ยอินทรีย์สำเร็จรูปยี่ห้อที่ใช้</p>
-							<input class="form-control" placeholder="ปุ๋ยอินทรีย์สำเร็จรูปยี่ห้อที่ใช้" type="text" name="organicFertilizer">
+							<input class="form-control" placeholder="ปุ๋ยอินทรีย์สำเร็จรูปยี่ห้อที่ใช้" maxlength="100" type="text" name="organicFertilizer">
 						</div>
 					</div>
 					 <div class="col-md-6">
 						<div class="form-group">
 							<p>ปริมาณที่ใช้ (กก./ไร่)</p>
-							<input class="form-control" placeholder="ปริมาณที่ใช้ (กก./ไร่)" type="text" name="	amountToUse">
+							<input class="form-control" placeholder="ปริมาณที่ใช้ (กก./ไร่)" type="text" maxlength="100" name="	amountToUse">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่1)</p>
-							<input class="form-control" placeholder="ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่1)" type="text" name="Factor1">
+							<input class="form-control" placeholder="ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่1)" type="text" maxlength="100" name="Factor1">
 						</div>
 					</div>
 					 <div class="col-md-6">
 						<div class="form-group">
 							<p>ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่2)</p>
-							<input class="form-control" placeholder="ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่2)" type="text" name="	Factor2">
+							<input class="form-control" placeholder="ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่2)" type="text" maxlength="100" name="Factor2">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่3)</p>
-							<input class="form-control" placeholder="ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่3)" type="text" name="Factor3">
+							<input class="form-control" placeholder="ปัจจัยที่ทำให้เกษตรอินทรีย์ประสบความสำเร็จ(ลำดับที่3)" type="text" maxlength="100" name="Factor3">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<p>แรงบันดาลใจในการเปลี่ยนมาทำเกษตรอินทรีย์</p>
-							<input class="form-control" placeholder="แรงบันดาลใจในการเปลี่ยนมาทำเกษตรอินทรีย์" type="text" name="Inspiration">
+							<input class="form-control" placeholder="แรงบันดาลใจในการเปลี่ยนมาทำเกษตรอินทรีย์" type="text" name="Inspiration" maxlength="100">
 						</div>
 					</div>
 				</div>

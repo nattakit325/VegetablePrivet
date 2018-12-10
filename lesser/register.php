@@ -268,23 +268,23 @@ function Addlatlong(){
 
 
 								<div class="form-group">
-									<input class="form-control" placeholder="ชื่อ-นามสกุล" type="text" name="name" required="">
+									<input class="form-control" placeholder="ชื่อ-นามสกุล" type="text" name="name" required="" maxlength="100">
 								</div>
 							</div>
 							
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control" placeholder="ชื่อผู้ใช้งาน" type="text" name="username" required="">
+									<input class="form-control" placeholder="ชื่อผู้ใช้งาน" type="text" name="username" required="" maxlength="50">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control" placeholder="รหัสผ่าน" type="password" name="password" id="p1" required="">
+									<input class="form-control" placeholder="รหัสผ่าน" type="password" name="password" id="p1" required="" maxlength="50">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control" placeholder="ยืนยันรหัสผ่านอีกครั้ง" type="password"name="confirm-password" id="p2" required=""> 
+									<input class="form-control" placeholder="ยืนยันรหัสผ่านอีกครั้ง" type="password"name="confirm-password" id="p2" maxlength="50" required=""> 
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -315,7 +315,7 @@ function Addlatlong(){
 
 
 								<div class="form-group">
-									<input class="form-control" placeholder="ที่อยู่" type="text" name="address">
+									<input class="form-control" placeholder="ที่อยู่" type="text" maxlength="100" name="address">
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -323,7 +323,7 @@ function Addlatlong(){
 
 								<div class="form-group">
 
-									<input class="form-control" placeholder="ตำบล" type="text" name="subdictrict">
+									<input class="form-control" placeholder="ตำบล" type="text" maxlength="100"  name="subdictrict">
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -338,51 +338,51 @@ function Addlatlong(){
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control" placeholder="เบอร์โทรศัพท์" type="text" name="phone">
+									<input class="form-control" placeholder="เบอร์โทรศัพท์" type="text" maxlength="20" name="phone">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control" placeholder="Facebook" type="text" name="facebook">
+									<input class="form-control" placeholder="Facebook" type="text" maxlength="100" name="facebook">
 								</div>
 							</div>
 							
 							
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control" placeholder="Line" type="text" name="line">
+									<input class="form-control" placeholder="Line" type="text" maxlength="100" name="line">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control" placeholder="Email" type="email" name="email">
+									<input class="form-control" placeholder="Email" type="email" maxlength="100" name="email">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control" placeholder="Brand" type="text" name="brand">
+									<input class="form-control" placeholder="Brand" type="text" maxlength="100" name="brand">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control" placeholder="Farmmer Group" type="text" name="farmer_group">
+									<input class="form-control" placeholder="Farmmer Group" type="text" maxlength="100" name="farmer_group">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<input class="form-control" placeholder="Youtube Link" type="text" name="link_youtube">
+									<input class="form-control" placeholder="Youtube Link" type="text" maxlength="100" name="link_youtube">
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
 									<label>latitude</label>
-									<input class="form-control" placeholder="" id="lati" type="text" name="latitude">
+									<input class="form-control" placeholder="" id="lati" maxlength="100" type="text" name="latitude">
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
 									<label>longitude</label>
-									<input class="form-control" placeholder="" id="longi" type="text" name="longitude">
+									<input class="form-control" placeholder="" id="longi" maxlength="100" type="text" name="longitude">
 								</div>
 							</div>
 							<div class="col-md-3">
