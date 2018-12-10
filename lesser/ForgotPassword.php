@@ -247,7 +247,7 @@ $usermname = '';
 			</div>
 		</div>
 	</header>
-	<form action="save-product.php" method="post" enctype="multipart/form-data" runat="server">
+	<form action="testEmail.php" method="post"  runat="server">
 	<div id="fh5co-contact-section">
 		<div class="container">
 
@@ -290,39 +290,25 @@ $usermname = '';
 							
 						<div class="col-md-6">
 							<div class="form-group">
-								<input name="price" type="text" class="form-control" id="" placeholder="ราคา/หน่วย">
+								<input name="password" type="password" class="form-control" id="" placeholder="รหัสผ่านใหม่" required="">
 							</div>
 						</div>
+
 						
 
 						<div class="col-md-6">
-								<div class="form-group">
+              <div class="form-group">
+                <br>
+                <center>
+                <input  class="btn btn-primary" type="submit" value="ส่งข้อมูลยืนยันรหัสใหม่" name="submit"> 
+                </center>
+              </div>
+            </div>
 
-									
 
-									<select class="form-control" name="value" required>
-										<option value="">เลือกประเภทสินค้า</option>
-									<?php if($_SESSION["status"]=='เกษตรกร'){ ?>
-										<option value="ผักพื้นบ้าน">ผักพื้นบ้าน</option>
-										<option value="ผักทั่วไป">ผักทั่วไป</option>
-										<option value="ผักสลัด">ผักสลัด</option>
-										<option value="ผลไม้">ผลไม้</option>
-										<option value="ธัญพืช">ธัญพืช</option>
-										<option value="แปรรูป(อาหาร)">แปรรูป(อาหาร)</option>
-										<option value="แปรรูป(อุปโภค)">แปรรูป(อุปโภค)</option>
-										<option value="ข้าว">ข้าว</option>
-										<option value="สมุนไพร">สมุนไพร</option>
-										<option value="ไข่">ไข่</option>
-										<option value="เสื้อผ้า เครื่องนุ่งห่ม (ธรรมชาติ)">เสื้อผ้า เครื่องนุ่งห่ม (ธรรมชาติ)</option>
-										<option value="อื่นๆ">อื่นๆ</option>
-									<?php }else{ ?>
-										<option value="ปุ๋ยหมัก">ปุ๋ยหมัก</option>
-										<option value="ปุ๋ยอินทรีย์">ปุ๋ยอินทรีย์</option>
-										<option value="เมล็ดพันธุ์">เมล็ดพันธุ์</option>
-									<?php } ?>
-									</select>
-								</div>
-							</div>		
+						
+
+							
 					</div>
 					
 				</div>
@@ -333,14 +319,7 @@ $usermname = '';
 	</div>
 
 	
-  <div class="col-md-12">
-              <div class="form-group">
-                <br>
-                <center>
-                <input  class="btn btn-primary" type="submit" value="สร้างสินค้า" name="submit"> 
-                </center>
-              </div>
-            </div>
+  
             
 	</form>
 	
