@@ -383,6 +383,7 @@ $count=0;
 				<table border="1" class="datatable table table-hover table-bordered" cellspacing="0" width="100%" id='datatable'>
 				    <thead>
 				        <tr>
+				        	<th>No.</th>
 				            <th>ID</th>
 				            <th>Name</th>
 				            <th>Address</th>
@@ -392,7 +393,7 @@ $count=0;
 				    <tbody>
 				    	<?php while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {?>
 							<tr>
-					    
+					    		<td><?php echo $row["id"];?></td>
 					            <td><?php echo $row["username"];?></td>
 					    		<td><?php echo $row["name"];?></td>
 				            	<td>ที่อยู่ <?php echo $row["address"];?> <?php echo $row["subdictrict"];?> อำเภอ<?php echo $row["district_name"];?></td>
@@ -408,15 +409,17 @@ $count=0;
 						<table border="1" class="datatable table table-hover table-bordered" cellspacing="0" width="100%" id='datatable'>
 						    <thead>
 						        <tr>
+						        	<th>No.</th>
 						            <th>ID</th>
 						            <th>Name</th>
 						            <th>Delete</th>
 						        </tr>
 						    </thead>
 						    <tbody>
+
 						    	<?php while ($row = mysqli_fetch_array($query, MYSQLI_ASSOC)) {?>
 									<tr>
-							    
+										
 							            <td><?php echo $row["id"];?></h3></td>
 							    		<td><?php echo $row["name"];?></td>
 						            	<td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#forconfermdeleteeach" onclick="Delete('<?php echo $row['id'] ?>','<?php echo $row['name'] ?>','<?php echo $row['picture'] ?>','admin')"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;ยกเลิกบัญชีผู้ดูแลระบบ</span></button></td>
@@ -469,7 +472,9 @@ $count=0;
 	  <script src="//cdn.datatables.net/buttons/1.2.1/js/buttons.html5.min.js"></script>
 	  
 	  <script>
-	    var dataTable = $('#datatable').DataTable();
+	    var dataTable = $('#datatable').DataTable({
+	        "order": [[ 0, "desc" ]]
+	    });
 	  </script>
 	<!-- END Data Table -->
 	</body>

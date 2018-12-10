@@ -347,7 +347,7 @@ function Addlatlong(){
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><i class="sl-icon-energy"></i><a href="index.php">Lesserr</a></h1>
+				<h1><i class="sl-icon-energy"></i><a href="index.php">ORGANICAPP</a></h1>
 				<nav role="navigation">
 					<ul>
 						<li>
@@ -401,16 +401,19 @@ function Addlatlong(){
 
 								<div class="form-group">
                                     <label>ชื่อ - นามสกุล</label>
-									<input class="form-control" placeholder="ชื่อจริง" type="text" name="name" value="<?php echo $objResult["name_surname"];?>">
+									<input class="form-control" placeholder="ชื่อจริง" maxlength="100" type="text" name="name" value="<?php echo $objResult["name_surname"];?>">
 								</div>
 							</div>
 							<div class="col-md-6">
-								<label>ชื่อผู้ใช้งาน</label>
 								<div class="form-group">
-									<input class="form-control" placeholder="ชื่อผู้ใช้งาน" type="text" name="username" value="<?php echo $objResult["username"];?>" >
+									<input class="form-control" type="hidden" name="username" value="<?php echo $objResult["username"];?>" >
 								</div>
 							</div>
-							
+							<div class="col-md-6">
+								<div class="form-group">
+									<button class="form-control"><a href="Edit-Password.php">แก้ไขรหัสผ่าน</a></button>
+								</div>
+							</div>
 							
 							
 
@@ -434,7 +437,7 @@ function Addlatlong(){
 
                             	<label>ที่อยู่</label>
 								<div class="form-group">
-									<input class="form-control" placeholder="ที่อยู่" type="text" name="address"
+									<input class="form-control" placeholder="ที่อยู่" maxlength="100" type="text" name="address"
 									value="<?php echo $objResult["address"];?>">
 								</div>
 							</div>
@@ -443,7 +446,7 @@ function Addlatlong(){
 								<label>ตำบล</label>
 								<div class="form-group">
 
-									<input class="form-control" placeholder="ตำบล" type="text" name="subdictrict" value="<?php echo $objResult["subdictrict"];?>">
+									<input class="form-control" placeholder="ตำบล" type="text" maxlength="100" name="subdictrict" value="<?php echo $objResult["subdictrict"];?>">
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -460,13 +463,13 @@ function Addlatlong(){
 							<div class="col-md-6">
 								<label>เบอร์โทรศัพท์</label>
 								<div class="form-group">
-									<input class="form-control" placeholder="เบอร์โทรศัพท์" type="text" name="phone" value="<?php echo $objResult["phone"];?>">
+									<input class="form-control" placeholder="เบอร์โทรศัพท์" maxlength="20" type="text" name="phone" value="<?php echo $objResult["phone"];?>">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<label>Facebook</label>
 								<div class="form-group">
-									<input class="form-control" placeholder="Facebook" type="text" name="facebook" value="<?php echo $objResult["facebook"];?>">
+									<input class="form-control" placeholder="Facebook" maxlength="100" type="text" name="facebook" value="<?php echo $objResult["facebook"];?>">
 								</div>
 							</div>
 							
@@ -474,45 +477,45 @@ function Addlatlong(){
 							<div class="col-md-6">
 								<label>Line</label>
 								<div class="form-group">
-									<input class="form-control" placeholder="Line" type="text" name="line" value="<?php echo $objResult["line"];?>"> 
+									<input class="form-control" placeholder="Line" maxlength="100" type="text" name="line" value="<?php echo $objResult["line"];?>"> 
 								</div>
 							</div>
 							<div class="col-md-6">
 								<label>Email</label>
 								<div class="form-group">
-									<input class="form-control" placeholder="Email" type="email" name="email"
+									<input class="form-control" placeholder="Email" maxlength="100" type="email" name="email"
 									value="<?php echo $objResult["email"];?>">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<label>Brand</label>
 								<div class="form-group">
-									<input class="form-control" placeholder="Brand" type="text" name="brand"
+									<input class="form-control" placeholder="Brand" maxlength="100" type="text" name="brand"
 									value="<?php echo $objResult["brand"];?>">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<label>Farmmer Group</label>
 								<div class="form-group">
-									<input class="form-control" placeholder="Farmmer Group" type="text" name="farmer_group" value="<?php echo $objResult["farmer_group"];?>">
+									<input class="form-control" placeholder="Farmmer Group" maxlength="100" type="text" name="farmer_group" value="<?php echo $objResult["farmer_group"];?>">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<label>Youtube Link</label>
 								<div class="form-group">
-									<input class="form-control" placeholder="Youtube Link" type="text" name="link_youtube" value="<?php echo $objResult["link_youtube"];?>">
+									<input class="form-control" placeholder="Youtube Link" maxlength="100" type="text" name="link_youtube" value="<?php echo $objResult["link_youtube"];?>">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<label>latitude</label>
 								<div class="form-group">
-									<input class="form-control" placeholder="" id="lati" type="text" name="latitude"   value="<?php echo $objResult["latitude"];?>">
+									<input class="form-control" placeholder="" id="lati" maxlength="100" type="text" name="latitude"   value="<?php echo $objResult["latitude"];?>">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<label>longitude</label>
 								<div class="form-group">
-									<input class="form-control" placeholder="" id="longi" type="text" name="longitude"   value="<?php echo $objResult["longitude"];?>">
+									<input class="form-control" placeholder="" id="longi" maxlength="100" type="text" name="longitude"   value="<?php echo $objResult["longitude"];?>">
 								</div>
 							</div>
 							<div class="col-md-4">

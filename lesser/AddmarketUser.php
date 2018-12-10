@@ -296,19 +296,19 @@ function Addlatlong(){
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>ชื่อสถานที่</label>
-									<input class="form-control" placeholder="ชื่อสถานที่" type="text" name="market_name" required="">
+									<input class="form-control" placeholder="ชื่อสถานที่" type="text" name="market_name" required="" maxlength="100">
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
 									<label>latitude</label>
-									<input class="form-control" placeholder="" id="lati" type="text" name="latitude"  required="">
+									<input class="form-control" placeholder="" id="lati" type="text" name="latitude"  required="" maxlength="100">
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
 									<label>longitude</label>
-									<input class="form-control" placeholder="" id="longi" type="text" name="longitude"  required="">
+									<input class="form-control" placeholder="" id="longi" type="text" name="longitude"  required="" maxlength="100">
 								</div>
 							</div>
 							<div class="col-md-6">
