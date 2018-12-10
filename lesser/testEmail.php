@@ -1,27 +1,29 @@
 
 <?php
 
-	$sqlgetcount = "SELECT * FROM `visitors_count` WHERE visitors_count_id = 1";
-	$querycountid=mysqli_query($objCon,$sqlgetcount);
-	$objResultCount = mysqli_fetch_array($querycountid, MYSQLI_ASSOC);
+	session_start();
+	include "connect.php";
 	
-	$email = $_POST['email'];
 	$name = $_POST['name'];
-	$password = $_POST['password'];
-	$username = $_SESSION["username"];
-	$strTo = $email;
+	$password = md5($_POST['password']);
+
+	$sqlgetEmail = "select email from profile where username = '$name'";
+	$queryEmail=mysqli_query($objCon,$sqlgetEmail);
+	$objResultEmail = mysqli_fetch_array($queryEmail, MYSQLI_ASSOC);
+
+
+	$strTo =  $objResultEmail['email'];
 	$strSubject = "Reset Your Password From OrganicApp.com";
 	$strHeader = "From: OrganicApp.com";
 	$strMessage = "<html><body>";
-	$message .= "URL To Change (Password): <a href='resetPassword.php?username=".$_SESSION["username"]."&password=".$password."'> คลิ๊กที่ที่ </a>";
+	$message .= "URL To Change (Password): <a href='resetPassword.php?username=".$name."&password=".$password."'> คลิ๊กที่ที่ </a>";
 	$message .= "</body></html>";
 	$flgSend = @mail($strTo,$strSubject,$strMessage,$strHeader);  // @ = No Show Error //
 	
 ?>
 
 <?php 
-session_start();
-include "connect.php";
+
 
 $usermname = '';
 
@@ -268,14 +270,24 @@ $usermname = '';
 			</div>
 		</div>
 	</header>
-	<form action="testEmail.php" method="post"  runat="server">
 	<div id="fh5co-contact-section">
 		<div class="container">
 
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3 text-center fh5co-heading">
-					<h2>เราได้ส่งการยืนยันไปที่ Email แล้ว</h2>
+					<?php if(empty($objResultEmail)){ ?>
+					<h2>เราได้ส่งการยืนยันไปที่ <?php echo $objResultEmail['email'] ?> แล้ว</h2>
 					<p><span>กรุณาเข้าไปยืนยันตัวตนและใช้รหัสผ่านใหม่</span></p>
+					<?php else{?>
+					<p><span>บัญชีดังกล่าว ไม่ได้ระบุ Email สำหรับระบุความเป็นเจ้าของ <br>
+					หรือ บัญชีไม่มีอยู่บนระบบ หรือ ถูกระงับการใช้งาน</span></p>
+					<?php }?>
+					<div class="form-group">
+                <br>
+                <center>
+                <a href="index.php"><button type="button" class="btn btn-primary">กลับสู่หนาหลัก</button></a>
+                </center>
+              </div>
 				</div>
 			</div>
 
@@ -284,9 +296,6 @@ $usermname = '';
 	</div>
 
 	
-  
-            
-	</form>
 	
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
