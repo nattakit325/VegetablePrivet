@@ -122,6 +122,9 @@
 							</div>
 							<input type="submit" class="btn btn-success" id="pwd" placeholder="Password" value="เข้าสู่ระบบ">
 						</form>
+						<br><br>
+	
+  <a href="ForgotPassword.php">ลืมรหัสผ่าน </a>	
   <br>
   <a href="register.html">ยังไม่ได้สมัครบัญชีในระบบ</a>
         </center>
@@ -141,7 +144,7 @@
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><i class="sl-icon-energy"></i><a href="index.html">OrganicApp</a></h1>
+				<a href="index.php"><img src="icon/logo.png" width="20%" height="12%"></a>
 				<nav role="navigation">
 					<ul>
                         <li><a href=""><?php echo $_SESSION["username"]; ?></a></li>

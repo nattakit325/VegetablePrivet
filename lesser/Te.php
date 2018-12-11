@@ -1,1 +1,0 @@
-<div class='msgln'><i>User fgh has left the chat session.</i><br></div><div class='msgln'><i>User jhkjh has left the chat session.</i><br></div>

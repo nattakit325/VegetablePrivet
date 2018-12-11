@@ -60,7 +60,7 @@ and c.chat_datetime = (SELECT c2.chat_datetime from tbl_chat c2
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Lesser &mdash; Free HTML5 Bootstrap Website Template by FreeHTML5.co</title>
+	<title>Chat List</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -253,29 +253,8 @@ div#messagesDiv{
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><i class="sl-icon-energy"></i><a href="index.php">OrganicApp</a></h1>
-				<nav role="navigation">
-					<ul>
-						<li>
-							<?php if(empty($_SESSION["username"])){
-								?>
-							<a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
-							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
-						<?php }else{
-							if ($objResult['chatAM']>0) {
-								$color = 'red';
-							}else{
-								$color = 'gray';
-
-							}
-							?>
-							<a href="TopChat.php" title="คุณมี <?php echo $objResult['chatAM'] ?> ข้อความ"><i class="fas fa-bell" style="color: <?php echo $color ?>">&nbsp;<?php echo $objResult['chatAM'] ?></i></a>
-							<a data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
-							
-						<?php } ?>
-						
-					</ul>
-				</nav>
+				<a href="index.php"><img src="icon/logo.png" width="20%" height="12%"></a>
+				
 			</div>
 		</div>
 	</header>

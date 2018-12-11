@@ -242,7 +242,7 @@ function Addlatlong(){
 						<p>career     : <?php echo $_SESSION["status"];?></p>
   <br>
 
-  <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
+ <a href="Edit-Password.php"><button type="button" class="btn btn-success" >แก้ไขรหัสผ่าน</button></a>
   <a href="ClearSession.php"><button type="button" class="btn btn-warning" >ออกจากระบบ</button></a>
         </center>
           

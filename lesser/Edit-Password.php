@@ -28,7 +28,7 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Edit Profile</title>
+	<title>Edit Password</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -214,23 +214,8 @@
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><i class="sl-icon-energy"></i><a href="index.php">Lesserr</a></h1>
-				<nav role="navigation">
-					<ul>
-						<li>
-							<?php if(empty($_SESSION["username"])){
-								?>
-							<a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
-							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
-						<?php }else{?>
-							<a href="" data-toggle="modal" data-target="#login"><?php echo $_SESSION["name_surname"];?> </a></li>
-							<a href="" data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
-							<br>
-							
-						<?php } ?>
-						
-					</ul>
-				</nav>
+				<a href="index.php"><img src="icon/logo.png" width="20%" height="12%"></a>
+				
 			</div>
 		</div>
 	</header>

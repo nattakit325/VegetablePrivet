@@ -36,7 +36,7 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>MenuMG</title>
+	<title>Menu Management</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -244,7 +244,7 @@
 						<p>career     : <?php echo $_SESSION["status"];?></p>
   <br>
 
-  <a href="edit.html"><button type="button" class="btn btn-success" >แก้ไขข้อมมูลส่วนตัว</button></a>
+   <a href="Edit-Password.php"><button type="button" class="btn btn-success" >แก้ไขรหัสผ่าน</button></a>
   <a href="ClearSession.php"><button type="button" class="btn btn-warning" >ออกจากระบบ</button></a>
         </center>
           
@@ -267,7 +267,7 @@
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><i class="sl-icon-energy"></i><a href="index.php">OrganicApp</a></h1>
+				<a href="index.php"><img src="icon/logo.png" width="20%" height="12%"></a>
 				<nav role="navigation">
 					<ul>
 						<li>
