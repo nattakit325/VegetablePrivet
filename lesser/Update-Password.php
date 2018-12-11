@@ -7,6 +7,6 @@ $Password = md5($Password);
 $sql="UPDATE login SET password = '$Password' WHERE username = '$username'";
 $query = mysqli_query($objCon,$sql);
 
-echo '<script>alert("เปลี่ยนรหัสสำเร็จ");window.location = "/editProfile.php"</script>';
+echo '<script>alert("เปลี่ยนรหัสสำเร็จ");window.location = "/index.php"</script>';
 
 ?>

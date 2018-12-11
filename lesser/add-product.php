@@ -123,15 +123,27 @@
 	<header id="fh5co-header" role="banner">
 		<div class="container">
 			<div class="header-inner">
-				<h1><i class="sl-icon-energy"></i><a href="index.html">OrganicApp</a></h1>
+				<a href="index.php"><img src="icon/logo.png" width="20%" height="12%"></a>
 				<nav role="navigation">
 					<ul>
-                        <?php if($_SESSION['username'] != "") { ?>
-						    <li><a href="profile.php"><?php echo $_SESSION["username"]; ?></a></li>
+						<li>
+							<?php if(empty($_SESSION["username"])){
+								?>
+							<a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
+							<a href="" data-toggle="modal" data-target="#myModal"><img class="circle" src="images/profile.png" width="10%" height="12%" /></a>
+						<?php }else{
+							if ($objResult['chatAM']>0) {
+								$color = 'red';
+							}else{
+								$color = 'gray';
+
+							}
+							?>
+							<a href="TopChat.php" title="คุณมี <?php echo $objResult['chatAM'] ?> ข้อความ"><i class="fas fa-bell" style="color: <?php echo $color ?>">&nbsp;<?php echo $objResult['chatAM'] ?></i></a>
+							<a data-toggle="modal" data-target="#login"><img class="circle" src="images/<?php echo $_SESSION["picture"]?>" width="10%" height="12%" /></a>
+							
 						<?php } ?>
-						<?php if($_SESSION['username'] == "") { ?>
-						    <li><a href="" data-toggle="modal" data-target="#myModal">เข้าสู่ระบบ</a></li>
-						<?php } ?>
+						
 					</ul>
 				</nav>
 			</div>
