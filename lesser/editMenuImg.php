@@ -325,6 +325,12 @@
                             <input type="hidden" name="id<?php echo $c ?>" value="<?php echo$row["id"]; ?>">
                             <input type="file"  name="fileToUpload<?php echo $c ?>" id="fileToUpload<?php echo $c ?>" class="form-control" onchange="readURL(this,<?php echo $c ?>);"> 
 
+  <br>เปลี่ยนสีข้อความ
+  <div class="col-10">
+    <input class="form-control" type="color" value="#563d7c" id="example-color-input">
+  </div>
+
+
                         </div>
                     </div>
                     <?php  
@@ -332,6 +338,7 @@
                 } ?>
                 <br><br>
                 <center>
+
 
                 <input  class="btn btn-primary" type="submit" value="บันทึกรูปแบบ" name="submit"> 
                 </center>
