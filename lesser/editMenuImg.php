@@ -5,7 +5,7 @@
     
     $id = $_GET['id'];
 
-    $sqlForImage= "SELECT name,position,id FROM menu  where page = '$id'";
+    $sqlForImage= "SELECT name,position,id,color FROM menu  where page = '$id'";
 
     $querylForImage=mysqli_query($objCon,$sqlForImage);
     $queryDialog=mysqli_query($objCon,$sqlForImage);
@@ -314,7 +314,7 @@
                         <div class="form-group">
                             <a href="#" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo$row["name"]; ?>);" id="blah<?php echo $c ?>">
                                 <div class="desc">
-                                    <h3><?php echo $row["position"]; ?></h3>
+                                    <h3 style="color: <?php echo$row['color']; ?>"><?php echo $row["position"]; ?></h3>
                                     
                                 </div>
                             </a>
@@ -327,7 +327,7 @@
 
   <br>เปลี่ยนสีข้อความ
   <div class="col-10">
-    <input class="form-control" type="color" value="#563d7c" id="example-color-input">
+    <input class="form-control" type="color" name="color<?php echo $c ?>" value="<?php echo$row['color']; ?>" id="example-color-input" >
   </div>
 
 

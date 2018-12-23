@@ -81,9 +81,9 @@
 
 
     	
-
+         $Color[$i] = $_POST["color".$i];
     	 $id[$i] = $_POST["id".$i];
-    	 $UpdateImgSQL = "UPDATE menu SET  name='$PictureName[$i]' where id='$id[$i]'";
+    	 $UpdateImgSQL = "UPDATE menu SET  name='$PictureName[$i]',color = '$Color[$i]' where id='$id[$i]'";
 		$objQuery = mysqli_query($objCon,$UpdateImgSQL);
 
     	$i++;
