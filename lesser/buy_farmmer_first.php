@@ -44,13 +44,14 @@
 		return "$strDay $strMonthThai $strYear, เวลา $strHour:$strMinute";
 	}
 
-	$sqlForImage= "SELECT name FROM menu  where page = 'ตัวเลือกสินค้าของเกษตรกร'";
+	$sqlForImage= "SELECT name,color as col FROM menu  where page = 'ตัวเลือกสินค้าของเกษตรกร'";
 
     $querylForImage=mysqli_query($objCon,$sqlForImage);
     $i = 1;
 
     while($row=mysqli_fetch_array($querylForImage,MYSQLI_ASSOC)){ 
     	$img[$i] = $row["name"];
+    	$col[$i] = $row["col"];
     	$i++;
     }
 
@@ -283,8 +284,8 @@
 				<div class="col-md-6">
 					<a href="marketList.php?type=1" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[1]; ?>);">
 						<div class="desc">
-							<h3>ชื้อสินค้าทางการเกษตร</h3>
-							<span>Buy agricultural products</span>
+							<h3 style="color: <?php echo $col[1]; ?>">ชื้อสินค้าทางการเกษตร</h3>
+							<span style="color: <?php echo $col[1]; ?>">Buy agricultural products</span>
 						</div>
 					</a>
 				</div>
@@ -295,8 +296,8 @@
 				<div class="col-md-6">
 					<a href="marketList.php?type=2"  class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[2]; ?>);">
 						<div class="desc">
-							<h3>ซื้อสินค้าปัจจัยทางการเกษตร</h3>
-							<span>Buy agricultural factor products</span>
+							<h3 style="color: <?php echo $col[2]; ?>">ซื้อสินค้าปัจจัยทางการเกษตร</h3>
+							<span style="color: <?php echo $col[2]; ?>">Buy agricultural factor products</span>
 						</div>
 					</a>
 					

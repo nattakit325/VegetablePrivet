@@ -42,13 +42,14 @@
 		return "$strDay $strMonthThai $strYear, เวลา $strHour:$strMinute";
 	}
 
-	$sqlForImage= "SELECT name FROM menu  where page = 'การจัดการบัญชี'";
+	$sqlForImage= "SELECT name,color as col FROM menu  where page = 'การจัดการบัญชี'";
 
     $querylForImage=mysqli_query($objCon,$sqlForImage);
     $i = 1;
 
     while($row=mysqli_fetch_array($querylForImage,MYSQLI_ASSOC)){ 
     	$img[$i] = $row["name"];
+    	$col[$i] = $row["col"];
     	$i++;
     }
 
@@ -361,16 +362,16 @@ function showHint(str) {
 				<div class="col-md-6">
 					<a href="AddAdmin.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[1]; ?>);">
 						<div class="desc">
-							<h3>เพิ่มผู้ดูแลระบบ</h3>
-							<span>Create new admin</span>
+							<h3 style="color: <?php echo $col[1]; ?>">เพิ่มผู้ดูแลระบบ</h3>
+							<span style="color: <?php echo $col[1]; ?>">Create new admin</span>
 						</div>
 					</a>
 				</div>
 				<div class="col-md-6">
 					<a href="report.php?value=' '&type=admin" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[2]; ?>);">
 						<div class="desc">
-							<h3>รายการบัญชี</h3>
-							<span>Account list</span>
+							<h3 style="color: <?php echo $col[2]; ?>">รายการบัญชี</h3>
+							<span style="color: <?php echo $col[2]; ?>">Account list</span>
 						</div>
 					</a>
 					

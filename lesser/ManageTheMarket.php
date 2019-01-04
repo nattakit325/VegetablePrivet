@@ -38,13 +38,14 @@
 		return "$strDay $strMonthThai $strYear, เวลา $strHour:$strMinute";
 	}
 
-	$sqlForImage= "SELECT name FROM menu  where page = 'การจัดการตลาด'";
+	$sqlForImage= "SELECT name,color as col FROM menu  where page = 'การจัดการตลาด'";
 
     $querylForImage=mysqli_query($objCon,$sqlForImage);
     $i = 1;
 
     while($row=mysqli_fetch_array($querylForImage,MYSQLI_ASSOC)){ 
     	$img[$i] = $row["name"];
+    	$col[$i] = $row["col"];
     	$i++;
     }
 
@@ -267,8 +268,8 @@
 				<div class="col-md-6">
 					<a href="ShowListMarketAdmin.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[1]; ?>);">
 						<div class="desc">
-							<h3>จัดการตลาด</h3>
-							<span>Manage Market</span>
+							<h3 style="color: <?php echo $col[1]; ?>">จัดการตลาด</h3>
+							<span style="color: <?php echo $col[1]; ?>">Manage Market</span>
 						</div>
 					</a>	
 				</div>
@@ -276,8 +277,8 @@
 				<div class="col-md-6">
 					<a href="addMarket.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[2]; ?>);">
 						<div class="desc">
-							<h3>เพิ่มตลาด</h3>
-							<span>Add Market</span>
+							<h3 style="color: <?php echo $col[2]; ?>">เพิ่มตลาด</h3>
+							<span style="color: <?php echo $col[2]; ?>">Add Market</span>
 						</div>
 					</a>	
 				</div>

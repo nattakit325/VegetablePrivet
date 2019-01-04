@@ -44,13 +44,14 @@
 		return "$strDay $strMonthThai $strYear, เวลา $strHour:$strMinute";
 	}
 
-	$sqlForImage= "SELECT name FROM menu  where page = 'แอดมิน'";
+	$sqlForImage= "SELECT name,color as col FROM menu  where page = 'แอดมิน'";
 
     $querylForImage=mysqli_query($objCon,$sqlForImage);
     $i = 1;
 
     while($row=mysqli_fetch_array($querylForImage,MYSQLI_ASSOC)){ 
     	$img[$i] = $row["name"];
+    	$col[$i] = $row["col"];
     	$i++;
     }
 
@@ -395,8 +396,8 @@ $count=0;
 				<div class="col-md-6">
 					<a href="AddNews.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[1]; ?>);">
 						<div class="desc">
-							<h3>สร้างข่าว</h3>
-							<span>Create news</span>
+							<h3 style="color: <?php echo $col[1]; ?>">สร้างข่าว</h3>
+							<span style="color: <?php echo $col[1]; ?>">Create news</span>
 						</div>
 					</a>
 				</div>
@@ -404,8 +405,8 @@ $count=0;
 				<div class="col-md-6">
 					<a href="AccountMG.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[2]; ?>);">
 						<div class="desc">
-							<h3>การจัดการบัญชี</h3>
-							<span>Account management</span>
+							<h3 style="color: <?php echo $col[2]; ?>">การจัดการบัญชี</h3>
+							<span style="color: <?php echo $col[2]; ?>">Account management</span>
 						</div>
 					</a>
 					
@@ -415,8 +416,8 @@ $count=0;
 				<div class="col-md-6">
 					<a href="report.php?value=' '&type=user"  class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[2]; ?>);">
 						<div class="desc">
-							<h3>การจัดการบัญชี</h3>
-							<span>Account management</span>
+							<h3 style="color: <?php echo $col[2]; ?>">การจัดการบัญชี</h3>
+							<span style="color: <?php echo $col[2]; ?>">Account management</span>
 						</div>
 					</a>
 					
@@ -425,8 +426,8 @@ $count=0;
 				<div class="col-md-6">
 					<a href="ManageTheMarket.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[3]; ?>);">
 						<div class="desc">
-							<h3>เพิ่มสถานที่ขายพืชผักอินทรีย์</h3>
-							<span>Add location</span>
+							<h3 style="color: <?php echo $col[3]; ?>">เพิ่มสถานที่ขายพืชผักอินทรีย์</h3>
+							<span style="color: <?php echo $col[3]; ?>">Add location</span>
 						</div>
 					</a>	
 				</div>
@@ -434,8 +435,8 @@ $count=0;
 				<div class="col-md-6">
 					<a href="addSellLocation.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[4]; ?>);">
 						<div class="desc">
-							<h3>เพิ่มสถานที่รับสินค้า</h3>
-							<span>Add location</span>
+							<h3 style="color: <?php echo $col[4]; ?>">เพิ่มสถานที่รับสินค้า</h3>
+							<span style="color: <?php echo $col[4]; ?>">Add location</span>
 						</div>
 					</a>	
 				</div>
@@ -443,8 +444,8 @@ $count=0;
 				<div class="col-md-6">
 					<a href="addFarmerLocation.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[5]; ?>);">
 						<div class="desc">
-							<h3>เพิ่มข้อมูลเกษตรกร</h3>
-							<span>Add farmer</span>
+							<h3 style="color: <?php echo $col[5]; ?>">เพิ่มข้อมูลเกษตรกร</h3>
+							<span style="color: <?php echo $col[5]; ?>">Add farmer</span>
 						</div>
 					</a>	
 				</div>
@@ -452,8 +453,8 @@ $count=0;
 				<div class="col-md-6">
 					<a href="farmer.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[6]; ?>);">
 						<div class="desc">
-							<h3>ข้อมูลเกษตรกร</h3>
-							<span>Add farmer</span>
+							<h3 style="color: <?php echo $col[6]; ?>">ข้อมูลเกษตรกร</h3>
+							<span style="color: <?php echo $col[6]; ?>">Add farmer</span>
 						</div>
 					</a>	
 				</div>
@@ -461,8 +462,8 @@ $count=0;
 				<div class="col-md-6">
 					<a href="dataMG.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[7]; ?>);">
 						<div class="desc">
-							<h3>การจัดการข้อมูล</h3>
-							<span>Data management</span>
+							<h3 style="color: <?php echo $col[7]; ?>">การจัดการข้อมูล</h3>
+							<span style="color: <?php echo $col[7]; ?>">Data management</span>
 						</div>
 					</a>
 					
@@ -470,8 +471,8 @@ $count=0;
 				<div class="col-md-6">
 					<a href="menuMG.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[8]; ?>);">
 						<div class="desc">
-							<h3>การจัดการเมนู</h3>
-							<span>Menu management</span>
+							<h3 style="color: <?php echo $col[8]; ?>">การจัดการเมนู</h3>
+							<span style="color: <?php echo $col[8]; ?>">Menu management</span>
 						</div>
 					</a>
 					

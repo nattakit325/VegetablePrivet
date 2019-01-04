@@ -33,7 +33,7 @@
     $sqlForNotification = "SELECT COUNT(DISTINCT chat_user1) as chatAM from tbl_chat WHERE chat_user2='$usermname' 
 							and status = 1 ";
 
-    $sqlForImage= "SELECT name FROM menu  where page = 'หน้าหลัก'";
+    $sqlForImage= "SELECT name,color as col FROM menu  where page = 'หน้าหลัก'";
 
 
     $sqlForProduct = "SELECT s.id as id, p.name as product_name,p.detail as detail,f.name_surname as name,p.price as price,p.picture as picture FROM selllist s 
@@ -51,6 +51,7 @@
 
     while($row=mysqli_fetch_array($querylForImage,MYSQLI_ASSOC)){ 
     	$img[$i] = $row["name"];
+    	$col[$i] = $row["col"];
     	$i++;
     }
 
@@ -416,12 +417,11 @@ $count=0;
 				 ?>
 
 
-
 				<div class="col-md-6">
 					<a href="<?php echo $buy?>" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[1]; ?>);">
 						<div class="desc">
-							<h3>ชื้อสินค้า(สินค้าทางการเกษตร)</h3>
-							<span>Buy</span>
+							<h3 style="color: <?php echo $col[1]; ?>">ชื้อสินค้า(สินค้าทางการเกษตร) </h3>
+							<span style="color: <?php echo $col[1]; ?>">Buy</span>
 						</div>
 					</a>
 				</div>
@@ -431,8 +431,8 @@ $count=0;
 				<div class="col-md-6">
 					<a href="#" data-toggle="modal" data-target="#myModal" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[2]; ?>);">
 						<div class="desc">
-							<h3>ขายสินค้า</h3>
-							<span>Sell</span>
+							<h3 style="color: <?php echo $col[2]; ?>">ขายสินค้า</h3>
+							<span style="color: <?php echo $col[2]; ?>">Sell</span>
 						</div>
 					</a>
 					
@@ -442,8 +442,8 @@ $count=0;
 				<div class="col-md-6">
 					<a href="selllist.php?value=' '"  class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[2]; ?>);">
 						<div class="desc">
-							<h3>ขายสินค้า</h3>
-							<span>Sell</span>
+							<h3 style="color: <?php echo $col[2]; ?>">ขายสินค้า</h3>
+							<span style="color: <?php echo $col[2]; ?>">Sell</span>
 						</div>
 					</a>
 					
@@ -453,16 +453,16 @@ $count=0;
 				<div class="col-md-6">
 					<a href="search-showConsignee.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[3]; ?>);">
 						<div class="desc">
-							<h3>ค้นหาพื้นที่การแลกเปลี่ยนสินค้า</h3>
-							<span>Search For The Exchange Area</span>
+							<h3 style="color: <?php echo $col[3]; ?>">ค้นหาพื้นที่การแลกเปลี่ยนสินค้า</h3>
+							<span style="color: <?php echo $col[3]; ?>">Search For The Exchange Area</span>
 						</div>
 					</a>
 				</div>
 				<div class="col-md-6">
 					<a href="search-farmer.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[4]; ?>);">
 						<div class="desc">
-							<h3>ค้นหาเกษตรกร</h3>
-							<span>Good Example Farmer</span>
+							<h3 style="color: <?php echo $col[4]; ?>">ค้นหาเกษตรกร</h3>
+							<span style="color: <?php echo $col[4]; ?>">Good Example Farmer</span>
 						</div>
 					</a>
 				</div>

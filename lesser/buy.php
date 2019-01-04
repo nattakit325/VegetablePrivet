@@ -34,7 +34,7 @@
 	$value12='อื่นๆ';
 	$type='พืชผัก';
 
-	$sqlForImage= "SELECT name FROM menu  where page = 'เลือกประเภทสินค้า'";
+	$sqlForImage= "SELECT name,color FROM menu  where page = 'เลือกประเภทสินค้า'";
 
     $querylForImage=mysqli_query($objCon,$sqlForImage);
     $i = 1;

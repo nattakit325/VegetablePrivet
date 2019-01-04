@@ -44,13 +44,14 @@
 		return "$strDay $strMonthThai $strYear, เวลา $strHour:$strMinute";
 	}
 
-	$sqlForImage= "SELECT name FROM menu  where page = 'การจัดการเกษตรกร'";
+	$sqlForImage= "SELECT name,color as col FROM menu  where page = 'การจัดการเกษตรกร'";
 
     $querylForImage=mysqli_query($objCon,$sqlForImage);
     $i = 1;
 
     while($row=mysqli_fetch_array($querylForImage,MYSQLI_ASSOC)){ 
     	$img[$i] = $row["name"];
+    	$col[$i] = $row["col"];
     	$i++;
     }
 
@@ -418,8 +419,8 @@ $count=0;
 				<div class="col-md-6">
 					<a href="farmerNormalList.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[1]; ?>);">
 						<div class="desc">
-							<h3>เกษตรกรทั่วไป</h3>
-							<span>Farmers</span>
+							<h3 style="color: <?php echo $col[1]; ?>">เกษตรกรทั่วไป</h3>
+							<span style="color: <?php echo $col[1]; ?>">Farmers</span>
 						</div>
 					</a>	
 				</div>
@@ -427,24 +428,24 @@ $count=0;
 				<div class="col-md-6">
 					<a href="farmerModelList.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[2]; ?>);">
 						<div class="desc">
-							<h3>เกษตรกรต้นแบบ</h3>
-							<span>Model Farmers</span>
+							<h3 style="color: <?php echo $col[2]; ?>">เกษตรกรต้นแบบ</h3>
+							<span style="color: <?php echo $col[2]; ?>">Model Farmers</span>
 						</div>
 					</a>	
 				</div>
 				<div class="col-md-6">
 					<a href="CertifiedList.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[3]; ?>);">
 						<div class="desc">
-							<h3>เกษตรกรที่ผ่านการรับรอง</h3>
-							<span>Certified Farmers</span>
+							<h3 style="color: <?php echo $col[3]; ?>">เกษตรกรที่ผ่านการรับรอง</h3>
+							<span style="color: <?php echo $col[3]; ?>">Certified Farmers</span>
 						</div>
 					</a>	
 				</div>
 				<div class="col-md-6">
 					<a href="WaitinglList.php" class="featured-grid featured-grid-2" style="background-image: url(images/<?php echo $img[4]; ?>);">
 						<div class="desc">
-							<h3>เกษตรกรที่รอการรับรอง</h3>
-							<span>Waiting for certification</span>
+							<h3 style="color: <?php echo $col[4]; ?>">เกษตรกรที่รอการรับรอง</h3>
+							<span style="color: <?php echo $col[4]; ?>">Waiting for certification</span>
 						</div>
 					</a>	
 				</div>
