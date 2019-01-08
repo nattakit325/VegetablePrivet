@@ -23,6 +23,17 @@ include "connect.php";
 	$queryForNotification=mysqli_query($objCon,$sqlForNotification);
 	$objResult = mysqli_fetch_array($queryForNotification, MYSQLI_ASSOC);
 
+
+	$sqlForImage= "SELECT name,color as col FROM menu  where page = 'ประเภทปัจจัย'";
+	$querylForImage=mysqli_query($objCon,$sqlForImage);
+    $i = 1;
+
+    while($row=mysqli_fetch_array($querylForImage,MYSQLI_ASSOC)){ 
+    	$img[$i] = $row["name"];
+    	$col[$i] = $row["col"];
+    	$i++;
+    }
+
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -235,31 +246,31 @@ include "connect.php";
 			<div class="row">
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value1;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/fertilizer.jpg);">
+						<a href="buylist.php?value=<?php echo $value1;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/<?php echo $img[1]; ?>);">
 						</a>
 						<div class="desc">
-							<h3><a href="buylist.php?value=<?php echo $value1;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">ปุ๋ยหมัก</a></h3>
+							<h3 ><a href="buylist.php?value=<?php echo $value1;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">ปุ๋ยหมัก</a></h3>
 							<span>fertilizer</span>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value2;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/shovel.jpg);">
+						<a href="buylist.php?value=<?php echo $value2;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/<?php echo $img[2]; ?>);">
 						</a>
 						<div class="desc">
 							<h3><a href="buylist.php?value=<?php echo $value2;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">ปุ๋ยอินทรีย์</a></h3>
-							<span>Tool</span>
+							<span>Oganic fertilizer</span>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 text-center">
 					<div class="work-inner">
-						<a href="buylist.php?value=<?php echo $value3;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/other.jpg);">
+						<a href="buylist.php?value=<?php echo $value3;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>" class="work-grid" style="background-image: url(images/<?php echo $img[3]; ?>);">
 						</a>
 						<div class="desc">
 							<h3><a href="buylist.php?value=<?php echo $value3;?>&type=<?php echo $type; ?>&MarketId=<?php echo $MarketId; ?>">เมล็ดพันธุ์</a></h3>
-							<span>other</span>
+							<span>Seed</span>
 						</div>
 					</div>
 				</div>

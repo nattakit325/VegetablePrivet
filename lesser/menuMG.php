@@ -304,7 +304,8 @@
 						<a href="editMenuImg.php?id=การจัดการบัญชี" class="btn btn-primary btn-outline with-arrow" >หน้าการจัดการบัญชี<i class="icon-arrow-right"></i></a>
 						<a href="editMenuImg.php?id=การจัดการตลาด" class="btn btn-primary btn-outline with-arrow" >หน้าการจัดการตลาด<i class="icon-arrow-right"></i></a>
 						<br><br>
-						<a href="editMenuImg.php?id=การจัดการเกษตรกร" class="btn btn-primary btn-outline with-arrow" >หน้าการจัดการเกษตรกร<i class="icon-arrow-right"></i></a>		
+						<a href="editMenuImg.php?id=การจัดการเกษตรกร" class="btn btn-primary btn-outline with-arrow" >หน้าการจัดการเกษตรกร<i class="icon-arrow-right"></i></a>	
+						<a href="editMenuImg.php?id=ประเภทปัจจัย" class="btn btn-primary btn-outline with-arrow" >หน้าประเภทปัจจัยการผลิต<i class="icon-arrow-right"></i></a>		
 					</div>
 				</div>
 				
